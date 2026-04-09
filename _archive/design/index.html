@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nemo — We create digital products with advanced technologies to build memorable experiences and transform brands.">
+<title>NEMO — Turn your ideas into reality</title>
+<style>
+
+/* ══════════════════════════════════════
+   FONTS
+══════════════════════════════════════ */
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayBold.ttf') format('truetype'); font-weight:700; }
+
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════ */
+:root {
+  --green:         #35D687;
+  --green-dim:     rgba(53,214,135,0.12);
+  --green-border:  rgba(53,214,135,0.28);
+  --green-hover:   #29c275;
+
+  --black:         #080808;
+  --navy:          #13171D;
+  --charcoal:      #222222;
+  --white:         #FFFFFF;
+  --off-white:     #FAFBFC;
+  --warm:          #EDE9E0;
+  --gray:          #868788;
+
+  --b1:            rgba(255,255,255,0.07);
+  --b2:            rgba(255,255,255,0.12);
+  --b3:            rgba(255,255,255,0.20);
+  --b-green:       rgba(53,214,135,0.28);
+  --b-dark:        rgba(0,0,0,0.1);
+
+  --t1:            #FFFFFF;
+  --t2:            #F3F3F3;
+  --t3:            #868788;
+
+  --fp:            'AeonikPro', 'Inter', sans-serif;
+  --fs:            'NeueHaas', 'Inter', sans-serif;
+  --fm:            'Courier New', monospace;
+
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   16px;
+  --r-xl:   20px;
+  --r-pill: 9999px;
+
+  --e-fast:   150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+  --e-slow:   500ms ease-in-out;
+
+  --container: 1312px;
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#FAFBFC;color:#111;font-family:var(--fs);font-size:14px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+ul{list-style:none;}
+
+/* ══════════════════════════════════════
+   LIGHT GRID BACKGROUND
+══════════════════════════════════════ */
+.bg-grid-light {
+  background-color: #FAFBFC;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION (fixed top bar style)
+══════════════════════════════════════ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  background: rgba(8,8,8,0.98);
+  border-bottom: 1px solid var(--b1);
+  z-index: 900;
+  transition: background var(--e-fast);
+}
+
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo img {
+  height: 28px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--fs);
+  font-size: 13px;
+  color: rgba(233,235,223,0.7);
+  transition: color var(--e-fast);
+  text-decoration: none;
+}
+.nav-links a:hover { color: #fff; }
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-ghost-sm {
+  font-family: var(--fs);
+  font-size: 13px;
+  border-radius: var(--r-pill);
+  padding: 0 20px;
+  height: 36px;
+  color: #fff;
+  border: 1px solid var(--b2);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color var(--e-fast);
+  text-decoration: none;
+}
+.btn-ghost-sm:hover { border-color: var(--b3); }
+
+.btn-sm {
+  font-family: var(--fs);
+  font-size: 13px;
+  border-radius: var(--r-pill);
+  padding: 0 20px;
+  height: 36px;
+  background: #E9EBDF;
+  color: #151515;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background var(--e-fast);
+  text-decoration: none;
+}
+.btn-sm:hover { background: #d6d8c6; }
+
+/* ══════════════════════════════════════
+   HERO (light grid bg)
+══════════════════════════════════════ */
+.hero {
+  padding: 220px 40px 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-inner {
+  max-width: var(--container);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.hero-left {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-h1 {
+  font-family: var(--fp);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  color: #111;
+}
+
+.hero-right {
+  flex: 1;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-desc {
+  font-family: var(--fs);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #555;
+}
+
+.btn-outline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: var(--r-pill);
+  height: 48px;
+  padding: 0 24px;
+  transition: var(--e-fast);
+  text-decoration: none;
+  align-self: flex-start;
+}
+.btn-outline-pill:hover { background: rgba(0,0,0,0.03); }
+
+/* ══════════════════════════════════════
+   MARQUEE (dark bar)
+══════════════════════════════════════ */
+.marquee-container {
+  background: var(--black);
+  border-top: 1px solid var(--b1);
+  padding: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+  width: max-content;
+}
+.marquee-track span {
+  margin: 0 40px;
+  font-family: var(--fp);
+  font-size: 20px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ══════════════════════════════════════
+   DARK FEATURE SECTION
+══════════════════════════════════════ */
+.feature-wrap {
+  background: var(--black);
+  border-radius: 0 0 24px 24px;
+  padding: 120px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.curved-line {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  height: 600px;
+  border-bottom: 1px solid var(--green);
+  border-radius: 50%;
+  opacity: 0.3;
+  pointer-events: none;
+  box-shadow: 0 10px 40px rgba(53,214,135,0.1);
+}
+
+.purple-btn {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(53,214,135,0.15);
+  border-radius: var(--r-pill);
+  padding: 8px 24px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+  border: 1px solid rgba(53,214,135,0.35);
+  box-shadow: 0 0 24px rgba(53,214,135,0.15);
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.new-tag {
+  background: rgba(0,0,0,0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+.feature-grid {
+  max-width: var(--container);
+  margin: 80px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-text {
+  color: white;
+  font-size: 28px;
+  line-height: 1.4;
+  font-weight: 400;
+  max-width: 480px;
+  font-family: var(--fp);
+}
+
+/* ── Dashboard Mockup (madebynemo-style) ── */
+.mock-ui {
+  background: #0A0A0F;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.07), 0 0 60px rgba(53,214,135,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+
+/* Browser chrome bar */
+.mock-chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: #111118;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.mock-chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
+.mock-chrome-dot:nth-child(1) { background: #FF5F57; }
+.mock-chrome-dot:nth-child(2) { background: #FFBD2E; }
+.mock-chrome-dot:nth-child(3) { background: #28CA42; }
+.mock-chrome-bar {
+  flex: 1;
+  margin: 0 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+.mock-chrome-url { font-size: 10px; color: rgba(255,255,255,0.3); font-family: monospace; }
+
+/* Dashboard body */
+.mock-dashboard {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Sidebar */
+.mock-sidebar {
+  width: 52px;
+  background: #111118;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.mock-sidebar-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mock-sidebar-icon.active { background: rgba(53,214,135,0.15); }
+.mock-sidebar-dot { width: 14px; height: 14px; border-radius: 3px; background: rgba(255,255,255,0.12); }
+.mock-sidebar-dot.green { background: var(--green); opacity: 0.8; }
+
+/* Main content */
+.mock-main {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.mock-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.mock-page-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); font-family: var(--fp); }
+.mock-header-badge {
+  background: rgba(53,214,135,0.15);
+  border: 1px solid rgba(53,214,135,0.3);
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Stats row */
+.mock-stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+}
+.mock-stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 10px;
+}
+.mock-stat-label { font-size: 8px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.mock-stat-value { font-size: 16px; font-weight: 700; color: #fff; font-family: var(--fp); line-height: 1; }
+.mock-stat-green { color: var(--green); }
+.mock-stat-change { font-size: 8px; color: var(--green); margin-top: 3px; }
+
+/* Chart area */
+.mock-chart-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 12px;
+  flex: 1;
+}
+.mock-chart-title { font-size: 9px; color: rgba(255,255,255,0.45); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+.mock-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 48px;
+}
+.mock-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: rgba(53,214,135,0.2);
+  transition: height 0.3s ease;
+}
+.mock-bar.active { background: var(--green); }
+
+/* Table row */
+.mock-table-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.mock-table-avatar {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(53,214,135,0.2);
+  border: 1px solid rgba(53,214,135,0.3);
+  flex-shrink: 0;
+}
+.mock-table-name { font-size: 9px; color: rgba(255,255,255,0.7); flex: 1; }
+.mock-table-tag {
+  font-size: 8px; padding: 2px 6px; border-radius: 20px;
+  background: rgba(53,214,135,0.12);
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════
+   DISCOVER / SELECTED WORK
+══════════════════════════════════════ */
+.selected-work {
+  padding: 140px 40px;
+}
+
+.selected-work-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 4px;
+  font-family: var(--fm);
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.work-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.work-h2 {
+  font-family: var(--fp);
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  color: #111;
+}
+
+.work-h2 em {
+  font-style: normal;
+  color: var(--green);
+}
+
+/* ══════════════════════════════════════
+   FAQ SECTION
+══════════════════════════════════════ */
+.faq-section {
+  padding: 100px 40px;
+}
+
+.faq-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.faq-h2 {
+  font-family: var(--fp);
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  color: #111;
+  margin-bottom: 48px;
+}
+
+.faq-item {
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding: 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background var(--e-fast);
+}
+.faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+
+.faq-question {
+  font-family: var(--fp);
+  font-size: 20px;
+  font-weight: 400;
+  color: #111;
+}
+
+.faq-plus {
+  color: var(--green);
+  font-size: 24px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+/* ══════════════════════════════════════
+   CTA SECTION (green-tinted card)
+══════════════════════════════════════ */
+.cta-section {
+  padding: 0 24px 40px;
+}
+
+.cta-card {
+  background: #E8FBF1;
+  padding: 120px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.cta-card-grid {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(circle, rgba(53,214,135,0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.cta-eyebrow {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 4px;
+  font-family: var(--fm);
+  font-size: 11px;
+  font-weight: 700;
+  color: #555;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+
+.cta-h2 {
+  font-family: var(--fp);
+  font-size: clamp(36px, 4.5vw, 48px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  color: #111;
+  margin-bottom: 16px;
+}
+
+.cta-h2 em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.cta-desc {
+  font-family: var(--fs);
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--fs);
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--black);
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 32px;
+  height: 48px;
+  cursor: pointer;
+  transition: background var(--e-fast);
+  text-decoration: none;
+}
+.btn-cta-primary:hover { background: #222; }
+
+.btn-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fs);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.6);
+  background: transparent;
+  border: 1px dashed rgba(0,0,0,0.25);
+  border-radius: var(--r-pill);
+  padding: 0 32px;
+  height: 48px;
+  cursor: pointer;
+  transition: all var(--e-fast);
+  text-decoration: none;
+}
+.btn-cta-ghost:hover { color: #111; border-color: rgba(0,0,0,0.4); }
+
+/* ══════════════════════════════════════
+   FOOTER  (madebynemo.com exact replica)
+══════════════════════════════════════ */
+.footer {
+  background: #000000;
+  margin: 0;
+  border-radius: 0;
+}
+
+/* ── Nav columns ── */
+.footer-nav {
+  padding: 80px 80px 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-nav-inner {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.footer-col-title {
+  font-family: var(--fp);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 28px;
+  letter-spacing: -0.5px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-links a {
+  font-family: var(--fs);
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.footer-links a:hover { color: #ffffff; }
+.footer-links a.active { color: #ffffff; }
+.footer-links .link-dim { color: rgba(255,255,255,0.25); pointer-events: none; }
+
+/* ── Work with us + Location ── */
+.footer-middle {
+  padding: 60px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-work-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.footer-work-heading {
+  font-family: var(--fp);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.btn-get-in-touch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  font-family: var(--fs);
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+  white-space: nowrap;
+  width: fit-content;
+}
+.btn-get-in-touch:hover { opacity: 0.85; }
+.btn-get-in-touch em {
+  font-style: normal;
+  color: var(--green);
+  margin: 0 4px;
+}
+
+.footer-location-col {
+  text-align: right;
+}
+
+.footer-location-city {
+  font-family: var(--fp);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 400;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.footer-location-time {
+  font-family: var(--fs);
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0;
+}
+
+/* ── Top section: subscribe + social ── */
+.footer-top {
+  padding: 100px 80px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 40px;
+}
+
+/* Left: Sign up for updates */
+.footer-subscribe-col {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 420px;
+  flex: 1;
+}
+
+.footer-col-heading {
+  font-family: var(--fp);
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.footer-email-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+}
+
+.email-input {
+  font-family: var(--fs);
+  font-size: 14px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #ffffff;
+  border-radius: 0;
+  padding: 8px 0;
+  outline: none;
+  width: 220px;
+  transition: opacity 200ms ease;
+}
+.email-input::placeholder { color: rgba(255,255,255,0.45); }
+.email-input:focus { opacity: 1; border-bottom-color: rgba(255,255,255,0.9); }
+
+.footer-subscribe-btn {
+  font-family: var(--fs);
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+  text-decoration: none;
+  display: inline-block;
+}
+.footer-subscribe-btn:hover { opacity: 0.6; }
+
+/* Right: Stay connected */
+.footer-social-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.footer-social-col .footer-col-heading {
+  margin-bottom: 4px;
+}
+
+.footer-social-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-social-list a {
+  font-family: var(--fp);
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+  display: inline-block;
+  letter-spacing: -0.5px;
+}
+.footer-social-list a:hover { opacity: 0.5; }
+
+/* ── Giant NEMO wordmark ── */
+.footer-giant {
+  overflow: hidden;
+  position: relative;
+  padding: 60px 40px 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-giant-img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── Bottom bar ── */
+.footer-bottom {
+  border-top: 1px solid var(--green);
+  padding: 20px 80px;
+}
+
+.footer-bottom-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-copy {
+  font-family: var(--fs);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+
+.footer-legal {
+  display: flex;
+  gap: 28px;
+}
+
+.footer-legal a {
+  font-family: var(--fs);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.footer-legal a:hover { color: #ffffff; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .site-header { height: 60px; }
+  .nav-inner { padding: 0 20px; }
+  .nav-links { display: none; }
+
+  .hero { padding: 140px 20px 60px; }
+  .hero-inner { flex-direction: column; gap: 32px; }
+  .hero-left { max-width: 100%; }
+  .hero-right { max-width: 100%; }
+
+  .feature-wrap { padding: 80px 20px; }
+  .feature-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 60px; }
+  .mock-ui { max-width: 100%; }
+
+  .selected-work { padding: 80px 20px; }
+  .work-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+
+  .faq-section { padding: 60px 20px; }
+
+  .cta-section { padding: 0 16px 32px; }
+  .cta-card { padding: 80px 20px; }
+
+  .footer { margin: 0; }
+  .footer-top { flex-direction: column; padding: 60px 24px 48px; gap: 48px; }
+  .footer-bottom { padding: 16px 24px; }
+  .footer-bottom-inner { flex-direction: column; gap: 14px; align-items: flex-start; }
+  .footer-giant-text { font-size: clamp(72px, 20vw, 180px); }
+}
+
+@media (max-width: 600px) {
+  .nav-actions .btn-ghost-sm { display: none; }
+  .hero-h1 { font-size: 40px; }
+  .cta-buttons { flex-direction: column; align-items: center; }
+  .footer-email-row { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .email-input { width: 100%; }
+  .footer-legal { flex-direction: column; gap: 10px; }
+}
+
+</style>
+</head>
+<body class="bg-grid-light">
+
+<!-- ══════════════════════════════════════
+     NAVIGATION (dark fixed bar)
+══════════════════════════════════════ -->
+<header class="site-header" id="site-header">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" id="nav-logo">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" onerror="this.outerHTML='<span style=\'font-family:var(--fp);font-size:17px;font-weight:500;color:#fff;letter-spacing:-0.3px;\'>NEMO</span>'">
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#" id="nav-home">Home</a></li>
+      <li><a href="#about" id="nav-about">About</a></li>
+      <li><a href="#work" id="nav-work">Work</a></li>
+      <li><a href="#services" id="nav-services">Services</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="btn-ghost-sm" id="btn-signin">Sign in</a>
+      <a href="#contact" class="btn-sm" id="btn-letstalk-nav">Let's talk</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     HERO (light grid background)
+══════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <h1 class="hero-h1">Turn your ideas<br>into reality</h1>
+    </div>
+    <div class="hero-right">
+      <p class="hero-desc">We create digital products with advanced technologies to build memorable experiences and transform brands.</p>
+      <a href="#contact" class="btn-outline-pill" id="btn-letstalk-hero">Let's talk &nbsp;→</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     MARQUEE (dark)
+══════════════════════════════════════ -->
+<div class="marquee-container" id="logo-strip" aria-label="Our clients">
+  <div class="marquee-track">
+    <span>AXA</span><span>Mazda</span><span>Pfizer</span><span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span><span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+    <span>AXA</span><span>Mazda</span><span>Pfizer</span><span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span><span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     DARK FEATURE SECTION
+══════════════════════════════════════ -->
+<div class="feature-wrap" id="work">
+  <div class="curved-line"></div>
+  <div class="purple-btn">
+    Nemo V.2 <span style="opacity:0.4;">|</span> <span class="new-tag">NEW</span> Auth0 for AI Agents &rarr;
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-text">
+      We create digital products with advanced technologies to build memorable experiences and transform brands.
+    </div>
+    <div class="mock-ui" id="app-mockup">
+      <!-- Browser chrome -->
+      <div class="mock-chrome">
+        <div class="mock-chrome-dot"></div>
+        <div class="mock-chrome-dot"></div>
+        <div class="mock-chrome-dot"></div>
+        <div class="mock-chrome-bar">
+          <span class="mock-chrome-url">app.noxus.io/dashboard</span>
+        </div>
+      </div>
+      <!-- Dashboard layout -->
+      <div class="mock-dashboard">
+        <!-- Sidebar -->
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-icon active">
+            <div class="mock-sidebar-dot green"></div>
+          </div>
+          <div class="mock-sidebar-icon"><div class="mock-sidebar-dot"></div></div>
+          <div class="mock-sidebar-icon"><div class="mock-sidebar-dot"></div></div>
+          <div class="mock-sidebar-icon"><div class="mock-sidebar-dot"></div></div>
+          <div class="mock-sidebar-icon"><div class="mock-sidebar-dot"></div></div>
+        </div>
+        <!-- Main content -->
+        <div class="mock-main">
+          <!-- Header row -->
+          <div class="mock-header-row">
+            <span class="mock-page-title">Dashboard</span>
+            <span class="mock-header-badge">Live</span>
+          </div>
+          <!-- Stats -->
+          <div class="mock-stats">
+            <div class="mock-stat-card">
+              <div class="mock-stat-label">Revenue</div>
+              <div class="mock-stat-value mock-stat-green">$83K</div>
+              <div class="mock-stat-change">↑ 12.4%</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="mock-stat-label">Users</div>
+              <div class="mock-stat-value">1,284</div>
+              <div class="mock-stat-change">↑ 8.1%</div>
+            </div>
+            <div class="mock-stat-card">
+              <div class="mock-stat-label">Orders</div>
+              <div class="mock-stat-value">845</div>
+              <div class="mock-stat-change">↑ 4.6%</div>
+            </div>
+          </div>
+          <!-- Chart -->
+          <div class="mock-chart-card">
+            <div class="mock-chart-title">Revenue Overview</div>
+            <div class="mock-chart-bars">
+              <div class="mock-bar" style="height:30%"></div>
+              <div class="mock-bar" style="height:55%"></div>
+              <div class="mock-bar" style="height:40%"></div>
+              <div class="mock-bar active" style="height:75%"></div>
+              <div class="mock-bar" style="height:60%"></div>
+              <div class="mock-bar" style="height:85%"></div>
+              <div class="mock-bar active" style="height:100%"></div>
+            </div>
+          </div>
+          <!-- Table rows -->
+          <div class="mock-table-row">
+            <div class="mock-table-avatar"></div>
+            <div class="mock-table-name">Alex Harper — Product Manager</div>
+            <div class="mock-table-tag">Active</div>
+          </div>
+          <div class="mock-table-row">
+            <div class="mock-table-avatar" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);"></div>
+            <div class="mock-table-name">Sara Kim — UX Designer</div>
+            <div class="mock-table-tag">Active</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SELECTED WORK
+══════════════════════════════════════ -->
+<section class="selected-work" id="about">
+  <div class="selected-work-inner">
+    <div class="work-header">
+      <div>
+        <span class="eyebrow">// SELECTED WORK</span>
+        <h2 class="work-h2">Discover how we're driving <em>change</em></h2>
+      </div>
+      <a href="#" class="btn-outline-pill" id="btn-viewall">View all &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FAQ SECTION
+══════════════════════════════════════ -->
+<section class="faq-section" id="services">
+  <div class="faq-inner">
+    <span class="eyebrow">// FAQ</span>
+    <h2 class="faq-h2">Got questions? We've got the answers</h2>
+    <div class="faq-list">
+      <div class="faq-item" id="faq-1">
+        <div class="faq-question">How does your process work?</div>
+        <div class="faq-plus">+</div>
+      </div>
+      <div class="faq-item" id="faq-2">
+        <div class="faq-question">How long does it take?</div>
+        <div class="faq-plus">+</div>
+      </div>
+      <div class="faq-item" id="faq-3">
+        <div class="faq-question">What do you specialize in?</div>
+        <div class="faq-plus">+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CTA SECTION (green card)
+══════════════════════════════════════ -->
+<section class="cta-section" id="contact">
+  <div class="cta-card">
+    <div class="cta-card-grid"></div>
+    <div class="cta-inner">
+      <span class="cta-eyebrow">// READY TO START?</span>
+      <h2 class="cta-h2">Turn tech into your biggest <em>advantage</em></h2>
+      <p class="cta-desc">Discover how partnering with Nemo can drive your success and prepare you for what's next.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-cta-primary" id="btn-cta-consult">Get a free consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER  (madebynemo.com replica)
+══════════════════════════════════════ -->
+<footer class="footer" id="footer">
+
+  <!-- Nav columns -->
+  <div class="footer-nav">
+    <div class="footer-nav-inner">
+
+      <!-- Explore -->
+      <div>
+        <div class="footer-col-title">Explore</div>
+        <ul class="footer-links">
+          <li><a href="#" class="active" id="footer-home">Home</a></li>
+          <li><a href="#services" id="footer-services">Services</a></li>
+          <li><a href="#work" id="footer-work">Work</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#about" id="footer-about">About</a></li>
+          <li><a href="#" id="footer-careers">Careers</a></li>
+          <li><a href="#contact" id="footer-contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Soon -->
+      <div>
+        <div class="footer-col-title">Soon</div>
+        <ul class="footer-links">
+          <li><a class="link-dim">Growth plan</a></li>
+          <li><a class="link-dim">Affiliate</a></li>
+          <li><a class="link-dim">Charity</a></li>
+        </ul>
+      </div>
+
+      <!-- Updates -->
+      <div>
+        <div class="footer-col-title">Updates</div>
+        <ul class="footer-links">
+          <li><a href="#" id="footer-leiila">LEIILA</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Work with us + Cairo clock -->
+  <div class="footer-middle">
+
+    <div class="footer-work-col">
+      <h3 class="footer-work-heading">Work with us</h3>
+      <a href="#contact" class="btn-get-in-touch" id="btn-get-in-touch">Get <em>in</em> touch</a>
+    </div>
+
+    <div class="footer-location-col">
+      <div class="footer-location-city">Cairo</div>
+      <div class="footer-location-time" id="footer-cairo-time">--:--:-- --</div>
+    </div>
+
+  </div>
+
+  <!-- Top: Subscribe + Social -->
+  <div class="footer-top">
+
+    <!-- Left: Sign up for updates -->
+    <div class="footer-subscribe-col">
+      <p class="footer-col-heading">Sign up for updates</p>
+      <div class="footer-email-row">
+        <input type="email" class="email-input" id="email-input" placeholder="Email" autocomplete="email">
+        <button class="footer-subscribe-btn" id="footer-subscribe-btn" type="button">Subscribe</button>
+      </div>
+    </div>
+
+    <!-- Right: Stay connected -->
+    <div class="footer-social-col">
+      <p class="footer-col-heading">Stay connected</p>
+      <ul class="footer-social-list">
+        <li><a href="https://www.instagram.com/madebynemo" target="_blank" rel="noopener" id="social-instagram">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/company/madebynemo" target="_blank" rel="noopener" id="social-linkedin">LinkedIn</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Giant NEMO wordmark (fades to black) -->
+  <div class="footer-giant" aria-hidden="true">
+    <img class="footer-giant-img"
+         src="https://madebynemo.com/storage/2025/05/nemo-white.png"
+         alt=""
+         draggable="false">
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">© 2026 Nemo | All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#" id="footer-cookie">Cookie Policy</a>
+        <a href="#" id="footer-terms">Terms of Service</a>
+        <a href="#" id="footer-privacy">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
+
+<script>
+// Cairo live clock (UTC+2)
+function updateCairoTime() {
+  const now = new Date();
+  const cairoOffset = 2;
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  const cairoDate = new Date(utcMs + cairoOffset * 3600000);
+  let h = cairoDate.getHours();
+  const m = String(cairoDate.getMinutes()).padStart(2, '0');
+  const s = String(cairoDate.getSeconds()).padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  const timeStr = `${String(h).padStart(2,'0')}:${m}:${s} ${ampm}`;
+  const el = document.getElementById('footer-cairo-time');
+  if (el) el.textContent = timeStr;
+}
+updateCairoTime();
+setInterval(updateCairoTime, 1000);
+
+// Nav scroll effect — darken slightly on scroll
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.style.background = window.scrollY > 40
+    ? 'rgba(8,8,8,0.95)'
+    : 'rgba(8,8,8,0.98)';
+}, { passive: true });
+
+// Subscribe button — basic feedback
+const subscribeBtn = document.getElementById('footer-subscribe-btn');
+const emailInput   = document.getElementById('email-input');
+if (subscribeBtn && emailInput) {
+  subscribeBtn.addEventListener('click', () => {
+    if (emailInput.value.trim()) {
+      subscribeBtn.textContent = 'Subscribed ✓';
+      subscribeBtn.style.opacity = '0.5';
+      emailInput.value = '';
+      setTimeout(() => {
+        subscribeBtn.textContent = 'Subscribe';
+        subscribeBtn.style.opacity = '';
+      }, 3000);
+    } else {
+      emailInput.focus();
+    }
+  });
+}
+</script>
+
+</body>
+</html>

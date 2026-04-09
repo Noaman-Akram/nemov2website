@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nemo — Foundation Component Kit v2</title>
+<style>
+
+/* ══════════════════════════════════════
+   FONTS
+══════════════════════════════════════ */
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'NeueHaas'; src:url('fonts/NeueHaasDisplayBold.ttf') format('truetype'); font-weight:700; }
+
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+   Colors:     Nemo brand (locked)
+   Typography: Auth0 scale (Aeonik)
+   Spacing:    WithRealm verified
+   Radii:      WithRealm verified
+   Motion:     Vaulta verified
+══════════════════════════════════════ */
+:root {
+  /* ── Brand Colors (LOCKED) ── */
+  --green:         #35D687;
+  --green-dim:     rgba(53,214,135,0.12);
+  --green-border:  rgba(53,214,135,0.28);
+  --green-hover:   #29c275;
+
+  --black:         #080808;
+  --navy:          #13171D;
+  --charcoal:      #222222;
+  --white:         #FFFFFF;
+  --off-white:     #F3F3F3;
+  --warm:          #EDE9E0;
+  --gray:          #868788;
+
+  /* ── Surface system ── */
+  --s0:            #080808;
+  --s1:            #13171D;
+  --s2:            #222222;
+  --s3:            rgba(255,255,255,0.04);
+  --s3h:           rgba(255,255,255,0.07);
+
+  /* ── Borders ── */
+  --b1:            rgba(255,255,255,0.07);
+  --b2:            rgba(255,255,255,0.12);
+  --b3:            rgba(255,255,255,0.20);
+  --b-green:       rgba(53,214,135,0.28);
+  /* WR dark-on-light border: rgba(0,0,0,0.15) */
+  --b-dark:        rgba(0,0,0,0.15);
+
+  /* ── Text ── */
+  --t1:            #FFFFFF;
+  --t2:            #F3F3F3;
+  --t3:            #868788;
+  --t-off:         rgba(255,255,255,0.25);
+
+  /* ── Fonts ── */
+  --fp:            'AeonikPro', sans-serif;
+  --fs:            'NeueHaas', sans-serif;
+
+  /* ── Spacing (WithRealm) ── */
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:20px; --sp6:24px;
+  --sp8:32px; --sp10:40px; --sp12:48px; --sp16:64px; --sp20:80px; --sp32:128px;
+
+  /* ── Radii (WithRealm verified) ── */
+  --r-sm:   4px;    /* WR: 0.25rem */
+  --r-md:   8px;    /* WR: 0.5rem */
+  --r-lg:   16px;   /* WR: 1rem */
+  --r-xl:   20px;   /* WR: 1.25rem - large card */
+  --r-pill: 9999px; /* RT: pill buttons */
+
+  /* ── Motion (Vaulta verified) ── */
+  --e-fast:   150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+  --e-slow:   500ms ease-in-out;
+
+  /* ── WR shadow (verified from components.html) ── */
+  --shadow-md: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 4px 8px -2px rgba(0,0,0,0.1);
+
+  /* ── Layout (WR: container-large = 82rem = 1312px) ── */
+  --container: 1312px;
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--t1);font-family:var(--fs);font-size:14px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;}
+
+
+/* ══════════════════════════════════════
+   KIT CHROME
+══════════════════════════════════════ */
+.kit-bar{
+  position:sticky;top:0;z-index:300;
+  height:52px;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,8,8,0.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--b1);
+}
+.kit-bar-logo{font-family:var(--fp);font-size:15px;font-weight:500;color:var(--t1);letter-spacing:-.3px;display:flex;align-items:center;gap:7px;}
+.kit-dot{width:6px;height:6px;background:var(--green);border-radius:50%;}
+.kit-bar-tag{font-family:var(--fs);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);}
+
+.kit-wrap{display:flex;min-height:calc(100vh - 52px);}
+
+/* Sidebar */
+.kit-side{
+  width:196px;flex-shrink:0;
+  position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;
+  padding:24px 14px;
+  border-right:1px solid var(--b1);
+  background:var(--black);
+}
+.kg{margin-bottom:24px;}
+.kg-title{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);padding:0 8px;margin-bottom:5px;}
+.kl{display:block;padding:5px 8px;font-size:12px;color:var(--t3);border-radius:var(--r-sm);transition:all var(--e-fast);}
+.kl:hover{color:var(--t1);background:var(--s3);}
+.ks{font-size:9px;color:var(--green);margin-left:4px;opacity:.7;}
+
+/* Main */
+.kit-main{flex:1;padding:52px 60px 120px;max-width:960px;}
+.sec{margin-bottom:80px;scroll-margin-top:68px;}
+.sec-eye{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:5px;}
+.sec-title{font-family:var(--fp);font-size:21px;font-weight:500;letter-spacing:-.3px;color:var(--t1);margin-bottom:4px;}
+.sec-sub{font-size:12px;color:var(--t3);margin-bottom:28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sec-rule{height:1px;background:var(--b1);margin-bottom:28px;}
+
+.src{display:inline-flex;align-items:center;font-family:var(--fs);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:var(--r-pill);border:1px solid var(--b-green);color:var(--green);}
+.gen{display:inline-flex;align-items:center;font-family:var(--fs);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:var(--r-pill);border:1px solid var(--b2);color:var(--gray);}
+
+/* Demo canvases */
+.dm{padding:24px;border-radius:var(--r-md);border:1px solid var(--b1);background:rgba(255,255,255,.01);margin-bottom:18px;}
+.dm-dark{background:#040404;}
+.dm-navy{background:var(--s1);}
+.dm-warm{background:var(--warm);}
+.dm-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.dm-col{display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
+.dm-top{align-items:flex-start;}
+
+.dg{margin-bottom:24px;}
+.dg-label{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--b1);}
+
+
+/* ══════════════════════════════════════
+   § COLORS
+══════════════════════════════════════ */
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:10px;}
+.sw{display:flex;flex-direction:column;gap:5px;}
+.sw-blk{height:48px;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.06);}
+.sw-nm{font-size:11px;font-weight:500;color:var(--t2);}
+.sw-hex{font-size:9px;color:var(--gray);word-break:break-all;}
+.cg-title{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:9px;margin-top:20px;}
+.cg-title:first-child{margin-top:0;}
+
+
+/* ══════════════════════════════════════
+   § TYPOGRAPHY
+══════════════════════════════════════ */
+.type-list{display:flex;flex-direction:column;}
+.type-item{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-bottom:1px solid var(--b1);}
+.type-item:last-child{border-bottom:none;}
+.type-meta{min-width:140px;flex-shrink:0;}
+.type-meta-nm{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);}
+.type-meta-sp{font-family:var(--fs);font-size:10px;color:var(--gray);line-height:1.7;margin-top:2px;}
+
+
+/* ══════════════════════════════════════
+   § SPACING (WithRealm)
+══════════════════════════════════════ */
+.sp-list{display:flex;flex-direction:column;gap:7px;}
+.sp-row{display:flex;align-items:center;gap:10px;}
+.sp-tk{font-family:var(--fs);font-size:10px;font-weight:700;color:var(--green);min-width:52px;}
+.sp-bar-w{display:flex;align-items:center;gap:9px;flex:1;}
+.sp-bar{background:var(--green-dim);border:1px solid var(--b-green);border-radius:2px;height:14px;}
+.sp-v{font-family:var(--fs);font-size:10px;color:var(--gray);}
+
+
+/* ══════════════════════════════════════
+   § RADII
+══════════════════════════════════════ */
+.r-row{display:flex;gap:18px;flex-wrap:wrap;}
+.r-chip{display:flex;flex-direction:column;align-items:center;gap:7px;}
+.r-box{width:56px;height:56px;background:var(--s3);border:1px solid var(--b2);}
+.r-lbl{font-family:var(--fs);font-size:10px;color:var(--gray);text-align:center;line-height:1.4;}
+
+
+/* ══════════════════════════════════════
+   § MOTION (Vaulta)
+══════════════════════════════════════ */
+.m-list{display:flex;flex-direction:column;gap:9px;}
+.m-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--s3);border:1px solid var(--b1);border-radius:var(--r-md);}
+.m-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.m-nm{font-size:13px;font-weight:500;color:var(--t1);}
+.m-sp{font-family:var(--fs);font-size:10px;color:var(--gray);margin-top:1px;}
+.m-use{margin-left:auto;font-size:11px;color:var(--t3);}
+
+
+/* ══════════════════════════════════════
+   § TAGS & BADGES
+   Source: WithRealm
+   WR: radius=4px, padding=4px 16px, 14px/500, ls=0.5px, uppercase
+══════════════════════════════════════ */
+/* WR: border=1px solid rgba(0,0,0,0.15) on light, mapped to rgba(255,255,255,0.15) on dark */
+.tag{display:inline-flex;align-items:center;font-family:var(--fs);font-size:14px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;border-radius:var(--r-sm);padding:4px 16px;border:1px solid var(--b2);color:var(--t3);transition:all var(--e-fast);}
+.tag-active{border-color:var(--b-green);color:var(--green);background:var(--green-dim);}
+/* On warm/light surface: WR original border-color=rgba(0,0,0,0.15) */
+.tag-on-light{border-color:rgba(0,0,0,0.15);color:rgba(0,0,0,0.5);background:transparent;}
+/* WR eyebrow: text=AI workspace for revenue, border=1px solid rgba(0,0,0,0.15), color=rgb(34,67,62)→green */
+.tag-eyebrow{display:inline-flex;font-family:var(--fs);font-size:14px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;border-radius:var(--r-sm);padding:4px 16px;border:1px solid var(--b-green);color:var(--green);}
+/* WR Watch tag: bg=rgba(255,255,255,0.1), no border */
+.tag-ghost{display:inline-flex;align-items:center;font-family:var(--fs);font-size:14px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;border-radius:var(--r-sm);padding:4px 16px;background:rgba(255,255,255,.08);border:1px solid transparent;color:var(--t2);}
+
+/* Badges - compact pill */
+.badge{display:inline-flex;align-items:center;font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--r-pill);padding:0 9px;height:20px;}
+.bg-green{background:var(--green-dim);color:var(--green);border:1px solid var(--b-green);}
+.bg-neutral{background:var(--s3);color:var(--t3);border:1px solid var(--b2);}
+.bg-warm{background:rgba(237,233,224,.12);color:var(--warm);border:1px solid rgba(237,233,224,.2);}
+.bg-red{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.25);}
+.bg-yellow{background:rgba(250,204,21,.1);color:#facc15;border:1px solid rgba(250,204,21,.25);}
+
+
+/* ══════════════════════════════════════
+   § BUTTONS — STYLE 1 (WithRealm)
+   WR exact (from components.html):
+   Primary: bg=#0a0908→--black, color=#ffffff→--warm, border=1px solid, r=4px, p=16px 24px, 18px/500
+   Secondary small: border=rgba(0,0,0,0.15), bg=transparent, p=8px 20px
+   Play/Watch: bg=#ffffff1a, border=transparent, backdrop-filter=blur(64px), p=8px 16px
+   Link: bg=transparent, padding=4px 0, weight=400, underline+offset, Inter/NeueHaas
+   Color scheme 3: bg=#3c3630→near charcoal, color=#f4f0ec→--warm
+══════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;font-family:var(--fs);transition:all var(--e-fast);white-space:nowrap;text-decoration:none;}
+
+/* S1 Primary — WR: bg=#0a0908 (near black), color=white/warm, r=4px, p=16px 24px, 18px/500 */
+.s1-p{font-size:18px;font-weight:500;line-height:27px;border-radius:var(--r-sm);padding:16px 24px;background:var(--black);color:var(--warm);border:1px solid var(--black);}
+.s1-p:hover{background:#1a1a1a;border-color:#1a1a1a;}
+
+/* S1 Primary Green — Nemo accent CTA (not WR, but Nemo's own green variant) */
+.s1-p-green{font-size:18px;font-weight:500;line-height:27px;border-radius:var(--r-sm);padding:16px 24px;background:var(--green);color:var(--black);border:1px solid var(--green);}
+.s1-p-green:hover{background:var(--green-hover);border-color:var(--green-hover);}
+
+/* S1 Warm dark (WR color-scheme-3: bg=#3c3630, color=#f4f0ec) */
+.s1-warm{font-size:18px;font-weight:500;line-height:27px;border-radius:var(--r-sm);padding:16px 24px;background:#3c3630;color:#f4f0ec;border:1px solid #3c3630;}
+.s1-warm:hover{background:#4a4440;border-color:#4a4440;}
+
+/* S1 Ghost — WR: border-color=rgba(0,0,0,0.15) on light → rgba(255,255,255,0.15) on dark, p=8px 20px */
+.s1-ghost{font-size:18px;font-weight:500;line-height:27px;border-radius:var(--r-sm);padding:8px 20px;background:transparent;color:var(--t1);border:1px solid rgba(255,255,255,.15);}
+.s1-ghost:hover{background:var(--s3);border-color:rgba(255,255,255,.25);}
+
+/* S1 Watch/Play — WR: bg=#ffffff1a, border=transparent, backdrop-filter=blur(64px), p=8px 16px */
+.s1-watch{font-size:18px;font-weight:500;line-height:1;border-radius:var(--r-sm);padding:8px 16px;background:rgba(255,255,255,.1);color:var(--white);border:1px solid transparent;-webkit-backdrop-filter:blur(64px);backdrop-filter:blur(64px);}
+.s1-watch:hover{background:rgba(255,255,255,.16);}
+
+/* S1 Link — WR: bg=transparent, p=4px 0, weight=400, font=Inter/NeueHaas, underline+offset */
+.s1-link{font-size:18px;font-weight:400;line-height:18px;border-radius:var(--r-sm);padding:4px 0;background:transparent;color:var(--t1);border:none;text-decoration:underline;text-decoration-color:rgba(255,255,255,.2);text-underline-offset:4px;}
+.s1-link:hover{text-decoration-color:rgba(255,255,255,.6);}
+
+/* S1 Small */
+.s1-sm{font-size:14px;font-weight:500;border-radius:var(--r-sm);padding:8px 16px;background:var(--black);color:var(--warm);border:1px solid var(--black);}
+.s1-sm:hover{background:#1a1a1a;}
+
+/* S1 Disabled */
+.s1-dis{font-size:18px;font-weight:500;border-radius:var(--r-sm);padding:16px 24px;background:var(--s3);color:var(--t-off);border:1px solid var(--b1);cursor:not-allowed;opacity:.5;}
+
+/* S1 Danger */
+.s1-danger{font-size:15px;font-weight:500;border-radius:var(--r-sm);padding:10px 20px;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.25);}
+.s1-danger:hover{background:rgba(239,68,68,.18);}
+
+
+/* ══════════════════════════════════════
+   § BUTTONS — STYLE 2 (Retool)
+   RT exact:
+   Filled pill: bg=#e9ebdf (cream/warm), color=#151515 (near black), r=9999px, p=0 36px, 16px/300, ls=0.16px
+   Ghost pill: border=1px solid rgb(139,134,127)→gray, r=9999px, same sizing
+══════════════════════════════════════ */
+/* S2 Large pill filled — RT: bg=#E9EBDF, color=#151515, r=9999px, p=0 36px, 16px/300, ls=0.16px */
+.s2-lg{font-size:16px;font-weight:300;letter-spacing:.16px;border-radius:var(--r-pill);padding:0 36px;height:48px;background:var(--warm);color:#151515;border:none;}
+.s2-lg:hover{filter:brightness(.94);}
+
+/* S2 Default pill filled */
+.s2{font-size:14px;font-weight:400;border-radius:var(--r-pill);padding:0 20px;height:40px;background:var(--warm);color:#151515;border:none;}
+.s2:hover{filter:brightness(.94);}
+
+/* S2 Green pill — Nemo accent version */
+.s2-green{font-size:14px;font-weight:500;border-radius:var(--r-pill);padding:0 24px;height:40px;background:var(--green);color:var(--black);border:none;}
+.s2-green:hover{background:var(--green-hover);}
+
+/* S2 Ghost large — RT: border=1px solid rgb(139,134,127), r=9999px, p=0 36px, 16px/300 */
+.s2-ghost-lg{font-size:16px;font-weight:300;letter-spacing:.16px;border-radius:var(--r-pill);padding:0 36px;height:48px;background:transparent;color:var(--t2);border:1px solid #8b867f;}
+.s2-ghost-lg:hover{border-color:var(--t2);background:rgba(255,255,255,.04);}
+
+/* S2 Ghost small */
+.s2-ghost-sm{font-size:14px;font-weight:400;border-radius:var(--r-pill);padding:0 20px;height:36px;background:transparent;color:var(--t2);border:1px solid var(--b2);}
+.s2-ghost-sm:hover{border-color:var(--b3);}
+
+/* S2 Disabled */
+.s2-dis{font-size:14px;font-weight:400;border-radius:var(--r-pill);padding:0 20px;height:40px;background:var(--s3);color:var(--t-off);border:1px solid var(--b1);cursor:not-allowed;opacity:.5;}
+
+
+/* ══════════════════════════════════════
+   § INPUTS (Cohere — underline style only)
+   Cohere: 14px/400/lh 21px, border=none, border-bottom only, height=21px
+   Checkbox: r=2px, h=18.5px, border=1px solid
+══════════════════════════════════════ */
+.f-group{display:flex;flex-direction:column;gap:5px;width:240px;}
+.f-label{font-family:var(--fs);font-size:12px;font-weight:500;color:var(--t3);letter-spacing:.04em;}
+/* Cohere underline input: border=none except border-bottom */
+.f-input{font-family:var(--fs);font-size:14px;font-weight:400;line-height:21px;background:transparent;color:var(--t1);border:none;border-bottom:1px solid var(--b2);border-radius:0;padding:8px 0;outline:none;width:100%;transition:border-color var(--e-fast);}
+.f-input::placeholder{color:var(--gray);}
+.f-input:focus{border-bottom-color:var(--green);}
+.f-input.f-err{border-bottom-color:rgba(248,113,113,.7);}
+.f-hint{font-size:11px;color:var(--gray);}
+.f-err-msg{font-size:11px;color:#f87171;}
+
+/* Cohere checkbox */
+.f-check{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.f-check-box{width:18px;height:18.5px;border-radius:2px;border:1px solid var(--b3);background:transparent;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all var(--e-fast);}
+.f-check-box.on{background:var(--green);border-color:var(--green);color:var(--black);}
+.f-check-lbl{font-size:14px;font-weight:400;color:var(--t3);}
+
+
+/* ══════════════════════════════════════
+   § CARDS (WithRealm)
+   WR testimonial: bg=#f2f2f2→warm, r=1.25rem (20px), p=4rem (64px)
+   WR shadow: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05)
+══════════════════════════════════════ */
+/* Large dark card (WR: dark scheme, r=20px, p=64px) */
+.card-dark{border-radius:var(--r-xl);padding:var(--sp16);background:var(--s1);border:0 none;display:flex;flex-direction:column;gap:20px;box-shadow:var(--shadow-md);transition:background var(--e-normal);}
+.card-dark:hover{background:#181e25;}
+
+/* Large warm card (WR: bg=#f2f2f2→Nemo warm, r=20px, p=64px) */
+.card-warm{border-radius:var(--r-xl);padding:var(--sp16);background:var(--warm);border:0 none;display:flex;flex-direction:column;gap:20px;box-shadow:var(--shadow-md);}
+
+/* Medium card (WR: r=8px, p=64px 20px) */
+.card-md{border-radius:var(--r-md);padding:var(--sp16) var(--sp5);background:var(--s2);display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-sm);}
+
+/* Feature card — green top border, WR features_item pattern */
+.card-feat{border-radius:var(--r-md);padding:var(--sp8);background:var(--s3);border:1px solid var(--b1);border-top:2px solid var(--green);display:flex;flex-direction:column;gap:14px;transition:all var(--e-normal);box-shadow:var(--shadow-sm);}
+.card-feat:hover{background:var(--s3h);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+
+/* Small activity card */
+.card-sm{border-radius:var(--r-md);padding:var(--sp5) var(--sp6);background:var(--s3);border:1px solid var(--b1);}
+
+/* WR testimonial card (border-bottom pattern from features_item_link) */
+.card-testimonial{border-radius:var(--r-xl);padding:var(--sp16);background:var(--s1);border:0 none;display:flex;flex-direction:column;gap:20px;min-height:280px;box-shadow:var(--shadow-md);}
+
+.c-title{font-family:var(--fp);font-size:18px;font-weight:500;color:var(--t1);letter-spacing:-.2px;}
+.c-title-dk{color:var(--charcoal);}
+.c-body{font-size:14px;font-weight:400;line-height:1.6;color:var(--t3);}
+.c-body-dk{color:rgba(0,0,0,.55);}
+
+
+/* ══════════════════════════════════════
+   § NAV — FLOATING MEGA MENU (Retool dark system)
+   Floating glass nav + CSS mega menu on hover
+══════════════════════════════════════ */
+.nav{
+  position:relative;
+  background:rgba(8,8,8,.88);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--b1);
+  border-radius:var(--r-xl);
+  padding:0 24px;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;
+}
+
+.nav-logo{font-family:var(--fp);font-size:17px;font-weight:500;color:var(--t1);letter-spacing:-.3px;text-decoration:none;display:flex;align-items:center;gap:8px;}
+.nav-ndot{width:6px;height:6px;background:var(--green);border-radius:50%;}
+
+.nav-links{display:flex;gap:4px;list-style:none;position:relative;}
+.nav-item{position:relative;}
+.nav-link{font-family:var(--fs);font-size:14px;font-weight:400;color:var(--t3);padding:6px 12px;border-radius:var(--r-sm);display:flex;align-items:center;gap:4px;transition:color var(--e-fast),background var(--e-fast);cursor:pointer;}
+.nav-link:hover,.nav-item:hover .nav-link{color:var(--t1);background:var(--s3);}
+.nav-link-arr{font-size:9px;opacity:.5;transition:transform var(--e-fast);}
+.nav-item:hover .nav-link-arr{transform:rotate(180deg);}
+
+/* Mega menu panel */
+.mega{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  width:540px;
+  background:rgba(14,18,24,.98);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--b2);
+  border-radius:var(--r-lg);
+  padding:20px;
+  box-shadow:0 24px 48px rgba(0,0,0,.5);
+  z-index:200;
+}
+.nav-item:hover .mega{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+
+.mega-item{display:flex;align-items:flex-start;gap:11px;padding:10px 12px;border-radius:var(--r-md);transition:background var(--e-fast);cursor:pointer;}
+.mega-item:hover{background:var(--s3h);}
+.mega-icon{width:32px;height:32px;border-radius:var(--r-sm);background:var(--green-dim);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.mega-nm{font-family:var(--fp);font-size:13px;font-weight:500;color:var(--t1);margin-bottom:2px;}
+.mega-desc{font-size:11px;color:var(--gray);line-height:1.4;}
+
+/* Mega menu full-width variant */
+.mega-wide{
+  display:none;
+  position:absolute;
+  top:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  width:640px;
+  background:rgba(14,18,24,.98);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--b2);
+  border-radius:var(--r-lg);
+  padding:24px;
+  box-shadow:0 24px 48px rgba(0,0,0,.5);
+  z-index:200;
+}
+.nav-item:hover .mega-wide{display:block;}
+.mega-header{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--b1);}
+.mega-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+
+.nav-ctas{display:flex;gap:8px;align-items:center;}
+
+
+/* ══════════════════════════════════════
+   § FOOTER (WithRealm exact structure)
+   WR: grid 4-col, row-gap=4rem, pt=4rem, pb=5rem
+   WR footer_component: border-top-radius=1rem
+   WR footer_link: 14px/500, hover underline
+══════════════════════════════════════ */
+.footer{
+  background:#050505;
+  border-top:1px solid var(--b1);
+  /* WR: border-top-left-radius + border-top-right-radius = 1rem */
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  padding-top:64px;  /* WR: 4rem */
+  padding-bottom:80px; /* WR: 5rem */
+  padding-left:40px;
+  padding-right:40px;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  row-gap:64px; /* WR: 4rem */
+  column-gap:40px;
+  margin-bottom:48px;
+}
+
+.footer-brand{display:flex;flex-direction:column;gap:12px;}
+.footer-logo{font-family:var(--fp);font-size:17px;font-weight:500;color:var(--t1);letter-spacing:-.3px;display:flex;align-items:center;gap:8px;}
+.footer-tagline{font-size:13px;font-weight:400;line-height:1.65;color:var(--gray);max-width:220px;}
+
+.footer-col-title{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);margin-bottom:var(--sp4);}
+
+/* WR: footer_link: font-size=0.875rem (14px), weight=500, hover underline */
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.footer-links a{
+  display:block;
+  font-family:var(--fs);
+  font-size:14px;      /* WR: 0.875rem */
+  font-weight:500;     /* WR exact */
+  padding:6px 0;       /* WR: 0.5rem padding */
+  color:var(--gray);
+  text-decoration:none;
+  transition:all var(--e-normal); /* WR: .4s cubic-bezier(.19,1,.22,1) */
+}
+.footer-links a:hover{color:var(--t2);text-decoration:underline;} /* WR: text-decoration underline on hover */
+
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;border-top:1px solid var(--b1);
+}
+.footer-copy{font-size:12px;color:var(--gray);}
+.footer-made{font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green);opacity:.7;}
+
+
+/* ══════════════════════════════════════
+   GENERATED COMPONENTS
+   No verified source — labeled clearly
+══════════════════════════════════════ */
+
+/* Avatars */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fp);font-weight:500;flex-shrink:0;background:var(--green-dim);color:var(--green);}
+.av-sm{width:28px;height:28px;font-size:10px;}
+.av-md{width:40px;height:40px;font-size:13px;}
+.av-lg{width:52px;height:52px;font-size:17px;}
+
+/* Alerts — redesigned, cleaner */
+.alert{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:var(--r-md);margin-bottom:0;}
+.alert-info{background:rgba(53,214,135,.06);border:1px solid rgba(53,214,135,.2);}
+.alert-warn{background:rgba(250,204,21,.06);border:1px solid rgba(250,204,21,.2);}
+.alert-error{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.2);}
+.alert-icon{font-size:15px;flex-shrink:0;margin-top:1px;line-height:1;}
+.alert-content{}
+.alert-title{font-family:var(--fp);font-size:14px;font-weight:500;color:var(--t1);margin-bottom:3px;}
+.alert-body{font-size:13px;color:var(--t3);line-height:1.5;}
+
+/* Dividers — Nexo: 1px solid border, mapped to rgba(255,255,255,.08) on dark */
+.div-line{height:1px;background:rgba(255,255,255,.08);width:100%;}  /* Nexo: border-gray-100 */
+.div-glow{height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);}
+.div-lbl{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--gray);}
+.div-lbl::before,.div-lbl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+
+/* Tooltip */
+.tt-wrap{position:relative;display:inline-flex;}
+.tt{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--charcoal);border:1px solid var(--b2);color:var(--t2);font-size:11px;font-weight:400;padding:5px 10px;border-radius:var(--r-sm);white-space:nowrap;pointer-events:none;}
+.tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--charcoal);}
+
+/* Progress */
+.prog-track{width:100%;height:5px;background:var(--s3h);border-radius:var(--r-pill);overflow:hidden;}
+.prog-fill{height:100%;background:var(--green);border-radius:var(--r-pill);transition:width var(--e-slow);}
+
+/* Toggles */
+.tgl-wrap{display:flex;align-items:center;gap:10px;}
+.tgl{width:38px;height:21px;background:var(--s3h);border:1px solid var(--b2);border-radius:var(--r-pill);position:relative;cursor:pointer;transition:background var(--e-fast);flex-shrink:0;}
+.tgl::after{content:'';position:absolute;width:15px;height:15px;background:var(--gray);border-radius:50%;top:2px;left:2px;transition:all var(--e-fast);}
+.tgl.on{background:var(--green);border-color:var(--green);}
+.tgl.on::after{left:20px;background:var(--black);}
+.tgl-lbl{font-size:13px;color:var(--t3);}
+
+/* Code */
+.code-blk{background:rgba(0,0,0,.6);border:1px solid var(--b1);border-radius:var(--r-md);padding:16px 20px;font-family:'Courier New',monospace;font-size:12px;color:var(--green);line-height:1.8;overflow-x:auto;}
+.code-inline{font-family:'Courier New',monospace;font-size:11px;color:var(--green);background:var(--green-dim);padding:2px 6px;border-radius:var(--r-sm);border:1px solid var(--b-green);}
+
+/* Grid helper for kit demos */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="kit-bar">
+  <div class="kit-bar-logo"><span class="kit-dot"></span>Nemo</div>
+  <div class="kit-bar-tag">Foundation · Component Kit v2</div>
+</div>
+
+<div class="kit-wrap">
+
+<!-- SIDEBAR -->
+<nav class="kit-side">
+  <div class="kg">
+    <div class="kg-title">Foundation</div>
+    <a class="kl" href="#colors">Colors <span class="ks">brand</span></a>
+    <a class="kl" href="#type">Typography <span class="ks">auth0</span></a>
+    <a class="kl" href="#spacing">Spacing <span class="ks">withrealm</span></a>
+    <a class="kl" href="#radii">Radii <span class="ks">withrealm</span></a>
+    <a class="kl" href="#motion">Motion <span class="ks">vaulta</span></a>
+  </div>
+  <div class="kg">
+    <div class="kg-title">Components</div>
+    <a class="kl" href="#tags">Tags & Badges <span class="ks">withrealm</span></a>
+    <a class="kl" href="#btns1">Buttons S1 <span class="ks">withrealm</span></a>
+    <a class="kl" href="#btns2">Buttons S2 <span class="ks">retool</span></a>
+    <a class="kl" href="#forms">Forms <span class="ks">cohere</span></a>
+    <a class="kl" href="#cards">Cards <span class="ks">withrealm</span></a>
+    <a class="kl" href="#nav">Nav / Mega Menu <span class="ks">retool</span></a>
+    <a class="kl" href="#footer">Footer <span class="ks">withrealm</span></a>
+    <a class="kl" href="#dividers">Dividers <span class="ks">nexo</span></a>
+  </div>
+  <div class="kg">
+    <div class="kg-title">Generated</div>
+    <a class="kl" href="#avatars">Avatars</a>
+    <a class="kl" href="#alerts">Alerts</a>
+    <a class="kl" href="#progress">Progress</a>
+    <a class="kl" href="#tooltips">Tooltips</a>
+    <a class="kl" href="#toggles">Toggles</a>
+    <a class="kl" href="#code">Code</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="kit-main">
+
+
+<!-- ▓ COLORS -->
+<section class="sec" id="colors">
+  <div class="sec-eye">Foundation</div>
+  <div class="sec-title">Colors</div>
+  <div class="sec-sub"><span class="src">Brand — Locked</span><span>Fixed values. Do not change.</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="cg-title">Primary Accent</div>
+  <div class="sw-grid">
+    <div class="sw"><div class="sw-blk" style="background:#35D687;"></div><div class="sw-nm">Green</div><div class="sw-hex">--green · #35D687</div></div>
+    <div class="sw"><div class="sw-blk" style="background:rgba(53,214,135,0.12);"></div><div class="sw-nm">Green Dim</div><div class="sw-hex">--green-dim</div></div>
+    <div class="sw"><div class="sw-blk" style="background:rgba(53,214,135,0.28);"></div><div class="sw-nm">Green Border</div><div class="sw-hex">--green-border</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#29c275;"></div><div class="sw-nm">Green Hover</div><div class="sw-hex">--green-hover</div></div>
+  </div>
+
+  <div class="cg-title">Dark Surfaces</div>
+  <div class="sw-grid">
+    <div class="sw"><div class="sw-blk" style="background:#080808;border-color:rgba(255,255,255,.1);"></div><div class="sw-nm">Near Black</div><div class="sw-hex">--black · #080808</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#13171D;border-color:rgba(255,255,255,.08);"></div><div class="sw-nm">Dark Navy</div><div class="sw-hex">--navy · #13171D</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#222222;border-color:rgba(255,255,255,.08);"></div><div class="sw-nm">Charcoal</div><div class="sw-hex">--charcoal · #222222</div></div>
+    <div class="sw"><div class="sw-blk" style="background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);"></div><div class="sw-nm">Surface</div><div class="sw-hex">--s3</div></div>
+  </div>
+
+  <div class="cg-title">Light / Neutral</div>
+  <div class="sw-grid">
+    <div class="sw"><div class="sw-blk" style="background:#FFF;border-color:rgba(0,0,0,.1);"></div><div class="sw-nm">White</div><div class="sw-hex">--white · #FFFFFF</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#F3F3F3;border-color:rgba(0,0,0,.06);"></div><div class="sw-nm">Off-white</div><div class="sw-hex">--off-white · #F3F3F3</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#EDE9E0;border-color:rgba(0,0,0,.06);"></div><div class="sw-nm">Warm</div><div class="sw-hex">--warm · #EDE9E0</div></div>
+    <div class="sw"><div class="sw-blk" style="background:#868788;border-color:rgba(0,0,0,.06);"></div><div class="sw-nm">Gray</div><div class="sw-hex">--gray · #868788</div></div>
+  </div>
+</section>
+
+
+<!-- ▓ TYPOGRAPHY -->
+<section class="sec" id="type">
+  <div class="sec-eye">Foundation</div>
+  <div class="sec-title">Typography</div>
+  <div class="sec-sub"><span class="src">Auth0 Scale</span><span>Auth0 uses Aeonik — same family as Nemo's Aeonik Pro. Scale maps directly.</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="type-list">
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">H1 / Display</div><div class="type-meta-sp">AeonikPro · 400<br>64px · lh 72px · ls -1px</div></div>
+      <div style="font-family:var(--fp);font-size:64px;font-weight:400;line-height:72px;letter-spacing:-1px;color:var(--t1);">Moving goals forward</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">H2</div><div class="type-meta-sp">AeonikPro · 400<br>48px · lh 56px · ls -0.5px</div></div>
+      <div style="font-family:var(--fp);font-size:48px;font-weight:400;line-height:56px;letter-spacing:-.5px;color:var(--t1);">Build something real</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">H3</div><div class="type-meta-sp">AeonikPro · 400<br>32px · lh 38px</div></div>
+      <div style="font-family:var(--fp);font-size:32px;font-weight:400;line-height:38px;color:var(--t1);">Platform capabilities</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">H4</div><div class="type-meta-sp">AeonikPro · 400<br>24px · lh 30px</div></div>
+      <div style="font-family:var(--fp);font-size:24px;font-weight:400;line-height:30px;color:var(--t1);">Core integrations</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">Body LG</div><div class="type-meta-sp">NeueHaas · 400<br>18px · lh 27px</div></div>
+      <div style="font-family:var(--fs);font-size:18px;font-weight:400;line-height:27px;color:var(--t3);max-width:460px;">We help businesses create world-class digital products using advanced technologies that drive value and inspire growth.</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">Body Base</div><div class="type-meta-sp">NeueHaas · 500<br>14px · lh 20px</div></div>
+      <div style="font-family:var(--fs);font-size:14px;font-weight:500;line-height:20px;color:var(--t3);max-width:400px;">Every action, every metric, every insight in one dashboard. Your data, your speed.</div>
+    </div>
+    <div class="type-item">
+      <div class="type-meta"><div class="type-meta-nm">Body SM</div><div class="type-meta-sp">NeueHaas · 400<br>12px · lh 18px</div></div>
+      <div style="font-family:var(--fs);font-size:12px;font-weight:400;line-height:18px;color:var(--gray);">Plan renews March 1st. Upgrade anytime for advanced features.</div>
+    </div>
+    <div class="type-item" style="border:none;">
+      <div class="type-meta"><div class="type-meta-nm">Button / Label</div><div class="type-meta-sp">NeueHaas · 400<br>14px · lh 16.1px (Auth0)</div></div>
+      <div style="font-family:var(--fs);font-size:14px;font-weight:400;line-height:16.1px;color:var(--t1);">Get started — no card needed</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ SPACING -->
+<section class="sec" id="spacing">
+  <div class="sec-eye">Foundation</div>
+  <div class="sec-title">Spacing</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>WR verified: 64px card padding · 4px/16px tag · 16px/24px button</span></div>
+  <div class="sec-rule"></div>
+  <div class="sp-list">
+    <div class="sp-row"><span class="sp-tk">--sp1</span><div class="sp-bar-w"><div class="sp-bar" style="width:4px;"></div><span class="sp-v">4px · tag padding-v</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp2</span><div class="sp-bar-w"><div class="sp-bar" style="width:8px;"></div><span class="sp-v">8px</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp3</span><div class="sp-bar-w"><div class="sp-bar" style="width:12px;"></div><span class="sp-v">12px</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp4</span><div class="sp-bar-w"><div class="sp-bar" style="width:16px;"></div><span class="sp-v">16px · tag padding-h, small btn</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp5</span><div class="sp-bar-w"><div class="sp-bar" style="width:20px;"></div><span class="sp-v">20px · ghost btn padding-h</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp6</span><div class="sp-bar-w"><div class="sp-bar" style="width:24px;"></div><span class="sp-v">24px · primary btn padding-h</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp8</span><div class="sp-bar-w"><div class="sp-bar" style="width:32px;"></div><span class="sp-v">32px</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp10</span><div class="sp-bar-w"><div class="sp-bar" style="width:40px;"></div><span class="sp-v">40px</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp12</span><div class="sp-bar-w"><div class="sp-bar" style="width:48px;"></div><span class="sp-v">48px</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp16</span><div class="sp-bar-w"><div class="sp-bar" style="width:64px;"></div><span class="sp-v">64px · WR card padding (4rem)</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp20</span><div class="sp-bar-w"><div class="sp-bar" style="width:80px;"></div><span class="sp-v">80px · section</span></div></div>
+    <div class="sp-row"><span class="sp-tk">--sp32</span><div class="sp-bar-w"><div class="sp-bar" style="width:128px;"></div><span class="sp-v">128px · hero</span></div></div>
+  </div>
+</section>
+
+
+<!-- ▓ RADII -->
+<section class="sec" id="radii">
+  <div class="sec-eye">Foundation</div>
+  <div class="sec-title">Border Radii</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>WR: 0.25rem (4px) · 0.5rem (8px) · 1rem (16px) · 1.25rem (20px) · 9999px pill</span></div>
+  <div class="sec-rule"></div>
+  <div class="r-row">
+    <div class="r-chip"><div class="r-box" style="border-radius:4px;"></div><div class="r-lbl">--r-sm · 4px<br>WR 0.25rem<br>Tags, S1 btns</div></div>
+    <div class="r-chip"><div class="r-box" style="border-radius:8px;"></div><div class="r-lbl">--r-md · 8px<br>WR 0.5rem<br>Cards sm</div></div>
+    <div class="r-chip"><div class="r-box" style="border-radius:16px;"></div><div class="r-lbl">--r-lg · 16px<br>WR 1rem<br>Footer corners</div></div>
+    <div class="r-chip"><div class="r-box" style="border-radius:20px;"></div><div class="r-lbl">--r-xl · 20px<br>WR 1.25rem<br>Large cards</div></div>
+    <div class="r-chip"><div class="r-box" style="border-radius:9999px;width:82px;"></div><div class="r-lbl">--r-pill · 9999px<br>RT pill btns</div></div>
+  </div>
+</section>
+
+
+<!-- ▓ MOTION -->
+<section class="sec" id="motion">
+  <div class="sec-eye">Foundation</div>
+  <div class="sec-title">Motion</div>
+  <div class="sec-sub"><span class="src">Vaulta</span><span>Vaulta verified: 150ms / 300ms / 500ms — all ease-in-out</span></div>
+  <div class="sec-rule"></div>
+  <div class="m-list">
+    <div class="m-item"><div class="m-dot"></div><div><div class="m-nm">Fast</div><div class="m-sp">--e-fast · 150ms ease-in-out (Vaulta .15s)</div></div><div class="m-use">Buttons, hover, focus</div></div>
+    <div class="m-item"><div class="m-dot" style="background:var(--gray);"></div><div><div class="m-nm">Normal</div><div class="m-sp">--e-normal · 300ms ease-in-out (Vaulta .3s)</div></div><div class="m-use">Cards, panels</div></div>
+    <div class="m-item"><div class="m-dot" style="background:var(--s2);border:1px solid var(--b2);"></div><div><div class="m-nm">Slow</div><div class="m-sp">--e-slow · 500ms ease-in-out (Vaulta .5s)</div></div><div class="m-use">Hero entrances</div></div>
+  </div>
+</section>
+
+
+<!-- ▓ TAGS & BADGES -->
+<section class="sec" id="tags">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Tags & Badges</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>WR exact: r=4px · p=4px 16px · 14px/500 · ls=0.5px · uppercase</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Tags — on dark surface</div>
+    <div class="dm dm-row">
+      <span class="tag">Platform</span>
+      <span class="tag">Use Cases</span>
+      <span class="tag">Enterprise</span>
+      <span class="tag tag-active">New Feature</span>
+      <span class="tag-eyebrow">AI-powered</span>
+      <span class="tag-ghost">Beta</span>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Tags — on warm surface (WR: border=rgba(0,0,0,0.15))</div>
+    <div class="dm dm-warm dm-row">
+      <span class="tag tag-on-light">Platform</span>
+      <span class="tag tag-on-light">Use Cases</span>
+      <span class="tag tag-on-light">Enterprise</span>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Badges — compact pill</div>
+    <div class="dm dm-row">
+      <span class="badge bg-green">Live</span>
+      <span class="badge bg-green">New</span>
+      <span class="badge bg-neutral">Beta</span>
+      <span class="badge bg-neutral">v2.0</span>
+      <span class="badge bg-warm">Pro</span>
+      <span class="badge bg-red">Error</span>
+      <span class="badge bg-yellow">Warn</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ BUTTONS S1 — WithRealm -->
+<section class="sec" id="btns1">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Buttons — Style 1</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>Rounded r=4px · Primary: bg=#080808 color=#EDE9E0 · Ghost: border=rgba(255,255,255,.15) · Watch: bg=rgba(255,255,255,.1) blur(64px) · Link: underline offset</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Primary — WR: bg=near-black, color=warm, r=4px, p=16px 24px, 18px/500</div>
+    <div class="dm dm-row">
+      <a href="#" class="btn s1-p">Get started</a>
+      <a href="#" class="btn s1-p">Get a demo →</a>
+      <a href="#" class="btn s1-sm">Sign in</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Primary Green — Nemo accent CTA variant (green bg)</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s1-p-green">Start for free</a>
+      <a href="#" class="btn s1-p-green">Get a demo →</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Warm dark (WR color-scheme-3: bg=#3c3630, color=#f4f0ec)</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s1-warm">Book a call</a>
+      <a href="#" class="btn s1-warm">Learn more</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Ghost outline — WR: border=rgba(0,0,0,0.15)→rgba(255,255,255,.15) on dark, p=8px 20px</div>
+    <div class="dm dm-row">
+      <a href="#" class="btn s1-ghost">Learn more</a>
+      <a href="#" class="btn s1-ghost">View pricing</a>
+      <a href="#" class="btn s1-ghost">Explore →</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Watch / Play — WR: bg=#ffffff1a, border=transparent, backdrop-filter=blur(64px), p=8px 16px</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s1-watch">▶ Watch demo</a>
+      <a href="#" class="btn s1-watch">See it live</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Link text — WR: p=4px 0, 18px/400, underline text-underline-offset=4px</div>
+    <div class="dm dm-row">
+      <a href="#" class="btn s1-link">Learn more</a>
+      <a href="#" class="btn s1-link">Case study</a>
+      <a href="#" class="btn s1-link" style="color:var(--green);text-decoration-color:rgba(53,214,135,.3);">View all →</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">States</div>
+    <div class="dm dm-row">
+      <a href="#" class="btn s1-p">Default</a>
+      <a href="#" class="btn s1-p" style="background:#1a1a1a;border-color:#1a1a1a;">Hover</a>
+      <a href="#" class="btn s1-p" style="outline:3px solid rgba(53,214,135,.3);outline-offset:2px;">Focus</a>
+      <span class="btn s1-dis">Disabled</span>
+      <a href="#" class="btn s1-danger">Delete</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ BUTTONS S2 — Retool -->
+<section class="sec" id="btns2">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Buttons — Style 2</div>
+  <div class="sec-sub"><span class="src">Retool</span><span>Pill r=9999px · RT exact: bg=#E9EBDF (warm cream) · 16px/300 · ls=0.16px · p=0 36px · Ghost border=#8b867f</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Large pill — RT: bg=#E9EBDF (warm), color=#151515, r=9999px, p=0 36px, 16px/300, ls=0.16px</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s2-lg">Start for free</a>
+      <a href="#" class="btn s2-lg">Get started</a>
+      <a href="#" class="btn s2-green">Start free →</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Default pill + ghost</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s2">Sign up</a>
+      <a href="#" class="btn s2-ghost-lg">Book a demo</a>
+      <a href="#" class="btn s2-ghost-sm">Sign in</a>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">States</div>
+    <div class="dm dm-dark dm-row">
+      <a href="#" class="btn s2">Default</a>
+      <a href="#" class="btn s2" style="filter:brightness(.9);">Hover</a>
+      <a href="#" class="btn s2" style="outline:3px solid rgba(53,214,135,.25);outline-offset:2px;">Focus</a>
+      <span class="btn s2-dis">Disabled</span>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">S1 vs S2 — side by side comparison</div>
+    <div class="dm dm-row" style="gap:32px;align-items:center;">
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+        <span style="font-size:10px;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;">Style 1 · WithRealm · r=4px</span>
+        <a href="#" class="btn s1-p">Get started</a>
+      </div>
+      <div style="width:1px;height:56px;background:var(--b1);"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+        <span style="font-size:10px;color:var(--gray);letter-spacing:.1em;text-transform:uppercase;">Style 2 · Retool · r=9999px</span>
+        <a href="#" class="btn s2-green">Get started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ FORMS — Cohere -->
+<section class="sec" id="forms">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Forms & Inputs</div>
+  <div class="sec-sub"><span class="src">Cohere</span><span>Cohere exact: underline email input 14px/400/lh 21px · no border-box, bottom-border only · checkbox r=2px h=18.5px</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Underline input — Cohere: border=none except bottom, 14px/400, lh=21px</div>
+    <div class="dm dm-row dm-top" style="gap:36px;">
+      <div class="f-group">
+        <label class="f-label">Email address</label>
+        <input class="f-input" type="email" placeholder="hello@madebynemo.com">
+        <span class="f-hint">We'll never share your email.</span>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Full name</label>
+        <input class="f-input" type="text" placeholder="Your name">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Error state</label>
+        <input class="f-input f-err" type="email" value="invalid-email">
+        <span class="f-err-msg">Please enter a valid email.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Checkbox — Cohere: r=2px, h=18.5px, border=1px solid</div>
+    <div class="dm dm-row" style="gap:28px;">
+      <label class="f-check"><div class="f-check-box"></div><span class="f-check-lbl">I agree to the terms</span></label>
+      <label class="f-check"><div class="f-check-box on">✓</div><span class="f-check-lbl">Receive updates</span></label>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ CARDS — WithRealm -->
+<section class="sec" id="cards">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Cards</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>WR: large r=20px p=64px · shadow: 0 12px 16px -4px rgba(0,0,0,.08) · feature r=8px</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Large cards — WR: r=20px, p=64px, shadow-md</div>
+    <div class="dm grid-2">
+      <div class="card-dark">
+        <span class="tag-eyebrow">Enterprise</span>
+        <div class="c-title">Built for teams that move fast</div>
+        <p class="c-body">R&D is our core. Every solution is informed, intentional, built to last. No guesswork.</p>
+        <a href="#" class="btn s1-link" style="font-size:16px;margin-top:8px;">Learn more →</a>
+      </div>
+      <div class="card-warm">
+        <span class="tag tag-on-light">Platform</span>
+        <div class="c-title c-title-dk">Design is identity</div>
+        <p class="c-body c-body-dk">Clear and impactful — always. Shapes how people feel and remember.</p>
+        <a href="#" class="btn s1-link" style="font-size:16px;margin-top:8px;color:var(--charcoal);text-decoration-color:rgba(0,0,0,.2);">Learn more →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Feature cards — WR features_item_link: top border 2px, r=8px, shadow</div>
+    <div class="dm grid-3">
+      <div class="card-feat">
+        <span style="font-size:18px;">⚡</span>
+        <div class="c-title" style="font-size:15px;">AI Automation</div>
+        <p class="c-body">Trigger workflows from natural language.</p>
+        <a href="#" class="btn s1-link" style="font-size:14px;margin-top:auto;">Learn more →</a>
+      </div>
+      <div class="card-feat">
+        <span style="font-size:18px;">📊</span>
+        <div class="c-title" style="font-size:15px;">Analytics</div>
+        <p class="c-body">Every metric in one live dashboard.</p>
+        <a href="#" class="btn s1-link" style="font-size:14px;margin-top:auto;">Learn more →</a>
+      </div>
+      <div class="card-feat">
+        <span style="font-size:18px;">🔗</span>
+        <div class="c-title" style="font-size:15px;">Integrations</div>
+        <p class="c-body">200+ native connectors. No middleware.</p>
+        <a href="#" class="btn s1-link" style="font-size:14px;margin-top:auto;">Learn more →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Testimonial card (WR: min-height=24rem, grid 2-col, centered content)</div>
+    <div class="dm">
+      <div class="card-testimonial">
+        <div style="font-family:var(--fp);font-size:22px;font-weight:400;line-height:1.5;color:var(--t1);max-width:540px;">"Nemo cut our deal cycle in half. What used to take a week now happens <span style="color:var(--green);">automatically</span>."</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:var(--sp8);border-top:1px solid var(--b1);">
+          <div class="av av-md">SR</div>
+          <div><div style="font-size:14px;font-weight:500;color:var(--t1);">Sarah R.</div><div style="font-size:12px;color:var(--gray);">VP of Sales, TechCorp</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dg"><div class="dg-label">Small activity cards</div>
+    <div class="dm" style="max-width:380px;display:flex;flex-direction:column;gap:8px;">
+      <div class="card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-size:13px;font-weight:500;color:var(--t1);">Deal closed · Acme Corp</div><div style="font-size:11px;color:var(--gray);margin-top:2px;">2 min ago</div></div>
+        <span class="badge bg-green">+$48K</span>
+      </div>
+      <div class="card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+        <div><div style="font-size:13px;font-weight:500;color:var(--t1);">Proposal generated</div><div style="font-size:11px;color:var(--gray);margin-top:2px;">Automated · 5 min ago</div></div>
+        <span class="badge bg-neutral">Auto</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ NAV — Floating Mega Menu -->
+<section class="sec" id="nav">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Navigation — Floating Mega Menu</div>
+  <div class="sec-sub"><span class="src">Retool</span><span>RT: dark glass · minimal links · pill CTAs · Mega menu: CSS hover-driven dropdown panels</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="dg"><div class="dg-label">Hover over "Product" or "Use Cases" to see mega menu</div>
+    <div class="dm" style="padding:16px;overflow:visible;min-height:120px;">
+      <nav class="nav">
+        <a class="nav-logo" href="#"><span class="nav-ndot"></span>Nemo</a>
+
+        <ul class="nav-links">
+          <li class="nav-item">
+            <div class="nav-link" style="color:var(--t1);">Product <span class="nav-link-arr">▾</span></div>
+            <div class="mega">
+              <div class="mega-item"><div class="mega-icon">⚡</div><div><div class="mega-nm">AI Automation</div><div class="mega-desc">Trigger workflows from natural language</div></div></div>
+              <div class="mega-item"><div class="mega-icon">📊</div><div><div class="mega-nm">Analytics</div><div class="mega-desc">Every metric in one live dashboard</div></div></div>
+              <div class="mega-item"><div class="mega-icon">🔗</div><div><div class="mega-nm">Integrations</div><div class="mega-desc">200+ native connectors</div></div></div>
+              <div class="mega-item"><div class="mega-icon">🔐</div><div><div class="mega-nm">Security</div><div class="mega-desc">SOC 2, SSO, RBAC, audit logs</div></div></div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div class="nav-link">Use Cases <span class="nav-link-arr">▾</span></div>
+            <div class="mega-wide">
+              <div class="mega-header">Who uses Nemo</div>
+              <div class="mega-3col">
+                <div class="mega-item"><div class="mega-icon">💼</div><div><div class="mega-nm">Revenue Teams</div><div class="mega-desc">Close deals faster with AI</div></div></div>
+                <div class="mega-item"><div class="mega-icon">🧩</div><div><div class="mega-nm">Product Teams</div><div class="mega-desc">Ship without status meetings</div></div></div>
+                <div class="mega-item"><div class="mega-icon">⚙️</div><div><div class="mega-nm">Ops Teams</div><div class="mega-desc">Automate repetitive work</div></div></div>
+                <div class="mega-item"><div class="mega-icon">🚀</div><div><div class="mega-nm">Startups</div><div class="mega-desc">Do more with a smaller team</div></div></div>
+                <div class="mega-item"><div class="mega-icon">🏢</div><div><div class="mega-nm">Enterprise</div><div class="mega-desc">Scale securely at any size</div></div></div>
+                <div class="mega-item"><div class="mega-icon">📈</div><div><div class="mega-nm">Agencies</div><div class="mega-desc">Deliver faster for clients</div></div></div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Docs</a></li>
+        </ul>
+
+        <div class="nav-ctas">
+          <a href="#" class="btn s2-ghost-sm">Sign in</a>
+          <a href="#" class="btn s2-green" style="height:36px;font-size:13px;padding:0 18px;">Get started</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ FOOTER — WithRealm -->
+<section class="sec" id="footer">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Footer</div>
+  <div class="sec-sub"><span class="src">WithRealm</span><span>WR: grid 4-col · row-gap=4rem · pt=4rem · pb=5rem · top-radius=1rem · links 14px/500 · hover:underline</span></div>
+  <div class="sec-rule"></div>
+
+  <div class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo"><span class="kit-dot"></span>Nemo</div>
+        <p class="footer-tagline">Moving goals forward. Your premier digital partner.</p>
+        <a href="#" class="btn s2-green" style="align-self:flex-start;height:36px;font-size:13px;padding:0 18px;margin-top:4px;">Start free →</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="#">Platform</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Made by Nemo. All rights reserved.</span>
+      <span class="footer-made">madebynemo.com</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ▓ DIVIDERS — Nexo -->
+<section class="sec" id="dividers">
+  <div class="sec-eye">Components</div>
+  <div class="sec-title">Dividers</div>
+  <div class="sec-sub"><span class="src">Nexo</span><span>Nexo: 1px solid border-gray-100 · border-t / border-b / border-l patterns · mapped to rgba(255,255,255,.08) on dark</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm" style="display:flex;flex-direction:column;gap:24px;">
+    <div><span style="font-size:10px;color:var(--gray);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">Line (Nexo: border-t/border-b 1px solid)</span><div class="div-line"></div></div>
+    <div><span style="font-size:10px;color:var(--gray);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">Glow — green accent</span><div class="div-glow"></div></div>
+    <div><span style="font-size:10px;color:var(--gray);display:block;margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">With label (Nexo: border-x pattern)</span><div class="div-lbl">or continue with email</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);">
+      <div style="padding:20px;border-right:1px solid rgba(255,255,255,.08);">
+        <div style="font-size:11px;color:var(--gray);">Nexo border-l column</div>
+        <div style="font-family:var(--fp);font-size:24px;font-weight:400;color:var(--t1);margin-top:4px;">2.4M</div>
+      </div>
+      <div style="padding:20px;border-right:1px solid rgba(255,255,255,.08);">
+        <div style="font-size:11px;color:var(--gray);">tasks automated</div>
+        <div style="font-family:var(--fp);font-size:24px;font-weight:400;color:var(--t1);margin-top:4px;">98%</div>
+      </div>
+      <div style="padding:20px;">
+        <div style="font-size:11px;color:var(--gray);">adoption rate</div>
+        <div style="font-family:var(--fp);font-size:24px;font-weight:400;color:var(--t1);margin-top:4px;">14×</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+   GENERATED SECTION
+══════════════════════════════════ -->
+<div style="padding:18px 22px;background:rgba(255,255,255,.02);border:1px solid var(--b1);border-radius:var(--r-md);margin-bottom:44px;">
+  <div style="font-family:var(--fs);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:3px;">Below this line — Generated</div>
+  <div style="font-size:13px;font-weight:500;color:var(--t2);">No verified source for these components.</div>
+  <div style="font-size:12px;color:var(--gray);margin-top:3px;">Built for complete UI kit coverage. Follow Nemo brand tokens + Vaulta motion. Labeled clearly.</div>
+</div>
+
+
+<!-- Avatars -->
+<section class="sec" id="avatars">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Avatars <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm dm-row" style="gap:28px;align-items:center;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="av av-sm">NM</div><span style="font-size:10px;color:var(--gray);">28px</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="av av-md">NM</div><span style="font-size:10px;color:var(--gray);">40px</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="av av-lg">NM</div><span style="font-size:10px;color:var(--gray);">52px</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <div style="display:flex;">
+        <div class="av av-md" style="margin-right:-10px;border:2px solid var(--black);z-index:3;">A</div>
+        <div class="av av-md" style="margin-right:-10px;border:2px solid var(--black);z-index:2;background:rgba(237,233,224,.12);color:var(--warm);">B</div>
+        <div class="av av-md" style="border:2px solid var(--black);z-index:1;background:var(--s3);color:var(--t3);">+4</div>
+      </div>
+      <span style="font-size:10px;color:var(--gray);">Stack</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- Alerts -->
+<section class="sec" id="alerts">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Alerts <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm" style="display:flex;flex-direction:column;gap:10px;">
+    <div class="alert alert-info">
+      <span class="alert-icon" style="color:var(--green);">✦</span>
+      <div class="alert-content"><div class="alert-title">Workspace syncing</div><div class="alert-body">This may take a few minutes the first time you connect a new integration.</div></div>
+    </div>
+    <div class="alert alert-warn">
+      <span class="alert-icon" style="color:#facc15;">◆</span>
+      <div class="alert-content"><div class="alert-title">Plan limit approaching</div><div class="alert-body">You've used 85% of your monthly automation runs. Upgrade to continue.</div></div>
+    </div>
+    <div class="alert alert-error">
+      <span class="alert-icon" style="color:#f87171;">✕</span>
+      <div class="alert-content"><div class="alert-title">Workflow failed</div><div class="alert-body">The "Close deal" trigger returned an error. <a href="#" style="color:#f87171;text-decoration:underline;">View logs →</a></div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Progress -->
+<section class="sec" id="progress">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Progress <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm" style="display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:column;gap:6px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);"><span>Tasks automated</span><span style="color:var(--green);">72%</span></div><div class="prog-track"><div class="prog-fill" style="width:72%;"></div></div></div>
+    <div style="display:flex;flex-direction:column;gap:6px;"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray);"><span>Setup complete</span><span>45%</span></div><div class="prog-track"><div class="prog-fill" style="width:45%;background:var(--gray);"></div></div></div>
+  </div>
+</section>
+
+
+<!-- Tooltips -->
+<section class="sec" id="tooltips">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Tooltips <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm" style="padding-top:56px;">
+    <div class="dm-row">
+      <div class="tt-wrap"><a href="#" class="btn s1-p">Hover target</a><div class="tt">Tooltip content</div></div>
+      <div class="tt-wrap"><div style="width:30px;height:30px;border-radius:50%;background:var(--s3);border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;">?</div><div class="tt">Feature is in beta</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Toggles -->
+<section class="sec" id="toggles">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Toggles <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm dm-row" style="gap:32px;">
+    <div class="tgl-wrap"><div class="tgl"></div><span class="tgl-lbl">Off</span></div>
+    <div class="tgl-wrap"><div class="tgl on"></div><span class="tgl-lbl">On</span></div>
+    <div class="tgl-wrap"><div class="tgl on"></div><span class="tgl-lbl">AI Automation</span></div>
+    <div class="tgl-wrap"><div class="tgl"></div><span class="tgl-lbl">Notifications</span></div>
+  </div>
+</section>
+
+
+<!-- Code -->
+<section class="sec" id="code">
+  <div class="sec-eye">Generated</div>
+  <div class="sec-title">Code Display <span class="gen" style="vertical-align:middle;margin-left:8px;">Generated</span></div>
+  <div class="sec-rule"></div>
+  <div class="dm" style="display:flex;flex-direction:column;gap:16px;">
+    <div class="code-blk">// Nemo workspace init<br>const nemo = await Nemo.init({<br>&nbsp;&nbsp;workspace: 'acme-corp',<br>&nbsp;&nbsp;model: 'nemo-v2',<br>&nbsp;&nbsp;ai: true<br>})<br><br>await nemo.run('close all open deals')</div>
+    <p style="font-size:14px;color:var(--t3);line-height:1.8;">Use <span class="code-inline">nemo.run()</span> to trigger automations or <span class="code-inline">nemo.sync()</span> to pull the latest data.</p>
+  </div>
+</section>
+
+
+</main>
+</div>
+</body>
+</html>

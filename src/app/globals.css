@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════
+   NEMO — Design Token Layer
+   Source of truth: DESIGN.md
+   DO NOT write component styles here — tokens only.
+══════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties ── */
+:root {
+  /* Brand Colors (LOCKED) */
+  --green:           #35D687;
+  --green-dim:       rgba(53, 214, 135, 0.12);
+  --green-border:    rgba(53, 214, 135, 0.28);
+  --green-hover:     #29c275;
+
+  /* Dark Surfaces */
+  --black:           #080808;
+  --navy:            #13171D;
+  --charcoal:        #222222;
+  --s0:              #080808;
+  --s1:              #13171D;
+  --s2:              #222222;
+  --s3:              rgba(255, 255, 255, 0.04);
+  --s3h:             rgba(255, 255, 255, 0.07);
+
+  /* Light / Neutral */
+  --white:           #FFFFFF;
+  --off-white:       #FAFBFC;
+  --warm:            #EDE9E0;
+  --warm-cream:      #E9EBDF;
+  --gray:            #868788;
+
+  /* Borders */
+  --b1:              rgba(255, 255, 255, 0.07);
+  --b2:              rgba(255, 255, 255, 0.12);
+  --b3:              rgba(255, 255, 255, 0.20);
+  --b-green:         rgba(53, 214, 135, 0.28);
+  --b-dark:          rgba(0, 0, 0, 0.15);
+
+  /* Text */
+  --t1:              #FFFFFF;
+  --t2:              #F3F3F3;
+  --t3:              #868788;
+  --t-off:           rgba(255, 255, 255, 0.25);
+
+  /* Spacing (WithRealm verified) */
+  --sp1:   4px;   --sp2:   8px;   --sp3:  12px;
+  --sp4:  16px;   --sp5:  20px;   --sp6:  24px;
+  --sp8:  32px;   --sp10: 40px;   --sp12: 48px;
+  --sp16: 64px;   --sp20: 80px;   --sp32: 128px;
+
+  /* Border Radius (WithRealm verified) */
+  --r-sm:    4px;
+  --r-md:    8px;
+  --r-lg:    16px;
+  --r-xl:    20px;
+  --r-pill:  9999px;
+
+  /* Motion (Vaulta verified) */
+  --e-fast:    150ms ease-in-out;
+  --e-normal:  300ms ease-in-out;
+  --e-slow:    500ms ease-in-out;
+
+  /* Shadows (WithRealm verified) */
+  --shadow-md: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 4px 8px -2px rgba(0,0,0,0.1);
+
+  /* Layout */
+  --container: 1312px;
+
+  /* Semantic */
+  --success:  #35D687;
+  --error:    #DC2626;
+  --warning:  #F59E0B;
+  --beta:     #8B5CF6;
+  --pro:      #6366F1;
+}
+
+/* ── Tailwind v4 theme (maps tokens to utility classes) ── */
+@theme inline {
+  /* Colors */
+  --color-green:        var(--green);
+  --color-green-dim:    var(--green-dim);
+  --color-green-border: var(--green-border);
+  --color-green-hover:  var(--green-hover);
+  --color-black:        var(--black);
+  --color-navy:         var(--navy);
+  --color-charcoal:     var(--charcoal);
+  --color-s0:           var(--s0);
+  --color-s1:           var(--s1);
+  --color-s2:           var(--s2);
+  --color-s3:           var(--s3);
+  --color-s3h:          var(--s3h);
+  --color-white:        var(--white);
+  --color-off-white:    var(--off-white);
+  --color-warm:         var(--warm);
+  --color-warm-cream:   var(--warm-cream);
+  --color-gray:         var(--gray);
+  --color-b1:           var(--b1);
+  --color-b2:           var(--b2);
+  --color-b3:           var(--b3);
+  --color-b-green:      var(--b-green);
+  --color-b-dark:       var(--b-dark);
+  --color-t1:           var(--t1);
+  --color-t2:           var(--t2);
+  --color-t3:           var(--t3);
+  --color-t-off:        var(--t-off);
+  --color-success:      var(--success);
+  --color-error:        var(--error);
+  --color-warning:      var(--warning);
+  --color-beta:         var(--beta);
+
+  /* Border Radius */
+  --radius-sm:   var(--r-sm);
+  --radius-md:   var(--r-md);
+  --radius-lg:   var(--r-lg);
+  --radius-xl:   var(--r-xl);
+  --radius-pill: var(--r-pill);
+
+  /* Shadows */
+  --shadow-card:    var(--shadow-md);
+  --shadow-card-sm: var(--shadow-sm);
+
+  /* Layout */
+  --width-container: var(--container);
+}
+
+/* ── Base Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--off-white);
+  color: #111;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
