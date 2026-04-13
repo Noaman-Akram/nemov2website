@@ -71,65 +71,164 @@ a{text-decoration:none;color:inherit;}
 img{max-width:100%;display:block;}
 ul{list-style:none;}
 
+/* ── Scroll Reveal Animations ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
 /* ══════════════════════════════════════
    LIGHT GRID BACKGROUND
 ══════════════════════════════════════ */
 .bg-grid-light {
   background-color: #FAFBFC;
-  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
+  position: relative;
+}
+
+.bg-grid-light::before {
+  content: '';
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.15) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  
+  /* Creates an authentic, flowing wave mask using an embedded SVG */
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='b'%3E%3CfeGaussianBlur stdDeviation='30'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='black' opacity='0.35'/%3E%3Cpath d='M0,400 Q150,200 300,400 T600,400 T900,400 T1200,400 V800 H0 Z' fill='black' filter='url(%23b)' opacity='0.8'/%3E%3Cpath d='M0,500 Q150,700 300,500 T600,500 T900,500 T1200,500 V800 H0 Z' fill='black' filter='url(%23b)' opacity='0.6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' preserveAspectRatio='none'%3E%3Cdefs%3E%3Cfilter id='b'%3E%3CfeGaussianBlur stdDeviation='30'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='black' opacity='0.35'/%3E%3Cpath d='M0,400 Q150,200 300,400 T600,400 T900,400 T1200,400 V800 H0 Z' fill='black' filter='url(%23b)' opacity='0.8'/%3E%3Cpath d='M0,500 Q150,700 300,500 T600,500 T900,500 T1200,500 V800 H0 Z' fill='black' filter='url(%23b)' opacity='0.6'/%3E%3C/svg%3E");
+  -webkit-mask-size: 1600px 100vh;
+  mask-size: 1600px 100vh;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  
+  animation: shimmerGrid 15s linear infinite;
+}
+
+@keyframes shimmerGrid {
+  0% { 
+    -webkit-mask-position: 0px 0px; 
+    mask-position: 0px 0px; 
+    background-position: 0px 0px; 
+  }
+  100% { 
+    -webkit-mask-position: 1600px 0px; 
+    mask-position: 1600px 0px; 
+    background-position: 32px 32px; 
+  }
 }
 
 /* ══════════════════════════════════════
-   NAVIGATION (fixed top bar style)
+   NAVIGATION (floating pill style)
 ══════════════════════════════════════ */
 .site-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
+  top: 12px;
+  left: 24px;
+  right: 24px;
+  height: 56px;
   display: flex;
   align-items: center;
-  background: rgba(8,8,8,0.98);
-  border-bottom: 1px solid var(--b1);
   z-index: 900;
-  transition: background var(--e-fast);
+  pointer-events: none;
 }
+
+.site-header .nav-logo,
+.site-header .nav-links,
+.site-header .nav-actions {
+  pointer-events: auto;
+}
+
+
 
 .nav-inner {
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 40px;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  gap: 24px;
 }
 
 .nav-logo img {
   height: 28px;
+  transition: filter 400ms ease;
+}
+
+/* Logo color modes */
+.site-header .nav-logo img {
+  filter: invert(1); /* dark logo on light bg by default */
+}
+.site-header.header-dark .nav-logo img {
+  filter: invert(0); /* white logo on dark bg */
 }
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 4px;
   list-style: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(250, 251, 252, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 9999px;
+  padding: 6px;
+  transition: background 400ms ease, border-color 400ms ease;
+}
+
+.site-header.header-dark .nav-links {
+  background: rgba(8, 8, 8, 0.65);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
 .nav-links a {
+  display: inline-block;
   font-family: var(--fs);
-  font-size: 13px;
-  color: rgba(233,235,223,0.7);
-  transition: color var(--e-fast);
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(0,0,0,0.6);
+  transition: all 400ms ease;
   text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 9999px;
 }
-.nav-links a:hover { color: #fff; }
+.nav-links a:hover,
+.nav-links a.active {
+  color: #111;
+  background: rgba(0,0,0,0.05);
+}
+
+.site-header.header-dark .nav-links a {
+  color: rgba(255,255,255,0.75);
+}
+.site-header.header-dark .nav-links a:hover,
+.site-header.header-dark .nav-links a.active {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
 
 .nav-actions {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .btn-ghost-sm {
@@ -138,15 +237,21 @@ ul{list-style:none;}
   border-radius: var(--r-pill);
   padding: 0 20px;
   height: 36px;
-  color: #fff;
-  border: 1px solid var(--b2);
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.15);
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  transition: border-color var(--e-fast);
+  transition: border-color var(--e-fast), color 400ms ease;
   text-decoration: none;
 }
-.btn-ghost-sm:hover { border-color: var(--b3); }
+.btn-ghost-sm:hover { border-color: rgba(0,0,0,0.3); }
+
+.site-header.header-dark .btn-ghost-sm {
+  color: #fff;
+  border-color: var(--b2);
+}
+.site-header.header-dark .btn-ghost-sm:hover { border-color: var(--b3); }
 
 .btn-sm {
   font-family: var(--fs);
@@ -169,24 +274,21 @@ ul{list-style:none;}
    HERO (light grid bg)
 ══════════════════════════════════════ */
 .hero {
-  padding: 220px 40px 120px;
+  padding: 160px 40px 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: calc(100vh - 120px);
 }
 
 .hero-inner {
-  max-width: var(--container);
+  max-width: 800px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 60px;
-}
-
-.hero-left {
-  flex: 1;
-  max-width: 600px;
+  text-align: center;
+  gap: 28px;
 }
 
 .hero-h1 {
@@ -198,20 +300,13 @@ ul{list-style:none;}
   color: #111;
 }
 
-.hero-right {
-  flex: 1;
-  max-width: 440px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
 .hero-desc {
   font-family: var(--fs);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.6;
   color: #555;
+  max-width: 520px;
 }
 
 .btn-outline-pill {
@@ -227,9 +322,52 @@ ul{list-style:none;}
   padding: 0 24px;
   transition: var(--e-fast);
   text-decoration: none;
-  align-self: flex-start;
 }
 .btn-outline-pill:hover { background: rgba(0,0,0,0.03); }
+
+.btn-glow-hero {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  border: none;
+  border-radius: var(--r-pill);
+  height: 48px;
+  padding: 0 24px;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+}
+.btn-glow-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent 70%, var(--green) 100%);
+  animation: rotateGlowBorder 2s linear infinite;
+  z-index: -2;
+}
+.btn-glow-hero::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: #FAFBFC;
+  border-radius: var(--r-pill);
+  z-index: -1;
+  transition: background var(--e-fast);
+}
+.btn-glow-hero:hover::after {
+  background: #f0f2f5;
+}
+@keyframes rotateGlowBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* ══════════════════════════════════════
    MARQUEE (dark bar)
@@ -272,17 +410,15 @@ ul{list-style:none;}
   overflow: hidden;
 }
 
-.curved-line {
+/* ── Canvas animation (Nemo-style green ribbon) ── */
+#nemo-ribbon-canvas {
   position: absolute;
-  bottom: 0;
-  left: -50%;
-  width: 200%;
-  height: 600px;
-  border-bottom: 1px solid var(--green);
-  border-radius: 50%;
-  opacity: 0.3;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  box-shadow: 0 10px 40px rgba(53,214,135,0.1);
+  z-index: 1;
 }
 
 .purple-btn {
@@ -950,8 +1086,33 @@ ul{list-style:none;}
 
 /* ── Bottom bar ── */
 .footer-bottom {
-  border-top: 1px solid var(--green);
+  position: relative;
   padding: 20px 80px;
+}
+
+.footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    rgba(53,214,135,0.7) 0%, 
+    var(--green) 50%, 
+    rgba(53,214,135,0.7) 100%);
+  animation: glowLine 3s ease-in-out infinite;
+}
+
+@keyframes glowLine {
+  0%, 100% {
+    opacity: 0.5;
+    box-shadow: 0 0 6px rgba(53,214,135,0.2);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2);
+  }
 }
 
 .footer-bottom-inner {
@@ -1036,13 +1197,12 @@ ul{list-style:none;}
       <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" onerror="this.outerHTML='<span style=\'font-family:var(--fp);font-size:17px;font-weight:500;color:#fff;letter-spacing:-0.3px;\'>NEMO</span>'">
     </a>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#" id="nav-home">Home</a></li>
-      <li><a href="#about" id="nav-about">About</a></li>
+      <li><a href="#" class="active" id="nav-home">Home</a></li>
+      <li><a href="about.html" id="nav-about">About</a></li>
       <li><a href="#work" id="nav-work">Work</a></li>
       <li><a href="#services" id="nav-services">Services</a></li>
     </ul>
     <div class="nav-actions">
-      <a href="#" class="btn-ghost-sm" id="btn-signin">Sign in</a>
       <a href="#contact" class="btn-sm" id="btn-letstalk-nav">Let's talk</a>
     </div>
   </div>
@@ -1053,13 +1213,9 @@ ul{list-style:none;}
 ══════════════════════════════════════ -->
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <div class="hero-left">
-      <h1 class="hero-h1">Turn your ideas<br>into reality</h1>
-    </div>
-    <div class="hero-right">
-      <p class="hero-desc">We create digital products with advanced technologies to build memorable experiences and transform brands.</p>
-      <a href="#contact" class="btn-outline-pill" id="btn-letstalk-hero">Let's talk &nbsp;→</a>
-    </div>
+    <h1 class="hero-h1 reveal">Turn your ideas<br>into reality</h1>
+    <p class="hero-desc reveal reveal-delay-1">We create digital products with advanced technologies to build memorable experiences and transform brands.</p>
+    <a href="#contact" class="btn-glow-hero reveal reveal-delay-2" id="btn-letstalk-hero">Let's talk &nbsp;→</a>
   </div>
 </section>
 
@@ -1077,16 +1233,16 @@ ul{list-style:none;}
      DARK FEATURE SECTION
 ══════════════════════════════════════ -->
 <div class="feature-wrap" id="work">
-  <div class="curved-line"></div>
+  <canvas id="nemo-ribbon-canvas" aria-hidden="true"></canvas>
   <div class="purple-btn">
     Nemo V.2 <span style="opacity:0.4;">|</span> <span class="new-tag">NEW</span> Auth0 for AI Agents &rarr;
   </div>
 
   <div class="feature-grid">
-    <div class="feature-text">
+    <div class="feature-text reveal">
       We create digital products with advanced technologies to build memorable experiences and transform brands.
     </div>
-    <div class="mock-ui" id="app-mockup">
+    <div class="mock-ui reveal reveal-delay-1" id="app-mockup">
       <!-- Browser chrome -->
       <div class="mock-chrome">
         <div class="mock-chrome-dot"></div>
@@ -1168,7 +1324,7 @@ ul{list-style:none;}
 ══════════════════════════════════════ -->
 <section class="selected-work" id="about">
   <div class="selected-work-inner">
-    <div class="work-header">
+    <div class="work-header reveal">
       <div>
         <span class="eyebrow">// SELECTED WORK</span>
         <h2 class="work-h2">Discover how we're driving <em>change</em></h2>
@@ -1183,18 +1339,18 @@ ul{list-style:none;}
 ══════════════════════════════════════ -->
 <section class="faq-section" id="services">
   <div class="faq-inner">
-    <span class="eyebrow">// FAQ</span>
-    <h2 class="faq-h2">Got questions? We've got the answers</h2>
+    <span class="eyebrow reveal">// FAQ</span>
+    <h2 class="faq-h2 reveal reveal-delay-1">Got questions? We've got the answers</h2>
     <div class="faq-list">
-      <div class="faq-item" id="faq-1">
+      <div class="faq-item reveal reveal-delay-1" id="faq-1">
         <div class="faq-question">How does your process work?</div>
         <div class="faq-plus">+</div>
       </div>
-      <div class="faq-item" id="faq-2">
+      <div class="faq-item reveal reveal-delay-2" id="faq-2">
         <div class="faq-question">How long does it take?</div>
         <div class="faq-plus">+</div>
       </div>
-      <div class="faq-item" id="faq-3">
+      <div class="faq-item reveal reveal-delay-3" id="faq-3">
         <div class="faq-question">What do you specialize in?</div>
         <div class="faq-plus">+</div>
       </div>
@@ -1206,7 +1362,7 @@ ul{list-style:none;}
      CTA SECTION (green card)
 ══════════════════════════════════════ -->
 <section class="cta-section" id="contact">
-  <div class="cta-card">
+  <div class="cta-card reveal">
     <div class="cta-card-grid"></div>
     <div class="cta-inner">
       <span class="cta-eyebrow">// READY TO START?</span>
@@ -1242,7 +1398,7 @@ ul{list-style:none;}
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a href="#about" id="footer-about">About</a></li>
+          <li><a href="about.html" id="footer-about">About</a></li>
           <li><a href="#" id="footer-careers">Careers</a></li>
           <li><a href="#contact" id="footer-contact">Contact</a></li>
         </ul>
@@ -1348,13 +1504,84 @@ function updateCairoTime() {
 updateCairoTime();
 setInterval(updateCairoTime, 1000);
 
-// Nav scroll effect — darken slightly on scroll
+// ══════════════════════════════════════
+// SCROLL REVEAL ANIMATION
+// ══════════════════════════════════════
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ══════════════════════════════════════
+// NAVBAR: DARK/LIGHT MODE BASED ON SECTION
+// ══════════════════════════════════════
 const header = document.getElementById('site-header');
-window.addEventListener('scroll', () => {
-  header.style.background = window.scrollY > 40
-    ? 'rgba(8,8,8,0.95)'
-    : 'rgba(8,8,8,0.98)';
-}, { passive: true });
+const darkSections = document.querySelectorAll('.feature-wrap, .marquee-container, .footer');
+
+function updateNavMode() {
+  const navBottom = header.getBoundingClientRect().bottom;
+  let isOverDark = false;
+
+  darkSections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    // Check if the navbar overlaps with this dark section
+    if (rect.top < navBottom && rect.bottom > 0) {
+      isOverDark = true;
+    }
+  });
+
+  if (isOverDark) {
+    header.classList.add('header-dark');
+  } else {
+    header.classList.remove('header-dark');
+  }
+}
+
+updateNavMode();
+window.addEventListener('scroll', updateNavMode, { passive: true });
+
+// ══════════════════════════════════════
+// SCROLL SPY & ACTIVE NAV LINKS
+// ══════════════════════════════════════
+const navLinksArray = document.querySelectorAll('.nav-links a');
+const sectionsForNav = [
+  { id: 'hero', linkId: 'nav-home' },
+  { id: 'work', linkId: 'nav-work' },
+  { id: 'services', linkId: 'nav-services' }
+];
+
+// 1. Update active class on click
+navLinksArray.forEach(link => {
+  link.addEventListener('click', function() {
+    navLinksArray.forEach(l => l.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// 2. Update active class on scroll
+const scrollSpyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const match = sectionsForNav.find(s => s.id === entry.target.id);
+      if (match) {
+        navLinksArray.forEach(l => l.classList.remove('active'));
+        const activeLink = document.getElementById(match.linkId);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+
+sectionsForNav.forEach(s => {
+  const el = document.getElementById(s.id);
+  if (el) scrollSpyObserver.observe(el);
+});
+
 
 // Subscribe button — basic feedback
 const subscribeBtn = document.getElementById('footer-subscribe-btn');
@@ -1374,6 +1601,155 @@ if (subscribeBtn && emailInput) {
     }
   });
 }
+
+// ══════════════════════════════════════
+//  NEMO-STYLE SINGLE GREEN FLOWING LINE
+//  One smooth curve with glow + trail
+// ══════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('nemo-ribbon-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const parent = canvas.parentElement;
+
+  // High-DPI support
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = parent.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let phase = 0;
+
+  function getY(x, W, H) {
+    const t = x / W; // 0 to 1
+
+    // Flatter horizontal sweep through the middle of the section
+    // Positioned at ~60% height, gentle arc that rises slightly in center then falls
+    const baseY = H * 0.62 - Math.sin(t * Math.PI) * H * 0.12;
+
+    // Gentle undulation
+    const wave1 = Math.sin(t * Math.PI * 2.0 + phase) * 10;
+    const wave2 = Math.sin(t * Math.PI * 1.1 - phase * 0.6) * 6;
+
+    return baseY + wave1 + wave2;
+  }
+
+  function drawCurve(W, H, lineWidth, color, blur) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (blur > 0) {
+      ctx.shadowColor = color;
+      ctx.shadowBlur = blur;
+    }
+
+    const startX = -20;
+    const endX = W + 20;
+
+    let prevX = startX;
+    let prevY = getY(startX, W, H);
+    ctx.moveTo(prevX, prevY);
+
+    const step = 6;
+    for (let x = startX + step; x <= endX; x += step) {
+      const y = getY(x, W, H);
+      const cpX = (prevX + x) / 2;
+      const cpY = (prevY + y) / 2;
+      ctx.quadraticCurveTo(prevX, prevY, cpX, cpY);
+      prevX = x;
+      prevY = y;
+    }
+    ctx.lineTo(prevX, prevY);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Dark shadow/gradient beneath the line (Nemo-style depth)
+  function drawShadow(W, H) {
+    ctx.save();
+    ctx.beginPath();
+
+    const startX = -20;
+    const endX = W + 20;
+
+    // Trace the curve path
+    let prevX = startX;
+    let prevY = getY(startX, W, H);
+    ctx.moveTo(prevX, prevY);
+
+    const step = 6;
+    for (let x = startX + step; x <= endX; x += step) {
+      const y = getY(x, W, H);
+      const cpX = (prevX + x) / 2;
+      const cpY = (prevY + y) / 2;
+      ctx.quadraticCurveTo(prevX, prevY, cpX, cpY);
+      prevX = x;
+      prevY = y;
+    }
+
+    // Close path to bottom
+    ctx.lineTo(W + 20, H + 50);
+    ctx.lineTo(-20, H + 50);
+    ctx.closePath();
+
+    // Darker, more visible shadow gradient
+    const lineY = H * 0.55;
+    const grad = ctx.createLinearGradient(0, lineY - 20, 0, lineY + H * 0.35);
+    grad.addColorStop(0, 'rgba(6, 50, 32, 0.7)');
+    grad.addColorStop(0.15, 'rgba(4, 35, 22, 0.5)');
+    grad.addColorStop(0.5, 'rgba(4, 20, 14, 0.25)');
+    grad.addColorStop(1, 'rgba(8, 8, 8, 0)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function draw() {
+    const W = parent.getBoundingClientRect().width;
+    const H = parent.getBoundingClientRect().height;
+
+    // Trail fade
+    ctx.fillStyle = 'rgba(8, 8, 8, 0.15)';
+    ctx.fillRect(0, 0, W, H);
+
+    phase += 0.012;
+
+    // Shadow beneath the curve
+    drawShadow(W, H);
+
+    // Animating the glow intensity based on phase
+    const glowOp = 0.08 + Math.sin(phase * 4) * 0.05;
+    const glowBlur = 6 + Math.sin(phase * 4) * 4;
+    
+    // Subtle pulsating glow
+    drawCurve(W, H, 3, `rgba(16, 185, 129, ${glowOp.toFixed(3)})`, glowBlur);
+
+    // Animating the main line opacity slightly for a "glowing light" feel
+    const lineOp = 0.75 + Math.sin(phase * 4) * 0.15;
+    // Thin crisp line
+    drawCurve(W, H, 1, `rgba(45, 220, 155, ${lineOp.toFixed(3)})`, 2 + Math.max(0, Math.sin(phase * 4) * 2));
+
+    requestAnimationFrame(draw);
+  }
+
+  // Initial clear
+  const rect = parent.getBoundingClientRect();
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, rect.width, rect.height);
+
+  draw();
+})();
 </script>
 
 </body>

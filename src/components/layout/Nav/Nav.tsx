@@ -1,293 +1,186 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { NAV_LINKS, SITE } from "@/config/site";
+import { useEffect, useRef, useState } from "react";
+
+const NAV_ITEMS = [
+  { label: "Home",     href: "/" },
+  { label: "About",    href: "/about" },
+  { label: "Work",     href: "/work" },
+  { label: "Services", href: "/services" },
+];
 
 export function Nav() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const [dark, setDark] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  // Switch to dark mode when nav overlaps a [data-nav-dark] section
+  useEffect(() => {
+    function update() {
+      const header = headerRef.current;
+      if (!header) return;
+      const navBottom = header.getBoundingClientRect().bottom;
+      const darkSections = document.querySelectorAll<HTMLElement>("[data-nav-dark]");
+      let over = false;
+      darkSections.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < navBottom && r.bottom > 0) over = true;
+      });
+      setDark(over);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
 
   return (
-    <>
-      <header
+    <header
+      ref={headerRef}
+      id="site-header"
+      style={{
+        position: "fixed",
+        top: 12,
+        left: 24,
+        right: 24,
+        height: 56,
+        display: "flex",
+        alignItems: "center",
+        zIndex: 900,
+        pointerEvents: "none",
+      }}
+    >
+      <div
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "72px",
-          zIndex: 900,
-          background: "rgba(8,8,8,0.96)",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          display: "flex",
+          maxWidth: "var(--container)",
+          margin: "0 auto",
+          padding: "0 40px",
+          width: "100%",
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
           alignItems: "center",
+          gap: 24,
         }}
       >
-        <div
-          style={{
-            maxWidth: "var(--container)",
-            width: "100%",
-            margin: "0 auto",
-            padding: "0 40px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* Logo */}
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-aeonik, sans-serif)",
-              fontSize: "17px",
-              fontWeight: 500,
-              letterSpacing: "-0.3px",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              textDecoration: "none",
-            }}
-          >
+        {/* ── Logo ── */}
+        <Link href="/" style={{ pointerEvents: "auto", display: "inline-flex" }}>
+          {!imgError ? (
+            <Image
+              src="https://madebynemo.com/storage/2025/05/nemo-white.png"
+              alt="Nemo"
+              width={80}
+              height={28}
+              style={{
+                height: 28,
+                width: "auto",
+                filter: dark ? "invert(0)" : "invert(1)",
+                transition: "filter 400ms ease",
+              }}
+              onError={() => setImgError(true)}
+              unoptimized
+            />
+          ) : (
             <span
               style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: "#35D687",
-                flexShrink: 0,
-              }}
-            />
-            {SITE.name}
-          </Link>
-
-          {/* Desktop links */}
-          <nav
-            style={{
-              display: "flex",
-              gap: "4px",
-              alignItems: "center",
-            }}
-            className="nav-links-desktop"
-          >
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    fontFamily: "var(--font-haas, sans-serif)",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                    color: active ? "#fff" : "#868788",
-                    padding: "6px 12px",
-                    borderRadius: "4px",
-                    transition: "color 150ms ease-in-out, background 150ms ease-in-out",
-                    textDecoration: "none",
-                    background: active ? "rgba(255,255,255,0.04)" : "transparent",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#fff";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = active ? "#fff" : "#868788";
-                    e.currentTarget.style.background = active ? "rgba(255,255,255,0.04)" : "transparent";
-                  }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* CTAs */}
-          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <Link
-              href="/contact"
-              style={{
-                fontFamily: "var(--font-haas, sans-serif)",
-                fontSize: "13px",
-                fontWeight: 400,
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: "9999px",
-                padding: "0 20px",
-                height: "36px",
-                display: "inline-flex",
-                alignItems: "center",
-                textDecoration: "none",
-                transition: "border-color 150ms ease-in-out",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
+                fontFamily: "var(--font-aeonik)",
+                fontSize: 17,
+                fontWeight: 500,
+                letterSpacing: "-0.3px",
+                color: dark ? "#fff" : "#111",
+                transition: "color 400ms ease",
               }}
             >
-              Get in touch
-            </Link>
+              NEMO
+            </span>
+          )}
+        </Link>
 
-            <Link
-              href="/growth-plan"
-              style={{
-                fontFamily: "var(--font-haas, sans-serif)",
-                fontSize: "13px",
-                fontWeight: 400,
-                color: "#151515",
-                background: "#E9EBDF",
-                border: "none",
-                borderRadius: "9999px",
-                padding: "0 20px",
-                height: "36px",
-                display: "inline-flex",
-                alignItems: "center",
-                textDecoration: "none",
-                transition: "background 150ms ease-in-out",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#d6d8c6";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#E9EBDF";
-              }}
-            >
-              Growth plan
-            </Link>
-
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label="Toggle menu"
-              className="nav-hamburger"
-              style={{
-                display: "none",
-                background: "none",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: "6px",
-                width: "36px",
-                height: "36px",
-                cursor: "pointer",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "5px",
-                padding: 0,
-              }}
-            >
-              {[0, 1, 2].map((i) => (
-                <span
-                  key={i}
-                  style={{
-                    display: "block",
-                    width: "16px",
-                    height: "1.5px",
-                    background: "#fff",
-                    borderRadius: "2px",
-                    transition: "150ms ease-in-out",
-                    transform:
-                      mobileOpen && i === 0 ? "rotate(45deg) translate(4px, 4px)"
-                      : mobileOpen && i === 2 ? "rotate(-45deg) translate(4px, -4px)"
-                      : mobileOpen && i === 1 ? "scaleX(0)"
-                      : "none",
-                  }}
-                />
-              ))}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div
-          className="nav-mobile"
+        {/* ── Nav links pill ── */}
+        <ul
           style={{
-            position: "fixed",
-            top: "72px",
-            left: 0,
-            right: 0,
-            background: "rgba(8,8,8,0.98)",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
-            backdropFilter: "blur(14px)",
-            WebkitBackdropFilter: "blur(14px)",
-            zIndex: 899,
-            padding: "12px 20px 20px",
             display: "flex",
-            flexDirection: "column",
-            gap: "2px",
+            gap: 4,
+            listStyle: "none",
+            justifyContent: "center",
+            alignItems: "center",
+            background: dark ? "rgba(8,8,8,0.65)" : "rgba(250,251,252,0.65)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: dark ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.06)",
+            borderRadius: 9999,
+            padding: 6,
+            margin: 0,
+            pointerEvents: "auto",
+            transition: "background 400ms ease, border-color 400ms ease",
           }}
         >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              style={{
-                fontFamily: "var(--font-haas, sans-serif)",
-                fontSize: "16px",
-                fontWeight: 400,
-                color: pathname === link.href ? "#fff" : "#868788",
-                padding: "10px 12px",
-                borderRadius: "6px",
-                textDecoration: "none",
-                background: pathname === link.href ? "rgba(255,255,255,0.04)" : "transparent",
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div style={{ height: "1px", background: "rgba(255,255,255,0.07)", margin: "8px 0" }} />
+          {NAV_ITEMS.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  style={{
+                    display: "inline-block",
+                    fontFamily: "var(--font-haas)",
+                    fontSize: 14,
+                    lineHeight: 1,
+                    color: dark
+                      ? active ? "#fff" : "rgba(255,255,255,0.75)"
+                      : active ? "#111" : "rgba(0,0,0,0.6)",
+                    background: active
+                      ? dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"
+                      : "transparent",
+                    textDecoration: "none",
+                    padding: "10px 18px",
+                    borderRadius: 9999,
+                    transition: "all 400ms ease",
+                  }}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* ── Actions ── */}
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            alignItems: "center",
+            justifyContent: "flex-end",
+            pointerEvents: "auto",
+          }}
+        >
           <Link
             href="/contact"
-            onClick={() => setMobileOpen(false)}
             style={{
-              fontFamily: "var(--font-haas, sans-serif)",
-              fontSize: "15px",
-              color: "#fff",
-              padding: "10px 12px",
-              textDecoration: "none",
-            }}
-          >
-            Get in touch
-          </Link>
-          <Link
-            href="/growth-plan"
-            onClick={() => setMobileOpen(false)}
-            style={{
-              fontFamily: "var(--font-haas, sans-serif)",
-              fontSize: "14px",
-              fontWeight: 400,
-              color: "#151515",
+              fontFamily: "var(--font-haas)",
+              fontSize: 13,
+              borderRadius: 9999,
+              padding: "0 20px",
+              height: 36,
               background: "#E9EBDF",
-              borderRadius: "9999px",
-              padding: "10px 20px",
+              color: "#151515",
+              border: "none",
+              display: "inline-flex",
+              alignItems: "center",
               textDecoration: "none",
-              textAlign: "center",
-              marginTop: "4px",
+              transition: "background 150ms ease-in-out",
+              cursor: "pointer",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#d6d8c6")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#E9EBDF")}
           >
-            Growth plan
+            Let&apos;s talk
           </Link>
         </div>
-      )}
-
-      {/* Responsive styles */}
-      <style>{`
-        @media (max-width: 768px) {
-          .nav-links-desktop { display: none !important; }
-          .nav-hamburger { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .nav-mobile { display: none !important; }
-        }
-      `}</style>
-    </>
+      </div>
+    </header>
   );
 }

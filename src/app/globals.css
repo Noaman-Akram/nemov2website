@@ -152,3 +152,45 @@ body {
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
+
+/* ══════════════════════════════════════════════════════
+   UTILITIES
+══════════════════════════════════════════════════════ */
+@utility bg-grid-light {
+  background-color: var(--color-off-white);
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@utility bg-grid-green {
+  background-color: #E8FBF1;
+  background-image: radial-gradient(circle, rgba(53,214,135,0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Scroll Reveal ── */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+@utility reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Animations ── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes rotate-glow {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow-line {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 6px rgba(53,214,135,0.2); }
+  50%       { opacity: 1;   box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2); }
+}
