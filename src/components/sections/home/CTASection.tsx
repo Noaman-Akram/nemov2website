@@ -28,15 +28,16 @@ export function CTASection() {
 
       <style>{`
         .cta-section {
-          padding: 0 var(--sp6) var(--sp10);
+          padding: 0 var(--sp10) var(--sp10);
         }
         .cta-card {
           background: #E8FBF1;
-          padding: 120px var(--sp10);
+          padding: var(--sp20) var(--sp10);
           text-align: center;
           position: relative;
           overflow: hidden;
           border-radius: var(--r-lg);
+          border: 1px solid rgba(53,214,135,0.25);
         }
         .cta-card-grid {
           position: absolute;
@@ -94,7 +95,7 @@ export function CTASection() {
         .btn-cta-primary:hover { background: var(--charcoal); }
 
         @media (max-width: 900px) {
-          .cta-section { padding: 0 var(--sp4) var(--sp8); }
+          .cta-section { padding: 0 var(--sp5) var(--sp8); }
           .cta-card { padding: 80px var(--sp5); }
           .cta-buttons { flex-direction: column; align-items: center; }
         }

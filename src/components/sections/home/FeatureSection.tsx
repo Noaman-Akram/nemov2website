@@ -113,10 +113,13 @@ export function FeatureSection() {
       <style>{`
         .feature-wrap {
           background: var(--black);
-          border-radius: 0 0 24px 24px;
-          padding: 120px var(--sp10);
+          border-radius: 0 0 var(--r-lg) var(--r-lg);
+          padding: var(--sp20) var(--sp10);
           position: relative;
           overflow: hidden;
+          border-left: 1px solid rgba(255,255,255,0.06);
+          border-right: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
         /* Ambient glow */
@@ -373,7 +376,7 @@ export function FeatureSection() {
         }
 
         @media (max-width: 900px) {
-          .feature-wrap { padding: 80px var(--sp5); }
+          .feature-wrap { padding: var(--sp16) var(--sp5); }
           .feature-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 60px; }
           .mock-ui { max-width: 100%; }
         }
