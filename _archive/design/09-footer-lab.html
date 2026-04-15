@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 9.0 (The Final Polish)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+:root {
+  --green:#35D687; 
+  --black:#080808; 
+  --off-white:#F5F5F0;
+  
+  --bd1:rgba(0,0,0,0.06); 
+  --bd2:rgba(0,0,0,0.12);
+  --bd-white:rgba(255,255,255,0.08);
+
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:28px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;--sp24:96px;
+  --r-pill:9999px;
+  --e-fast:150ms ease-in-out; 
+  --container:1312px;
+  
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--off-white);color:#111;font-family:var(--font-haas);font-size:14px;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;transition:all var(--e-fast);}
+
+.lab { text-align: center; font-family: var(--font-aeonik); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: var(--sp10); color: rgba(0,0,0,0.4); }
+
+/* ═══════════════════════════════════════════
+   LIGHT SECTION (Menu + Newsletter + CTAs)
+═══════════════════════════════════════════ */
+.ft-light {
+  background: var(--off-white);
+  padding: var(--sp24) var(--sp10) var(--sp16);
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+/* Menu Row */
+.ft-menu-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--sp20);
+  padding-bottom: var(--sp20);
+  border-bottom: 1px solid var(--bd1);
+  margin-bottom: var(--sp20);
+}
+
+.ft-mission {
+  font-family: var(--font-haas);
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  color: #111;
+  max-width: 500px;
+}
+.ft-mission em { font-style: normal; color: var(--green); }
+
+.ft-issue {
+  margin-top: var(--sp6);
+  font-family: var(--font-haas);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(0,0,0,0.3);
+}
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp6);
+}
+.ft-col-title {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.3);
+  margin-bottom: var(--sp6);
+  padding-bottom: var(--sp4);
+  border-bottom: 1px solid var(--bd1);
+}
+.ft-col a {
+  display: block;
+  font-family: var(--font-haas);
+  font-size: 14px;
+  color: #111;
+  padding: 6px 0;
+}
+.ft-col a:hover { color: var(--green); }
+
+
+/* Newsletter Row */
+.ft-cta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--sp16);
+}
+
+.ft-cta-left { display: flex; flex-direction: column; gap: var(--sp6); }
+
+.ft-cta-heading {
+  font-family: var(--font-haas);
+  font-size: clamp(40px, 5vw, 56px);
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: #111;
+}
+.ft-cta-heading em { font-style: normal; color: var(--green); }
+
+.ft-buttons { display: flex; gap: var(--sp3); flex-wrap: wrap; }
+.ft-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp2);
+  height: 48px; padding: 0 var(--sp6); border-radius: var(--r-pill);
+  font-family: var(--font-haas); font-size: 14px; font-weight: 500;
+  transition: all var(--e-fast); border: 1px solid transparent; cursor: pointer;
+}
+.ft-btn-primary { background: var(--green); color: #0A1A10; }
+.ft-btn-primary:hover { background: #29c275; transform: scale(0.98); }
+.ft-btn-secondary { background: transparent; border-color: rgba(0,0,0,0.15); color: #111; }
+.ft-btn-secondary:hover { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.3); transform: scale(0.98); }
+.arr { font-family: system-ui; font-size: 16px; margin-left: 2px; }
+
+.ft-cta-right { max-width: 440px; width: 100%; }
+.nl-label {
+  font-family: var(--font-haas);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.4);
+  margin-bottom: var(--sp3);
+}
+.nl-form {
+  display: flex;
+  background: #fff;
+  border: 1px solid var(--bd2);
+  border-radius: var(--r-pill);
+  padding: 4px;
+}
+.nl-form input {
+  flex: 1; min-width: 0; background: transparent; border: none; outline: none;
+  padding: 0 var(--sp4); font-family: var(--font-haas); font-size: 14px; color: #111;
+}
+.nl-form input::placeholder { color: rgba(0,0,0,0.4); }
+.nl-form button {
+  background: var(--black); color: #fff; border: none; border-radius: var(--r-pill);
+  padding: 0 var(--sp5); height: 40px; font-family: var(--font-haas); font-size: 14px;
+  font-weight: 500; cursor: pointer; transition: background var(--e-fast);
+}
+.nl-form button:hover { background: #333; }
+.nl-meta { margin-top: var(--sp3); font-family: var(--font-haas); font-size: 12px; color: rgba(0,0,0,0.4); }
+
+/* ═══════════════════════════════════════════
+   DARK SECTION (Wordmark + GL Line + Copy)
+═══════════════════════════════════════════ */
+.ft-dark {
+  background: var(--black);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fading Wordmark */
+.wm {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-top: var(--sp24); /* Lots of top breathing room */
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin-bottom: -5px; /* Subtle negative margin to align exactly with the canvas glow */
+}
+.wm img {
+  width: 100%;
+  max-width: 1200px; /* Big and bold */
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  /* perfectly aligned fade-out shadow effect */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0) 100%);
+}
+
+/* WebGL Canvas */
+.gl-wrapper {
+  position: relative;
+  width: 100%;
+  height: 80px; 
+  z-index: 1;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Copyright Row */
+.ft-copy {
+  padding: var(--sp5) var(--sp10);
+  background: transparent; /* lets canvas glow bleed down slightly into it, matching the image */
+  position: relative;
+  z-index: 3;
+}
+.ft-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+.ft-legal { display: flex; gap: var(--sp5); }
+.ft-legal a:hover { color: #fff; }
+
+@media(max-width: 900px){
+  .ft-menu-row { grid-template-columns: 1fr; gap: var(--sp12); }
+  .ft-grid { grid-template-columns: 1fr 1fr; }
+  .ft-cta-left { text-align: center; align-items: center; }
+  .ft-cta-row { flex-direction: column; align-items: center; gap: var(--sp10); text-align: center; }
+  .ft-copy-inner { flex-direction: column; gap: var(--sp4); }
+}
+</style>
+</head>
+<body>
+
+<div class="lab">— The Final Polished Structure —</div>
+
+<footer>
+  <!-- LIGHT TOP HALF -->
+  <div class="ft-light">
+    <!-- Menu Grid -->
+    <div class="ft-menu-row">
+      <div>
+        <h2 class="ft-mission">Independent studio crafting brands, products and the <em>systems</em> that make them run.</h2>
+        <div class="ft-issue">ISSUE #26 · SPRING 2026</div>
+      </div>
+      
+      <div class="ft-grid">
+        <div class="ft-col">
+          <div class="ft-col-title">Studio</div>
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="ft-col">
+          <div class="ft-col-title">Work</div>
+          <a href="#">Selected</a>
+          <a href="#">Archive</a>
+          <a href="#">Clients</a>
+        </div>
+        <div class="ft-col">
+          <div class="ft-col-title">Elsewhere</div>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Newsletter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter + CTAs -->
+    <div class="ft-cta-row">
+      <div class="ft-cta-left">
+        <h2 class="ft-cta-heading">What's <em>next</em><br>starts here</h2>
+        <div class="ft-buttons">
+          <button class="ft-btn ft-btn-primary">Start a project <span class="arr">↗</span></button>
+          <button class="ft-btn ft-btn-secondary">Book a call <span class="arr">↗</span></button>
+        </div>
+      </div>
+      <div class="ft-cta-right">
+        <div class="nl-label">Subscribe to our updates</div>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="nl-meta">No spam. One dispatch a month.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DARK BOTTOM HALF -->
+  <div class="ft-dark">
+    
+    <!-- Fading wordmark -->
+    <div class="wm" aria-hidden="true">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+    </div>
+
+    <!-- Glowing Line (R2 WebGL) -->
+    <div class="gl-wrapper">
+      <canvas id="gl-line"></canvas>
+    </div>
+
+    <!-- Copyright -->
+    <div class="ft-copy">
+      <div class="ft-copy-inner">
+        <div>© <span class="jy">2026</span> Nemo · All rights reserved</div>
+        <div class="ft-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+/* WebGL Shader: Glowing line, R2 styling, organically flowing (no mouse events) */
+function initGlowLine() {
+  const c = document.getElementById('gl-line');
+  if(!c) return;
+  const gl = c.getContext('webgl', { alpha: false, antialias: true });
+  if(!gl) return;
+
+  const vs = `
+    attribute vec2 a_pos;
+    varying vec2 v_uv;
+    void main(){ v_uv=a_pos*0.5+0.5; gl_Position=vec4(a_pos,0.0,1.0); }
+  `;
+
+  // Background explicitly set to absolute black #080808 to seamlessly blend with .ft-dark
+  const fs = `
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_r;
+    varying vec2 v_uv;
+
+    #define G vec3(0.207, 0.839, 0.529)
+
+    float n(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+    float sn(vec2 p){
+      vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+      return mix(mix(n(i),n(i+vec2(1,0)),f.x),mix(n(i+vec2(0,1)),n(i+vec2(1,1)),f.x),f.y);
+    }
+    float fbm(vec2 p){
+      float v=0.,a=0.5,f=1.;
+      for(int i=0;i<5;i++){v+=a*sn(p*f);f*=2.;a*=0.5;}
+      return v;
+    }
+
+    void main() {
+      vec2 uv = v_uv;
+      vec2 asp = vec2(u_r.x/u_r.y, 1.0);
+      vec2 p = (uv - 0.5) * asp;
+      
+      // Keep the line centered horizontally
+      float dist = abs(p.y);
+
+      // Smooth fading off at the left/right screen edges
+      float hf = smoothstep(0.0, 0.15, uv.x) * smoothstep(0.0, 0.15, 1.0-uv.x);
+      // Soften top/bottom bounds
+      float vf = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vf = smoothstep(0.0, 1.0, vf);
+      float fade = hf * pow(vf, 1.2);
+
+      // Noise generator for flowing thickness
+      float noise = fbm(vec2(uv.x * 4.0 - u_t * 0.15, uv.y * 5.0 + u_t * 0.05)) * 0.35 + 0.65;
+
+      // Pulse and bloom intensity
+      float glow = 0.0;
+      glow += exp(-dist * 280.0) * 1.5;   // Hot core  (was thicker before, tightened for sharpness)
+      glow += exp(-dist * 80.0) * 0.8;    // Inner aura
+      glow += exp(-dist * 35.0)  * 0.35;  // Outer bloom
+      glow *= fade * noise;
+
+      // Lateral energetic flowing waves
+      float flow1 = sin(uv.x * 8.0 - u_t * 2.5 + fbm(uv * 3.0) * 3.0) * 0.5 + 0.5;
+      float flow2 = sin(uv.x * 12.0 + u_t * 1.8 + fbm(uv * 5.0) * 2.0) * 0.5 + 0.5;
+      flow1 = smoothstep(0.2, 0.8, flow1);
+      flow2 = smoothstep(0.3, 0.7, flow2);
+      glow *= (0.6 + flow1 * 0.25 + flow2 * 0.15);
+
+      // True black background to perfectly match the HTML wrapper
+      vec3 bg = vec3(0.031, 0.031, 0.031); // Matching roughly #080808
+      
+      vec3 color = mix(bg, G * clamp(glow, 0.0, 2.0), clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compile(src, type) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(vs, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(fs, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'a_pos'); gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog, 'u_t');
+  const uR = gl.getUniformLocation(prog, 'u_r');
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    gl.viewport(0, 0, c.width, c.height);
+  }
+  resize(); window.addEventListener('resize', resize);
+
+  const t0 = performance.now();
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) / 1000);
+    gl.uniform2f(uR, c.width, c.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+}
+
+initGlowLine();
+document.querySelectorAll('.jy').forEach(e => { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

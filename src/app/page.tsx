@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import {
   Hero,
   Marquee,
+  Process,
   FeatureSection,
   SelectedWork,
   FAQ,
@@ -25,6 +26,7 @@ export default function HomePage() {
         <Marquee />
         <FeatureSection />
         <SelectedWork />
+        <Process />
         <FAQ />
         <CTASection />
       </main>

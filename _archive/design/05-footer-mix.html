@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Mix Lab 5.0 (Final Locked)</title>
+<style>
+/* ══════════════════════════════════════════════════════
+   NEMO — FOOTER MIX LAB 5.0
+   LOCKED ELEMENTS:
+     1) "Stay in the loop" Newsletter (exact from 04 Variant 2)
+     2) Social Pill Buttons (from 05 V5 Split Panel)
+     3) Giant NEMO Wordmark + Breathing Green Line
+   ONLY FONTS: AeonikPro (--font-aeonik), NeueHaas (--font-haas)
+════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'AeonikPro';
+  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'NeueHaas';
+  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+  --green:           #35D687;
+  --green-dim:       rgba(53, 214, 135, 0.12);
+  --green-hover:     #29c275;
+  --green-border:    rgba(53,214,135,0.28);
+
+  --black:     #080808;
+  --navy:      #13171D;
+  --charcoal:  #222222;
+  --s3:        rgba(255,255,255,0.04);
+  --s3h:       rgba(255,255,255,0.07);
+
+  --white:      #FFFFFF;
+  --off-white:  #FAFBFC;
+  --warm:       #EDE9E0;
+  --warm-cream: #E9EBDF;
+
+  --b1: rgba(255,255,255,0.07);
+  --b2: rgba(255,255,255,0.12);
+  --b3: rgba(255,255,255,0.20);
+  --b-dark: rgba(0,0,0,0.15);
+  --b-green: rgba(53,214,135,0.28);
+
+  --t1: #FFFFFF;
+  --t-off: rgba(255,255,255,0.25);
+
+  --sp1:4px;  --sp2:8px;  --sp3:12px;  --sp4:16px;
+  --sp5:20px; --sp6:24px; --sp7:28px;  --sp8:32px;
+  --sp10:40px; --sp12:48px; --sp16:64px; --sp20:80px;
+
+  --r-sm:4px; --r-md:8px; --r-lg:16px; --r-xl:20px; --r-pill:9999px;
+
+  --e-fast: 150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+
+  --container: 1312px;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas:   'NeueHaas', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--off-white); color: #111;
+  font-family: var(--font-haas); font-size: 14px; font-weight: 400;
+  line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ── Label Divider ── */
+.lab { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp6); font-family: var(--font-aeonik); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.35); display: flex; align-items: center; gap: var(--sp4); }
+.lab::before, .lab::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.1); }
+.lab span { padding: 0 var(--sp3); color: #111; font-size: 13px; letter-spacing: 0.05em; }
+
+/* ══════════════════════════════════════════════════════
+   LOCKED: Giant NEMO Wordmark + Breathing Green Line
+═══════════════════════════════════════════════════════ */
+.footer-giant { overflow: hidden; padding: 60px 40px 0; display: flex; align-items: center; justify-content: center; }
+.footer-giant img { width: 100%; max-width: 1100px; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%); mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%); user-select: none; pointer-events: none; }
+.footer-giant--dark img { filter: invert(1); }
+
+.footer-bottom-line { position: relative; }
+.footer-bottom-line::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(53,214,135,0.7) 0%, var(--green) 50%, rgba(53,214,135,0.7) 100%); animation: glow-line 3s ease-in-out infinite; }
+@keyframes glow-line {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 6px rgba(53,214,135,0.2); }
+  50%       { opacity: 1;   box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2); }
+}
+
+/* ══════════════════════════════════════════════════════
+   LOCKED: Newsletter (exact from 04-Variant-2)
+═══════════════════════════════════════════════════════ */
+.nl-h { font-family: var(--font-aeonik); font-size: clamp(40px, 5vw, 64px); font-weight: 400; letter-spacing: -1.5px; line-height: 1.04; }
+.nl-h em { font-style: normal; color: #5a7f65; }
+.nl-h--white { color: #fff; }
+.nl-h--white em { color: var(--green); }
+.nl-label { font-family: var(--font-haas); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.5); margin-bottom: var(--sp4); }
+.nl-label--white { color: rgba(255,255,255,0.5); }
+.nl-form { display: flex; background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: var(--r-pill); padding: 4px; max-width: 440px; }
+.nl-form input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; padding: 0 var(--sp4); font-family: var(--font-haas); font-size: 14px; color: #111; }
+.nl-form input::placeholder { color: rgba(0,0,0,0.4); }
+.nl-form button { background: var(--black); color: #fff; border: none; border-radius: var(--r-pill); padding: 0 var(--sp5); height: 40px; font-family: var(--font-haas); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.nl-meta { margin-top: var(--sp3); font-family: var(--font-haas); font-size: 12px; color: rgba(0,0,0,0.5); }
+.nl-meta--white { color: rgba(255,255,255,0.5); }
+
+/* Dark variant of the form */
+.nl-form--dark { background: rgba(255,255,255,0.06); border-color: var(--b2); }
+.nl-form--dark input { color: #fff; }
+.nl-form--dark input::placeholder { color: rgba(255,255,255,0.35); }
+.nl-form--dark button { background: var(--green); color: #0A1A10; }
+
+/* ══════════════════════════════════════════════════════
+   LOCKED: Social Pill Buttons
+═══════════════════════════════════════════════════════ */
+.social-pill { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 var(--sp5); border-radius: var(--r-pill); font-family: var(--font-haas); font-size: 13px; font-weight: 500; transition: all var(--e-fast); cursor: pointer; }
+.social-pill--dark { color: #fff; border: 1px solid var(--b2); background: transparent; }
+.social-pill--dark:hover { background: var(--s3h); border-color: var(--b3); }
+.social-pill--light { color: #111; border: 1px solid rgba(0,0,0,0.15); background: transparent; }
+.social-pill--light:hover { background: rgba(0,0,0,0.04); }
+.social-row { display: flex; gap: var(--sp3); flex-wrap: wrap; }
+
+/* ══════════════════════════════════════════════════════
+   SHARED: Column heads & links
+═══════════════════════════════════════════════════════ */
+.col-title { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--sp4); }
+.col-title--dark { color: rgba(255,255,255,0.35); }
+.col-title--light { color: rgba(0,0,0,0.45); }
+.col-links a { display: block; font-family: var(--font-haas); font-size: 14px; padding: 6px 0; transition: color var(--e-fast); }
+.col-links--dark a { color: rgba(255,255,255,0.8); }
+.col-links--dark a:hover { color: var(--green); }
+.col-links--light a { color: rgba(0,0,0,0.75); }
+.col-links--light a:hover { color: #000; }
+
+/* SHARED: copyright bars */
+.copy-bar { padding: var(--sp5) var(--sp10); }
+.copy-bar-inner { max-width: var(--container); margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: var(--sp6); flex-wrap: wrap; }
+.copy-bar-inner span, .copy-bar-inner a { font-family: var(--font-haas); font-size: 13px; }
+.copy-bar-inner a:hover { opacity: 1; }
+.copy-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════════════
+   A — VERCEL-INSPIRED: Warm Cream, 8-col grid, newsletter top
+   Pattern: Massive structured grid like Vercel footer
+═══════════════════════════════════════════════════════ */
+.fa { background: var(--warm-cream); color: #111; }
+.fa-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fa-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 1px solid rgba(0,0,0,0.1); }
+
+.fa-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); padding-top: var(--sp16); }
+
+.fa-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp16); border-top: 1px solid rgba(0,0,0,0.1); margin-top: var(--sp12); }
+.fa-brand { font-family: var(--font-aeonik); font-size: 22px; letter-spacing: -0.5px; color: #111; }
+.fa-copy { background: #fff; }
+.fa-copy .copy-bar-inner span, .fa-copy .copy-bar-inner a { color: rgba(0,0,0,0.55); }
+.fa-copy .copy-dot { background: rgba(0,0,0,0.2); }
+
+/* ══════════════════════════════════════════════════════
+   B — LINEAR-INSPIRED: Navy base, 6-col footer, newsletter in hero
+   Pattern: Dense multi-column like Linear footer
+═══════════════════════════════════════════════════════ */
+.fb { background: var(--navy); color: #fff; }
+.fb-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fb-hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp20); align-items: end; padding-bottom: var(--sp16); border-bottom: 1px solid var(--b1); margin-bottom: var(--sp16); }
+
+.fb-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sp6); }
+
+.fb-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp12); margin-top: var(--sp6); }
+.fb-status { display: inline-flex; align-items: center; gap: var(--sp2); font-family: var(--font-haas); font-size: 13px; color: rgba(255,255,255,0.5); }
+.fb-status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+.fb-copy { background: #0a0e13; }
+.fb-copy .copy-bar-inner span, .fb-copy .copy-bar-inner a { color: rgba(255,255,255,0.4); }
+.fb-copy .copy-bar-inner a:hover { color: #fff; }
+.fb-copy .copy-dot { background: rgba(255,255,255,0.15); }
+
+/* ══════════════════════════════════════════════════════
+   C — RESEND-INSPIRED: White, address block, clean 5-col
+   Pattern: Minimal factual grid like Resend footer
+═══════════════════════════════════════════════════════ */
+.fc { background: var(--white); color: #111; border-top: 1px solid rgba(0,0,0,0.08); }
+.fc-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fc-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 1px solid rgba(0,0,0,0.08); }
+.fc-address { font-family: var(--font-haas); font-size: 14px; color: rgba(0,0,0,0.55); line-height: 1.7; margin-top: var(--sp6); }
+
+.fc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); padding-top: var(--sp16); }
+
+.fc-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp16); border-top: 1px solid rgba(0,0,0,0.08); margin-top: var(--sp12); }
+.fc-copy { background: var(--off-white); }
+.fc-copy .copy-bar-inner span, .fc-copy .copy-bar-inner a { color: rgba(0,0,0,0.45); }
+.fc-copy .copy-dot { background: rgba(0,0,0,0.15); }
+
+/* ══════════════════════════════════════════════════════
+   D — THE EDITORIAL SPLIT: Dual-tone card panel
+   Pattern: Off-white left (Newsletter) + Charcoal right (Grid + Socials)
+═══════════════════════════════════════════════════════ */
+.fd { background: var(--off-white); }
+.fd-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) 0; }
+.fd-split { display: grid; grid-template-columns: 1fr 1.2fr; border-radius: var(--r-xl); overflow: hidden; border: 1px solid rgba(0,0,0,0.08); }
+
+.fd-left { background: #fff; padding: var(--sp20) var(--sp16); display: flex; flex-direction: column; justify-content: center; gap: var(--sp6); }
+
+.fd-right { background: var(--charcoal); padding: var(--sp20) var(--sp16); color: #fff; display: flex; flex-direction: column; gap: var(--sp16); }
+.fd-right-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp8); }
+.fd-right-bottom { margin-top: auto; padding-top: var(--sp10); border-top: 1px solid var(--b1); display: flex; justify-content: space-between; align-items: center; }
+.fd-right-brand { font-family: var(--font-aeonik); font-size: 18px; letter-spacing: -0.3px; color: rgba(255,255,255,0.4); }
+
+.fd-copy { background: transparent; }
+.fd-copy .copy-bar-inner span, .fd-copy .copy-bar-inner a { color: rgba(0,0,0,0.45); }
+.fd-copy .copy-dot { background: rgba(0,0,0,0.15); }
+
+/* ══════════════════════════════════════════════════════
+   E — THE AMBIENT GLOW: Full dark, centered hero CTA, ambient green
+   Pattern: Premium centered CTA like 04-Variant-3 but with structured grid
+═══════════════════════════════════════════════════════ */
+.fe { background: var(--black); color: #fff; position: relative; overflow: hidden; }
+.fe-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 900px; height: 600px; background: radial-gradient(ellipse at center, var(--green-dim) 0%, transparent 60%); pointer-events: none; }
+.fe-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fe-hero { text-align: center; max-width: 700px; margin: 0 auto var(--sp20); }
+.fe-eyebrow { display: inline-flex; align-items: center; gap: var(--sp2); font-family: var(--font-haas); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); padding: var(--sp2) var(--sp4); border: 1px solid var(--b-green); background: rgba(53,214,135,0.05); border-radius: var(--r-pill); margin-bottom: var(--sp8); }
+
+.fe-form-wrap { margin-top: var(--sp8); display: flex; flex-direction: column; align-items: center; }
+
+.fe-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp10); padding-top: var(--sp16); border-top: 1px solid var(--b1); }
+
+.fe-bottom { display: flex; justify-content: center; align-items: center; padding-top: var(--sp12); margin-top: var(--sp4); }
+
+.fe-copy { background: #050505; }
+.fe-copy .copy-bar-inner span, .fe-copy .copy-bar-inner a { color: rgba(255,255,255,0.35); }
+.fe-copy .copy-bar-inner a:hover { color: #fff; }
+.fe-copy .copy-dot { background: rgba(255,255,255,0.12); }
+
+/* ══════════════════════════════════════════════════════
+   F — THE CHARCOAL CLASSIC: Charcoal, 5-col, NEMO. brand bottom
+   Pattern: Dense structured dark grid with horizontal social pills
+═══════════════════════════════════════════════════════ */
+.ff { background: var(--charcoal); color: #fff; }
+.ff-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.ff-hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp20); align-items: end; padding-bottom: var(--sp16); border-bottom: 1px solid var(--b1); margin-bottom: var(--sp16); }
+
+.ff-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); }
+
+.ff-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp16); border-top: 1px solid var(--b1); margin-top: var(--sp12); }
+
+.ff-clocks { display: flex; gap: var(--sp12); }
+.ff-clock { display: flex; align-items: center; gap: var(--sp3); }
+.ff-clock-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(53,214,135,0.4); animation: ff-pulse 2s ease-in-out infinite; }
+@keyframes ff-pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+.ff-clock-city { font-family: var(--font-haas); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.45); }
+.ff-clock-time { font-family: var(--font-aeonik); font-size: 15px; color: #fff; letter-spacing: -0.3px; font-variant-numeric: tabular-nums; }
+
+.ff-copy { background: var(--black); }
+.ff-copy .copy-bar-inner { justify-content: space-between; }
+.ff-copy .copy-bar-inner span, .ff-copy .copy-bar-inner a { color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; }
+.ff-copy .copy-bar-inner a:hover { color: #fff; }
+
+/* ══════════════════════════════════════════════════════
+   G — GREEN AURORA: Black-to-deep-green gradient
+   Pattern: Gradient bg with subtle green aurora glow at top
+═══════════════════════════════════════════════════════ */
+.fg { background: linear-gradient(180deg, #0a1f12 0%, #0d1510 30%, var(--black) 100%); color: #fff; position: relative; overflow: hidden; }
+.fg-aurora { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 1200px; height: 500px; background: radial-gradient(ellipse at 30% 0%, rgba(53,214,135,0.08) 0%, transparent 50%), radial-gradient(ellipse at 70% 0%, rgba(53,214,135,0.05) 0%, transparent 50%); pointer-events: none; }
+.fg-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fg-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp20); align-items: end; padding-bottom: var(--sp16); border-bottom: 1px solid rgba(53,214,135,0.1); margin-bottom: var(--sp16); }
+
+.fg-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); }
+
+.fg-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp12); margin-top: var(--sp6); }
+
+.fg-copy { background: rgba(0,0,0,0.4); }
+.fg-copy .copy-bar-inner span, .fg-copy .copy-bar-inner a { color: rgba(255,255,255,0.35); }
+.fg-copy .copy-bar-inner a:hover { color: var(--green); }
+.fg-copy .copy-dot { background: rgba(53,214,135,0.25); }
+
+/* ══════════════════════════════════════════════════════
+   H — MIDNIGHT INDIGO: Deep blue-violet to dark gradient
+   Pattern: Premium dark gradient shifting from indigo to black
+═══════════════════════════════════════════════════════ */
+.fh { background: linear-gradient(160deg, #0f0c29 0%, #12111a 40%, var(--black) 100%); color: #fff; position: relative; overflow: hidden; }
+.fh-mesh { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 10%, rgba(99,102,241,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.04) 0%, transparent 50%); pointer-events: none; }
+.fh-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fh-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: var(--sp16); }
+
+.fh-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: var(--sp10); }
+.fh-brand-block { font-family: var(--font-aeonik); font-size: 28px; letter-spacing: -0.5px; color: #fff; }
+.fh-brand-desc { font-family: var(--font-haas); font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; margin-top: var(--sp4); max-width: 300px; }
+
+.fh-copy { background: rgba(0,0,0,0.5); }
+.fh-copy .copy-bar-inner span, .fh-copy .copy-bar-inner a { color: rgba(255,255,255,0.3); }
+.fh-copy .copy-bar-inner a:hover { color: #fff; }
+.fh-copy .copy-dot { background: rgba(255,255,255,0.1); }
+
+/* Pill variant for gradient footers — frosted glass look */
+.social-pill--glass { color: #fff; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); }
+.social-pill--glass:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+
+/* ══════════════════════════════════════════════════════
+   I — WARM DUSK: Warm cream fading into charcoal
+   Pattern: Top half warm cream, bottom half fades to dark
+═══════════════════════════════════════════════════════ */
+.fi { background: linear-gradient(180deg, var(--warm-cream) 0%, #c8c9be 35%, #4a4a45 65%, var(--charcoal) 100%); color: #111; position: relative; }
+.fi-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fi-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: var(--sp16); }
+
+.fi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); }
+/* Links transition from dark to light as the gradient shifts */
+.fi-col-title { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.4); margin-bottom: var(--sp4); }
+.fi-col a { display: block; font-family: var(--font-haas); font-size: 14px; color: rgba(0,0,0,0.7); padding: 6px 0; transition: color var(--e-fast); }
+.fi-col a:hover { color: #000; }
+
+.fi-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp16); border-top: 1px solid rgba(255,255,255,0.1); margin-top: var(--sp12); }
+.fi-brand { font-family: var(--font-aeonik); font-size: 22px; letter-spacing: -0.5px; color: #fff; }
+
+.fi-copy { background: var(--black); }
+.fi-copy .copy-bar-inner span, .fi-copy .copy-bar-inner a { color: rgba(255,255,255,0.4); }
+.fi-copy .copy-bar-inner a:hover { color: #fff; }
+.fi-copy .copy-dot { background: rgba(255,255,255,0.15); }
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .fa-top, .fb-hero, .fc-top, .ff-hero, .fg-top, .fh-top, .fi-top { grid-template-columns: 1fr; gap: var(--sp10); }
+  .fa-grid, .fc-grid, .ff-grid, .fg-grid, .fi-grid { grid-template-columns: 1fr 1fr; }
+  .fb-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .fd-split { grid-template-columns: 1fr; }
+  .fd-right-grid { grid-template-columns: 1fr 1fr; }
+  .fe-grid { grid-template-columns: 1fr 1fr; }
+  .fh-grid { grid-template-columns: 1fr 1fr; }
+  .fa-bottom, .fb-bottom, .fc-bottom, .fd-right-bottom, .ff-bottom, .fg-bottom, .fi-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp6); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     A — VERCEL-INSPIRED (Warm Cream, 5-col grid)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>A · Warm Cream — Vercel-Style Grid</span></div>
+<footer class="fa">
+  <div class="fa-inner">
+    <!-- Newsletter Row (Locked from V2) -->
+    <div class="fa-top">
+      <div>
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-label">Subscribe to our updates</p>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- 5-Col Structured Grid -->
+    <div class="fa-grid">
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Services</p>
+        <a href="#">Branding</a>
+        <a href="#">Web Design</a>
+        <a href="#">Product Design</a>
+        <a href="#">E-commerce</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Studio</p>
+        <a href="#">About</a>
+        <a href="#">Process</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Resources</p>
+        <a href="#">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="col-title col-title--light">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--light">Instagram</a>
+          <a href="#" class="social-pill social-pill--light">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--light">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom branding -->
+    <div class="fa-bottom">
+      <span class="fa-brand">NEMO</span>
+      <div class="social-row">
+        <span style="font-family:var(--font-haas);font-size:13px;color:rgba(0,0,0,0.45);">Cairo, Egypt</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant footer-giant--dark" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fa-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy Policy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms of Service</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     B — LINEAR-INSPIRED (Navy, 6-col dense)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>B · Navy Base — Linear-Style Dense Grid</span></div>
+<footer class="fb">
+  <div class="fb-inner">
+    <!-- Hero Newsletter Row -->
+    <div class="fb-hero">
+      <div>
+        <h2 class="nl-h nl-h--white">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-label nl-label--white">Subscribe to our updates</p>
+        <form class="nl-form nl-form--dark" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta nl-meta--white">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- 6-Column Dense Grid -->
+    <div class="fb-grid">
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Product</p>
+        <a href="#">Branding</a>
+        <a href="#">Web Design</a>
+        <a href="#">Product Design</a>
+        <a href="#">E-commerce</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Capabilities</p>
+        <a href="#">Strategy</a>
+        <a href="#">UX / UI</a>
+        <a href="#">Development</a>
+        <a href="#">AI Solutions</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Explore</p>
+        <a href="#">Home</a>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Company</p>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Legal</p>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+      <div>
+        <p class="col-title col-title--dark">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--dark">Instagram</a>
+          <a href="#" class="social-pill social-pill--dark">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--dark">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fb-bottom">
+      <div class="fb-status">
+        <span class="fb-status-dot"></span> All systems operational
+      </div>
+      <div class="social-row">
+        <span style="font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,0.35);">Cairo · Remote</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fb-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     C — RESEND-INSPIRED (White, minimal with address)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>C · Clean White — Resend-Style Minimal</span></div>
+<footer class="fc">
+  <div class="fc-inner">
+    <div class="fc-top">
+      <div>
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+        <p class="fc-address">
+          Nemo Digital Studio<br>
+          Cairo, Egypt<br>
+          hello@madebynemo.com
+        </p>
+      </div>
+      <div>
+        <p class="nl-label">Subscribe to our updates</p>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fc-grid">
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Services</p>
+        <a href="#">Branding</a>
+        <a href="#">Web Design</a>
+        <a href="#">Product Design</a>
+        <a href="#">AI Solutions</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Resources</p>
+        <a href="#">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#">FAQ</a>
+        <a href="#">Pricing</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Company</p>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="col-links col-links--light">
+        <p class="col-title col-title--light">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+      <div>
+        <p class="col-title col-title--light">Social</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--light">Instagram</a>
+          <a href="#" class="social-pill social-pill--light">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--light">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc-bottom">
+      <span style="font-family:var(--font-haas);font-size:13px;color:rgba(0,0,0,0.45);">© 2026 Nemo Inc.</span>
+      <div class="social-row">
+        <span style="font-family:var(--font-haas);font-size:13px;color:rgba(0,0,0,0.45);">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant footer-giant--dark" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fc-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Cairo, Egypt</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     D — THE SPLIT PANEL (White left + Charcoal right)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>D · Split Panel — White Card vs Charcoal Card</span></div>
+<footer class="fd">
+  <div class="fd-inner">
+    <div class="fd-split">
+      <!-- Left: Newsletter -->
+      <div class="fd-left">
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+        <div>
+          <p class="nl-label">Subscribe to our updates</p>
+          <form class="nl-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="nl-meta">One email a month. Unsubscribe anytime.</p>
+        </div>
+      </div>
+
+      <!-- Right: Grid + Socials -->
+      <div class="fd-right">
+        <div class="fd-right-grid">
+          <div class="col-links col-links--dark">
+            <p class="col-title col-title--dark">Navigation</p>
+            <a href="#">Home</a>
+            <a href="#">Work</a>
+            <a href="#">Services</a>
+            <a href="#">About</a>
+          </div>
+          <div class="col-links col-links--dark">
+            <p class="col-title col-title--dark">Resources</p>
+            <a href="#">Careers</a>
+            <a href="#">Blog</a>
+            <a href="#">FAQ</a>
+            <a href="#">Contact</a>
+          </div>
+          <div class="col-links col-links--dark">
+            <p class="col-title col-title--dark">Legal</p>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+          </div>
+        </div>
+        <div class="fd-right-bottom">
+          <span class="fd-right-brand">NEMO</span>
+          <div class="social-row">
+            <a href="#" class="social-pill social-pill--dark">Instagram</a>
+            <a href="#" class="social-pill social-pill--dark">LinkedIn</a>
+            <a href="#" class="social-pill social-pill--dark">Dribbble</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant footer-giant--dark" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fd-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     E — THE AMBIENT GLOW (Full dark, centered hero)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>E · Ambient Glow — Dark Centered Hero</span></div>
+<footer class="fe">
+  <div class="fe-glow" aria-hidden="true"></div>
+  <div class="fe-inner">
+    <!-- Centered Hero CTA -->
+    <div class="fe-hero">
+      <span class="fe-eyebrow">Now taking 2026 projects</span>
+      <h2 class="nl-h nl-h--white" style="text-align:center;">Stay in the <em>loop</em></h2>
+      <div class="fe-form-wrap">
+        <p class="nl-label nl-label--white" style="text-align:center;">Subscribe to our updates</p>
+        <form class="nl-form nl-form--dark" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta nl-meta--white" style="text-align:center;">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <!-- 4-Col Grid -->
+    <div class="fe-grid">
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Explore</p>
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Studio</p>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="col-title col-title--dark">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--dark">Instagram</a>
+          <a href="#" class="social-pill social-pill--dark">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--dark">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Centered socials bottom -->
+    <div class="fe-bottom">
+      <span style="font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,0.3);">Cairo · Remote · Available</span>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fe-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     F — THE CHARCOAL CLASSIC (Restored from earlier version)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>F · The Charcoal Classic — Restored Fan Favorite</span></div>
+<footer class="ff">
+  <div class="ff-inner">
+    <div class="ff-hero">
+      <div>
+        <h2 class="nl-h nl-h--white">What's <em>next</em> is<br>already in motion</h2>
+      </div>
+      <div>
+        <p class="nl-label nl-label--white">Get early access to insights & work</p>
+        <form class="nl-form nl-form--dark" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta nl-meta--white">No spam. One dispatch a month.</p>
+      </div>
+    </div>
+
+    <div class="ff-grid">
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Product</p>
+        <a href="#">Branding</a>
+        <a href="#">Web design</a>
+        <a href="#">Apps</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Services</p>
+        <a href="#">Strategy</a>
+        <a href="#">Architecture</a>
+        <a href="#">UX / UI</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Studio</p>
+        <a href="#">Culture</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Archive</p>
+        <a href="#">Case Studies</a>
+        <a href="#">Experiments</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+      </div>
+    </div>
+
+    <div class="ff-bottom">
+      <div class="ff-clocks">
+        <div class="ff-clock">
+          <span class="ff-clock-dot"></span>
+          <span class="ff-clock-city">Istanbul</span>
+          <span class="ff-clock-time" id="ff-ist">--:--</span>
+        </div>
+        <div class="ff-clock">
+          <span class="ff-clock-dot"></span>
+          <span class="ff-clock-city">Cairo</span>
+          <span class="ff-clock-time" id="ff-cai">--:--</span>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="#" class="social-pill social-pill--dark">Instagram</a>
+        <a href="#" class="social-pill social-pill--dark">LinkedIn</a>
+        <a href="#" class="social-pill social-pill--dark">Dribbble</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar ff-copy">
+    <div class="copy-bar-inner">
+      <span>© <span class="js-year">2026</span> NEMO</span>
+      <span>ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     G — GREEN AURORA GRADIENT (Black with green shimmer)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>G · Green Aurora — Gradient Dark with Emerald Glow</span></div>
+<footer class="fg">
+  <div class="fg-aurora" aria-hidden="true"></div>
+  <div class="fg-inner">
+    <div class="fg-top">
+      <div>
+        <h2 class="nl-h nl-h--white">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-label nl-label--white">Subscribe to our updates</p>
+        <form class="nl-form nl-form--dark" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta nl-meta--white">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fg-grid">
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Services</p>
+        <a href="#">Branding</a>
+        <a href="#">Web Design</a>
+        <a href="#">Product Design</a>
+        <a href="#">AI Solutions</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Studio</p>
+        <a href="#">About</a>
+        <a href="#">Process</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Resources</p>
+        <a href="#">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="col-title col-title--dark">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--glass">Instagram</a>
+          <a href="#" class="social-pill social-pill--glass">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--glass">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fg-bottom">
+      <span style="font-family:var(--font-aeonik);font-size:22px;letter-spacing:-0.5px;color:#fff;">NEMO<span style="color:var(--green)">.</span></span>
+      <span style="font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,0.3);">Cairo · Remote</span>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fg-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     H — MIDNIGHT INDIGO (Deep blue-violet gradient)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>H · Midnight Indigo — Deep Violet Gradient</span></div>
+<footer class="fh">
+  <div class="fh-mesh" aria-hidden="true"></div>
+  <div class="fh-inner">
+    <div class="fh-top">
+      <div>
+        <h2 class="nl-h nl-h--white">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-label nl-label--white">Subscribe to our updates</p>
+        <form class="nl-form nl-form--dark" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta nl-meta--white">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fh-grid">
+      <div>
+        <span class="fh-brand-block">NEMO</span>
+        <p class="fh-brand-desc">
+          We create digital products with advanced technologies to build memorable experiences and transform brands.
+        </p>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Explore</p>
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Company</p>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="col-links col-links--dark">
+        <p class="col-title col-title--dark">Legal</p>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div>
+        <p class="col-title col-title--dark">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--glass">Instagram</a>
+          <a href="#" class="social-pill social-pill--glass">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--glass">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fh-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     I — WARM DUSK (Cream fading into Charcoal)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>I · Warm Dusk — Cream to Charcoal Gradient</span></div>
+<footer class="fi">
+  <div class="fi-inner">
+    <div class="fi-top">
+      <div>
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-label">Subscribe to our updates</p>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-meta">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fi-grid">
+      <div class="fi-col">
+        <p class="fi-col-title">Services</p>
+        <a href="#">Branding</a>
+        <a href="#">Web Design</a>
+        <a href="#">Product Design</a>
+      </div>
+      <div class="fi-col">
+        <p class="fi-col-title">Studio</p>
+        <a href="#">About</a>
+        <a href="#">Process</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="fi-col">
+        <p class="fi-col-title">Resources</p>
+        <a href="#">Case Studies</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="fi-col">
+        <p class="fi-col-title">Legal</p>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="fi-col-title">Connect</p>
+        <div class="social-row" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="social-pill social-pill--light">Instagram</a>
+          <a href="#" class="social-pill social-pill--light">LinkedIn</a>
+          <a href="#" class="social-pill social-pill--light">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fi-bottom">
+      <span class="fi-brand">NEMO<span style="color:var(--green)">.</span></span>
+      <div class="social-row">
+        <span style="font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,0.5);">Cairo · Remote</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line copy-bar fi-copy">
+    <div class="copy-bar-inner">
+      <span>© 2026 Nemo</span>
+      <span class="copy-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="copy-dot"></span>
+      <a href="#">Terms</a>
+      <span class="copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lab"><span>End of Footer Mix Lab 5.0</span></div>
+
+<script>
+// Live city clocks for F variant
+function updateClocks() {
+  const fmt = (tz) => {
+    const d = new Date();
+    return d.toLocaleTimeString('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  };
+  const ist = document.getElementById('ff-ist');
+  const cai = document.getElementById('ff-cai');
+  if (ist) ist.textContent = fmt('Europe/Istanbul');
+  if (cai) cai.textContent = fmt('Africa/Cairo');
+}
+updateClocks();
+setInterval(updateClocks, 1000);
+
+// Dynamic year
+document.querySelectorAll('.js-year').forEach(el => {
+  el.textContent = new Date().getFullYear();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 7.0 (Intense WebGL + Fresh Layouts)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+:root {
+  --green:#35D687; --green-dim:rgba(53,214,135,0.12);
+  --black:#0D0D0D; --charcoal:#1A1A1A; --off-white:#F5F5F0;
+  --b1:rgba(255,255,255,0.07); --b2:rgba(255,255,255,0.12); --b3:rgba(255,255,255,0.20);
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:28px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-xl:20px;--r-pill:9999px;
+  --e-fast:150ms ease-in-out; --container:1312px;
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* Label */
+.lab{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) var(--sp6);font-family:var(--font-aeonik);font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.35);display:flex;align-items:center;gap:var(--sp4);}
+.lab::before,.lab::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.08);}
+.lab span{padding:0 var(--sp3);color:#111;font-size:13px;letter-spacing:0.05em;}
+
+/* Newsletter */
+.nl-h{font-family:var(--font-aeonik);font-size:clamp(36px,4.5vw,56px);font-weight:400;letter-spacing:-1.5px;line-height:1.06;color:#fff;}
+.nl-h em{font-style:normal;color:var(--green);}
+.nl-sub{font-family:var(--font-haas);font-size:15px;color:rgba(255,255,255,0.45);line-height:1.6;margin-top:var(--sp3);max-width:380px;}
+.nl-lb{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-bottom:var(--sp3);}
+.nl-f{display:flex;background:rgba(255,255,255,0.06);border:1px solid var(--b2);border-radius:var(--r-pill);padding:4px;max-width:440px;}
+.nl-f input{flex:1;min-width:0;background:transparent;border:none;outline:none;padding:0 var(--sp4);font-family:var(--font-haas);font-size:14px;color:#fff;}
+.nl-f input::placeholder{color:rgba(255,255,255,0.3);}
+.nl-f button{background:var(--green);color:#0A1A10;border:none;border-radius:var(--r-pill);padding:0 var(--sp5);height:40px;font-family:var(--font-haas);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background var(--e-fast);}
+.nl-f button:hover{background:#29c275;}
+.nl-m{margin-top:var(--sp2);font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.35);}
+
+/* Social pills */
+.sp{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 var(--sp5);border-radius:var(--r-pill);font-family:var(--font-haas);font-size:13px;font-weight:500;transition:all var(--e-fast);cursor:pointer;color:#fff;border:1px solid var(--b2);background:transparent;}
+.sp:hover{background:rgba(255,255,255,0.07);border-color:var(--b3);}
+.srow{display:flex;gap:var(--sp2);flex-wrap:wrap;}
+
+/* Column links */
+.ct{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:var(--sp3);color:rgba(255,255,255,0.3);}
+.cl a{display:block;font-family:var(--font-haas);font-size:14px;padding:5px 0;color:rgba(255,255,255,0.7);transition:color var(--e-fast);}
+.cl a:hover{color:var(--green);}
+
+/* Inline links (horizontal) */
+.il{display:flex;gap:var(--sp6);flex-wrap:wrap;}
+.il a{font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,0.5);transition:color var(--e-fast);}
+.il a:hover{color:var(--green);}
+
+/* Clocks */
+.ck{display:flex;align-items:center;gap:var(--sp3);}
+.ck-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(53,214,135,0.5);animation:ckp 2s ease-in-out infinite;}
+@keyframes ckp{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.ck-city{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);}
+.ck-time{font-family:var(--font-aeonik);font-size:14px;color:#fff;letter-spacing:-0.3px;font-variant-numeric:tabular-nums;}
+
+/* Giant wordmark — TIGHT spacing to the GL canvas */
+.wm{overflow:hidden;padding:40px 40px 0;display:flex;align-items:center;justify-content:center;margin-bottom:-10px;position:relative;z-index:1;}
+.wm img{width:100%;max-width:1000px;height:auto;display:block;-webkit-mask-image:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 85%);mask-image:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 85%);user-select:none;pointer-events:none;}
+
+/* GL Canvas — NO gap from wordmark */
+.gl-strip{width:100%;display:block;position:relative;z-index:0;}
+
+/* Copy bar */
+.cpb{padding:var(--sp4) var(--sp10);background:var(--black);}
+.cpb-i{max-width:var(--container);margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.cpb-i span,.cpb-i a{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;}
+.cpb-i a:hover{color:#fff;}
+
+/* ═══════════════════════════════════════════
+   R1 — HORIZONTAL RAIL: Single-row inline links
+═══════════════════════════════════════════ */
+.r1{background:var(--charcoal);color:#fff;}
+.r1-inner{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) 0;}
+.r1-top{display:grid;grid-template-columns:1.4fr 1fr;gap:var(--sp16);align-items:end;padding-bottom:var(--sp16);border-bottom:1px solid var(--b1);}
+.r1-mid{padding:var(--sp10) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp6);border-bottom:1px solid var(--b1);}
+.r1-bottom{padding:var(--sp10) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp6);}
+
+/* ═══════════════════════════════════════════
+   R2 — COMPACT STACK: Newsletter + thin link bar
+═══════════════════════════════════════════ */
+.r2{background:#111;color:#fff;}
+.r2-inner{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) 0;}
+.r2-hero{text-align:center;max-width:600px;margin:0 auto var(--sp16);}
+.r2-hero .nl-h{font-size:clamp(42px,5vw,64px);}
+.r2-hero .nl-sub{margin:var(--sp4) auto 0;text-align:center;}
+.r2-form-c{display:flex;flex-direction:column;align-items:center;margin-top:var(--sp8);}
+.r2-form-c .nl-f{max-width:460px;width:100%;}
+.r2-form-c .nl-m{text-align:center;}
+.r2-rail{display:flex;justify-content:space-between;align-items:center;padding:var(--sp10) 0;border-top:1px solid var(--b1);flex-wrap:wrap;gap:var(--sp6);}
+
+/* ═══════════════════════════════════════════
+   R3 — 3-COL DENSE: Newsletter left, links center, socials right
+═══════════════════════════════════════════ */
+.r3{background:#151515;color:#fff;}
+.r3-inner{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) 0;}
+.r3-grid{display:grid;grid-template-columns:1.3fr 2fr 0.8fr;gap:var(--sp16);padding-bottom:var(--sp12);border-bottom:1px solid var(--b1);}
+.r3-links{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp8);}
+.r3-right{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
+.r3-bottom{padding:var(--sp10) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp6);}
+
+/* ═══════════════════════════════════════════
+   R4 — SPLIT NEWSLETTER: Big left card + right content
+═══════════════════════════════════════════ */
+.r4{background:#0e0e0e;color:#fff;}
+.r4-inner{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) 0;}
+.r4-split{display:grid;grid-template-columns:1fr 1.5fr;gap:0;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--b1);margin-bottom:var(--sp12);}
+.r4-left{background:rgba(53,214,135,0.04);border-right:1px solid var(--b1);padding:var(--sp16);display:flex;flex-direction:column;justify-content:center;gap:var(--sp6);}
+.r4-right{padding:var(--sp16);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp8);align-content:start;}
+.r4-right-bottom{grid-column:1/-1;padding-top:var(--sp8);border-top:1px solid var(--b1);margin-top:var(--sp4);display:flex;justify-content:space-between;align-items:center;}
+.r4-bottom{padding:var(--sp10) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp6);}
+
+/* Responsive */
+@media(max-width:900px){
+  .r1-top,.r3-grid,.r4-split{grid-template-columns:1fr;}
+  .r3-links{grid-template-columns:1fr 1fr;}
+  .r4-right{grid-template-columns:1fr 1fr;}
+  .r1-mid,.r1-bottom,.r2-rail,.r3-bottom,.r4-bottom,.r4-right-bottom{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     R1 — HORIZONTAL RAIL
+     All nav links in one horizontal row, super clean
+═══════════════════════════════════════════ -->
+<div class="lab"><span>R1 · Horizontal Rail — Inline Links, Minimal</span></div>
+<footer class="r1">
+  <div class="r1-inner">
+    <div class="r1-top">
+      <div>
+        <h2 class="nl-h">What's <em>next</em> is<br>already in motion</h2>
+        <p class="nl-sub">We ship ideas that move industries. Get our latest thinking before anyone else.</p>
+      </div>
+      <div>
+        <p class="nl-lb">Join the dispatch</p>
+        <form class="nl-f" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m">No spam, ever. One email a month.</p>
+      </div>
+    </div>
+
+    <!-- Inline horizontal links -->
+    <div class="r1-mid">
+      <div class="il">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <div class="srow">
+        <a href="#" class="sp">Instagram</a>
+        <a href="#" class="sp">LinkedIn</a>
+        <a href="#" class="sp">Dribbble</a>
+      </div>
+    </div>
+
+    <div class="r1-bottom">
+      <div style="display:flex;gap:var(--sp12);">
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Istanbul</span><span class="ck-time jc" data-tz="Europe/Istanbul">--:--</span></div>
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Cairo</span><span class="ck-time jc" data-tz="Africa/Cairo">--:--</span></div>
+      </div>
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.25);">Available for 2026 projects</span>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+  <canvas class="gl-strip" id="gl-r1" style="height:90px;"></canvas>
+  <div class="cpb"><div class="cpb-i"><span>© <span class="jy">2026</span> NEMO</span><span>ALL RIGHTS RESERVED</span></div></div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     R2 — CENTERED HERO STACK
+     Big centered newsletter, then single inline rail
+═══════════════════════════════════════════ -->
+<div class="lab"><span>R2 · Centered Stack — Hero Newsletter + Rail</span></div>
+<footer class="r2">
+  <div class="r2-inner">
+    <div class="r2-hero">
+      <h2 class="nl-h">Let's build<br>something <em>great</em></h2>
+      <p class="nl-sub">Subscribe for project insights, studio updates, and early access to our experiments.</p>
+      <div class="r2-form-c">
+        <form class="nl-f" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m">One dispatch a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="r2-rail">
+      <div class="il">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="srow">
+        <a href="#" class="sp">Instagram</a>
+        <a href="#" class="sp">LinkedIn</a>
+        <a href="#" class="sp">Dribbble</a>
+      </div>
+    </div>
+
+    <div style="padding:var(--sp8) 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--sp6);">
+      <div style="display:flex;gap:var(--sp12);">
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Istanbul</span><span class="ck-time jc" data-tz="Europe/Istanbul">--:--</span></div>
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Cairo</span><span class="ck-time jc" data-tz="Africa/Cairo">--:--</span></div>
+      </div>
+      <div class="il"><a href="#">Privacy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+  <canvas class="gl-strip" id="gl-r2" style="height:90px;"></canvas>
+  <div class="cpb"><div class="cpb-i"><span>© <span class="jy">2026</span> NEMO</span><span>ALL RIGHTS RESERVED</span></div></div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     R3 — 3-COL DENSE
+     Newsletter left, 4-col links center, socials right
+═══════════════════════════════════════════ -->
+<div class="lab"><span>R3 · Dense Three-Panel — Newsletter + Grid + Socials</span></div>
+<footer class="r3">
+  <div class="r3-inner">
+    <div class="r3-grid">
+      <!-- Left: Newsletter -->
+      <div>
+        <h2 class="nl-h" style="font-size:clamp(32px,3.5vw,44px);">Stay in<br>the <em>loop</em></h2>
+        <div style="margin-top:var(--sp6);">
+          <p class="nl-lb">Subscribe</p>
+          <form class="nl-f" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="nl-m">One email a month.</p>
+        </div>
+      </div>
+
+      <!-- Center: 4-col links -->
+      <div class="r3-links">
+        <div class="cl">
+          <p class="ct">Product</p>
+          <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Apps</a>
+        </div>
+        <div class="cl">
+          <p class="ct">Services</p>
+          <a href="#">Strategy</a><a href="#">UX / UI</a><a href="#">Development</a>
+        </div>
+        <div class="cl">
+          <p class="ct">Studio</p>
+          <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a>
+        </div>
+        <div class="cl">
+          <p class="ct">Legal</p>
+          <a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+      </div>
+
+      <!-- Right: Socials stacked -->
+      <div class="r3-right">
+        <div class="srow" style="flex-direction:column;gap:var(--sp2);">
+          <a href="#" class="sp">Instagram</a>
+          <a href="#" class="sp">LinkedIn</a>
+          <a href="#" class="sp">Dribbble</a>
+        </div>
+        <div style="text-align:right;">
+          <div class="ck" style="justify-content:flex-end;"><span class="ck-dot"></span><span class="ck-city">Istanbul</span><span class="ck-time jc" data-tz="Europe/Istanbul">--:--</span></div>
+          <div class="ck" style="justify-content:flex-end;margin-top:var(--sp2);"><span class="ck-dot"></span><span class="ck-city">Cairo</span><span class="ck-time jc" data-tz="Africa/Cairo">--:--</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+  <canvas class="gl-strip" id="gl-r3" style="height:90px;"></canvas>
+  <div class="cpb"><div class="cpb-i"><span>© <span class="jy">2026</span> NEMO</span><span>ALL RIGHTS RESERVED</span></div></div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════
+     R4 — SPLIT CARD: Green-tint left + dark right
+═══════════════════════════════════════════ -->
+<div class="lab"><span>R4 · Split Card — Green-Tint Newsletter + Dark Grid</span></div>
+<footer class="r4">
+  <div class="r4-inner">
+    <div class="r4-split">
+      <div class="r4-left">
+        <h2 class="nl-h" style="font-size:clamp(32px,3.5vw,44px);">What's <em>next</em><br>starts here</h2>
+        <p class="nl-sub" style="max-width:320px;">Get first access to our latest projects, insights, and experiments.</p>
+        <div>
+          <form class="nl-f" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="nl-m">No spam. Monthly dispatch.</p>
+        </div>
+      </div>
+      <div class="r4-right">
+        <div class="cl">
+          <p class="ct">Product</p>
+          <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Apps</a>
+        </div>
+        <div class="cl">
+          <p class="ct">Studio</p>
+          <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a>
+        </div>
+        <div class="cl">
+          <p class="ct">Legal</p>
+          <a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+        <div class="r4-right-bottom">
+          <div style="display:flex;gap:var(--sp10);">
+            <div class="ck"><span class="ck-dot"></span><span class="ck-city">Istanbul</span><span class="ck-time jc" data-tz="Europe/Istanbul">--:--</span></div>
+            <div class="ck"><span class="ck-dot"></span><span class="ck-city">Cairo</span><span class="ck-time jc" data-tz="Africa/Cairo">--:--</span></div>
+          </div>
+          <div class="srow">
+            <a href="#" class="sp">Ig</a>
+            <a href="#" class="sp">Li</a>
+            <a href="#" class="sp">Dr</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+  <canvas class="gl-strip" id="gl-r4" style="height:90px;"></canvas>
+  <div class="cpb"><div class="cpb-i"><span>© <span class="jy">2026</span> NEMO</span><span>ALL RIGHTS RESERVED</span></div></div>
+</footer>
+
+
+<div class="lab"><span>End of Footer Lab 7.0</span></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   WebGL Shader — Intense Reactive Green Neon
+   MORE mouse response, THICKER glow, ORGANIC flow
+═══════════════════════════════════════════ */
+function initGL(id) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const gl = c.getContext('webgl', { alpha: false, antialias: true });
+  if (!gl) return;
+
+  const vs = `
+    attribute vec2 a_pos;
+    varying vec2 v_uv;
+    void main(){ v_uv = a_pos * 0.5 + 0.5; gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+
+  const fs = `
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_m;
+    uniform vec2 u_r;
+    varying vec2 v_uv;
+
+    #define G vec3(0.207, 0.839, 0.529)
+
+    float n(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+    float sn(vec2 p){
+      vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+      return mix(mix(n(i),n(i+vec2(1,0)),f.x),mix(n(i+vec2(0,1)),n(i+vec2(1,1)),f.x),f.y);
+    }
+    float fbm(vec2 p){
+      float v=0.0,a=0.5,f=1.0;
+      for(int i=0;i<5;i++){v+=a*sn(p*f);f*=2.0;a*=0.5;}
+      return v;
+    }
+
+    void main(){
+      vec2 uv = v_uv;
+      vec2 asp = vec2(u_r.x/u_r.y, 1.0);
+      vec2 p = (uv - 0.5) * asp;
+      float dist = abs(p.y);
+
+      // Edge fading
+      float hf = smoothstep(0.0, 0.15, uv.x) * smoothstep(0.0, 0.15, 1.0-uv.x);
+      float vf = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vf = smoothstep(0.0, 1.0, vf);
+      float fade = hf * pow(vf, 1.2);
+
+      // Organic noise
+      float noise = fbm(vec2(uv.x * 4.0 - u_t * 0.15, uv.y * 5.0 + u_t * 0.05)) * 0.35 + 0.65;
+
+      // INTENSE mouse reactivity
+      float md = length(uv - u_m);
+      float mi = smoothstep(0.35, 0.0, md) * 0.8;
+      // Mouse creates a local glow burst
+      float mGlow = exp(-md * 8.0) * 0.6;
+
+      // Multi-layer line glow (THICKER)
+      float glow = 0.0;
+      glow += exp(-dist * 300.0) * 1.2;  // hot core
+      glow += exp(-dist * 100.0) * 0.7;  // inner bloom
+      glow += exp(-dist * 40.0)  * 0.4;  // outer bloom
+      glow += exp(-dist * 15.0)  * 0.15; // wide ambient
+      glow *= fade * noise;
+
+      // Mouse additive
+      glow += mi * fade;
+      glow += mGlow;
+
+      // Flowing energy pulses
+      float flow = sin(uv.x * 8.0 - u_t * 2.5 + fbm(uv * 3.0) * 3.0) * 0.5 + 0.5;
+      float flow2 = sin(uv.x * 12.0 + u_t * 1.8 + fbm(uv * 5.0) * 2.0) * 0.5 + 0.5;
+      flow = smoothstep(0.2, 0.8, flow);
+      flow2 = smoothstep(0.3, 0.7, flow2);
+      glow *= (0.6 + flow * 0.25 + flow2 * 0.15);
+
+      // Slight color shift near mouse (cooler tint)
+      vec3 lineColor = G;
+      lineColor = mix(lineColor, vec3(0.3, 0.9, 0.7), mGlow * 0.5);
+
+      // Background — match footer charcoal
+      vec3 bg = vec3(0.067, 0.067, 0.067);
+
+      // Subtle ambient light from the line
+      float ambient = exp(-dist * 6.0) * 0.03 * fade;
+      bg += G * ambient;
+
+      vec3 color = mix(bg, lineColor * clamp(glow, 0.0, 2.5), clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compile(src, type) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(vs, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(fs, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog, 'u_t');
+  const uM = gl.getUniformLocation(prog, 'u_m');
+  const uR = gl.getUniformLocation(prog, 'u_r');
+
+  let mouse = [0.5, 0.5];
+  c.addEventListener('mousemove', (e) => {
+    const r = c.getBoundingClientRect();
+    mouse[0] = (e.clientX - r.left) / r.width;
+    mouse[1] = 1.0 - (e.clientY - r.top) / r.height;
+  });
+  c.addEventListener('mouseleave', () => { mouse = [0.5, 0.5]; });
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    gl.viewport(0, 0, c.width, c.height);
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  const t0 = performance.now();
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) / 1000);
+    gl.uniform2f(uM, mouse[0], mouse[1]);
+    gl.uniform2f(uR, c.width, c.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+}
+
+// Init all canvases
+['gl-r1','gl-r2','gl-r3','gl-r4'].forEach(initGL);
+
+// Clocks
+function tick(){
+  document.querySelectorAll('.jc').forEach(el => {
+    el.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:el.dataset.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  });
+}
+tick(); setInterval(tick, 1000);
+
+// Year
+document.querySelectorAll('.jy').forEach(e => { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

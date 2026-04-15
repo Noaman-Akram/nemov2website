@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Home Test (Realm-inspired variants)</title>
+<style>
+/* ══════════════════════════════════════════════════════
+   NEMO — Home TEST page
+   Mirrors src/app/page.tsx visuals, adds Realm-inspired
+   variants on: (1) top white logo marquee,
+   (2) tag-style section labels, (3) Work cards w/ no bg,
+   (4) redone upper footer (giant NEMO + breathing line
+       bottom bar are UNTOUCHED)
+
+   Fonts + tokens mirror src/app/globals.css and
+   src/app/layout.tsx EXACTLY.
+════════════════════════════════════════════════════════ */
+
+/* ── Real project fonts (same files loaded by layout.tsx) ── */
+@font-face {
+  font-family: 'AeonikPro';
+  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'NeueHaas';
+  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* ── Tokens — copied verbatim from src/app/globals.css ── */
+:root {
+  /* Brand Colors (LOCKED) */
+  --green:           #35D687;
+  --green-dim:       rgba(53, 214, 135, 0.12);
+  --green-border:    rgba(53, 214, 135, 0.28);
+  --green-hover:     #29c275;
+
+  /* Dark Surfaces */
+  --black:           #080808;
+  --navy:            #13171D;
+  --charcoal:        #222222;
+  --s0:              #080808;
+  --s1:              #13171D;
+  --s2:              #222222;
+  --s3:              rgba(255, 255, 255, 0.04);
+  --s3h:             rgba(255, 255, 255, 0.07);
+
+  /* Light / Neutral */
+  --white:           #FFFFFF;
+  --off-white:       #FAFBFC;
+  --warm:            #EDE9E0;
+  --warm-cream:      #E9EBDF;
+  --gray:            #868788;
+
+  /* Borders */
+  --b1:              rgba(255, 255, 255, 0.07);
+  --b2:              rgba(255, 255, 255, 0.12);
+  --b3:              rgba(255, 255, 255, 0.20);
+  --b-green:         rgba(53, 214, 135, 0.28);
+  --b-dark:          rgba(0, 0, 0, 0.15);
+
+  /* Text */
+  --t1:              #FFFFFF;
+  --t2:              #F3F3F3;
+  --t3:              #868788;
+  --t-off:           rgba(255, 255, 255, 0.25);
+
+  /* Spacing */
+  --sp1:  4px;  --sp2:  8px;  --sp3: 12px;
+  --sp4: 16px;  --sp5: 20px;  --sp6: 24px;
+  --sp7: 28px;  --sp8: 32px;  --sp10: 40px;
+  --sp12: 48px; --sp16: 64px; --sp20: 80px;  --sp32: 128px;
+
+  /* Border Radius */
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:  16px;
+  --r-xl:  20px;
+  --r-pill: 9999px;
+
+  /* Motion */
+  --e-fast:   150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+  --e-slow:   500ms ease-in-out;
+
+  /* Shadows */
+  --shadow-md: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 4px 8px -2px rgba(0,0,0,0.1);
+
+  /* Layout */
+  --container: 1312px;
+
+  /* Fonts — LOCAL project fonts, not Inter */
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas:   'NeueHaas', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: #111;
+  font-family: var(--font-haas), 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Section label variants ─────────────────────────────
+   Default on this page = Realm-style "tag".
+   Old slash-style is kept under .eyebrow for reference. */
+.eyebrow {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 11px; font-weight: 700;
+  color: #999;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp4);
+}
+/* Realm-style tag: small radius, uppercase, light border,
+   transparent bg, 0.5px tracking, 500 weight. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-aeonik);
+  font-size: 12px;
+  font-weight: 500;
+  color: #535252;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: var(--r-sm);
+  padding: 4px 16px;
+  margin-bottom: var(--sp6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+/* Dark-bg variant */
+.tag--dark {
+  color: rgba(255,255,255,0.7);
+  border-color: var(--b2);
+}
+
+/* ══════════════════════════════════════════════════════
+   NAV (simplified — static white variant)
+═══════════════════════════════════════════════════════ */
+.site-header {
+  position: fixed; top: 12px; left: 24px; right: 24px;
+  height: 56px; display: flex; align-items: center;
+  z-index: 900; pointer-events: none;
+}
+.site-header-inner {
+  max-width: var(--container); margin: 0 auto; width: 100%;
+  padding: 0 40px;
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 24px;
+}
+.logo {
+  pointer-events: auto;
+  font-family: var(--font-aeonik);
+  font-size: 17px; font-weight: 500; letter-spacing: -0.3px;
+  color: #111;
+}
+.nav-pill {
+  display: flex; gap: 4px; justify-content: center; align-items: center;
+  background: rgba(250,251,252,0.65);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 9999px; padding: 6px;
+  pointer-events: auto;
+}
+.nav-pill a {
+  font-size: 14px; color: rgba(0,0,0,0.6);
+  padding: 10px 18px; border-radius: 9999px;
+}
+.nav-pill a.active { color: #111; background: rgba(0,0,0,0.05); }
+.nav-actions { display:flex; justify-content:flex-end; pointer-events:auto; }
+.nav-cta {
+  font-size: 13px; padding: 0 20px; height: 36px;
+  display: inline-flex; align-items: center;
+  background: var(--warm-cream); color: #151515;
+  border-radius: 9999px;
+}
+
+/* ══════════════════════════════════════════════════════
+   [NEW] TOP WHITE LOGO MARQUEE
+   Realm-inspired, lives ABOVE hero & above the black band.
+   White background, slow speed, muted mono logos.
+═══════════════════════════════════════════════════════ */
+.top-marquee {
+  padding: var(--sp12) 0 var(--sp16);
+  background: var(--off-white);
+  overflow: hidden;
+}
+.top-marquee-caption {
+  text-align: center;
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: #777;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--sp8);
+}
+.top-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 60s linear infinite; /* slow */
+  align-items: center;
+}
+.top-marquee-track span {
+  flex-shrink: 0;
+  margin: 0 var(--sp10);
+  font-family: var(--font-aeonik);
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.35);
+  letter-spacing: -0.3px;
+}
+.top-marquee-fade {
+  position: relative;
+}
+.top-marquee-fade::before,
+.top-marquee-fade::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px;
+  pointer-events: none; z-index: 2;
+}
+.top-marquee-fade::before {
+  left: 0; background: linear-gradient(90deg, var(--off-white), transparent);
+}
+.top-marquee-fade::after {
+  right: 0; background: linear-gradient(-90deg, var(--off-white), transparent);
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ══════════════════════════════════════════════════════
+   HERO  (kept ~ identical to live site)
+═══════════════════════════════════════════════════════ */
+.hero-section {
+  padding: calc(var(--sp20) + 56px) var(--sp10) var(--sp12);
+  min-height: 60vh;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-inner {
+  max-width: var(--container); width: 100%; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp10);
+  align-items: flex-end;
+}
+.hero-h1 {
+  font-family: var(--font-aeonik);
+  font-size: clamp(40px, 5vw, 68px);
+  font-weight: 400; line-height: 1.05;
+  letter-spacing: -2px; color: var(--black);
+}
+.hero-right {
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: var(--sp6); padding-bottom: var(--sp2);
+}
+.hero-desc {
+  font-size: 15px; line-height: 1.65; color: #555; max-width: 340px;
+}
+.btn-glow-hero {
+  position: relative; display: inline-flex; align-items: center;
+  gap: var(--sp2); font-size: 14px; font-weight: 500; color: var(--black);
+  border-radius: var(--r-pill); height: 44px; padding: 0 var(--sp6);
+  overflow: hidden; z-index: 1;
+}
+.btn-glow-hero::before {
+  content: ''; position: absolute; top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent 70%, var(--green) 100%);
+  animation: rotate-glow 2s linear infinite; z-index: -2;
+}
+.btn-glow-hero::after {
+  content: ''; position: absolute; inset: 1.5px;
+  background: var(--off-white); border-radius: var(--r-pill); z-index: -1;
+  transition: background var(--e-fast);
+}
+.btn-glow-hero:hover::after { background: #f0f2f5; }
+@keyframes rotate-glow { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════════════════
+   BLACK CLIENT BAND — HIDDEN on this variant
+═══════════════════════════════════════════════════════ */
+.dark-marquee { display: none; }
+.dark-marquee-legacy {
+  background: #080808;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+.dark-marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+  width: max-content;
+}
+.dark-marquee-track span {
+  margin: 0 40px;
+  font-family: var(--font-aeonik);
+  font-size: 20px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE / DASHBOARD MOCK (dark) — unchanged, tag label
+═══════════════════════════════════════════════════════ */
+.feature-wrap {
+  background: var(--black);
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  padding: var(--sp20) var(--sp10);
+  position: relative; overflow: hidden;
+  border-left: 1px solid var(--b1);
+  border-right: 1px solid var(--b1);
+  border-bottom: 1px solid var(--b1);
+}
+.feature-glow {
+  position: absolute; top: 10%; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--green-dim) 0%, transparent 70%);
+  pointer-events: none;
+}
+.feature-badge {
+  position: absolute; top: 100px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(53,214,135,0.15);
+  border-radius: var(--r-pill);
+  padding: var(--sp2) var(--sp6);
+  color: var(--green);
+  font-size: 13px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: var(--sp3);
+  z-index: 10;
+  border: 1px solid var(--b-green);
+  box-shadow: 0 0 24px var(--green-dim);
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+.feature-badge-new {
+  background: rgba(0,0,0,0.2);
+  padding: 2px var(--sp2);
+  border-radius: var(--r-sm);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-right: var(--sp1);
+}
+.feature-grid {
+  max-width: var(--container);
+  margin: var(--sp20) auto 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: center;
+  position: relative; z-index: 2;
+}
+.feature-text {
+  font-family: var(--font-aeonik);
+  color: var(--t1);
+  font-size: 28px; line-height: 1.4;
+  font-weight: 400; max-width: 480px;
+}
+/* minimal mock panel — just a placeholder for this test */
+.mock-ui {
+  background: #0A0A0F;
+  border-radius: var(--r-xl);
+  height: 360px;
+  border: 1px solid var(--b2);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 60px var(--green-dim);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.25);
+  font-size: 13px;
+}
+
+/* ══════════════════════════════════════════════════════
+   SELECTED WORK — Realm-style cards (NO card background)
+═══════════════════════════════════════════════════════ */
+.sw-section {
+  padding: var(--sp20) var(--sp10);
+  background: var(--off-white);
+}
+.sw-inner { max-width: var(--container); margin: 0 auto; }
+.sw-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: var(--sp12);
+}
+.sw-header-left { max-width: 640px; }
+.sw-h2 {
+  font-family: var(--font-aeonik);
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 400; line-height: 1.1;
+  letter-spacing: -1px; color: var(--black);
+}
+.sw-h2 em { font-style: normal; color: var(--green); }
+.sw-btn {
+  display: inline-flex; align-items: center;
+  font-size: 14px; font-weight: 500; color: var(--black);
+  border: 1px solid var(--b-dark);
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+  white-space: nowrap; flex-shrink: 0;
+  transition: background var(--e-fast);
+}
+.sw-btn:hover { background: rgba(0,0,0,0.04); }
+
+/* Realm-style grid: 3 columns, no card bg, no border,
+   simple image + content below, image has rounded corners. */
+.sw-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp8) var(--sp6);
+}
+.sw-card {
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.sw-card-img {
+  position: relative; width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: #EDEBE4;
+  margin-bottom: var(--sp5);
+}
+.sw-card-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 500ms ease;
+}
+.sw-card:hover .sw-card-img img { transform: scale(1.03); }
+.sw-card-title {
+  display: block;
+  font-family: var(--font-aeonik);
+  font-size: 19px; font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+  margin-bottom: var(--sp3);
+}
+.sw-card-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: #111;
+}
+.sw-card-link::after {
+  content: '→';
+  transition: transform var(--e-fast);
+}
+.sw-card:hover .sw-card-link::after { transform: translateX(4px); }
+
+/* ══════════════════════════════════════════════════════
+   FAQ — unchanged, now labelled with a .tag
+═══════════════════════════════════════════════════════ */
+.faq-section { padding: 100px var(--sp10); }
+.faq-inner { max-width: var(--container); margin: 0 auto; }
+.faq-h2 {
+  font-family: var(--font-aeonik);
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 400; line-height: 1.2;
+  letter-spacing: -1px; color: #111;
+  margin-bottom: var(--sp12);
+}
+.faq-item {
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding: var(--sp6) 0;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer;
+}
+.faq-item:last-child { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.faq-question {
+  font-family: var(--font-aeonik);
+  font-size: 20px; font-weight: 400; color: #111;
+}
+.faq-plus {
+  color: var(--green); font-size: 24px; line-height: 1;
+  margin-left: var(--sp5);
+}
+
+/* ══════════════════════════════════════════════════════
+   CTA — unchanged
+═══════════════════════════════════════════════════════ */
+.cta-section { padding: 0 var(--sp10) var(--sp10); }
+.cta-card {
+  background: #E8FBF1;
+  padding: var(--sp20) var(--sp10);
+  text-align: center;
+  position: relative; overflow: hidden;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(53,214,135,0.25);
+}
+.cta-card-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, var(--green-dim) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+.cta-inner { position: relative; z-index: 1; max-width: var(--container); margin: 0 auto; }
+.cta-h2 {
+  font-family: var(--font-aeonik);
+  font-size: clamp(36px, 4.5vw, 48px);
+  font-weight: 400; line-height: 1.2;
+  letter-spacing: -1px; color: #111;
+  margin-bottom: var(--sp4);
+}
+.cta-h2 em { font-style: normal; color: var(--green); }
+.cta-desc {
+  font-size: 16px; color: #555; line-height: 1.6;
+  margin: 0 auto var(--sp10); max-width: 500px;
+}
+.btn-cta-primary {
+  display: inline-flex; align-items: center;
+  font-size: 14px; font-weight: 500; color: #fff;
+  background: var(--black);
+  border-radius: var(--r-pill);
+  padding: 0 var(--sp8); height: 48px;
+}
+
+/* ══════════════════════════════════════════════════════
+   [REDONE] UPPER FOOTER
+   NOTE: giant NEMO wordmark + breathing green line +
+   bottom bar below are LOCKED — not touched.
+═══════════════════════════════════════════════════════ */
+.footer-root { background: #000; }
+
+/* ══════════════════════════════════════════════════════
+   UPPER FOOTER — Realm-style grid/spacing
+   Mirrors withrealm: .padding-global + .container-large,
+   top row (heading + CTA), .footer_main 4-col grid of
+   link lists, bottom row w/ logo + legal list.
+═══════════════════════════════════════════════════════ */
+.footer-upper {
+  padding: 0 var(--sp10);      /* = Realm .padding-global */
+}
+.footer-upper-inner {
+  max-width: var(--container); /* = Realm .container-large */
+  margin: 0 auto;
+  padding: var(--sp16) 0 var(--sp20); /* 4rem / 5rem section padding */
+  border-bottom: 1px solid var(--b1);
+}
+
+/* Top row: heading + CTA (.footer-wrapper / .max-width-medium) */
+.footer-upper-top {
+  max-width: 560px;
+  margin-bottom: var(--sp16);
+}
+.footer-upper-heading {
+  font-family: var(--font-aeonik);
+  font-size: clamp(32px, 3.6vw, 48px);  /* ~ heading-style-h3 */
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-bottom: var(--sp6);
+}
+.footer-upper-heading em { font-style: normal; color: var(--green); }
+.btn-footer-primary {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500; color: #111;
+  background: #fff;
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+  text-decoration: none;
+  transition: opacity var(--e-fast);
+}
+.btn-footer-primary:hover { opacity: 0.85; }
+
+/* Realm .footer_main: 4 columns, 4rem row gap, auto rows */
+.footer-main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: var(--sp8);
+  row-gap: var(--sp16);
+  padding-top: var(--sp16);
+  padding-bottom: var(--sp20);
+}
+
+/* Realm .footer_main_link-list: 1rem gap, vertical flex */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp4);
+}
+.footer-col-title {
+  font-family: var(--font-haas);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45); /* tertiary text */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.footer-link {
+  font-family: var(--font-haas);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  transition: color 0.4s cubic-bezier(0.19,1,0.22,1);
+}
+.footer-link:hover { color: var(--green); }
+.footer-link-dim {
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,0.25);
+}
+
+/* Bottom row inside upper footer: logo-link + legal list */
+.footer-upper-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--sp10);
+  border-top: 1px solid var(--b1);
+}
+.footer-upper-logo {
+  font-family: var(--font-aeonik);
+  font-size: 17px; font-weight: 500;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.footer-legal-list {
+  display: flex;
+  gap: var(--sp6);
+}
+.footer-legal-list a {
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color var(--e-fast);
+}
+.footer-legal-list a:hover { color: #fff; }
+
+/* ── LOCKED: giant wordmark + breathing green line + bottom
+   bar. Copied verbatim from live footer — do not edit. ── */
+.footer-giant {
+  overflow: hidden;
+  padding: 60px 40px 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.footer-giant img {
+  width: 100%; max-width: 1100px; height: auto; display: block;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  user-select: none; pointer-events: none;
+}
+.footer-bottom { position: relative; padding: 20px 80px; }
+.footer-bottom::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(53,214,135,0.7) 0%, var(--green) 50%, rgba(53,214,135,0.7) 100%);
+  animation: glow-line 3s ease-in-out infinite;
+}
+@keyframes glow-line {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 6px rgba(53,214,135,0.2); }
+  50%       { opacity: 1;   box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2); }
+}
+.footer-bottom-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-copy { font-size: 13px; color: rgba(255,255,255,0.55); }
+.footer-legal { display: flex; gap: 28px; }
+.footer-legal a { font-size: 13px; color: rgba(255,255,255,0.55); }
+.footer-legal a:hover { color: #fff; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .hero-inner,
+  .feature-grid,
+  .sw-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sw-grid { gap: var(--sp8); }
+  .footer-upper { padding: 0 var(--sp5); }
+  .footer-upper-inner { padding: var(--sp12) 0 var(--sp16); }
+  .footer-main { grid-template-columns: 1fr 1fr; row-gap: var(--sp10); }
+  .footer-upper-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp5); }
+  .sw-header { flex-direction: column; align-items: flex-start; gap: var(--sp5); }
+}
+</style>
+</head>
+<body>
+
+<!-- ═════════════ NAV ═════════════ -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#" class="logo">NEMO</a>
+    <ul class="nav-pill">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Work</a></li>
+      <li><a href="#">Services</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#" class="nav-cta">Let's talk</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═════════════ HERO ═════════════ -->
+  <section class="hero-section">
+    <div class="hero-inner">
+      <h1 class="hero-h1">Turn your ideas<br>into reality</h1>
+      <div class="hero-right">
+        <p class="hero-desc">
+          We create digital products with advanced technologies to build
+          memorable experiences and transform brands.
+        </p>
+        <a href="#" class="btn-glow-hero">Let's talk &nbsp;→</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ WHITE LOGO MARQUEE (under hero) ═════════════ -->
+  <section class="top-marquee">
+    <p class="top-marquee-caption">Our impact reaches</p>
+    <div class="top-marquee-fade">
+      <div class="top-marquee-track">
+        <span>AXA</span><span>Mazda</span><span>Pfizer</span>
+        <span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span>
+        <span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+        <!-- duplicate for seamless loop -->
+        <span>AXA</span><span>Mazda</span><span>Pfizer</span>
+        <span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span>
+        <span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ DARK CLIENT BAND (kept) ═════════════ -->
+  <div class="dark-marquee" aria-label="Our clients">
+    <div class="dark-marquee-track">
+      <span>AXA</span><span>Mazda</span><span>Pfizer</span>
+      <span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span>
+      <span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+      <span>AXA</span><span>Mazda</span><span>Pfizer</span>
+      <span>BlueCross BlueShield</span><span>Sage</span><span>Carrefour</span>
+      <span>1-800-Flowers</span><span>POLARIS</span><span>Mercado Libre</span>
+    </div>
+  </div>
+
+  <!-- ═════════════ FEATURE / DASHBOARD MOCK ═════════════ -->
+  <section class="feature-wrap">
+    <div class="feature-glow" aria-hidden="true"></div>
+    <div class="feature-badge">
+      Nemo V.2 <span style="opacity:0.4">|</span>
+      <span class="feature-badge-new">NEW</span>
+      Auth0 for AI Agents →
+    </div>
+    <div class="feature-grid">
+      <div>
+        <span class="tag tag--dark">Platform</span>
+        <p class="feature-text">
+          We create digital products with advanced technologies to build
+          memorable experiences and transform brands.
+        </p>
+      </div>
+      <div class="mock-ui">[ dashboard mock ]</div>
+    </div>
+  </section>
+
+  <!-- ═════════════ SELECTED WORK (Realm-style cards) ═════════════ -->
+  <section class="sw-section">
+    <div class="sw-inner">
+      <div class="sw-header">
+        <div class="sw-header-left">
+          <span class="tag">Selected work</span>
+          <h2 class="sw-h2">
+            Discover how we're driving <em>change</em>
+          </h2>
+        </div>
+        <a href="#" class="sw-btn">View all →</a>
+      </div>
+
+      <div class="sw-grid">
+        <a href="#" class="sw-card">
+          <div class="sw-card-img">
+            <img src="https://madebynemo.com/storage/2026/02/tkai-768x432.png" alt="Tekronyx AIP">
+          </div>
+          <span class="sw-card-title">Tekronyx AIP — AI agents for industrial operations</span>
+          <span class="sw-card-link">Case study</span>
+        </a>
+        <a href="#" class="sw-card">
+          <div class="sw-card-img">
+            <img src="https://madebynemo.com/storage/2026/02/Slide-16_9-1-768x432.png" alt="Wadi Sabarah Lodge">
+          </div>
+          <span class="sw-card-title">Wadi Sabarah Lodge — a brand rooted in the Red Sea</span>
+          <span class="sw-card-link">Case study</span>
+        </a>
+        <a href="#" class="sw-card">
+          <div class="sw-card-img">
+            <img src="https://madebynemo.com/storage/2025/12/Frame-1597880417-1-768x545.png" alt="EG Group CRM">
+          </div>
+          <span class="sw-card-title">EG Group — NEMO CRM for a global retail network</span>
+          <span class="sw-card-link">Case study</span>
+        </a>
+        <a href="#" class="sw-card">
+          <div class="sw-card-img">
+            <img src="https://madebynemo.com/storage/2025/12/almasriahomedecor-1-768x432.png" alt="Almasria Home Decor">
+          </div>
+          <span class="sw-card-title">Almasria Home Decor — e-commerce for a heritage brand</span>
+          <span class="sw-card-link">Case study</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ FAQ ═════════════ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <span class="tag">FAQ</span>
+      <h2 class="faq-h2">Got questions? We've got the answers</h2>
+      <div>
+        <div class="faq-item">
+          <span class="faq-question">How does your process work?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-question">How long does it take?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-item">
+          <span class="faq-question">What do you specialize in?</span>
+          <span class="faq-plus">+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ CTA ═════════════ -->
+  <section class="cta-section">
+    <div class="cta-card">
+      <div class="cta-card-grid" aria-hidden="true"></div>
+      <div class="cta-inner">
+        <span class="tag">Ready to start?</span>
+        <h2 class="cta-h2">Turn tech into your biggest <em>advantage</em></h2>
+        <p class="cta-desc">
+          Discover how partnering with Nemo can drive your success and
+          prepare you for what's next.
+        </p>
+        <a href="#" class="btn-cta-primary" style="padding: 0 var(--sp8)">
+          Get a free consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═════════════ FOOTER ═════════════
+     Upper section is the REDONE part. Everything from
+     .footer-giant onward is LOCKED and copied from live. -->
+<footer class="footer-root">
+
+  <!-- REDONE upper footer — Realm grid/layout/spacing -->
+  <div class="footer-upper">
+    <div class="footer-upper-inner">
+
+      <!-- Top: heading + single CTA -->
+      <div class="footer-upper-top">
+        <h2 class="footer-upper-heading">
+          Turn your ideas into <em>reality</em>
+        </h2>
+        <a href="#" class="btn-footer-primary">Let's talk →</a>
+      </div>
+
+      <!-- 4-col link grid (Realm .footer_main) -->
+      <div class="footer-main">
+        <div class="footer-col">
+          <p class="footer-col-title">Explore</p>
+          <a class="footer-link" href="#">Home</a>
+          <a class="footer-link" href="#">Services</a>
+          <a class="footer-link" href="#">Work</a>
+          <a class="footer-link" href="#">About</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Services</p>
+          <a class="footer-link" href="#">Branding</a>
+          <a class="footer-link" href="#">Web design</a>
+          <a class="footer-link" href="#">Product design</a>
+          <a class="footer-link" href="#">AI &amp; Automation</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Company</p>
+          <a class="footer-link" href="#">About us</a>
+          <a class="footer-link" href="#">Careers</a>
+          <a class="footer-link" href="#">Contact</a>
+          <a class="footer-link" href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Soon</p>
+          <span class="footer-link-dim">Growth plan</span>
+          <span class="footer-link-dim">Affiliate</span>
+          <span class="footer-link-dim">Charity</span>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Social</p>
+          <a class="footer-link" href="#">Instagram</a>
+          <a class="footer-link" href="#">LinkedIn</a>
+          <a class="footer-link" href="#">Behance</a>
+          <a class="footer-link" href="#">Dribbble</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Resources</p>
+          <a class="footer-link" href="#">Case studies</a>
+          <a class="footer-link" href="#">Process</a>
+          <a class="footer-link" href="#">FAQ</a>
+          <a class="footer-link" href="#">Support</a>
+        </div>
+      </div>
+
+      <!-- Bottom: logo + legal list -->
+      <div class="footer-upper-bottom">
+        <a href="#" class="footer-upper-logo">NEMO</a>
+        <div class="footer-legal-list">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───── LOCKED ZONE (do not edit) ───── -->
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span class="footer-copy">© 2026 Nemo | All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Cookie Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <!-- ───── END LOCKED ZONE ───── -->
+
+</footer>
+
+</body>
+</html>

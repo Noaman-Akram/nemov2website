@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 11.0 (Charcoal Classic Modified)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+:root {
+  --green:#35D687; 
+  --black:#050505; 
+  --charcoal:#111111;
+  --navy:#080b0e;
+  
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;--sp24:96px;--sp32:128px;
+  --r-pill:9999px;
+  --e-fast:150ms ease-in-out; 
+  --container:1312px;
+  
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);font-size:14px;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;transition:all var(--e-fast);}
+
+.lab { text-align: center; font-family: var(--font-aeonik); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: var(--sp10); color: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: var(--sp10); }
+
+/* ═══════════════════════════════════════════
+   BASE FOOTER STRUCTURAL LAYOUT
+   (Derived from "F · The Charcoal Classic")
+═══════════════════════════════════════════ */
+.ff {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+.ff-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp32) var(--sp10) 0;
+}
+
+/* Row 1: Newsletter Left / Form Right */
+.ff-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp16);
+  padding-bottom: var(--sp20);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: var(--sp16);
+}
+.nl-h { font-family: var(--font-aeonik); font-size: clamp(36px, 4vw, 56px); font-weight: 400; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: var(--sp6); }
+.nl-h em { font-style: normal; color: var(--green); }
+.nl-buttons { display: flex; gap: var(--sp3); }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 var(--sp6); border-radius: var(--r-pill); font-family: var(--font-haas); font-size: 14px; font-weight: 500; cursor: pointer; transition: all var(--e-fast); border: 1px solid transparent; }
+.btn-p { background: var(--green); color: #000; }
+.btn-p:hover { background: #29c275; }
+.btn-s { background: transparent; border-color: rgba(255,255,255,0.2); color: #fff; }
+.btn-s:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.4); }
+
+.ff-hero-right { max-width: 440px; width: 100%; justify-self: end; }
+.nl-label { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: var(--sp3); }
+.nl-form { display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-pill); padding: 4px; }
+.nl-form input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; padding: 0 var(--sp4); font-family: var(--font-haas); font-size: 14px; color: #fff; }
+.nl-form input::placeholder { color: rgba(255,255,255,0.3); }
+.nl-form button { background: #fff; color: #000; border: none; border-radius: var(--r-pill); padding: 0 var(--sp6); height: 40px; font-family: var(--font-haas); font-size: 13px; font-weight: 500; cursor: pointer; transition: background var(--e-fast); }
+.nl-form button:hover { background: #e0e0e0; }
+.nl-meta { margin-top: var(--sp3); font-family: var(--font-haas); font-size: 12px; color: rgba(255,255,255,0.4); }
+
+/* Row 2: 5 Columns */
+.ff-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp10);
+  margin-bottom: var(--sp16);
+}
+.col-title { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: var(--sp4); }
+.col-links a { display: block; font-family: var(--font-haas); font-size: 14px; color: rgba(255,255,255,0.7); padding: 5px 0; }
+.col-links a:hover { color: #fff; }
+
+/* Row 3: Clocks & Socials */
+.ff-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--sp10);
+}
+.ff-clocks { display: flex; gap: var(--sp10); }
+.ff-ck { display: flex; align-items: center; gap: 8px; }
+.ff-ck-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(53,214,135,0.5); }
+.ff-ck-city { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+.ff-ck-time { font-family: var(--font-aeonik); font-size: 14px; color: #fff; font-variant-numeric: tabular-nums; }
+
+.ff-socials { display: flex; gap: var(--sp2); }
+.ff-sp { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 var(--sp5); border-radius: var(--r-pill); border: 1px solid rgba(255,255,255,0.15); font-family: var(--font-haas); font-size: 12px; color: #fff; }
+.ff-sp:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.4); }
+
+/* Row 4: Logo & Line */
+.ff-wm {
+  margin-top: var(--sp10);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -5px; /* Sink exactly onto the line */
+  padding: 0 var(--sp10);
+}
+.ff-wm img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  /* Fading gradient exact replica */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0) 95%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0) 95%);
+}
+
+.thin-line {
+  height: 1px;
+  background: var(--green);
+  opacity: 0.6;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+.glow-line {
+  height: 60px;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+  margin-top: -30px; /* Pull it slightly into the wordmark bounding box */
+  margin-bottom: -30px;
+}
+
+/* Row 5: Central Cookie Bar (MATCHING SCREENSHOT) */
+.ff-cookie {
+  background: var(--black);
+  padding: var(--sp6) var(--sp10);
+  border-top: 1px solid rgba(255,255,255,0.03); /* Just in case thin line isn't used */
+}
+.ff-cookie-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ff-cookie-left {
+  font-family: var(--font-haas);
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: -0.2px;
+}
+.ff-cookie-right {
+  display: flex;
+  gap: var(--sp6);
+}
+.ff-cookie-right a {
+  font-family: var(--font-haas);
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  transition: color var(--e-fast);
+}
+.ff-cookie-right a:hover { color: #fff; }
+
+/* Theme Colors */
+.theme-black { background: var(--black); }
+.theme-black .ff-cookie { background: #030303; }
+
+.theme-navy { background: var(--navy); }
+.theme-navy .ff-cookie { background: #040608; }
+
+@media(max-width: 900px){
+  .ff-hero { grid-template-columns: 1fr; }
+  .ff-hero-right { justify-self: start; }
+  .ff-grid { grid-template-columns: 1fr 1fr; }
+  .ff-bottom-row { flex-direction: column; align-items: flex-start; gap: var(--sp6); }
+  .ff-cookie-inner { flex-direction: column; align-items: flex-start; gap: var(--sp4); }
+}
+</style>
+</head>
+<body>
+
+<div class="lab">Option A: Pure Black — Thin 1px Laser Line</div>
+<!-- OPTION A: PURE BLACK + THIN GREEN LINE -->
+<footer class="ff theme-black">
+  <div class="ff-inner">
+    <div class="ff-hero">
+      <div>
+        <h2 class="nl-h">What's <em>next</em> is<br>already in motion</h2>
+        <div class="nl-buttons">
+          <button class="btn btn-p">Start a project ↗</button>
+          <button class="btn btn-s">Book a call ↗</button>
+        </div>
+      </div>
+      <div class="ff-hero-right">
+        <div class="nl-label">Get early access to insights</div>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="nl-meta">No spam. One dispatch a month.</div>
+      </div>
+    </div>
+    
+    <div class="ff-grid">
+      <div class="col-links">
+        <p class="col-title">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Apps</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Services</p>
+        <a href="#">Strategy</a><a href="#">Architecture</a><a href="#">UX / UI</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Studio</p>
+        <a href="#">Culture</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Archive</p>
+        <a href="#">Case Studies</a><a href="#">Experiments</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      </div>
+    </div>
+
+    <div class="ff-bottom-row">
+      <div class="ff-clocks">
+        <div class="ff-ck"><span class="ff-ck-dot"></span><span class="ff-ck-city">Istanbul</span><span class="ff-ck-time jc" data-tz="Europe/Istanbul">--:--:--</span></div>
+        <div class="ff-ck"><span class="ff-ck-dot"></span><span class="ff-ck-city">Cairo</span><span class="ff-ck-time jc" data-tz="Africa/Cairo">--:--:--</span></div>
+      </div>
+      <div class="ff-socials">
+        <a href="#" class="ff-sp">Instagram</a><a href="#" class="ff-sp">LinkedIn</a><a href="#" class="ff-sp">Dribbble</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ff-wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+  </div>
+  
+  <!-- Exactly matches the screenshot with the sharp thin line -->
+  <div class="thin-line"></div>
+  
+  <div class="ff-cookie">
+    <div class="ff-cookie-inner">
+      <div class="ff-cookie-left">© <span class="jy">2026</span> Nemo | All rights reserved.</div>
+      <div class="ff-cookie-right">
+        <a href="#">Cookie Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<div class="lab" style="margin-top:var(--sp20);">Option B: Deep Navy Base — Intense WebGL Glowing Line</div>
+<!-- OPTION B: NAVY + WEBGL ROW -->
+<footer class="ff theme-navy">
+  <div class="ff-inner">
+    <div class="ff-hero">
+      <div>
+        <h2 class="nl-h">What's <em>next</em> is<br>already in motion</h2>
+        <div class="nl-buttons">
+          <button class="btn btn-p">Start a project ↗</button>
+          <button class="btn btn-s">Book a call ↗</button>
+        </div>
+      </div>
+      <div class="ff-hero-right">
+        <div class="nl-label">Get early access to insights</div>
+        <form class="nl-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="nl-meta">No spam. One dispatch a month.</div>
+      </div>
+    </div>
+    
+    <div class="ff-grid">
+      <div class="col-links">
+        <p class="col-title">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Apps</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Services</p>
+        <a href="#">Strategy</a><a href="#">Architecture</a><a href="#">UX / UI</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Studio</p>
+        <a href="#">Culture</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Archive</p>
+        <a href="#">Case Studies</a><a href="#">Experiments</a>
+      </div>
+      <div class="col-links">
+        <p class="col-title">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      </div>
+    </div>
+
+    <div class="ff-bottom-row">
+      <div class="ff-clocks">
+        <div class="ff-ck"><span class="ff-ck-dot"></span><span class="ff-ck-city">Istanbul</span><span class="ff-ck-time jc" data-tz="Europe/Istanbul">--:--:--</span></div>
+        <div class="ff-ck"><span class="ff-ck-dot"></span><span class="ff-ck-city">Cairo</span><span class="ff-ck-time jc" data-tz="Africa/Cairo">--:--:--</span></div>
+      </div>
+      <div class="ff-socials">
+        <a href="#" class="ff-sp">Instagram</a><a href="#" class="ff-sp">LinkedIn</a><a href="#" class="ff-sp">Dribbble</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ff-wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+  </div>
+  
+  <div class="glow-line">
+    <canvas id="gl-navy" style="width:100%;height:100%;display:block;"></canvas>
+  </div>
+  
+  <div class="ff-cookie">
+    <div class="ff-cookie-inner">
+      <div class="ff-cookie-left">© <span class="jy">2026</span> Nemo | All rights reserved.</div>
+      <div class="ff-cookie-right">
+        <a href="#">Cookie Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="lab">End of Footer Lab 11.0</div>
+
+<script>
+function initGlow(id) {
+  const c = document.getElementById(id);
+  if(!c) return;
+  const gl = c.getContext('webgl', { alpha: false, antialias: true });
+  if(!gl) return;
+
+  const vs = `
+    attribute vec2 a_pos;
+    varying vec2 v_uv;
+    void main(){ v_uv=a_pos*0.5+0.5; gl_Position=vec4(a_pos,0.0,1.0); }
+  `;
+
+  // Matches Navy Backgound
+  const fs = `
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_r;
+    varying vec2 v_uv;
+
+    #define G vec3(0.207, 0.839, 0.529)
+
+    float n(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+    float sn(vec2 p){
+      vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+      return mix(mix(n(i),n(i+vec2(1,0)),f.x),mix(n(i+vec2(0,1)),n(i+vec2(1,1)),f.x),f.y);
+    }
+    float fbm(vec2 p){
+      float v=0.,a=0.5,f=1.;
+      for(int i=0;i<5;i++){v+=a*sn(p*f);f*=2.;a*=0.5;}
+      return v;
+    }
+
+    void main() {
+      vec2 uv = v_uv;
+      vec2 asp = vec2(u_r.x/u_r.y, 1.0);
+      vec2 p = (uv - 0.5) * asp;
+      
+      float dist = abs(p.y);
+
+      float hf = smoothstep(0.0, 0.15, uv.x) * smoothstep(0.0, 0.15, 1.0-uv.x);
+      float vf = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vf = smoothstep(0.0, 1.0, vf);
+      float fade = hf * pow(vf, 1.2);
+
+      float noise = fbm(vec2(uv.x * 4.0 - u_t * 0.15, uv.y * 5.0 + u_t * 0.05)) * 0.35 + 0.65;
+
+      float glow = 0.0;
+      glow += exp(-dist * 250.0) * 1.8;   
+      glow += exp(-dist * 80.0) * 0.6;    
+      glow += exp(-dist * 20.0) * 0.2;    
+      glow *= fade * noise;
+
+      float flow1 = sin(uv.x * 8.0 - u_t * 2.5 + fbm(uv * 3.0) * 3.0) * 0.5 + 0.5;
+      float flow2 = sin(uv.x * 12.0 + u_t * 1.8 + fbm(uv * 5.0) * 2.0) * 0.5 + 0.5;
+      glow *= (0.6 + smoothstep(0.2, 0.8, flow1) * 0.25 + smoothstep(0.3, 0.7, flow2) * 0.15);
+
+      vec3 bg = vec3(0.015, 0.023, 0.031); // #040608 Navy match for transition to cookie bar
+      vec3 color = mix(bg, G * clamp(glow, 0.0, 2.5), clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compile(src, type) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) return null;
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(vs, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(fs, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'a_pos'); gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog, 'u_t');
+  const uR = gl.getUniformLocation(prog, 'u_r');
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    gl.viewport(0, 0, c.width, c.height);
+  }
+  resize(); window.addEventListener('resize', resize);
+
+  const t0 = performance.now();
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) / 1000);
+    gl.uniform2f(uR, c.width, c.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+}
+
+initGlow('gl-navy');
+
+function tick(){
+  document.querySelectorAll('.jc').forEach(el => {
+    el.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:el.dataset.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  });
+}
+tick(); setInterval(tick, 1000);
+document.querySelectorAll('.jy').forEach(e => { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

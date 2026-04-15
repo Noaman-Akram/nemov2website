@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 6.0 (Wild Explorations)</title>
+<style>
+/* ══════════════════════════════════════════════════════
+   NEMO — FOOTER LAB 6.0
+   Full creative exploration. Locked elements carried forward.
+   ONLY FONTS: AeonikPro + NeueHaas
+════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'AeonikPro';
+  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'NeueHaas';
+  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+  --green: #35D687;
+  --green-dim: rgba(53, 214, 135, 0.12);
+  --black: #080808;
+  --charcoal: #1A1A1A;
+  --off-white: #F5F5F0;
+  --warm-cream: #E9EBDF;
+  --white: #FFFFFF;
+
+  --b1: rgba(255,255,255,0.07);
+  --b2: rgba(255,255,255,0.12);
+  --b3: rgba(255,255,255,0.20);
+  --b-dark: rgba(0,0,0,0.12);
+
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px;
+  --sp5:20px; --sp6:24px; --sp7:28px; --sp8:32px;
+  --sp10:40px; --sp12:48px; --sp16:64px; --sp20:80px;
+
+  --r-sm:4px; --r-md:8px; --r-lg:16px; --r-xl:20px; --r-pill:9999px;
+  --e-fast: 150ms ease-in-out;
+  --container: 1312px;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #f0f0eb; color: #111; font-family: var(--font-haas); font-size: 14px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ── Label ── */
+.lab { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp6); font-family: var(--font-aeonik); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(0,0,0,0.35); display: flex; align-items: center; gap: var(--sp4); }
+.lab::before, .lab::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+.lab span { padding: 0 var(--sp3); color: #111; font-size: 13px; letter-spacing: 0.05em; }
+
+/* ══════════════════════════════════════════════════════
+   LOCKED: Newsletter (exact from 04-Variant-2)
+═══════════════════════════════════════════════════════ */
+.nl-h { font-family: var(--font-aeonik); font-size: clamp(40px, 5vw, 64px); font-weight: 400; letter-spacing: -1.5px; line-height: 1.04; }
+.nl-h em { font-style: normal; color: #5a7f65; }
+.nl-h--w { color: #fff; }
+.nl-h--w em { color: var(--green); }
+.nl-lb { font-family: var(--font-haas); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.5); margin-bottom: var(--sp4); }
+.nl-lb--w { color: rgba(255,255,255,0.5); }
+.nl-f { display: flex; background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: var(--r-pill); padding: 4px; max-width: 440px; }
+.nl-f input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; padding: 0 var(--sp4); font-family: var(--font-haas); font-size: 14px; color: #111; }
+.nl-f input::placeholder { color: rgba(0,0,0,0.4); }
+.nl-f button { background: var(--black); color: #fff; border: none; border-radius: var(--r-pill); padding: 0 var(--sp5); height: 40px; font-family: var(--font-haas); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background var(--e-fast); }
+.nl-f button:hover { background: #333; }
+.nl-m { margin-top: var(--sp3); font-family: var(--font-haas); font-size: 12px; color: rgba(0,0,0,0.5); }
+.nl-m--w { color: rgba(255,255,255,0.45); }
+
+.nl-f--dk { background: rgba(255,255,255,0.06); border-color: var(--b2); }
+.nl-f--dk input { color: #fff; }
+.nl-f--dk input::placeholder { color: rgba(255,255,255,0.35); }
+.nl-f--dk button { background: var(--green); color: #0A1A10; }
+.nl-f--dk button:hover { background: #29c275; }
+
+/* ══════════════════════════════════════════════════════
+   LOCKED: Social Pills
+═══════════════════════════════════════════════════════ */
+.sp { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 var(--sp5); border-radius: var(--r-pill); font-family: var(--font-haas); font-size: 13px; font-weight: 500; transition: all var(--e-fast); cursor: pointer; }
+.sp--dk { color: #fff; border: 1px solid var(--b2); background: transparent; }
+.sp--dk:hover { background: rgba(255,255,255,0.07); border-color: var(--b3); }
+.sp--lt { color: #111; border: 1px solid rgba(0,0,0,0.15); background: transparent; }
+.sp--lt:hover { background: rgba(0,0,0,0.04); }
+.sp--glass { color: #fff; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); backdrop-filter: blur(10px); }
+.sp--glass:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+.sp--green { color: #0A1A10; border: 1px solid rgba(53,214,135,0.3); background: rgba(53,214,135,0.08); }
+.sp--green:hover { background: rgba(53,214,135,0.15); }
+.srow { display: flex; gap: var(--sp3); flex-wrap: wrap; }
+
+/* ── Column links ── */
+.ct { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--sp4); }
+.ct--dk { color: rgba(255,255,255,0.35); }
+.ct--lt { color: rgba(0,0,0,0.45); }
+.cl a { display: block; font-family: var(--font-haas); font-size: 14px; padding: 6px 0; transition: color var(--e-fast); }
+.cl--dk a { color: rgba(255,255,255,0.8); }
+.cl--dk a:hover { color: var(--green); }
+.cl--lt a { color: rgba(0,0,0,0.7); }
+.cl--lt a:hover { color: #000; }
+
+/* ── Copy bar ── */
+.cb { padding: var(--sp5) var(--sp10); }
+.cb-i { max-width: var(--container); margin: 0 auto; display: flex; justify-content: center; align-items: center; gap: var(--sp6); flex-wrap: wrap; font-family: var(--font-haas); font-size: 13px; }
+.cb-i a:hover { opacity: 1; }
+.cb-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════════════
+   WORDMARK + BREATHING LINE VARIATIONS
+═══════════════════════════════════════════════════════ */
+
+/* V1: Original (image-based, fade mask) */
+.wm { overflow: hidden; padding: 60px 40px 0; display: flex; align-items: center; justify-content: center; }
+.wm img { width: 100%; max-width: 1100px; height: auto; display: block; -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%); mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%); user-select: none; pointer-events: none; }
+.wm--invert img { filter: invert(1); }
+
+/* V2: SVG-based giant wordmark with gradient fill */
+.wm-svg { overflow: hidden; padding: 40px 40px 0; display: flex; align-items: center; justify-content: center; }
+.wm-svg svg { width: 100%; max-width: 1100px; height: auto; }
+
+/* Breathing line V1: standard green glow */
+.bl { position: relative; }
+.bl::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(53,214,135,0.7) 0%, var(--green) 50%, rgba(53,214,135,0.7) 100%); animation: glow 3s ease-in-out infinite; }
+@keyframes glow {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 6px rgba(53,214,135,0.2); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2); }
+}
+
+/* Breathing line V2: expanding pulse from center */
+.bl2 { position: relative; overflow: hidden; }
+.bl2::before { content: ''; position: absolute; top: 0; left: 50%; height: 2px; background: var(--green); border-radius: 2px; animation: expand 4s ease-in-out infinite; transform: translateX(-50%); }
+@keyframes expand {
+  0%, 100% { width: 20%; opacity: 0.4; box-shadow: 0 0 8px rgba(53,214,135,0.3); }
+  50% { width: 80%; opacity: 1; box-shadow: 0 0 24px rgba(53,214,135,0.5); }
+}
+
+/* Breathing line V3: scanning beam */
+.bl3 { position: relative; overflow: hidden; }
+.bl3::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.05); }
+.bl3::after { content: ''; position: absolute; top: 0; width: 200px; height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent); animation: scan 3s ease-in-out infinite; }
+@keyframes scan {
+  0% { left: -200px; }
+  100% { left: calc(100% + 200px); }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   J — OBSIDIAN GLASS: Near-black with frosted glass panels
+═══════════════════════════════════════════════════════ */
+.fj { background: #0a0a0a; color: #fff; position: relative; }
+.fj::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.02) 0%, transparent 60%); pointer-events: none; }
+.fj-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) 0; }
+
+.fj-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: var(--r-xl); padding: var(--sp16); backdrop-filter: blur(20px); margin-bottom: var(--sp16); }
+.fj-card-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp16); align-items: end; }
+
+.fj-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); padding: 0 var(--sp4); }
+
+.fj-bottom { display: flex; justify-content: space-between; align-items: center; padding: var(--sp12) var(--sp4) 0; margin-top: var(--sp10); border-top: 1px solid rgba(255,255,255,0.04); }
+.fj-brand { font-family: var(--font-aeonik); font-size: 20px; color: rgba(255,255,255,0.2); letter-spacing: -0.3px; }
+
+.fj-copy { background: #050505; }
+.fj-copy .cb-i span, .fj-copy .cb-i a { color: rgba(255,255,255,0.3); }
+.fj-copy .cb-i a:hover { color: #fff; }
+.fj-copy .cb-dot { background: rgba(255,255,255,0.1); }
+
+
+/* ══════════════════════════════════════════════════════
+   K — SAGE & STONE: Muted earthy sage-green palette
+═══════════════════════════════════════════════════════ */
+.fk { background: #2a3029; color: #d4d8cf; }
+.fk-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fk-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: var(--sp16); }
+.fk .nl-h--w em { color: #7bc89a; }
+
+.fk-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: var(--sp10); }
+.fk-brand { font-family: var(--font-aeonik); font-size: 28px; letter-spacing: -0.5px; color: #d4d8cf; }
+.fk-desc { font-family: var(--font-haas); font-size: 14px; color: rgba(212,216,207,0.45); line-height: 1.7; margin-top: var(--sp4); max-width: 300px; }
+.fk-ct { color: rgba(212,216,207,0.35); }
+.fk-link a { color: rgba(212,216,207,0.7); }
+.fk-link a:hover { color: #7bc89a; }
+
+.fk-copy { background: #1e2420; }
+.fk-copy .cb-i span, .fk-copy .cb-i a { color: rgba(212,216,207,0.35); }
+.fk-copy .cb-i a:hover { color: #d4d8cf; }
+.fk-copy .cb-dot { background: rgba(212,216,207,0.15); }
+
+.sp--sage { color: #d4d8cf; border: 1px solid rgba(212,216,207,0.15); background: rgba(212,216,207,0.04); }
+.sp--sage:hover { background: rgba(212,216,207,0.08); border-color: rgba(212,216,207,0.25); }
+
+
+/* ══════════════════════════════════════════════════════
+   L — BONE & INK: Ultra-light with strong ink accents
+═══════════════════════════════════════════════════════ */
+.fl { background: #f4f1ec; color: #111; }
+.fl-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fl-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp20); padding-bottom: var(--sp16); border-bottom: 2px solid #111; margin-bottom: var(--sp16); }
+.fl .nl-h em { color: var(--green); }
+
+.fl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp10); }
+.fl-ct { color: #111; font-weight: 500; border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: var(--sp2); }
+.fl-link a { color: rgba(0,0,0,0.6); }
+.fl-link a:hover { color: #111; }
+
+.fl-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp16); border-top: 2px solid #111; margin-top: var(--sp12); }
+.fl-brand { font-family: var(--font-aeonik); font-size: 28px; letter-spacing: -1px; color: #111; }
+
+.fl-copy { background: #111; }
+.fl-copy .cb-i span, .fl-copy .cb-i a { color: rgba(255,255,255,0.5); }
+.fl-copy .cb-i a:hover { color: #fff; }
+.fl-copy .cb-dot { background: rgba(255,255,255,0.2); }
+
+
+/* ══════════════════════════════════════════════════════
+   M — NOIR MESH: Black with multi-point gradient mesh
+═══════════════════════════════════════════════════════ */
+.fm { background: #060606; color: #fff; position: relative; overflow: hidden; }
+.fm-mesh { position: absolute; inset: 0; background:
+  radial-gradient(ellipse at 15% 15%, rgba(53,214,135,0.06) 0%, transparent 40%),
+  radial-gradient(ellipse at 85% 25%, rgba(99,102,241,0.04) 0%, transparent 40%),
+  radial-gradient(ellipse at 50% 80%, rgba(53,214,135,0.03) 0%, transparent 40%);
+  pointer-events: none; }
+.fm-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fm-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp20); align-items: end; padding-bottom: var(--sp16); border-bottom: 1px solid var(--b1); margin-bottom: var(--sp16); }
+
+.fm-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--sp6); }
+
+.fm-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: var(--sp12); margin-top: var(--sp6); }
+.fm-status { display: inline-flex; align-items: center; gap: var(--sp2); font-family: var(--font-haas); font-size: 12px; color: rgba(255,255,255,0.4); }
+.fm-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+.fm-copy { background: #030303; }
+.fm-copy .cb-i span, .fm-copy .cb-i a { color: rgba(255,255,255,0.25); }
+.fm-copy .cb-i a:hover { color: var(--green); }
+.fm-copy .cb-dot { background: rgba(53,214,135,0.2); }
+
+
+/* ══════════════════════════════════════════════════════
+   N — NEON HORIZON: Dark with horizontal neon stripe
+═══════════════════════════════════════════════════════ */
+.fn { background: var(--black); color: #fff; position: relative; overflow: hidden; }
+.fn-stripe { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--green) 20%, var(--green) 80%, transparent 100%); opacity: 0.15; transform: translateY(-50%); }
+.fn-inner { position: relative; max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+
+.fn-hero { text-align: center; max-width: 700px; margin: 0 auto var(--sp20); }
+.fn-badge { display: inline-flex; align-items: center; gap: var(--sp2); font-family: var(--font-haas); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green); padding: var(--sp2) var(--sp4); border: 1px solid rgba(53,214,135,0.2); background: rgba(53,214,135,0.05); border-radius: var(--r-pill); margin-bottom: var(--sp8); }
+.fn-form-c { margin-top: var(--sp8); display: flex; flex-direction: column; align-items: center; }
+
+.fn-rail { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp10); padding-top: var(--sp16); border-top: 1px solid var(--b1); }
+
+.fn-copy { background: #050505; }
+.fn-copy .cb-i span, .fn-copy .cb-i a { color: rgba(255,255,255,0.3); }
+.fn-copy .cb-i a:hover { color: #fff; }
+.fn-copy .cb-dot { background: rgba(255,255,255,0.1); }
+
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .fj-card-top, .fk-top, .fl-top, .fm-top { grid-template-columns: 1fr; gap: var(--sp10); }
+  .fj-grid, .fl-grid { grid-template-columns: 1fr 1fr; }
+  .fk-grid { grid-template-columns: 1fr 1fr; }
+  .fm-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .fn-rail { grid-template-columns: 1fr 1fr; }
+  .fj-bottom, .fl-bottom, .fm-bottom { flex-direction: column; align-items: flex-start; gap: var(--sp6); }
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════
+     J — OBSIDIAN GLASS (Near-black, frosted card)
+     Wordmark: standard  |  Line: scanning beam (v3)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>J · Obsidian Glass — Frosted Card on Pure Black</span></div>
+<footer class="fj">
+  <div class="fj-inner">
+    <!-- Everything inside a frosted glass card -->
+    <div class="fj-card">
+      <div class="fj-card-top">
+        <div>
+          <h2 class="nl-h nl-h--w">Stay in the <em>loop</em></h2>
+        </div>
+        <div>
+          <p class="nl-lb nl-lb--w">Subscribe to our updates</p>
+          <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="nl-m nl-m--w">One email a month. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="fj-grid">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Services</p>
+        <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Product Design</a><a href="#">AI Solutions</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Studio</p>
+        <a href="#">About</a><a href="#">Process</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Resources</p>
+        <a href="#">Case Studies</a><a href="#">Blog</a><a href="#">FAQ</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--glass">Instagram</a>
+          <a href="#" class="sp sp--glass">LinkedIn</a>
+          <a href="#" class="sp sp--glass">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fj-bottom">
+      <span class="fj-brand">NEMO</span>
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.25);">Cairo · Remote</span>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="bl3 cb fj-copy">
+    <div class="cb-i">
+      <span>© 2026 Nemo</span>
+      <span class="cb-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="cb-dot"></span>
+      <a href="#">Terms</a>
+      <span class="cb-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     K — SAGE & STONE (Earthy muted greens)
+     Wordmark: inverted  |  Line: center pulse (v2)
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>K · Sage & Stone — Earthy Dark Green Palette</span></div>
+<footer class="fk">
+  <div class="fk-inner">
+    <div class="fk-top">
+      <div>
+        <h2 class="nl-h nl-h--w">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-lb nl-lb--w">Subscribe to our updates</p>
+        <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--w">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fk-grid">
+      <div>
+        <span class="fk-brand">NEMO</span>
+        <p class="fk-desc">
+          We create digital products with advanced technologies to build memorable experiences and transform brands.
+        </p>
+      </div>
+      <div class="cl fk-link">
+        <p class="ct fk-ct">Explore</p>
+        <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+      </div>
+      <div class="cl fk-link">
+        <p class="ct fk-ct">Company</p>
+        <a href="#">Careers</a><a href="#">Blog</a><a href="#">Contact</a>
+      </div>
+      <div class="cl fk-link">
+        <p class="ct fk-ct">Legal</p>
+        <a href="#">Privacy</a><a href="#">Terms</a>
+      </div>
+      <div>
+        <p class="ct fk-ct">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--sage">Instagram</a>
+          <a href="#" class="sp sp--sage">LinkedIn</a>
+          <a href="#" class="sp sp--sage">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="bl2 cb fk-copy">
+    <div class="cb-i">
+      <span>© 2026 Nemo</span>
+      <span class="cb-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="cb-dot"></span>
+      <a href="#">Terms</a>
+      <span class="cb-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     L — BONE & INK (Ultra light, editorial, bold borders)
+     Wordmark: inverted dark  |  Line: standard green
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>L · Bone & Ink — Editorial Light with Bold Borders</span></div>
+<footer class="fl">
+  <div class="fl-inner">
+    <div class="fl-top">
+      <div>
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-lb">Subscribe to our updates</p>
+        <form class="nl-f" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fl-grid">
+      <div class="cl fl-link">
+        <p class="ct fl-ct">Services</p>
+        <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Product Design</a><a href="#">AI Solutions</a>
+      </div>
+      <div class="cl fl-link">
+        <p class="ct fl-ct">Studio</p>
+        <a href="#">About</a><a href="#">Process</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="cl fl-link">
+        <p class="ct fl-ct">Resources</p>
+        <a href="#">Case Studies</a><a href="#">Blog</a><a href="#">FAQ</a>
+      </div>
+      <div class="cl fl-link">
+        <p class="ct fl-ct">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="ct fl-ct">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--lt">Instagram</a>
+          <a href="#" class="sp sp--lt">LinkedIn</a>
+          <a href="#" class="sp sp--lt">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fl-bottom">
+      <span class="fl-brand">NEMO</span>
+      <span style="font-family:var(--font-haas);font-size:13px;color:rgba(0,0,0,0.4);">Cairo, Egypt</span>
+    </div>
+  </div>
+
+  <div class="wm wm--invert" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="bl cb fl-copy">
+    <div class="cb-i">
+      <span>© 2026 Nemo</span>
+      <span class="cb-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="cb-dot"></span>
+      <a href="#">Terms</a>
+      <span class="cb-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     M — NOIR MESH (True black with multi-point gradient mesh)
+     Wordmark: standard  |  Line: scanning beam
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>M · Noir Mesh — Black with Multi-Point Gradient</span></div>
+<footer class="fm">
+  <div class="fm-mesh" aria-hidden="true"></div>
+  <div class="fm-inner">
+    <div class="fm-top">
+      <div>
+        <h2 class="nl-h nl-h--w">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-lb nl-lb--w">Subscribe to our updates</p>
+        <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--w">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fm-grid">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Product</p>
+        <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Apps</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Capabilities</p>
+        <a href="#">Strategy</a><a href="#">UX / UI</a><a href="#">Development</a><a href="#">AI</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Explore</p>
+        <a href="#">Home</a><a href="#">Work</a><a href="#">About</a><a href="#">Blog</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Company</p>
+        <a href="#">Careers</a><a href="#">Contact</a><a href="#">Press</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--green">Instagram</a>
+          <a href="#" class="sp sp--green">LinkedIn</a>
+          <a href="#" class="sp sp--green">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fm-bottom">
+      <div class="fm-status">
+        <span class="fm-dot"></span> All systems operational
+      </div>
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.25);">Cairo · Remote</span>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="bl3 cb fm-copy">
+    <div class="cb-i">
+      <span>© 2026 Nemo</span>
+      <span class="cb-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="cb-dot"></span>
+      <a href="#">Terms</a>
+      <span class="cb-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     N — NEON HORIZON (Centered hero with horizontal stripe)
+     Wordmark: standard  |  Line: center pulse
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>N · Neon Horizon — Centered Hero with Stripe</span></div>
+<footer class="fn">
+  <div class="fn-stripe" aria-hidden="true"></div>
+  <div class="fn-inner">
+    <div class="fn-hero">
+      <span class="fn-badge">Taking 2026 projects</span>
+      <h2 class="nl-h nl-h--w" style="text-align:center;">Stay in the <em>loop</em></h2>
+      <div class="fn-form-c">
+        <p class="nl-lb nl-lb--w" style="text-align:center;">Subscribe to our updates</p>
+        <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--w" style="text-align:center;">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="fn-rail">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Explore</p>
+        <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Studio</p>
+        <a href="#">Careers</a><a href="#">Contact</a><a href="#">Blog</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--dk">Instagram</a>
+          <a href="#" class="sp sp--dk">LinkedIn</a>
+          <a href="#" class="sp sp--dk">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="bl2 cb fn-copy">
+    <div class="cb-i">
+      <span>© 2026 Nemo</span>
+      <span class="cb-dot"></span>
+      <a href="#">Privacy</a>
+      <span class="cb-dot"></span>
+      <a href="#">Terms</a>
+      <span class="cb-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     P — WEBGL NEON LINE (Charcoal Classic + Shader Line)
+     Uses the GLSL flowing green neon shader as the breathing line
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>P · WebGL Neon — Shader-Powered Breathing Line</span></div>
+<footer class="fm" style="background:var(--charcoal);">
+  <div class="fm-inner" style="padding-bottom:0;">
+    <div class="fm-top" style="border-bottom-color:var(--b1);">
+      <div>
+        <h2 class="nl-h nl-h--w">What's <em>next</em> is<br>already in motion</h2>
+      </div>
+      <div>
+        <p class="nl-lb nl-lb--w">Get early access to insights & work</p>
+        <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--w">No spam. One dispatch a month.</p>
+      </div>
+    </div>
+
+    <div class="fm-grid" style="grid-template-columns:repeat(5,1fr);gap:var(--sp10);">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Apps</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Services</p>
+        <a href="#">Strategy</a><a href="#">Architecture</a><a href="#">UX / UI</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Studio</p>
+        <a href="#">Culture</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--dk">Instagram</a>
+          <a href="#" class="sp sp--dk">LinkedIn</a>
+          <a href="#" class="sp sp--dk">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="fm-bottom" style="border-top-color:var(--b1);padding-top:var(--sp12);margin-top:var(--sp12);">
+      <div style="display:flex;gap:var(--sp12);">
+        <div style="display:flex;align-items:center;gap:var(--sp3);">
+          <span class="fm-dot"></span>
+          <span style="font-family:var(--font-haas);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);">Istanbul</span>
+          <span class="gl-clock" data-tz="Europe/Istanbul" style="font-family:var(--font-aeonik);font-size:15px;color:#fff;letter-spacing:-0.3px;font-variant-numeric:tabular-nums;">--:--</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:var(--sp3);">
+          <span class="fm-dot"></span>
+          <span style="font-family:var(--font-haas);font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);">Cairo</span>
+          <span class="gl-clock" data-tz="Africa/Cairo" style="font-family:var(--font-aeonik);font-size:15px;color:#fff;letter-spacing:-0.3px;font-variant-numeric:tabular-nums;">--:--</span>
+        </div>
+      </div>
+      <div class="srow">
+        <a href="#" class="sp sp--dk">Instagram</a>
+        <a href="#" class="sp sp--dk">LinkedIn</a>
+        <a href="#" class="sp sp--dk">Dribbble</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEMO wordmark -->
+  <div class="wm" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+
+  <!-- WebGL Breathing Line (replaces CSS animation) -->
+  <canvas id="gl-line-p" style="width:100%;height:80px;display:block;"></canvas>
+
+  <div style="background:var(--black);padding:var(--sp5) var(--sp10);">
+    <div style="max-width:1312px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">© <span class="js-yr">2026</span> NEMO</span>
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;">ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     Q — WEBGL WIDE ATMOSPHERE (Wider shader band)
+     A taller atmospheric canvas that the wordmark floats over
+═══════════════════════════════════════════════════ -->
+<div class="lab"><span>Q · Wide Atmosphere — Shader Band Behind Wordmark</span></div>
+<footer style="background:#0a0a0a;color:#fff;position:relative;">
+  <div style="max-width:1312px;margin:0 auto;padding:var(--sp20) var(--sp10) 0;">
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:var(--sp20);align-items:end;padding-bottom:var(--sp16);border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:var(--sp16);">
+      <div>
+        <h2 class="nl-h nl-h--w">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="nl-lb nl-lb--w">Subscribe to our updates</p>
+        <form class="nl-f nl-f--dk" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--w">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp10);">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Services</p>
+        <a href="#">Branding</a><a href="#">Web Design</a><a href="#">Product Design</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Studio</p>
+        <a href="#">About</a><a href="#">Process</a><a href="#">Careers</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Resources</p>
+        <a href="#">Case Studies</a><a href="#">Blog</a><a href="#">Contact</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy</a><a href="#">Terms</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--glass">Instagram</a>
+          <a href="#" class="sp sp--glass">LinkedIn</a>
+          <a href="#" class="sp sp--glass">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wide WebGL atmosphere band with wordmark overlaid -->
+  <div style="position:relative;margin-top:var(--sp12);">
+    <canvas id="gl-line-q" style="width:100%;height:200px;display:block;"></canvas>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="" style="width:100%;max-width:900px;height:auto;opacity:0.12;-webkit-mask-image:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 90%);mask-image:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 90%);user-select:none;pointer-events:none;">
+    </div>
+  </div>
+
+  <div style="background:#050505;padding:var(--sp5) var(--sp10);">
+    <div style="max-width:1312px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;">© <span class="js-yr">2026</span> NEMO</span>
+      <span style="font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;">ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<div class="lab"><span>End of Footer Lab 6.0</span></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// WebGL Breathing Line Shader
+// Adapted from GLSL: flowing green neon with mouse + noise
+// ═══════════════════════════════════════════════
+
+function initGLLine(canvasId) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const gl = canvas.getContext('webgl', { alpha: false, antialias: true });
+  if (!gl) { console.warn('WebGL not supported'); return; }
+
+  // Vertex shader
+  const vsSource = `
+    attribute vec2 a_position;
+    varying vec2 v_uv;
+    void main() {
+      v_uv = a_position * 0.5 + 0.5;
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  `;
+
+  // Fragment shader (adapted from the GLSL)
+  const fsSource = `
+    precision mediump float;
+    uniform float u_time;
+    uniform vec2 u_mouse;
+    uniform vec2 u_resolution;
+    varying vec2 v_uv;
+
+    #define GREEN vec3(0.207, 0.839, 0.529)
+    #define BG vec3(0.067, 0.067, 0.067)
+
+    float noise(vec2 p) {
+      return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+    }
+
+    float smoothNoise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      float a = noise(i);
+      float b = noise(i + vec2(1.0, 0.0));
+      float c = noise(i + vec2(0.0, 1.0));
+      float d = noise(i + vec2(1.0, 1.0));
+      return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+    }
+
+    float fbm(vec2 p) {
+      float v = 0.0, a = 0.5, f = 1.0;
+      for(int i = 0; i < 4; i++) {
+        v += a * smoothNoise(p * f);
+        f *= 2.0; a *= 0.5;
+      }
+      return v;
+    }
+
+    void main() {
+      vec2 uv = v_uv;
+      vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.0);
+      vec2 p = (uv - 0.5) * aspect;
+
+      float lineY = 0.0;
+      float dist = abs(p.y - lineY);
+
+      // Center glow
+      float centerGlow = 1.0 - length(uv - 0.5) * 1.2;
+      centerGlow = smoothstep(0.0, 1.0, centerGlow);
+
+      // Edge fading
+      float hFade = 1.0 - abs(uv.x - 0.5) * 2.0;
+      hFade = smoothstep(0.0, 1.0, hFade);
+      float vFade = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vFade = smoothstep(0.0, 1.0, vFade);
+      float edgeFade = hFade * vFade * centerGlow;
+      edgeFade = pow(edgeFade, 1.5);
+
+      // Organic noise
+      float n = fbm(vec2(uv.x * 3.0 - u_time * 0.1, uv.y * 3.0)) * 0.3 + 0.7;
+
+      // Mouse interaction
+      float mouseDist = length(uv - u_mouse);
+      float mouseInfl = smoothstep(0.3, 0.0, mouseDist) * 0.4;
+
+      // Line glow layers
+      float glow = exp(-dist * 200.0) * edgeFade * n;
+      glow += exp(-dist * 80.0) * edgeFade * 0.5 * n;
+      glow += exp(-dist * 40.0) * edgeFade * 0.3 * n;
+      glow += mouseInfl * edgeFade;
+
+      // Flowing animation
+      float flow = sin(uv.x * 6.0 - u_time * 2.0 + fbm(uv * 2.0) * 2.0) * 0.5 + 0.5;
+      flow = smoothstep(0.3, 0.7, flow);
+      glow *= (0.7 + flow * 0.3);
+
+      vec3 color = mix(BG, GREEN * glow, clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compileShader(src, type) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, src);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(shader));
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  }
+
+  const vs = compileShader(vsSource, gl.VERTEX_SHADER);
+  const fs = compileShader(fsSource, gl.FRAGMENT_SHADER);
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs);
+  gl.attachShader(prog, fs);
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.error(gl.getProgramInfoLog(prog));
+    return;
+  }
+  gl.useProgram(prog);
+
+  // Full-screen quad
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  // Uniforms
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+  let mouse = [0.5, 0.5];
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse[0] = (e.clientX - rect.left) / rect.width;
+    mouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
+  });
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const startTime = performance.now();
+  function render() {
+    const t = (performance.now() - startTime) / 1000;
+    gl.uniform1f(uTime, t);
+    gl.uniform2f(uMouse, mouse[0], mouse[1]);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render();
+}
+
+// Init both canvases
+initGLLine('gl-line-p');
+initGLLine('gl-line-q');
+
+// Live clocks
+function updateLabClocks() {
+  document.querySelectorAll('.gl-clock').forEach(el => {
+    const tz = el.dataset.tz;
+    if (tz) el.textContent = new Date().toLocaleTimeString('en-GB', { timeZone: tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false });
+  });
+}
+updateLabClocks();
+setInterval(updateLabClocks, 1000);
+
+// Dynamic year
+document.querySelectorAll('.js-yr').forEach(el => { el.textContent = new Date().getFullYear(); });
+</script>
+
+</body>
+</html>

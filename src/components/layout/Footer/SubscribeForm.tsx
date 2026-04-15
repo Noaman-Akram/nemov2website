@@ -14,61 +14,58 @@ export function SubscribeForm() {
 
   if (done) {
     return (
-      <span style={{ fontFamily: "var(--font-haas)", fontSize: 14, color: "var(--green)" }}>
-        You&apos;re in ✓
+      <span style={{ fontFamily: "var(--font-haas)", fontSize: 13, color: "var(--green)" }}>
+        You&apos;re incredibly early ✓
       </span>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="email-row">
+    <form onSubmit={handleSubmit} className="nl-form">
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder="you@company.com"
         autoComplete="email"
         required
-        className="email-input"
       />
-      <button type="submit" className="subscribe-btn">
-        Subscribe
-      </button>
+      <button type="submit">Subscribe</button>
 
       <style>{`
-        .email-row {
+        .nl-form {
           display: flex;
-          align-items: flex-end;
-          gap: var(--sp6);
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: var(--r-pill);
+          padding: 4px;
         }
-        .email-input {
-          font-family: var(--font-haas);
-          font-size: 14px;
+        .nl-form input {
+          flex: 1;
+          min-width: 0;
           background: transparent;
-          color: var(--t1);
           border: none;
-          border-bottom: 1px solid var(--t1);
-          border-radius: 0;
-          padding: var(--sp2) 0;
           outline: none;
-          width: 220px;
-          transition: opacity 200ms ease;
-        }
-        .email-input::placeholder { color: rgba(255,255,255,0.45); }
-        .email-input:focus { opacity: 1; border-bottom-color: rgba(255,255,255,0.9); }
-        .subscribe-btn {
+          padding: 0 var(--sp4);
           font-family: var(--font-haas);
           font-size: 14px;
-          font-weight: 400;
-          color: var(--t1);
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          padding: var(--sp2) 0;
-          white-space: nowrap;
-          transition: opacity 200ms ease;
+          color: #fff;
         }
-        .subscribe-btn:hover { opacity: 0.6; }
+        .nl-form input::placeholder { color: rgba(255,255,255,0.3); }
+        .nl-form button {
+          background: #fff;
+          color: #000;
+          border: none;
+          border-radius: var(--r-pill);
+          padding: 0 var(--sp6);
+          height: 40px;
+          font-family: var(--font-haas);
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background var(--e-fast);
+        }
+        .nl-form button:hover { background: #e0e0e0; }
       `}</style>
     </form>
   );

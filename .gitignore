@@ -28,9 +28,6 @@ yarn-error.log*
 *.DS_Store
 Thumbs.db
 
-# Fonts (local proprietary fonts — do not commit)
-public/fonts/
-_archive/fonts/
 
 # IDE
 .vscode/

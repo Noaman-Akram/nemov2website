@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 10.0 (The Locked Dark Base)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+:root {
+  --green:#35D687; 
+  --black:#080808; 
+  --charcoal:#111111;
+  --off-white:#F7F7F4;
+  
+  --bd1:rgba(0,0,0,0.06); 
+  --bd2:rgba(0,0,0,0.12);
+
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;--sp24:96px;
+  --r-pill:9999px;
+  --e-fast:150ms ease-in-out; 
+  --container:1312px;
+  
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);font-size:14px;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;transition:all var(--e-fast);}
+
+.lab { text-align: center; font-family: var(--font-aeonik); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: var(--sp10); color: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: var(--sp10); }
+
+/* ═══════════════════════════════════════════
+   THE LOCKED DARK BASE (Matches User Screenshot)
+═══════════════════════════════════════════ */
+.locked-base {
+  background: var(--charcoal);
+  padding-top: var(--sp20);
+  border-top: 1px solid rgba(255,255,255,0.05); /* Soft delimiter from whatever is above */
+  position: relative;
+}
+
+.lb-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--sp10);
+}
+
+.lb-row-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp6);
+}
+.lb-nav {
+  display: flex;
+  gap: var(--sp6);
+  flex-wrap: wrap;
+}
+.lb-nav a {
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  transition: color var(--e-fast);
+}
+.lb-nav a:hover { color: #fff; }
+
+.lb-socials { display: flex; gap: var(--sp3); }
+.lb-sp {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 36px; padding: 0 var(--sp5); border-radius: var(--r-pill);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-family: var(--font-haas); font-size: 12px; color: #fff;
+  transition: background var(--e-fast), border-color var(--e-fast);
+}
+.lb-sp:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+
+.lb-row-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--sp10);
+  flex-wrap: wrap;
+  gap: var(--sp6);
+}
+.lb-clocks { display: flex; gap: var(--sp8); }
+.lb-ck { display: flex; align-items: center; gap: 8px; }
+.lb-ck-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(53,214,135,0.6); }
+.lb-ck-city { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); }
+.lb-ck-time { font-family: var(--font-aeonik); font-size: 13px; color: #fff; font-variant-numeric: tabular-nums; letter-spacing: 0.5px; }
+
+.lb-legal { display: flex; gap: var(--sp6); }
+.lb-legal a { font-family: var(--font-haas); font-size: 13px; color: rgba(255,255,255,0.4); }
+.lb-legal a:hover { color: #fff; }
+
+.lb-wm {
+  margin-top: var(--sp24);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -10px; /* Sink it into the glow line to perfectly blend */
+  padding: 0 var(--sp10);
+}
+.lb-wm img {
+  width: 100%;
+  max-width: 1040px;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0) 95%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0) 95%);
+}
+
+.gl-strip {
+  width: 100%;
+  height: 80px; 
+  position: relative;
+  z-index: 1;
+}
+
+.lb-bottom {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp4) var(--sp10) var(--sp10);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-haas);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ═══════════════════════════════════════════
+   UPPER SECTION OPTIONS
+═══════════════════════════════════════════ */
+
+/* OPTION 1: Ultra Minimal Light Intro */
+.up-light {
+  background: var(--off-white);
+  padding: var(--sp24) var(--sp10) var(--sp20);
+  margin: 0 auto;
+}
+.up-light-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.up-statement {
+  font-family: var(--font-haas);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: #111;
+  max-width: 700px;
+  margin-bottom: var(--sp24);
+}
+.up-statement em { font-style: normal; color: var(--green); }
+.up-issue {
+  margin-top: var(--sp6);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.4);
+}
+
+/* Reusing the CTA/Newsletter layout */
+.ft-cta-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--sp16); }
+.ft-cta-left { display: flex; flex-direction: column; gap: var(--sp6); }
+.ft-cta-heading { font-family: var(--font-haas); font-size: clamp(40px, 5vw, 56px); font-weight: 400; letter-spacing: -2px; line-height: 1; color: #111; }
+.ft-cta-heading em { font-style: normal; color: var(--green); }
+.ft-buttons { display: flex; gap: var(--sp3); flex-wrap: wrap; }
+.ft-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp2); height: 48px; padding: 0 var(--sp6); border-radius: var(--r-pill); font-family: var(--font-haas); font-size: 14px; font-weight: 500; transition: all var(--e-fast); border: 1px solid transparent; cursor: pointer; }
+.ft-btn-primary { background: var(--green); color: #0A1A10; }
+.ft-btn-primary:hover { background: #29c275; }
+.ft-btn-secondary { background: transparent; border-color: var(--bd2); color: #111; }
+.ft-btn-secondary:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.3); }
+
+.ft-cta-right { max-width: 440px; width: 100%; }
+.nl-label { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.4); margin-bottom: var(--sp3); }
+.nl-form { display: flex; background: #fff; border: 1px solid var(--bd2); border-radius: var(--r-pill); padding: 4px; }
+.nl-form input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; padding: 0 var(--sp4); font-family: var(--font-haas); font-size: 14px; color: #111; }
+.nl-form input::placeholder { color: rgba(0,0,0,0.4); }
+.nl-form button { background: var(--charcoal); color: #fff; border: none; border-radius: var(--r-pill); padding: 0 var(--sp5); height: 40px; font-family: var(--font-haas); font-size: 13px; font-weight: 500; cursor: pointer; transition: background var(--e-fast); }
+.nl-form button:hover { background: #000; }
+.nl-meta { margin-top: var(--sp3); font-family: var(--font-haas); font-size: 12px; color: rgba(0,0,0,0.4); }
+
+
+/* OPTION 2: Dark Editorial Intro */
+.up-dark {
+  background: var(--charcoal);
+  padding: var(--sp24) var(--sp10) var(--sp16);
+  margin: 0 auto;
+}
+.up-dark .ft-cta-heading { color: #fff; }
+.up-dark .ft-btn-secondary { color: #fff; border-color: rgba(255,255,255,0.2); }
+.up-dark .ft-btn-secondary:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
+.up-dark .nl-label, .up-dark .nl-meta { color: rgba(255,255,255,0.4); }
+.up-dark .nl-form { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
+.up-dark .nl-form input { color: #fff; }
+.up-dark .nl-form input::placeholder { color: rgba(255,255,255,0.3); }
+.up-dark .nl-form button { background: var(--green); color: #0A1A10; }
+.up-dark .nl-form button:hover { background: #29c275; }
+
+@media(max-width: 900px){
+  .lb-row-1 { flex-direction: column; align-items: flex-start; gap: var(--sp6); }
+  .lb-row-2 { flex-direction: column; align-items: flex-start; gap: var(--sp6); }
+  .ft-cta-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="lab">Option A: The Split (Light Editorial Top + Locked Dark Base)</div>
+
+<!-- OPTION A: LIGHT EDITORIAL SPLIT -->
+<footer>
+  <div class="up-light">
+    <div class="up-light-inner">
+      <h2 class="up-statement">Independent studio crafting brands, products and the <em>systems</em> that make them run.</h2>
+      <div class="ft-cta-row">
+        <div class="ft-cta-left">
+          <h2 class="ft-cta-heading">What's <em>next</em><br>starts here</h2>
+          <div class="ft-buttons">
+            <button class="ft-btn ft-btn-primary">Start a project ↗</button>
+            <button class="ft-btn ft-btn-secondary">Book a call ↗</button>
+          </div>
+        </div>
+        <div class="ft-cta-right">
+          <div class="nl-label">Subscribe to our updates</div>
+          <form class="nl-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="nl-meta">No spam. One dispatch a month.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE LOCKED DARK BASE -->
+  <div class="locked-base">
+    <div class="lb-inner">
+      <div class="lb-row-1">
+        <div class="lb-nav">
+          <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+          <a href="#">Careers</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="lb-socials">
+          <a href="#" class="lb-sp">Instagram</a>
+          <a href="#" class="lb-sp">LinkedIn</a>
+          <a href="#" class="lb-sp">Dribbble</a>
+        </div>
+      </div>
+      <div class="lb-row-2">
+        <div class="lb-clocks">
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Istanbul</span><span class="lb-ck-time jc" data-tz="Europe/Istanbul">--:--:--</span></div>
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Cairo</span><span class="lb-ck-time jc" data-tz="Africa/Cairo">--:--:--</span></div>
+        </div>
+        <div class="lb-legal">
+          <a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="lb-wm" aria-hidden="true">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+    </div>
+    <canvas class="gl-strip" id="gl-v1"></canvas>
+    
+    <div class="lb-bottom">
+      <span>© <span class="jy">2026</span> NEMO</span>
+      <span>ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<div class="lab" style="margin-top:var(--sp20);">Option B: The Dark Stack (Dark Editorial Top + Locked Dark Base)</div>
+
+<!-- OPTION B: ALL DARK -->
+<footer>
+  <div class="up-dark">
+    <div class="up-light-inner">
+      <div class="ft-cta-row">
+        <div class="ft-cta-left">
+          <h2 class="ft-cta-heading">What's <em>next</em><br>starts here</h2>
+          <div class="ft-buttons">
+            <button class="ft-btn ft-btn-primary">Start a project ↗</button>
+            <button class="ft-btn ft-btn-secondary">Book a call ↗</button>
+          </div>
+        </div>
+        <div class="ft-cta-right">
+          <div class="nl-label">Subscribe to our updates</div>
+          <form class="nl-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="you@company.com" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <div class="nl-meta">No spam. One dispatch a month.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE LOCKED DARK BASE -->
+  <div class="locked-base">
+    <div class="lb-inner">
+      <div class="lb-row-1">
+        <div class="lb-nav">
+          <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+          <a href="#">Careers</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="lb-socials">
+          <a href="#" class="lb-sp">Instagram</a>
+          <a href="#" class="lb-sp">LinkedIn</a>
+          <a href="#" class="lb-sp">Dribbble</a>
+        </div>
+      </div>
+      <div class="lb-row-2">
+        <div class="lb-clocks">
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Istanbul</span><span class="lb-ck-time jc" data-tz="Europe/Istanbul">--:--:--</span></div>
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Cairo</span><span class="lb-ck-time jc" data-tz="Africa/Cairo">--:--:--</span></div>
+        </div>
+        <div class="lb-legal">
+          <a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="lb-wm" aria-hidden="true">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+    </div>
+    <canvas class="gl-strip" id="gl-v2"></canvas>
+    
+    <div class="lb-bottom">
+      <span>© <span class="jy">2026</span> NEMO</span>
+      <span>ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<div class="lab" style="margin-top:var(--sp20);">Option C: Ultra Minimal (Only the Locked Dark Base)</div>
+
+<!-- OPTION C: ONLY THE BASE -->
+<footer>
+  <!-- THE LOCKED DARK BASE -->
+  <div class="locked-base" style="border-top:none;">
+    <div class="lb-inner">
+      <div class="lb-row-1">
+        <div class="lb-nav">
+          <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+          <a href="#">Careers</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="lb-socials">
+          <a href="#" class="lb-sp">Instagram</a>
+          <a href="#" class="lb-sp">LinkedIn</a>
+          <a href="#" class="lb-sp">Dribbble</a>
+        </div>
+      </div>
+      <div class="lb-row-2">
+        <div class="lb-clocks">
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Istanbul</span><span class="lb-ck-time jc" data-tz="Europe/Istanbul">--:--:--</span></div>
+          <div class="lb-ck"><span class="lb-ck-dot"></span><span class="lb-ck-city">Cairo</span><span class="lb-ck-time jc" data-tz="Africa/Cairo">--:--:--</span></div>
+        </div>
+        <div class="lb-legal">
+          <a href="#">Privacy</a><a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="lb-wm" aria-hidden="true">
+      <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="NEMO">
+    </div>
+    <canvas class="gl-strip" id="gl-v3"></canvas>
+    
+    <div class="lb-bottom">
+      <span>© <span class="jy">2026</span> NEMO</span>
+      <span>ALL RIGHTS RESERVED</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+function initGlow(id) {
+  const c = document.getElementById(id);
+  if(!c) return;
+  const gl = c.getContext('webgl', { alpha: false, antialias: true });
+  if(!gl) return;
+
+  const vs = `
+    attribute vec2 a_pos;
+    varying vec2 v_uv;
+    void main(){ v_uv=a_pos*0.5+0.5; gl_Position=vec4(a_pos,0.0,1.0); }
+  `;
+
+  // Matches the extremely dark charcoal root background --charcoal: #111 -> rgb(17,17,17) -> 17/255 = 0.0666
+  const fs = `
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_r;
+    varying vec2 v_uv;
+
+    #define G vec3(0.207, 0.839, 0.529)
+
+    float n(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+    float sn(vec2 p){
+      vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+      return mix(mix(n(i),n(i+vec2(1,0)),f.x),mix(n(i+vec2(0,1)),n(i+vec2(1,1)),f.x),f.y);
+    }
+    float fbm(vec2 p){
+      float v=0.,a=0.5,f=1.;
+      for(int i=0;i<5;i++){v+=a*sn(p*f);f*=2.;a*=0.5;}
+      return v;
+    }
+
+    void main() {
+      vec2 uv = v_uv;
+      vec2 asp = vec2(u_r.x/u_r.y, 1.0);
+      vec2 p = (uv - 0.5) * asp;
+      
+      // Center the intense glow directly horizontally
+      float dist = abs(p.y);
+
+      // Edge fading horizontally
+      float hf = smoothstep(0.0, 0.15, uv.x) * smoothstep(0.0, 0.15, 1.0-uv.x);
+      float vf = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vf = smoothstep(0.0, 1.0, vf);
+      float fade = hf * pow(vf, 1.2);
+
+      // Noise generator for flowing thickness
+      float noise = fbm(vec2(uv.x * 4.0 - u_t * 0.15, uv.y * 5.0 + u_t * 0.05)) * 0.35 + 0.65;
+
+      // Extremely punchy core pulse exactly like the screenshot
+      float glow = 0.0;
+      glow += exp(-dist * 250.0) * 1.8;   // Sharp hot core
+      glow += exp(-dist * 80.0) * 0.6;    // Subtle inner haze
+      glow += exp(-dist * 20.0) * 0.2;    // Wide ambient radiation
+      glow *= fade * noise;
+
+      // Autonomous horizontal flow
+      float flow1 = sin(uv.x * 8.0 - u_t * 2.5 + fbm(uv * 3.0) * 3.0) * 0.5 + 0.5;
+      float flow2 = sin(uv.x * 12.0 + u_t * 1.8 + fbm(uv * 5.0) * 2.0) * 0.5 + 0.5;
+      glow *= (0.6 + smoothstep(0.2, 0.8, flow1) * 0.25 + smoothstep(0.3, 0.7, flow2) * 0.15);
+
+      // Background matching the #111 charcoal precisely
+      vec3 bg = vec3(0.066, 0.066, 0.066); 
+      
+      vec3 color = mix(bg, G * clamp(glow, 0.0, 2.5), clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compile(src, type) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) return null;
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(vs, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(fs, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'a_pos'); gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog, 'u_t');
+  const uR = gl.getUniformLocation(prog, 'u_r');
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    gl.viewport(0, 0, c.width, c.height);
+  }
+  resize(); window.addEventListener('resize', resize);
+
+  const t0 = performance.now();
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) / 1000);
+    gl.uniform2f(uR, c.width, c.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+}
+
+initGlow('gl-v1');
+initGlow('gl-v2');
+initGlow('gl-v3');
+
+// Live precise ticking clocks matching the layout standard (HH:MM:SS)
+function tick(){
+  document.querySelectorAll('.jc').forEach(el => {
+    el.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:el.dataset.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  });
+}
+tick(); setInterval(tick, 1000);
+document.querySelectorAll('.jy').forEach(e => { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab (variants)</title>
+<style>
+/* ══════════════════════════════════════════════════════
+   NEMO — FOOTER LAB
+   6 footer variants stacked on one page, each separated
+   by a labelled divider.
+
+   Locked zone (DO NOT EDIT):
+     .footer-giant   — giant NEMO wordmark
+     .footer-bottom::before — breathing green line
+   The copyright bar itself can vary between variants.
+
+   Fonts + tokens mirror src/app/globals.css exactly.
+════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'AeonikPro';
+  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'NeueHaas';
+  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* Brand */
+  --green:           #35D687;
+  --green-dim:       rgba(53, 214, 135, 0.12);
+  --green-border:    rgba(53, 214, 135, 0.28);
+  --green-hover:     #29c275;
+
+  /* Dark surfaces */
+  --black:     #080808;
+  --navy:      #13171D;
+  --charcoal:  #222222;
+  --s0: #080808;
+  --s1: #13171D;
+  --s2: #222222;
+  --s3: rgba(255,255,255,0.04);
+  --s3h: rgba(255,255,255,0.07);
+
+  /* Light / neutral */
+  --white:      #FFFFFF;
+  --off-white:  #FAFBFC;
+  --warm:       #EDE9E0;
+  --warm-cream: #E9EBDF;
+  --gray:       #868788;
+
+  /* Borders */
+  --b1: rgba(255,255,255,0.07);
+  --b2: rgba(255,255,255,0.12);
+  --b3: rgba(255,255,255,0.20);
+  --b-green: rgba(53,214,135,0.28);
+  --b-dark:  rgba(0,0,0,0.15);
+
+  /* Text */
+  --t1: #FFFFFF;
+  --t2: #F3F3F3;
+  --t3: #868788;
+  --t-off: rgba(255,255,255,0.25);
+
+  /* Spacing */
+  --sp1:4px;  --sp2:8px;  --sp3:12px;  --sp4:16px;
+  --sp5:20px; --sp6:24px; --sp7:28px;  --sp8:32px;
+  --sp10:40px; --sp12:48px; --sp16:64px; --sp20:80px; --sp32:128px;
+
+  /* Radius */
+  --r-sm:4px; --r-md:8px; --r-lg:16px; --r-xl:20px; --r-pill:9999px;
+
+  /* Motion */
+  --e-fast:   150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+  --e-slow:   500ms ease-in-out;
+
+  /* Layout */
+  --container: 1312px;
+
+  /* Fonts */
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas:   'NeueHaas', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--off-white);
+  color: #111;
+  font-family: var(--font-haas), 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Page divider + label between variants ── */
+.variant-label {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp20) var(--sp10) var(--sp6);
+  font-family: var(--font-aeonik);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: var(--sp4);
+}
+.variant-label::before,
+.variant-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0,0,0,0.1);
+}
+.variant-label span {
+  padding: 0 var(--sp3);
+  color: #111;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+
+/* ══════════════════════════════════════════════════════
+   LOCKED ZONE — shared across all variants.
+   .footer-giant + .footer-bottom::before = NEVER edit.
+   .footer-bottom layout itself varies per variant.
+═══════════════════════════════════════════════════════ */
+.footer-giant {
+  overflow: hidden;
+  padding: 60px 40px 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.footer-giant img {
+  width: 100%; max-width: 1100px; height: auto; display: block;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 88%);
+  user-select: none; pointer-events: none;
+}
+.footer-giant--dark img { filter: invert(1); }
+
+.footer-bottom-line { position: relative; }
+.footer-bottom-line::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(53,214,135,0.7) 0%, var(--green) 50%, rgba(53,214,135,0.7) 100%);
+  animation: glow-line 3s ease-in-out infinite;
+}
+@keyframes glow-line {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 6px rgba(53,214,135,0.2); }
+  50%       { opacity: 1;   box-shadow: 0 0 20px rgba(53,214,135,0.5), 0 0 40px rgba(53,214,135,0.2); }
+}
+
+/* ══════════════════════════════════════════════════════
+   SHARED PIECES — reusable button/link atoms
+═══════════════════════════════════════════════════════ */
+.btn-white {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500;
+  color: #111; background: #fff;
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+  transition: opacity var(--e-fast);
+}
+.btn-white:hover { opacity: 0.85; }
+.btn-ghost-dark {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500;
+  color: #fff; background: transparent;
+  border: 1px solid var(--b3);
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+  transition: background var(--e-fast);
+}
+.btn-ghost-dark:hover { background: var(--s3h); }
+.btn-green {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500;
+  color: #0A1A10; background: var(--green);
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+  transition: background var(--e-fast);
+}
+.btn-green:hover { background: var(--green-hover); }
+.btn-dark {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-haas);
+  font-size: 14px; font-weight: 500;
+  color: #fff; background: var(--black);
+  border-radius: var(--r-pill);
+  height: 44px; padding: 0 var(--sp6);
+}
+.btn-dark:hover { background: var(--charcoal); }
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 1 — MEGA EDITORIAL (dark, s1/navy)
+   Huge left "Let's talk" hero, small link cluster right,
+   split copyright bar.
+═══════════════════════════════════════════════════════ */
+.f1 {
+  background: var(--s1);
+  color: #fff;
+}
+.f1-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp20) var(--sp10) var(--sp16);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--sp20);
+}
+.f1-mega {
+  font-family: var(--font-aeonik);
+  font-size: clamp(64px, 9vw, 140px);
+  font-weight: 400;
+  letter-spacing: -4px;
+  line-height: 0.92;
+  color: #fff;
+}
+.f1-mega em { font-style: normal; color: var(--green); }
+.f1-sub {
+  max-width: 420px;
+  margin-top: var(--sp8);
+  color: rgba(255,255,255,0.55);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.f1-ctas { display: flex; gap: var(--sp3); margin-top: var(--sp10); }
+.f1-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp10) var(--sp6);
+  align-content: start;
+  padding-top: var(--sp6);
+}
+.f1-col-title {
+  font-family: var(--font-haas);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp4);
+}
+.f1-col a {
+  display: block;
+  font-family: var(--font-haas);
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  padding: 6px 0;
+  transition: color var(--e-fast);
+}
+.f1-col a:hover { color: var(--green); }
+
+/* Copyright bar — split 3-up */
+.f1-copy {
+  padding: var(--sp5) var(--sp10);
+}
+.f1-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--sp6);
+  align-items: center;
+}
+.f1-copy-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.f1-copy-center {
+  font-family: var(--font-aeonik);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+.f1-copy-legal {
+  display: flex;
+  gap: var(--sp6);
+  justify-content: flex-end;
+}
+.f1-copy-legal a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.f1-copy-legal a:hover { color: #fff; }
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 2 — WARM CREAM (light, --warm-cream)
+   Inverted: light footer with dark text, newsletter row,
+   split link columns.
+═══════════════════════════════════════════════════════ */
+.f2 {
+  background: var(--warm-cream);
+  color: #111;
+}
+.f2-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp20) var(--sp10) var(--sp16);
+}
+.f2-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp20);
+  padding-bottom: var(--sp16);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.f2-h {
+  font-family: var(--font-aeonik);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  line-height: 1.04;
+  color: #111;
+}
+.f2-h em { font-style: normal; color: #5a7f65; }
+.f2-news-label {
+  font-family: var(--font-haas);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.5);
+  margin-bottom: var(--sp4);
+}
+.f2-news-form {
+  display: flex;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  max-width: 440px;
+}
+.f2-news-form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0 var(--sp4);
+  font-family: var(--font-haas);
+  font-size: 14px;
+  color: #111;
+}
+.f2-news-form input::placeholder { color: rgba(0,0,0,0.4); }
+.f2-news-form button {
+  background: var(--black);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 0 var(--sp5);
+  height: 40px;
+  font-family: var(--font-haas);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.f2-news-meta {
+  margin-top: var(--sp3);
+  font-size: 12px;
+  color: rgba(0,0,0,0.5);
+}
+.f2-cols {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: var(--sp10);
+  padding-top: var(--sp16);
+}
+.f2-brand-title {
+  font-family: var(--font-aeonik);
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--sp4);
+  color: #111;
+}
+.f2-brand-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(0,0,0,0.55);
+  max-width: 320px;
+}
+.f2-col-title {
+  font-family: var(--font-haas);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0,0,0,0.45);
+  margin-bottom: var(--sp4);
+}
+.f2-col a {
+  display: block;
+  font-family: var(--font-haas);
+  font-size: 14px;
+  color: rgba(0,0,0,0.82);
+  padding: 6px 0;
+  transition: color var(--e-fast);
+}
+.f2-col a:hover { color: #000; }
+
+/* Copyright bar — centered single line */
+.f2-copy {
+  padding: var(--sp5) var(--sp10);
+  background: #fff;
+}
+.f2-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp6);
+  flex-wrap: wrap;
+}
+.f2-copy-inner span, .f2-copy-inner a {
+  font-size: 13px;
+  color: rgba(0,0,0,0.55);
+}
+.f2-copy-inner a:hover { color: #000; }
+.f2-copy-dot {
+  width: 4px; height: 4px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 50%;
+}
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 3 — GREEN-TINTED (dark base + green glow card)
+   Single centered card with heading + pill CTA, city
+   marker row, minimal links.
+═══════════════════════════════════════════════════════ */
+.f3 {
+  background: var(--black);
+  position: relative;
+  overflow: hidden;
+}
+.f3::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 600px;
+  background: radial-gradient(ellipse at center, var(--green-dim) 0%, transparent 60%);
+  pointer-events: none;
+}
+.f3-inner {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp20) var(--sp10);
+  text-align: center;
+}
+.f3-eyebrow {
+  display: inline-block;
+  font-family: var(--font-aeonik);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  padding: 6px var(--sp4);
+  border: 1px solid var(--b-green);
+  background: var(--green-dim);
+  border-radius: var(--r-pill);
+  margin-bottom: var(--sp8);
+}
+.f3-h {
+  font-family: var(--font-aeonik);
+  font-size: clamp(48px, 6vw, 88px);
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 1.02;
+  color: #fff;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.f3-h em { font-style: normal; color: var(--green); }
+.f3-sub {
+  margin: var(--sp6) auto 0;
+  max-width: 520px;
+  color: rgba(255,255,255,0.55);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.f3-ctas {
+  margin-top: var(--sp10);
+  display: inline-flex;
+  gap: var(--sp3);
+}
+.f3-meta {
+  margin-top: var(--sp16);
+  display: flex;
+  justify-content: center;
+  gap: var(--sp12);
+  flex-wrap: wrap;
+}
+.f3-meta-item {
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+.f3-meta-item strong {
+  font-family: var(--font-aeonik);
+  font-size: 22px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.f3-meta-item .live-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 6px;
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+.f3-links {
+  margin-top: var(--sp16);
+  display: flex;
+  justify-content: center;
+  gap: var(--sp10);
+  flex-wrap: wrap;
+  padding-top: var(--sp10);
+  border-top: 1px solid var(--b1);
+}
+.f3-links a {
+  font-family: var(--font-haas);
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+}
+.f3-links a:hover { color: var(--green); }
+
+/* Copyright bar */
+.f3-copy {
+  padding: var(--sp5) var(--sp10);
+}
+.f3-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.f3-copy-inner span, .f3-copy-inner a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.f3-legal { display: flex; gap: var(--sp6); }
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 4 — WIDE 6-COL RAIL (charcoal, ultra-minimal)
+   Single row of 6 dense link columns, no heading hero,
+   clock-style copyright.
+═══════════════════════════════════════════════════════ */
+.f4 {
+  background: var(--charcoal);
+  border-top: 1px solid var(--b1);
+}
+.f4-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp16) var(--sp10) var(--sp12);
+}
+.f4-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: var(--sp12);
+  margin-bottom: var(--sp12);
+  border-bottom: 1px solid var(--b1);
+}
+.f4-brand {
+  font-family: var(--font-aeonik);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 400;
+  letter-spacing: -3px;
+  color: #fff;
+  line-height: 0.9;
+}
+.f4-brand em { font-style: normal; color: var(--green); }
+.f4-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp3);
+  padding: 0 var(--sp6);
+  height: 48px;
+  background: transparent;
+  border: 1px solid var(--b3);
+  border-radius: var(--r-pill);
+  color: #fff;
+  font-size: 14px;
+  transition: background var(--e-fast);
+}
+.f4-cta:hover { background: var(--s3h); }
+.f4-cta-arrow {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--green);
+  color: #0A1A10;
+  border-radius: 50%;
+  font-size: 13px;
+}
+.f4-cols {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--sp6);
+}
+.f4-col-title {
+  font-family: var(--font-haas);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: var(--sp3);
+}
+.f4-col a {
+  display: block;
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  padding: 4px 0;
+}
+.f4-col a:hover { color: var(--green); }
+
+/* Copyright bar — terminal-style */
+.f4-copy {
+  padding: var(--sp4) var(--sp10);
+  background: #000;
+}
+.f4-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+}
+.f4-copy-inner .prompt { color: var(--green); }
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 5 — SPLIT PANEL
+   Two vertical halves — left dark w/ mega type, right
+   off-white w/ contact card. Copyright bar spans both.
+═══════════════════════════════════════════════════════ */
+.f5 { background: var(--black); }
+.f5-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--sp10);
+}
+.f5-split {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-top: var(--sp16);
+  border: 1px solid var(--b1);
+}
+.f5-left {
+  background: var(--s1);
+  padding: var(--sp16) var(--sp12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sp12);
+}
+.f5-left-h {
+  font-family: var(--font-aeonik);
+  font-size: clamp(44px, 5vw, 72px);
+  font-weight: 400;
+  letter-spacing: -2px;
+  line-height: 1.02;
+  color: #fff;
+}
+.f5-left-h em { font-style: normal; color: var(--green); }
+.f5-left-meta {
+  display: flex;
+  gap: var(--sp10);
+  font-family: var(--font-haas);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.f5-right {
+  background: var(--off-white);
+  color: #111;
+  padding: var(--sp16) var(--sp12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp8);
+}
+.f5-contact-label {
+  font-family: var(--font-haas);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+}
+.f5-contact-val {
+  font-family: var(--font-aeonik);
+  font-size: 20px;
+  font-weight: 400;
+  color: #111;
+  letter-spacing: -0.3px;
+}
+.f5-contact-row { display: flex; flex-direction: column; gap: var(--sp2); }
+.f5-cta-row {
+  display: flex;
+  gap: var(--sp3);
+  margin-top: auto;
+  padding-top: var(--sp8);
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.f5-below-split {
+  padding: var(--sp10) 0 var(--sp12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp4);
+}
+.f5-below-split a {
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+.f5-below-split a:hover { color: var(--green); }
+.f5-nav-list {
+  display: flex;
+  gap: var(--sp6);
+  flex-wrap: wrap;
+}
+.f5-social-list {
+  display: flex;
+  gap: var(--sp4);
+}
+.f5-social-list a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border: 1px solid var(--b2);
+  border-radius: 50%;
+  font-size: 11px;
+  color: #fff;
+}
+.f5-social-list a:hover { background: var(--green); color: #0A1A10; border-color: var(--green); }
+
+/* Copyright bar */
+.f5-copy {
+  padding: var(--sp5) var(--sp10);
+}
+.f5-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.f5-copy-inner span {
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+}
+.f5-made-in {
+  display: flex;
+  align-items: center;
+  gap: var(--sp2);
+  font-family: var(--font-haas);
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+.f5-made-in .heart { color: var(--green); }
+
+/* ══════════════════════════════════════════════════════
+   VARIANT 6 — MONO / EDITORIAL NEWSPAPER
+   Off-white, serif-free big slab heading, tight Swiss
+   grid. Inverted from the usual dark footer.
+═══════════════════════════════════════════════════════ */
+.f6 {
+  background: var(--off-white);
+  color: #111;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.f6-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--sp20) var(--sp10) var(--sp16);
+}
+.f6-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--sp16);
+  padding-bottom: var(--sp16);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.f6-lede {
+  font-family: var(--font-aeonik);
+  font-size: clamp(28px, 2.8vw, 40px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: #111;
+  max-width: 520px;
+}
+.f6-lede em { font-style: normal; color: var(--green); }
+.f6-lede-meta {
+  margin-top: var(--sp6);
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+}
+.f6-col-title {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+  margin-bottom: var(--sp4);
+  padding-bottom: var(--sp3);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.f6-col a {
+  display: block;
+  font-family: var(--font-aeonik);
+  font-size: 15px;
+  color: #111;
+  padding: 6px 0;
+  letter-spacing: -0.2px;
+}
+.f6-col a:hover { color: var(--green); }
+.f6-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: var(--sp12);
+  gap: var(--sp10);
+}
+.f6-brand {
+  font-family: var(--font-aeonik);
+  font-size: clamp(72px, 10vw, 144px);
+  font-weight: 400;
+  letter-spacing: -4px;
+  line-height: 0.85;
+  color: #111;
+}
+.f6-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--sp7);
+  height: 52px;
+  background: var(--black);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-family: var(--font-haas);
+  font-size: 14px;
+  font-weight: 500;
+}
+.f6-cta:hover { background: var(--charcoal); }
+
+/* Copyright bar — dark inverted strip */
+.f6-copy {
+  background: var(--black);
+  padding: var(--sp5) var(--sp10);
+}
+.f6-copy-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp4);
+}
+.f6-copy-inner span,
+.f6-copy-inner a {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.55);
+}
+.f6-copy-inner a:hover { color: var(--green); }
+.f6-copy-legal { display: flex; gap: var(--sp6); }
+
+/* ══════════════════════════════════════════════════════
+   Responsive
+═══════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .f1-inner,
+  .f2-top,
+  .f2-cols,
+  .f5-split,
+  .f6-grid,
+  .f6-bottom-row { grid-template-columns: 1fr; gap: var(--sp10); }
+  .f4-cols { grid-template-columns: 1fr 1fr; }
+  .f1-right,
+  .f3-copy-inner,
+  .f5-below-split,
+  .f5-copy-inner,
+  .f6-copy-inner { flex-direction: column; align-items: flex-start; gap: var(--sp4); }
+  .f1-copy-inner { grid-template-columns: 1fr; text-align: left; }
+  .f1-copy-legal { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ VARIANT 1 ══════════════ -->
+<div class="variant-label"><span>01 · Mega Editorial (Navy)</span></div>
+<footer class="f1">
+  <div class="f1-inner">
+    <div class="f1-left">
+      <h2 class="f1-mega">Let's make <em>magic</em></h2>
+      <p class="f1-sub">
+        Tell us about your project. We come back within 24 hours with a point
+        of view and next steps — no forms, no funnels.
+      </p>
+      <div class="f1-ctas">
+        <a href="#" class="btn-green">Start a project →</a>
+        <a href="#" class="btn-ghost-dark">Book a call</a>
+      </div>
+    </div>
+    <div class="f1-right">
+      <div class="f1-col">
+        <p class="f1-col-title">Explore</p>
+        <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">About</a>
+      </div>
+      <div class="f1-col">
+        <p class="f1-col-title">Company</p>
+        <a href="#">Careers</a><a href="#">Contact</a><a href="#">Blog</a><a href="#">Press</a>
+      </div>
+      <div class="f1-col">
+        <p class="f1-col-title">Services</p>
+        <a href="#">Branding</a><a href="#">Web</a><a href="#">Product</a><a href="#">AI</a>
+      </div>
+      <div class="f1-col">
+        <p class="f1-col-title">Social</p>
+        <a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Dribbble</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCKED giant wordmark -->
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <!-- Copyright bar (free to style) + LOCKED breathing line on top -->
+  <div class="footer-bottom-line f1-copy">
+    <div class="f1-copy-inner">
+      <span class="f1-copy-text">© 2026 Nemo · All rights reserved</span>
+      <span class="f1-copy-center">Made in Cairo</span>
+      <div class="f1-copy-legal">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ VARIANT 2 ══════════════ -->
+<div class="variant-label"><span>02 · Warm Cream · Newsletter (Light)</span></div>
+<footer class="f2">
+  <div class="f2-inner">
+
+    <div class="f2-top">
+      <div>
+        <h2 class="f2-h">Stay in the <em>loop</em></h2>
+      </div>
+      <div>
+        <p class="f2-news-label">Subscribe to our updates</p>
+        <form class="f2-news-form" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="f2-news-meta">One email a month. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+    <div class="f2-cols">
+      <div>
+        <h3 class="f2-brand-title">NEMO</h3>
+        <p class="f2-brand-desc">
+          We create digital products with advanced technologies to build
+          memorable experiences and transform brands.
+        </p>
+      </div>
+      <div class="f2-col">
+        <p class="f2-col-title">Explore</p>
+        <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a><a href="#">About</a>
+      </div>
+      <div class="f2-col">
+        <p class="f2-col-title">Company</p>
+        <a href="#">Careers</a><a href="#">Contact</a><a href="#">Blog</a>
+      </div>
+      <div class="f2-col">
+        <p class="f2-col-title">Social</p>
+        <a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Dribbble</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LOCKED (dark wordmark on light footer — invert keeps it readable) -->
+  <div class="footer-giant footer-giant--dark" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line f2-copy">
+    <div class="f2-copy-inner">
+      <span>© 2026 Nemo</span>
+      <span class="f2-copy-dot"></span>
+      <a href="#">Privacy Policy</a>
+      <span class="f2-copy-dot"></span>
+      <a href="#">Terms of Service</a>
+      <span class="f2-copy-dot"></span>
+      <span>Made in Cairo</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ VARIANT 3 ══════════════ -->
+<div class="variant-label"><span>03 · Green Glow · Centered Hero</span></div>
+<footer class="f3">
+  <div class="f3-inner">
+    <span class="f3-eyebrow">Now taking 2026 projects</span>
+    <h2 class="f3-h">Turn tech into your biggest <em>advantage</em></h2>
+    <p class="f3-sub">
+      Discover how partnering with Nemo can drive your success and prepare
+      you for what's next.
+    </p>
+    <div class="f3-ctas">
+      <a href="#" class="btn-green">Get a free consultation →</a>
+      <a href="#" class="btn-ghost-dark">View our work</a>
+    </div>
+
+    <div class="f3-meta">
+      <div class="f3-meta-item">
+        <strong>8+ yrs</strong>
+        <span>of crafting products</span>
+      </div>
+      <div class="f3-meta-item">
+        <strong>120+ projects</strong>
+        <span>shipped worldwide</span>
+      </div>
+      <div class="f3-meta-item">
+        <strong><span class="live-dot"></span>Available</strong>
+        <span>for new work · Cairo, 10:42 AM</span>
+      </div>
+    </div>
+
+    <div class="f3-links">
+      <a href="#">Home</a><a href="#">Services</a><a href="#">Work</a>
+      <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a>
+      <a href="#">Instagram</a><a href="#">LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line f3-copy">
+    <div class="f3-copy-inner">
+      <span>© 2026 Nemo · All rights reserved</span>
+      <div class="f3-legal">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ VARIANT 4 ══════════════ -->
+<div class="variant-label"><span>04 · Dense 6-Col Rail (Charcoal)</span></div>
+<footer class="f4">
+  <div class="f4-inner">
+    <div class="f4-head">
+      <h2 class="f4-brand">Let's build<br>something <em>real</em></h2>
+      <a href="#" class="f4-cta">
+        Start a project
+        <span class="f4-cta-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="f4-cols">
+      <div class="f4-col">
+        <p class="f4-col-title">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Product design</a><a href="#">E-commerce</a>
+      </div>
+      <div class="f4-col">
+        <p class="f4-col-title">Services</p>
+        <a href="#">Strategy</a><a href="#">UX / UI</a><a href="#">Development</a><a href="#">AI</a>
+      </div>
+      <div class="f4-col">
+        <p class="f4-col-title">Explore</p>
+        <a href="#">Home</a><a href="#">Work</a><a href="#">About</a><a href="#">Blog</a>
+      </div>
+      <div class="f4-col">
+        <p class="f4-col-title">Company</p>
+        <a href="#">Careers</a><a href="#">Contact</a><a href="#">Press</a><a href="#">Partners</a>
+      </div>
+      <div class="f4-col">
+        <p class="f4-col-title">Resources</p>
+        <a href="#">Case studies</a><a href="#">Process</a><a href="#">FAQ</a><a href="#">Pricing</a>
+      </div>
+      <div class="f4-col">
+        <p class="f4-col-title">Social</p>
+        <a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Dribbble</a><a href="#">Behance</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line f4-copy">
+    <div class="f4-copy-inner">
+      <span><span class="prompt">$</span>&nbsp;nemo · ready &nbsp;[© 2026]</span>
+      <span>Cairo / 30°02'N / 31°14'E</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ VARIANT 5 ══════════════ -->
+<div class="variant-label"><span>05 · Split Panel (Dark + Off-white card)</span></div>
+<footer class="f5">
+  <div class="f5-inner">
+
+    <div class="f5-split">
+      <div class="f5-left">
+        <h2 class="f5-left-h">Great products<br>start with a <em>conversation</em></h2>
+        <div class="f5-left-meta">
+          <span>Est. 2018</span>
+          <span>Cairo · Remote</span>
+          <span>EN / FR / AR</span>
+        </div>
+      </div>
+      <div class="f5-right">
+        <div class="f5-contact-row">
+          <span class="f5-contact-label">General enquiries</span>
+          <span class="f5-contact-val">hello@madebynemo.com</span>
+        </div>
+        <div class="f5-contact-row">
+          <span class="f5-contact-label">New projects</span>
+          <span class="f5-contact-val">work@madebynemo.com</span>
+        </div>
+        <div class="f5-contact-row">
+          <span class="f5-contact-label">Careers</span>
+          <span class="f5-contact-val">careers@madebynemo.com</span>
+        </div>
+        <div class="f5-cta-row">
+          <a href="#" class="btn-dark">Get in touch →</a>
+          <a href="#" style="display:inline-flex;align-items:center;padding:0 var(--sp6);height:44px;border:1px solid var(--b-dark);border-radius:var(--r-pill);font-family:var(--font-haas);font-size:14px;font-weight:500;color:#111;">Book a call</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="f5-below-split">
+      <div class="f5-nav-list">
+        <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a>
+        <a href="#">About</a><a href="#">Careers</a><a href="#">Blog</a>
+      </div>
+      <div class="f5-social-list">
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="LinkedIn">IN</a>
+        <a href="#" aria-label="Dribbble">DR</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-giant" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line f5-copy">
+    <div class="f5-copy-inner">
+      <span>© 2026 Nemo · All rights reserved</span>
+      <span class="f5-made-in">
+        Crafted with <span class="heart">●</span> in Cairo
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ VARIANT 6 ══════════════ -->
+<div class="variant-label"><span>06 · Editorial / Swiss Grid (Light)</span></div>
+<footer class="f6">
+  <div class="f6-inner">
+
+    <div class="f6-grid">
+      <div>
+        <h2 class="f6-lede">
+          Independent studio crafting brands, products and the
+          <em>systems</em> that make them run.
+        </h2>
+        <p class="f6-lede-meta">Issue №26 · Spring 2026</p>
+      </div>
+      <div class="f6-col">
+        <p class="f6-col-title">Studio</p>
+        <a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="f6-col">
+        <p class="f6-col-title">Work</p>
+        <a href="#">Selected</a><a href="#">Archive</a><a href="#">Clients</a>
+      </div>
+      <div class="f6-col">
+        <p class="f6-col-title">Elsewhere</p>
+        <a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Newsletter</a>
+      </div>
+    </div>
+
+    <div class="f6-bottom-row">
+      <h3 class="f6-brand">Nemo<em style="color:var(--green);font-style:normal">.</em></h3>
+      <a href="#" class="f6-cta">Start a project →</a>
+    </div>
+
+  </div>
+
+  <div class="footer-giant footer-giant--dark" aria-hidden="true">
+    <img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="">
+  </div>
+  <div class="footer-bottom-line f6-copy">
+    <div class="f6-copy-inner">
+      <span>© MMXXVI NEMO</span>
+      <div class="f6-copy-legal">
+        <a href="#">Colophon</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+      <span>Cairo · Egypt</span>
+    </div>
+  </div>
+</footer>
+
+<div class="variant-label"><span>End of Footer Lab</span></div>
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Footer Lab 8.0 (The Final Mix)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+
+:root {
+  --green:#35D687; --green-dim:rgba(53,214,135,0.12);
+  --black:#0D0D0D; --charcoal:#1A1A1A; --off-white:#F5F5F0;
+  --b1:rgba(255,255,255,0.07); --b2:rgba(255,255,255,0.12); --b3:rgba(255,255,255,0.20);
+  --bd1:rgba(0,0,0,0.07); --bd2:rgba(0,0,0,0.12);
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:28px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-xl:20px;--r-pill:9999px;
+  --e-fast:150ms ease-in-out; --container:1312px;
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);font-size:14px;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* Label */
+.lab{max-width:var(--container);margin:0 auto;padding:var(--sp20) var(--sp10) var(--sp6);font-family:var(--font-aeonik);font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.35);display:flex;align-items:center;gap:var(--sp4);}
+.lab::before,.lab::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.08);}
+.lab span{padding:0 var(--sp3);color:#111;font-size:13px;letter-spacing:0.05em;}
+
+/* CTAs (Start Project / Book Call) */
+.btn-group { display: flex; gap: var(--sp3); flex-wrap: wrap; margin-bottom: var(--sp6); }
+.btn-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp2);
+  height: 48px; padding: 0 var(--sp6); border-radius: var(--r-pill);
+  font-family: var(--font-haas); font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: all var(--e-fast); border: 1px solid transparent;
+}
+.btn-cta-primary { background: var(--green); color: #0A1A10; }
+.btn-cta-primary:hover { background: #29c275; }
+.btn-cta-secondary { background: transparent; border-color: var(--b3); color: #fff; }
+.btn-cta-secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+
+.btn-cta-light-sec { background: transparent; border-color: var(--bd2); color: #111; }
+.btn-cta-light-sec:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.2); }
+
+.arr { font-family: system-ui; font-size: 16px; margin-left: 2px; }
+
+/* Newsletter */
+.nl-h{font-family:var(--font-aeonik);font-size:clamp(36px,4vw,48px);font-weight:400;letter-spacing:-1px;line-height:1.1;color:#fff;}
+.nl-h em{font-style:normal;color:var(--green);}
+.nl-h--dk{color:#111;}
+.nl-lb{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);margin-bottom:var(--sp3);}
+.nl-lb--dk{color:rgba(0,0,0,0.5);}
+.nl-f{display:flex;background:rgba(255,255,255,0.06);border:1px solid var(--b2);border-radius:var(--r-pill);padding:4px;max-width:440px;}
+.nl-f--ht{background:#fff;border-color:var(--bd2);}
+.nl-f input{flex:1;min-width:0;background:transparent;border:none;outline:none;padding:0 var(--sp4);font-family:var(--font-haas);font-size:14px;color:#fff;}
+.nl-f--ht input{color:#111;}
+.nl-f input::placeholder{color:rgba(255,255,255,0.3);}
+.nl-f--ht input::placeholder{color:rgba(0,0,0,0.4);}
+.nl-f button{background:var(--green);color:#0A1A10;border:none;border-radius:var(--r-pill);padding:0 var(--sp5);height:40px;font-family:var(--font-haas);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background var(--e-fast);}
+.nl-f--ht button{background:var(--black);color:#fff;}
+.nl-f button:hover{background:#29c275;}
+.nl-f--ht button:hover{background:#333;}
+.nl-m{margin-top:var(--sp2);font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,0.35);}
+.nl-m--dk{color:rgba(0,0,0,0.4);}
+
+/* Social pills */
+.sp{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 var(--sp5);border-radius:var(--r-pill);font-family:var(--font-haas);font-size:13px;font-weight:500;transition:all var(--e-fast);cursor:pointer;color:#fff;border:1px solid var(--b2);background:transparent;}
+.sp:hover{background:rgba(255,255,255,0.07);border-color:var(--b3);}
+.sp--lt{color:#111;border-color:var(--bd2);}
+.sp--lt:hover{background:rgba(0,0,0,0.04);border-color:rgba(0,0,0,0.2);}
+.srow{display:flex;gap:var(--sp2);flex-wrap:wrap;}
+
+/* Column links */
+.ct{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:var(--sp3);color:rgba(255,255,255,0.3);}
+.ct--dk{color:rgba(0,0,0,0.45);}
+.cl a{display:block;font-family:var(--font-haas);font-size:14px;padding:5px 0;color:rgba(255,255,255,0.7);transition:color var(--e-fast);}
+.cl a:hover{color:var(--green);}
+.cl--dk a{color:rgba(0,0,0,0.7);}
+.cl--dk a:hover{color:#000;}
+
+/* Clocks */
+.ck{display:flex;align-items:center;gap:var(--sp3);}
+.ck-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(53,214,135,0.5);animation:ckp 2s ease-in-out infinite;}
+@keyframes ckp{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.ck-city{font-family:var(--font-haas);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.4);}
+.ck-time{font-family:var(--font-aeonik);font-size:14px;color:#fff;letter-spacing:-0.3px;font-variant-numeric:tabular-nums;}
+
+.ck-city--dk{color:rgba(0,0,0,0.45);}
+.ck-time--dk{color:#111;}
+
+/* ═══════════════════════════════════════════
+   LOCKED FOOTER BASE (Wordmark + GL Canvas + Cookie Bar)
+   Wordmark sits flush on the canvas line, NO mask fade.
+═══════════════════════════════════════════ */
+.base-dark { background: var(--charcoal); }
+/* Wordmark wrapper — carefully tuned to touch line precisely */
+.wm {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 80px 40px 0;
+  margin-bottom: 0px; 
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+.wm img {
+  width: 100%;
+  max-width: 1050px;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  /* NO fade mask at bottom, keeping it 100% crisp where it meets the line */
+}
+
+/* WebGL canvas line — extremely thin and packed */
+.gl-strip {
+  width: 100%;
+  height: 60px; /* Short to ensure it stays tight to the text */
+  display: block;
+  margin-top: -30px; /* Pull it slightly into the wordmark bounding box so line hits letters exactly */
+  position: relative;
+  z-index: 1;
+}
+
+/* Centered Cookie Bar */
+.cookie-bar { background: var(--black); padding: var(--sp4) var(--sp10); text-align: center; }
+.cookie-bar-i {
+  display: inline-flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: var(--sp3);
+  font-family: var(--font-haas); font-size: 13px; color: rgba(255,255,255,0.4);
+}
+.cookie-bar-i a { color: rgba(255,255,255,0.4); transition: color var(--e-fast); }
+.cookie-bar-i a:hover { color: #fff; }
+.cookie-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+
+/* ═══════════════════════════════════════════
+   V1 — THE CHARCOAL MIX
+   Charcoal Classic Grid + CTAs + Central Cookie
+═══════════════════════════════════════════ */
+.v1 { background: var(--charcoal); color: #fff; }
+.v1-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) 0; }
+.v1-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--sp16); align-items: end; padding-bottom: var(--sp16); border-bottom: 1px solid var(--b1); margin-bottom: var(--sp16); }
+
+/* ═══════════════════════════════════════════
+   V2 — THE OFF-WHITE SWISS MIX
+   Light grid (Option 5 vibe) + Dark Base for the giant logo
+═══════════════════════════════════════════ */
+.v2 { background: var(--off-white); color: #111; }
+.v2-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) var(--sp16); }
+.v2-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp16); padding-bottom: var(--sp16); border-bottom: 1px solid var(--bd1); margin-bottom: var(--sp16); }
+
+/* ═══════════════════════════════════════════
+   V3 — CENTERED STACK
+   Hero CTA centered + nav centered below
+═══════════════════════════════════════════ */
+.v3 { background: #131313; color: #fff; text-align: center; }
+.v3-inner { max-width: var(--container); margin: 0 auto; padding: var(--sp20) var(--sp10) 0; }
+.v3-hero { max-width: 640px; margin: 0 auto var(--sp16); display: flex; flex-direction: column; align-items: center; }
+.v3-rail { display: inline-flex; gap: var(--sp8); justify-content: center; flex-wrap: wrap; margin-bottom: var(--sp12); }
+
+
+@media(max-width:900px){
+  .v1-top, .v2-top { grid-template-columns: 1fr; gap: var(--sp10); align-items: start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     V1 — THE CHARCOAL MIX
+     Dark theme, CTAs next to newsletter, 5-col grid
+═══════════════════════════════════════════ -->
+<div class="lab"><span>V1 · The Charcoal Mix — Classic Dark + CTAs</span></div>
+<footer class="v1">
+  <div class="v1-inner">
+    <div class="v1-top">
+      <div>
+        <h2 class="nl-h">Stay in the <em>loop</em></h2>
+        <div class="btn-group" style="margin-top:var(--sp8); margin-bottom:0;">
+          <button class="btn-cta btn-cta-primary">Start a project <span class="arr">↗</span></button>
+          <button class="btn-cta btn-cta-secondary">Book a call <span class="arr">↗</span></button>
+        </div>
+      </div>
+      <div>
+        <p class="nl-lb">Subscribe to our updates</p>
+        <form class="nl-f" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m">No spam. One dispatch a month.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp10);">
+      <div class="cl">
+        <p class="ct">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Apps</a>
+      </div>
+      <div class="cl">
+        <p class="ct">Services</p>
+        <a href="#">Strategy</a><a href="#">Architecture</a><a href="#">UX / UI</a>
+      </div>
+      <div class="cl">
+        <p class="ct">Studio</p>
+        <a href="#">Culture</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="cl">
+        <p class="ct">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      </div>
+      <div>
+        <p class="ct">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp">Instagram</a>
+          <a href="#" class="sp">LinkedIn</a>
+          <a href="#" class="sp">Dribbble</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:var(--sp12);border-top:1px solid var(--b1);margin-top:var(--sp12);">
+      <div style="display:flex;gap:var(--sp12);">
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Istanbul</span><span class="ck-time jc" data-tz="Europe/Istanbul">--:--</span></div>
+        <div class="ck"><span class="ck-dot"></span><span class="ck-city">Cairo</span><span class="ck-time jc" data-tz="Africa/Cairo">--:--</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Locked Base: Solid Wordmark + Tight WebGL Line + Centered Cookie -->
+  <div class="base-dark">
+    <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+    <canvas class="gl-strip" id="gl-v1"></canvas>
+    <div class="cookie-bar">
+      <div class="cookie-bar-i">
+        <span>© <span class="jy">2026</span> NEMO</span>
+        <span class="cookie-dot"></span>
+        <a href="#">Privacy Policy</a>
+        <span class="cookie-dot"></span>
+        <a href="#">Terms of Service</a>
+        <span class="cookie-dot"></span>
+        <span>Made in Cairo</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     V2 — THE OFF-WHITE SWISS MIX
+     Light upper layout + Dark striking base
+═══════════════════════════════════════════ -->
+<div class="lab"><span>V2 · Off-White Swiss Mix — Light Minimal Top + Dark Base</span></div>
+<footer class="v2">
+  <div class="v2-inner">
+    <div class="v2-top">
+      <div>
+        <h2 class="nl-h nl-h--dk">What's <em>next</em><br>starts here</h2>
+        <div class="btn-group" style="margin-top:var(--sp8); margin-bottom:0;">
+          <button class="btn-cta btn-cta-primary">Start a project <span class="arr">↗</span></button>
+          <button class="btn-cta btn-cta-light-sec">Book a call <span class="arr">↗</span></button>
+        </div>
+      </div>
+      <div>
+        <p class="nl-lb nl-lb--dk">Subscribe to our updates</p>
+        <form class="nl-f nl-f--ht" onsubmit="event.preventDefault()">
+          <input type="email" placeholder="you@company.com" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="nl-m nl-m--dk">No spam. One dispatch a month.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp10);">
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Product</p>
+        <a href="#">Branding</a><a href="#">Web design</a><a href="#">Apps</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Services</p>
+        <a href="#">Strategy</a><a href="#">Architecture</a><a href="#">UX / UI</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Studio</p>
+        <a href="#">Culture</a><a href="#">Careers</a><a href="#">Contact</a>
+      </div>
+      <div class="cl cl--dk">
+        <p class="ct ct--dk">Legal</p>
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a>
+      </div>
+      <div>
+        <p class="ct ct--dk">Connect</p>
+        <div class="srow" style="flex-direction:column; gap:var(--sp2);">
+          <a href="#" class="sp sp--lt">Instagram</a>
+          <a href="#" class="sp sp--lt">LinkedIn</a>
+          <a href="#" class="sp sp--lt">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Locked Base: Solid Wordmark + Tight WebGL Line + Centered Cookie -->
+  <div class="base-dark">
+    <div class="wm" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+    <canvas class="gl-strip" id="gl-v2"></canvas>
+    <div class="cookie-bar">
+      <div class="cookie-bar-i">
+        <span>© <span class="jy">2026</span> NEMO</span>
+        <span class="cookie-dot"></span>
+        <a href="#">Privacy Policy</a>
+        <span class="cookie-dot"></span>
+        <a href="#">Terms of Service</a>
+        <span class="cookie-dot"></span>
+        <span>Made in Cairo</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     V3 — CENTERED STACK
+     Fully centered layout + dark base
+═══════════════════════════════════════════ -->
+<div class="lab"><span>V3 · Centered Stack — Editorial & Focused</span></div>
+<footer class="v3">
+  <div class="v3-inner">
+    <div class="v3-hero">
+      <h2 class="nl-h" style="text-align:center;">Let's build<br>something <em>great</em></h2>
+      <div class="btn-group" style="margin-top:var(--sp6); justify-content:center;">
+        <button class="btn-cta btn-cta-primary">Start a project <span class="arr">↗</span></button>
+        <button class="btn-cta btn-cta-secondary">Book a call <span class="arr">↗</span></button>
+      </div>
+    </div>
+
+    <div class="v3-rail">
+      <div class="cl"><a href="#">Home</a></div>
+      <div class="cl"><a href="#">Services</a></div>
+      <div class="cl"><a href="#">Work</a></div>
+      <div class="cl"><a href="#">Careers</a></div>
+      <div class="cl"><a href="#">Contact</a></div>
+    </div>
+  </div>
+
+  <div class="base-dark" style="background:transparent;">
+    <!-- Reduced top padding on wm for this taller variant -->
+    <div class="wm" style="padding-top:20px;" aria-hidden="true"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt=""></div>
+    <canvas class="gl-strip" id="gl-v3"></canvas>
+    <div class="cookie-bar" style="background:#000;">
+      <div class="cookie-bar-i">
+        <span>© <span class="jy">2026</span> NEMO</span>
+        <span class="cookie-dot"></span>
+        <a href="#">Privacy Policy</a>
+        <span class="cookie-dot"></span>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="lab"><span>End of Footer Lab 8.0</span></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   WebGL Shader — Intense Glowing Line WITHOUT Mouse Interaction
+   Automatically loops & breathes.
+═══════════════════════════════════════════ */
+function initGL(id, hexBgColor) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  const gl = c.getContext('webgl', { alpha: false, antialias: true });
+  if (!gl) return;
+
+  const vs = `
+    attribute vec2 a_pos;
+    varying vec2 v_uv;
+    void main(){ v_uv = a_pos * 0.5 + 0.5; gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+
+  // Parse Hex to RGB Float for proper background matching
+  let r = 26/255, g = 26/255, b = 26/255; // #1A1A1A default
+  if(hexBgColor) {
+    hexBgColor.replace(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i, (m, rH, gH, bH) => {
+      r = parseInt(rH, 16)/255; g = parseInt(gH, 16)/255; b = parseInt(bH, 16)/255;
+    });
+  }
+
+  const fs = `
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_r;
+    varying vec2 v_uv;
+
+    #define G vec3(0.207, 0.839, 0.529)
+
+    float n(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
+    float sn(vec2 p){
+      vec2 i=floor(p),f=fract(p); f=f*f*(3.0-2.0*f);
+      return mix(mix(n(i),n(i+vec2(1,0)),f.x),mix(n(i+vec2(0,1)),n(i+vec2(1,1)),f.x),f.y);
+    }
+    float fbm(vec2 p){
+      float v=0.0,a=0.5,f=1.0;
+      for(int i=0;i<5;i++){v+=a*sn(p*f);f*=2.0;a*=0.5;}
+      return v;
+    }
+
+    void main(){
+      vec2 uv = v_uv;
+      vec2 asp = vec2(u_r.x/u_r.y, 1.0);
+      vec2 p = (uv - 0.5) * asp;
+      
+      // Move the line up extremely high so the white text can rest directly upon it.
+      // -0.01 physically shifts the glow hot-core up.
+      float dist = abs(p.y - (-0.015));
+
+      // Edge fading horizontally
+      float hf = smoothstep(0.0, 0.15, uv.x) * smoothstep(0.0, 0.15, 1.0-uv.x);
+      
+      // Vertical fading (so it doesn't clip top/bottom abruptly)
+      float vf = 1.0 - abs(uv.y - 0.5) * 2.0;
+      vf = smoothstep(0.0, 1.0, vf);
+      float fade = hf * pow(vf, 1.2);
+
+      // Organic noise, self-driven
+      float noise = fbm(vec2(uv.x * 4.0 - u_t * 0.15, uv.y * 5.0 + u_t * 0.05)) * 0.35 + 0.65;
+
+      // Intense layer build-up
+      float glow = 0.0;
+      glow += exp(-dist * 400.0) * 1.5;  // very hot core
+      glow += exp(-dist * 120.0) * 0.9;  // inner bloom
+      glow += exp(-dist * 50.0)  * 0.4;  // outer bloom
+      glow += exp(-dist * 20.0)  * 0.15; // wide ambient
+      glow *= fade * noise;
+
+      // Flowing energy pulses passing through
+      float flow1 = sin(uv.x * 8.0 - u_t * 2.5 + fbm(uv * 3.0) * 3.0) * 0.5 + 0.5;
+      float flow2 = sin(uv.x * 12.0 + u_t * 1.8 + fbm(uv * 5.0) * 2.0) * 0.5 + 0.5;
+      flow1 = smoothstep(0.2, 0.8, flow1);
+      flow2 = smoothstep(0.3, 0.7, flow2);
+      glow *= (0.6 + flow1 * 0.25 + flow2 * 0.15);
+
+      vec3 bg = vec3(${r}, ${g}, ${b}); 
+      vec3 color = mix(bg, G * clamp(glow, 0.0, 2.0), clamp(glow, 0.0, 1.0));
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compile(src, type) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(vs, gl.VERTEX_SHADER));
+  gl.attachShader(prog, compile(fs, gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const aP = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(aP);
+  gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
+
+  const uT = gl.getUniformLocation(prog, 'u_t');
+  const uR = gl.getUniformLocation(prog, 'u_r');
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    c.width = c.clientWidth * dpr;
+    c.height = c.clientHeight * dpr;
+    gl.viewport(0, 0, c.width, c.height);
+  }
+  resize();
+  addEventListener('resize', resize);
+
+  const t0 = performance.now();
+  (function loop() {
+    gl.uniform1f(uT, (performance.now() - t0) / 1000);
+    gl.uniform2f(uR, c.width, c.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(loop);
+  })();
+}
+
+// Charcoal background hex to match --charcoal #1A1A1A which is roughly vec3(0.102)
+initGL('gl-v1', '1A1A1A');
+initGL('gl-v2', '1A1A1A');
+initGL('gl-v3', '131313');
+
+// Clocks and year
+function tick(){
+  document.querySelectorAll('.jc').forEach(el => {
+    el.textContent = new Date().toLocaleTimeString('en-GB',{timeZone:el.dataset.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  });
+}
+tick(); setInterval(tick, 1000);
+document.querySelectorAll('.jy').forEach(e => { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>
