@@ -429,6 +429,44 @@ a { text-decoration: none; color: inherit; }
   color: rgba(0,0,0,0.15);
 }
 
+/* ════════════════════════════════════════════════════
+   OPTION J — Rhythmic Grid (Premium)
+   Fixed-width cells to ensure uniform pace and weight
+   ════════════════════════════════════════════════════ */
+.j-wrap {
+  --fade-color: #0D0D0D;
+  --speed: 18s; /* FASTER as requested */
+  background: #0D0D0D;
+  padding: 48px 0;
+  border-top: 1px solid var(--b2);
+  border-bottom: 1px solid var(--b2);
+}
+.j-track {
+  display: flex;
+  align-items: center;
+}
+.mq-cell {
+  flex-shrink: 0;
+  width: 220px; /* fixed rhythmic "slot" */
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px; /* side breathing room */
+}
+.mq-cell img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.35;
+  transition: all var(--e-fast);
+}
+.mq-cell:hover img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 </style>
 </head>
 <body>
@@ -438,8 +476,32 @@ a { text-decoration: none; color: inherit; }
   <p style="font-family: var(--font-haas); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">Design Lab</p>
   <h1 style="font-family: var(--font-aeonik); font-size:clamp(28px,4vw,44px); font-weight:400; letter-spacing:-1.5px; color:#fff; margin-bottom:16px;">Marquee Options</h1>
   <p style="font-family: var(--font-haas); font-size:14px; color:rgba(255,255,255,0.35); max-width:480px; margin:0 auto;">
-    9 variants — dark &amp; light backgrounds, different logo sizes, pill containers, card containers, multi-row, and hover effects. Hover any logo to pause.
+    10 variants — dark &amp; light backgrounds, different logo sizes, pill containers, card containers, multi-row, and hover effects. Hover any logo to pause.
   </p>
+</div>
+
+
+<!-- ════════ J — RHYTHMIC GRID · Premium (Corrected Sizing) ════════ -->
+<div class="lab-section">
+  <p class="lab-label">Option J (BEST)</p>
+  <p class="lab-title">Rhythmic Grid · Fixed 220px Cells · Fast (18s) · Uniform Weight</p>
+  <div class="mq-wrap j-wrap">
+    <div class="mq-track j-track" style="animation-duration: var(--speed);">
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+      <!-- dup -->
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+    </div>
+  </div>
 </div>
 
 
