@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Menu Lab 18.0 (Final Options)</title>
+<style>
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');font-weight:400;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype');font-weight:500;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype');font-weight:300;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype');font-weight:700;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;}
+
+:root{
+  --green:#35D687;--green-dim:rgba(53,214,135,0.12);--green-hover:#29c275;
+  --black:#080808;--charcoal:#131313;--surface:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.04);
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --r-pill:9999px;--r-lg:16px;--r-md:12px;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+
+/* ── Lab chrome ── */
+.lab-title{text-align:center;font-family:var(--font-aeonik);font-size:11px;text-transform:uppercase;letter-spacing:.12em;padding:48px 20px 16px;color:rgba(0,0,0,.4);line-height:1.6;}
+.lab-title span{display:block;font-size:9px;margin-top:6px;letter-spacing:.15em;color:rgba(0,0,0,.25);}
+
+/* ── Preview system ── */
+.pw{max-width:1400px;margin:0 auto 80px;}
+.pt{display:flex;gap:2px;margin-bottom:-1px;padding:0 16px;position:relative;z-index:2;}
+.pt div{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:10px 20px;background:rgba(0,0,0,.06);color:rgba(0,0,0,.35);border-radius:8px 8px 0 0;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:all 150ms ease;}
+.pt div.a{background:var(--black);color:rgba(255,255,255,.6);border-color:var(--border);}
+.pt div:hover:not(.a){background:rgba(0,0,0,.1);}
+.fd{background:var(--black);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;min-height:600px;}
+.fm{background:var(--black);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);width:390px;margin:0 auto;border:3px solid #222;display:none;position:relative;min-height:700px;}
+.pw.mob .fd{display:none;}.pw.mob .fm{display:block;}
+
+/* ══════════════════════════════════════════
+   ORIGINAL HEADER BAR
+══════════════════════════════════════════ */
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;position:relative;z-index:100;
+}
+.fm .site-header{padding:14px 20px;}
+.logo-img{height:20px;width:auto;}
+.fm .logo-img{height:16px;}
+
+.pill{
+  display:flex;gap:4px;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill);padding:5px;
+}
+.pill a{
+  display:inline-block;font-family:var(--font-haas);font-size:13px;
+  color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--r-pill);transition:all 200ms ease;
+}
+.pill a:hover{color:#fff;background:rgba(255,255,255,.06);}
+.pill a.ac{color:#fff;background:rgba(255,255,255,.1);}
+.fm .pill{display:none;}
+
+.h-actions{display:flex;gap:10px;align-items:center;}
+.cta{
+  font-family:var(--font-haas);font-size:13px;border-radius:var(--r-pill);
+  padding:0 20px;height:36px;display:inline-flex;align-items:center;
+  border:none;cursor:pointer;transition:all 200ms ease;white-space:nowrap;
+  background:#E9EBDF;color:#151515;
+}
+.cta:hover{background:#d6d8c6;}
+.fm .cta{font-size:11px;padding:0 14px;height:30px;}
+
+/* Hamburger */
+.menu-toggle{
+  width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);transition:all 200ms ease;position:relative;
+}
+.menu-toggle:hover{background:rgba(255,255,255,.1);}
+.menu-toggle .bar{display:block;width:16px;height:1.5px;background:#fff;transition:all 400ms var(--ease-out);transform-origin:center;}
+.fm .menu-toggle{width:30px;height:30px;}
+.fm .menu-toggle .bar{width:13px;}
+.menu-toggle.open .bar:nth-child(1){transform:rotate(45deg) translate(2.3px,2.3px);}
+.menu-toggle.open .bar:nth-child(2){transform:rotate(-45deg) translate(2.3px,-2.3px);}
+
+/* ══════════════════════════════════════════
+   MENU PANEL — drops down from header
+══════════════════════════════════════════ */
+.menu-panel{
+  position:absolute;top:68px;left:16px;right:16px;z-index:90;
+  background:var(--charcoal);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+  transform:translateY(-8px) scale(0.98);opacity:0;
+  pointer-events:none;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+  transform-origin:top center;
+}
+.menu-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+.fm .menu-panel{top:58px;left:10px;right:10px;}
+
+/* Backdrop */
+.menu-backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:80;
+  opacity:0;pointer-events:none;transition:opacity 400ms ease;
+}
+.menu-backdrop.open{opacity:1;pointer-events:auto;}
+
+/* Dummy page content */
+.page-content{
+  padding:100px 32px 60px;
+  font-family:var(--font-aeonik);font-size:56px;font-weight:300;
+  color:rgba(255,255,255,.04);line-height:1.15;letter-spacing:-2px;
+  transition:filter 400ms ease;
+}
+.page-content.dimmed{filter:blur(2px);}
+.fm .page-content{padding:80px 20px 40px;font-size:32px;}
+
+/* ── Shared panel footer with social links ── */
+.panel-footer{
+  padding:16px 24px;border-top:1px solid var(--border-light);
+  display:flex;justify-content:space-between;align-items:center;
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .panel-footer{transform:translateY(0);opacity:1;transition-delay:340ms;}
+.panel-footer .socials{display:flex;gap:24px;}
+.panel-footer .socials a{
+  font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.25);
+  letter-spacing:.06em;text-transform:uppercase;transition:color 200ms ease;
+}
+.panel-footer .socials a:hover{color:#fff;}
+.panel-footer .tagline{
+  font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.15);
+  letter-spacing:.02em;
+}
+.fm .panel-footer{padding:14px 16px;flex-direction:column;gap:10px;align-items:flex-start;}
+
+/* ── Stagger animation base ── */
+.stagger-item{
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .stagger-item{transform:translateY(0);opacity:1;}
+.menu-panel.open .stagger-item:nth-child(1){transition-delay:60ms;}
+.menu-panel.open .stagger-item:nth-child(2){transition-delay:120ms;}
+.menu-panel.open .stagger-item:nth-child(3){transition-delay:180ms;}
+.menu-panel.open .stagger-item:nth-child(4){transition-delay:240ms;}
+.menu-panel.open .stagger-item:nth-child(5){transition-delay:300ms;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 1 — Two-Weight Split (M21 style + Osmo panel drop)
+   Big light links left. Grouped bold-titled secondary right.
+   Arrow reveal on hover. Footer with social bar.
+══════════════════════════════════════════════════════════ */
+.f1 .panel-inner{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:0;
+  padding:28px 28px 0;
+}
+.f1 .primary-col{display:flex;flex-direction:column;justify-content:center;padding-right:28px;}
+.f1 .primary-col a{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-aeonik);font-size:52px;font-weight:300;
+  color:rgba(255,255,255,.06);line-height:1.12;letter-spacing:-2px;
+  transition:all 500ms var(--ease-out);padding:4px 0;
+}
+.f1 .primary-col a:hover{color:#fff;letter-spacing:-1px;}
+.f1 .primary-col a .arrow{
+  font-size:20px;color:rgba(255,255,255,.08);
+  transform:translateX(-8px);opacity:0;
+  transition:all 400ms var(--ease-out);
+}
+.f1 .primary-col a:hover .arrow{transform:translateX(0);opacity:1;color:var(--green);}
+
+.f1 .secondary-col{
+  border-left:1px solid var(--border-light);padding-left:28px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.f1 .grp{margin-bottom:20px;}
+.f1 .grp:last-child{margin-bottom:0;}
+.f1 .grp-title{
+  font-family:var(--font-aeonik);font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:rgba(255,255,255,.1);margin-bottom:10px;
+}
+.f1 .grp a{
+  display:block;font-family:var(--font-haas);font-size:15px;
+  color:rgba(255,255,255,.3);padding:5px 0;transition:all 200ms ease;
+}
+.f1 .grp a:hover{color:#fff;padding-left:6px;}
+.f1 .grp.products a{font-family:var(--font-aeonik);font-size:14px;font-weight:500;color:rgba(255,255,255,.2);}
+.f1 .grp.products a:hover{color:var(--green);padding-left:6px;}
+.f1 .grp.soon a{font-size:12px;color:rgba(255,255,255,.08);padding:3px 0;}
+
+.fm .f1 .panel-inner{grid-template-columns:1fr;padding:20px 20px 0;}
+.fm .f1 .primary-col{padding-right:0;margin-bottom:16px;}
+.fm .f1 .primary-col a{font-size:34px;letter-spacing:-1px;}
+.fm .f1 .secondary-col{border-left:none;border-top:1px solid var(--border-light);padding-left:0;padding-top:16px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 2 — Editorial Columns (Menu C style + stagger cards)
+   Three columns: Menu, Company, Products.
+   Big type main links, medium company, small products.
+   Eyebrow labels. Coming soon at bottom.
+══════════════════════════════════════════════════════════ */
+.f2 .panel-inner{
+  display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0;
+  padding:24px 28px 0;
+}
+.f2 .col{padding:0 20px;position:relative;}
+.f2 .col:not(:last-child)::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:1px;
+  background:var(--border-light);
+}
+.f2 .col:first-child{padding-left:0;}
+.f2 .col:last-child{padding-right:0;}
+.f2 .col-label{
+  font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;
+  letter-spacing:.15em;color:rgba(255,255,255,.15);margin-bottom:16px;
+}
+/* Main links */
+.f2 .col-main a{
+  display:block;font-family:var(--font-aeonik);font-size:36px;font-weight:300;
+  color:rgba(255,255,255,.1);line-height:1.2;letter-spacing:-1px;
+  padding:8px 0;transition:all 400ms var(--ease-out);
+  border-bottom:1px solid rgba(255,255,255,.02);
+}
+.f2 .col-main a:last-child{border-bottom:none;}
+.f2 .col-main a:hover{color:#fff;letter-spacing:0;padding-left:4px;}
+/* Company links */
+.f2 .col-company a{
+  display:block;font-family:var(--font-haas);font-size:16px;
+  color:rgba(255,255,255,.3);padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.02);
+  transition:all 200ms ease;
+}
+.f2 .col-company a:last-child{border-bottom:none;}
+.f2 .col-company a:hover{color:#fff;padding-left:6px;}
+/* Products */
+.f2 .col-products a{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-aeonik);font-size:15px;font-weight:500;
+  color:rgba(255,255,255,.2);padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.02);
+  transition:all 200ms ease;
+}
+.f2 .col-products a:last-child{border-bottom:none;}
+.f2 .col-products a:hover{color:var(--green);padding-left:4px;}
+.f2 .col-products .prod-sub{font-size:11px;color:rgba(255,255,255,.1);font-weight:400;font-family:var(--font-haas);}
+
+/* Coming soon row */
+.f2 .soon-row{
+  display:flex;gap:20px;padding:12px 0 0;margin-top:4px;
+  border-top:1px solid var(--border-light);grid-column:1/-1;
+}
+.f2 .soon-row a{font-size:11px;color:rgba(255,255,255,.08);transition:color 200ms ease;}
+.f2 .soon-row a:hover{color:rgba(255,255,255,.3);}
+
+.fm .f2 .panel-inner{grid-template-columns:1fr;gap:16px;padding:20px 16px 0;}
+.fm .f2 .col{padding:0;}
+.fm .f2 .col:not(:last-child)::after{display:none;}
+.fm .f2 .col{border-bottom:1px solid var(--border-light);padding-bottom:12px;}
+.fm .f2 .col:last-child{border-bottom:none;}
+.fm .f2 .col-main a{font-size:26px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 3 — Hybrid (Two-Weight + Column feel)
+   Left: big links with arrow. Right: two stacked columns
+   (Company top, Products bottom) separated by subtle divider.
+   More compact than F1, editorial rhythm from F2.
+══════════════════════════════════════════════════════════ */
+.f3 .panel-inner{
+  display:grid;grid-template-columns:1.2fr 1fr;gap:0;
+  padding:24px 28px 0;
+}
+.f3 .left a{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--font-aeonik);font-size:44px;font-weight:300;
+  color:rgba(255,255,255,.07);line-height:1.15;letter-spacing:-1.5px;
+  padding:6px 0;transition:all 500ms var(--ease-out);
+}
+.f3 .left a:hover{color:#fff;letter-spacing:-.5px;}
+.f3 .left a .num{
+  font-size:11px;font-weight:400;color:rgba(255,255,255,.06);
+  letter-spacing:.05em;font-family:var(--font-haas);
+  min-width:20px;transition:color 400ms ease;
+}
+.f3 .left a:hover .num{color:var(--green);}
+
+.f3 .right{
+  border-left:1px solid var(--border-light);padding-left:28px;
+  display:flex;flex-direction:column;
+}
+.f3 .right-section{margin-bottom:16px;}
+.f3 .right-section:last-child{margin-bottom:0;}
+.f3 .right-label{
+  font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(255,255,255,.12);margin-bottom:8px;
+}
+.f3 .right-section a{
+  display:block;font-family:var(--font-haas);font-size:15px;
+  color:rgba(255,255,255,.28);padding:5px 0;transition:all 200ms ease;
+}
+.f3 .right-section a:hover{color:#fff;padding-left:5px;}
+.f3 .right-section.products a{
+  font-family:var(--font-aeonik);font-size:14px;font-weight:500;
+  color:rgba(255,255,255,.18);
+}
+.f3 .right-section.products a:hover{color:var(--green);}
+.f3 .right-section.soon{margin-top:auto;padding-top:12px;border-top:1px solid var(--border-light);}
+.f3 .right-section.soon a{font-size:11px;color:rgba(255,255,255,.07);padding:3px 0;}
+
+.fm .f3 .panel-inner{grid-template-columns:1fr;padding:20px 16px 0;}
+.fm .f3 .left a{font-size:30px;letter-spacing:-1px;}
+.fm .f3 .left a .num{font-size:10px;}
+.fm .f3 .right{border-left:none;border-top:1px solid var(--border-light);padding-left:0;padding-top:14px;margin-top:8px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 4 — Full-Width Bands (Horizontal rows)
+   Each main link is a full-width band. Company+Products
+   as a bottom tray. Green accent line on hover.
+══════════════════════════════════════════════════════════ */
+.f4 .panel-inner{padding:0;}
+.f4 .band{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;border-bottom:1px solid var(--border-light);
+  transition:all 350ms var(--ease-out);cursor:pointer;position:relative;
+  overflow:hidden;
+}
+.f4 .band::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:0;background:var(--green);border-radius:2px;
+  transition:height 350ms var(--ease-out);
+}
+.f4 .band:hover::before{height:28px;}
+.f4 .band:hover{padding-left:36px;background:rgba(255,255,255,.015);}
+.f4 .band .b-name{
+  font-family:var(--font-aeonik);font-size:32px;font-weight:300;
+  color:rgba(255,255,255,.08);letter-spacing:-.5px;
+  transition:all 350ms var(--ease-out);
+}
+.f4 .band:hover .b-name{color:#fff;}
+.f4 .band .b-arrow{
+  font-size:16px;color:rgba(255,255,255,.05);
+  transform:translateX(-6px);transition:all 350ms var(--ease-out);
+}
+.f4 .band:hover .b-arrow{color:var(--green);transform:translateX(0);}
+
+.f4 .bottom-tray{
+  display:flex;padding:16px 28px 0;gap:40px;
+}
+.f4 .tray-col .tray-label{
+  font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(255,255,255,.1);margin-bottom:8px;
+}
+.f4 .tray-col a{
+  display:block;font-size:13px;color:rgba(255,255,255,.22);padding:4px 0;transition:all 200ms ease;
+}
+.f4 .tray-col a:hover{color:#fff;padding-left:4px;}
+.f4 .tray-col.products a:hover{color:var(--green);}
+.f4 .tray-col.soon a{font-size:11px;color:rgba(255,255,255,.06);padding:3px 0;}
+
+.fm .f4 .band{padding:12px 20px;}
+.fm .f4 .band .b-name{font-size:22px;}
+.fm .f4 .band:hover{padding-left:28px;}
+.fm .f4 .bottom-tray{flex-direction:column;gap:14px;padding:12px 20px 0;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 5 — Minimal Flush (Clean vertical cascade)
+   Everything flush left. Scale difference only.
+   56px main → 18px company (inline) → 13px products.
+   Dividers between levels. Most minimal option.
+══════════════════════════════════════════════════════════ */
+.f5 .panel-inner{padding:24px 28px 0;}
+.f5 .main-links a{
+  display:block;font-family:var(--font-aeonik);font-size:48px;font-weight:300;
+  color:rgba(255,255,255,.06);line-height:1.15;letter-spacing:-1.5px;
+  transition:all 500ms var(--ease-out);
+}
+.f5 .main-links a:hover{color:#fff;letter-spacing:-.5px;}
+.f5 .divider{height:1px;background:var(--border-light);margin:16px 0;}
+.f5 .mid-row{display:flex;flex-wrap:wrap;gap:0;}
+.f5 .mid-row a{
+  font-family:var(--font-aeonik);font-size:18px;font-weight:300;
+  color:rgba(255,255,255,.1);padding:4px 24px 4px 0;transition:all 300ms ease;
+}
+.f5 .mid-row a:hover{color:#fff;}
+.f5 .low-row{display:flex;gap:16px;padding:10px 0 0;}
+.f5 .low-row a{font-size:13px;color:rgba(255,255,255,.15);transition:color 200ms ease;}
+.f5 .low-row a:hover{color:var(--green);}
+.f5 .ghost-row{display:flex;gap:14px;padding:6px 0 0;}
+.f5 .ghost-row a{font-size:11px;color:rgba(255,255,255,.06);transition:color 200ms ease;}
+.f5 .ghost-row a:hover{color:rgba(255,255,255,.25);}
+
+.fm .f5 .panel-inner{padding:20px 16px 0;}
+.fm .f5 .main-links a{font-size:32px;letter-spacing:-1px;}
+.fm .f5 .mid-row a{font-size:15px;padding-right:16px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   FINAL 6 — Card + Weight Hybrid
+   Two cards: left card has big links, right card has
+   two column groups (company + products). Surface cards
+   with subtle borders. Osmo card aesthetic.
+══════════════════════════════════════════════════════════ */
+.f6 .panel-inner{
+  display:grid;grid-template-columns:1.3fr 1fr;gap:12px;
+  padding:20px;
+}
+.f6 .card{
+  background:var(--surface);border:1px solid var(--border-light);
+  border-radius:var(--r-md);padding:20px;
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .f6 .card:nth-child(1){transform:translateY(0);opacity:1;transition-delay:80ms;}
+.menu-panel.open .f6 .card:nth-child(2){transform:translateY(0);opacity:1;transition-delay:160ms;}
+
+.f6 .card-label{
+  font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;
+  letter-spacing:.14em;color:rgba(255,255,255,.12);margin-bottom:14px;
+}
+.f6 .card-main a{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-aeonik);font-size:28px;font-weight:300;
+  color:rgba(255,255,255,.5);padding:10px 0;letter-spacing:-.3px;
+  border-bottom:1px solid var(--border-light);
+  transition:all 300ms var(--ease-out);
+}
+.f6 .card-main a:last-child{border-bottom:none;}
+.f6 .card-main a:hover{color:#fff;padding-left:6px;}
+.f6 .card-main a .arrow{
+  font-size:14px;color:rgba(255,255,255,.08);
+  transform:translateX(-4px);opacity:0;
+  transition:all 300ms var(--ease-out);
+}
+.f6 .card-main a:hover .arrow{transform:translateX(0);opacity:1;color:var(--green);}
+
+.f6 .card-right .grp{margin-bottom:16px;}
+.f6 .card-right .grp:last-child{margin-bottom:0;}
+.f6 .card-right .grp-title{
+  font-family:var(--font-aeonik);font-size:10px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:rgba(255,255,255,.1);margin-bottom:8px;
+}
+.f6 .card-right .grp a{
+  display:block;font-size:14px;color:rgba(255,255,255,.3);padding:5px 0;transition:all 200ms ease;
+}
+.f6 .card-right .grp a:hover{color:#fff;padding-left:4px;}
+.f6 .card-right .grp.products a:hover{color:var(--green);}
+.f6 .card-right .grp.soon a{font-size:11px;color:rgba(255,255,255,.06);padding:3px 0;}
+.f6 .card-right .grp.soon a:hover{color:rgba(255,255,255,.2);}
+
+.fm .f6 .panel-inner{grid-template-columns:1fr;padding:16px;}
+.fm .f6 .card-main a{font-size:22px;}
+
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:40px 20px 0;">
+  <div style="font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(0,0,0,.7);letter-spacing:-1px;">Menu Lab v6 — Finals</div>
+  <div style="font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,0,0,.25);margin-top:8px;">Based on M21 Two-Weight + Menu C Editorial Columns. Osmo-inspired panel drop. Click hamburger to test.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 1 — Two-Weight Split
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 1 — Two-Weight Split<span>M21 style. Large light 300 links left with arrow reveal on hover. Company/Products/Coming Soon grouped right with bold titles. Footer: social left, tagline right.</span></div>
+<div class="pw" id="p1">
+  <div class="pt"><div class="a" onclick="sv('p1','d')">Desktop</div><div onclick="sv('p1','m')">Mobile</div></div>
+  <div class="fd f1">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="primary-col">
+          <a href="#">Home <span class="arrow">→</span></a>
+          <a href="#">Work <span class="arrow">→</span></a>
+          <a href="#">Services <span class="arrow">→</span></a>
+          <a href="#">Blog <span class="arrow">→</span></a>
+          <a href="#">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="secondary-col">
+          <div>
+            <div class="grp">
+              <div class="grp-title">Company</div>
+              <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+            </div>
+            <div class="grp products">
+              <div class="grp-title">Products</div>
+              <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+            </div>
+          </div>
+          <div class="grp soon">
+            <div class="grp-title" style="opacity:.4;">Coming Soon</div>
+            <a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f1">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="primary-col">
+          <a href="#">Home <span class="arrow">→</span></a><a href="#">Work <span class="arrow">→</span></a><a href="#">Services <span class="arrow">→</span></a><a href="#">Blog <span class="arrow">→</span></a><a href="#">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="secondary-col">
+          <div><div class="grp"><div class="grp-title">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+          <div class="grp products"><div class="grp-title">Products</div><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 2 — Editorial Columns
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 2 — Editorial Columns<span>Menu C style. Three columns: Menu (big type), Company (medium), Products (small with desc). Divider lines between. Eyebrow labels.</span></div>
+<div class="pw" id="p2">
+  <div class="pt"><div class="a" onclick="sv('p2','d')">Desktop</div><div onclick="sv('p2','m')">Mobile</div></div>
+  <div class="fd f2">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="col col-main">
+          <div class="col-label">// Menu</div>
+          <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="col col-company">
+          <div class="col-label">// Company</div>
+          <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        </div>
+        <div class="col col-products">
+          <div class="col-label">// Products</div>
+          <a href="#">Mappire <span class="prod-sub">Mapping</span></a>
+          <a href="#">Nemo CRM <span class="prod-sub">Clients</span></a>
+          <a href="#">Nemo GO <span class="prod-sub">Launch</span></a>
+        </div>
+      </div>
+      <div class="soon-row stagger-item" style="padding:0 28px 12px;">
+        <a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f2">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="col col-main"><div class="col-label">// Menu</div><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div class="col col-company"><div class="col-label">// Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="col col-products"><div class="col-label">// Products</div><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 3 — Numbered Hybrid
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 3 — Numbered Hybrid<span>Big links left with subtle index numbers. Company + Products stacked right. Numbers turn green on hover.</span></div>
+<div class="pw" id="p3">
+  <div class="pt"><div class="a" onclick="sv('p3','d')">Desktop</div><div onclick="sv('p3','m')">Mobile</div></div>
+  <div class="fd f3">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="left">
+          <a href="#"><span class="num">01</span>Home</a>
+          <a href="#"><span class="num">02</span>Work</a>
+          <a href="#"><span class="num">03</span>Services</a>
+          <a href="#"><span class="num">04</span>Blog</a>
+          <a href="#"><span class="num">05</span>Contact</a>
+        </div>
+        <div class="right">
+          <div class="right-section">
+            <div class="right-label">Company</div>
+            <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+          </div>
+          <div class="right-section products">
+            <div class="right-label">Products</div>
+            <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+          </div>
+          <div class="right-section soon">
+            <a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f3">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="left"><a href="#"><span class="num">01</span>Home</a><a href="#"><span class="num">02</span>Work</a><a href="#"><span class="num">03</span>Services</a><a href="#"><span class="num">04</span>Blog</a><a href="#"><span class="num">05</span>Contact</a></div>
+        <div class="right">
+          <div class="right-section"><div class="right-label">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+          <div class="right-section products"><div class="right-label">Products</div><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 4 — Full-Width Bands
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 4 — Full-Width Bands<span>Each main link is a horizontal band with green accent line on hover. Company + Products in a bottom tray.</span></div>
+<div class="pw" id="p4">
+  <div class="pt"><div class="a" onclick="sv('p4','d')">Desktop</div><div onclick="sv('p4','m')">Mobile</div></div>
+  <div class="fd f4">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a class="band" href="#"><span class="b-name">Home</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Work</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Services</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Blog</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Contact</span><span class="b-arrow">→</span></a>
+      </div>
+      <div class="bottom-tray stagger-item">
+        <div class="tray-col">
+          <div class="tray-label">Company</div>
+          <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        </div>
+        <div class="tray-col products">
+          <div class="tray-label">Products</div>
+          <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+        </div>
+        <div class="tray-col soon">
+          <div class="tray-label" style="opacity:.4;">Coming Soon</div>
+          <a href="#">Partner Program</a><a href="#">Affiliates</a><a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f4">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a class="band" href="#"><span class="b-name">Home</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Work</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Services</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Blog</span><span class="b-arrow">→</span></a>
+        <a class="band" href="#"><span class="b-name">Contact</span><span class="b-arrow">→</span></a>
+      </div>
+      <div class="bottom-tray stagger-item">
+        <div class="tray-col"><div class="tray-label">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="tray-col products"><div class="tray-label">Products</div><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 5 — Minimal Flush
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 5 — Minimal Flush<span>Everything flush left. 48px main → 18px company (inline row) → 13px products. Pure vertical cascade, dividers between levels.</span></div>
+<div class="pw" id="p5">
+  <div class="pt"><div class="a" onclick="sv('p5','d')">Desktop</div><div onclick="sv('p5','m')">Mobile</div></div>
+  <div class="fd f5">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="main-links">
+          <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="divider"></div>
+        <div class="mid-row">
+          <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        </div>
+        <div class="divider"></div>
+        <div class="low-row">
+          <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+        </div>
+        <div class="ghost-row">
+          <a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f5">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="main-links"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div class="divider"></div>
+        <div class="mid-row"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="divider"></div>
+        <div class="low-row"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FINAL 6 — Card + Weight Hybrid
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Final 6 — Osmo Cards + Two-Weight<span>Two surface cards side by side. Left card: big links with arrow reveal. Right card: grouped Company + Products with bold titles. Staggered card animation.</span></div>
+<div class="pw" id="p6">
+  <div class="pt"><div class="a" onclick="sv('p6','d')">Desktop</div><div onclick="sv('p6','m')">Mobile</div></div>
+  <div class="fd f6">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner f6">
+        <div class="card card-main">
+          <div class="card-label">Menu</div>
+          <a href="#">Home <span class="arrow">→</span></a>
+          <a href="#">Work <span class="arrow">→</span></a>
+          <a href="#">Services <span class="arrow">→</span></a>
+          <a href="#">Blog <span class="arrow">→</span></a>
+          <a href="#">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="card card-right">
+          <div class="grp">
+            <div class="grp-title">Company</div>
+            <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+          </div>
+          <div class="grp products">
+            <div class="grp-title">Products</div>
+            <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+          </div>
+          <div class="grp soon">
+            <div class="grp-title" style="opacity:.5;">Coming Soon</div>
+            <a href="#">Partner Program</a><a href="#">Affiliates</a><a href="#">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm f6">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner f6">
+        <div class="card card-main">
+          <div class="card-label">Menu</div>
+          <a href="#">Home <span class="arrow">→</span></a><a href="#">Work <span class="arrow">→</span></a><a href="#">Services <span class="arrow">→</span></a><a href="#">Blog <span class="arrow">→</span></a><a href="#">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="card card-right">
+          <div class="grp"><div class="grp-title">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+          <div class="grp products"><div class="grp-title">Products</div><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+function toggle(btn){
+  const frame = btn.closest('.fd') || btn.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const backdrop = frame.querySelector('.menu-backdrop');
+  const page = frame.querySelector('.page-content');
+  const isOpen = panel.classList.contains('open');
+
+  if(isOpen){
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    btn.classList.remove('open');
+    if(page) page.classList.remove('dimmed');
+  } else {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    btn.classList.add('open');
+    if(page) page.classList.add('dimmed');
+  }
+}
+
+function closeMenu(backdrop){
+  const frame = backdrop.closest('.fd') || backdrop.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const btn = frame.querySelector('.menu-toggle');
+  const page = frame.querySelector('.page-content');
+  panel.classList.remove('open');
+  backdrop.classList.remove('open');
+  btn.classList.remove('open');
+  if(page) page.classList.remove('dimmed');
+}
+
+function sv(id,mode){
+  const w=document.getElementById(id),t=w.querySelectorAll('.pt div');
+  if(mode==='m'){w.classList.add('mob');t[0].classList.remove('a');t[1].classList.add('a');}
+  else{w.classList.remove('mob');t[0].classList.add('a');t[1].classList.remove('a');}
+}
+</script>
+</body>
+</html>

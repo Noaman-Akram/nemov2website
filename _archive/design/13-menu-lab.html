@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Menu Lab 13.0</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+
+:root {
+  --green: #35D687;
+  --green-dim: rgba(53,214,135,0.12);
+  --green-hover: #29c275;
+  --black: #080808;
+  --charcoal: #111;
+  --off-white: #F5F5F0;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+  --container: 1200px;
+  --r-pill: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; cursor: pointer; }
+
+/* ── Lab chrome ── */
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em; padding: 48px 20px 20px;
+  color: rgba(0,0,0,0.4); line-height: 1.6;
+}
+.lab-title span { display: block; font-size: 9px; margin-top: 6px; letter-spacing: 0.15em; color: rgba(0,0,0,0.25); }
+
+.variant {
+  background: var(--black); color: #fff;
+  margin: 0 auto 80px; max-width: 1400px;
+  border-radius: 16px; overflow: hidden; position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+/* ── Shared header ── */
+.v-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 40px; position: relative; z-index: 10;
+}
+.logo-img {
+  height: 22px; width: auto; filter: invert(0);
+  transition: filter 400ms ease;
+}
+
+/* ── Nav pill ── */
+.nav-pill {
+  display: flex; gap: 4px; list-style: none;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-pill); padding: 5px;
+}
+.nav-pill a {
+  display: inline-block; font-family: var(--font-haas);
+  font-size: 13px; color: rgba(255,255,255,0.7);
+  padding: 8px 16px; border-radius: var(--r-pill);
+  transition: all 200ms ease;
+}
+.nav-pill a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.nav-pill a.active { color: #fff; background: rgba(255,255,255,0.1); }
+
+/* ── CTA button ── */
+.cta-btn {
+  font-family: var(--font-haas); font-size: 13px;
+  border-radius: var(--r-pill); padding: 0 20px; height: 36px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; cursor: pointer; transition: all 200ms ease;
+  white-space: nowrap;
+}
+.cta-solid { background: var(--green); color: var(--black); }
+.cta-solid:hover { background: var(--green-hover); }
+.cta-outline { background: transparent; color: var(--green); border: 1px solid rgba(53,214,135,0.35); }
+.cta-outline:hover { background: var(--green-dim); border-color: var(--green); }
+.cta-muted { background: #E9EBDF; color: #151515; }
+.cta-muted:hover { background: #d6d8c6; }
+
+/* ── Hamburger ── */
+.hamburger {
+  width: 36px; height: 36px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  cursor: pointer; border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+  transition: all 200ms ease;
+}
+.hamburger:hover { background: rgba(255,255,255,0.1); }
+.hamburger span {
+  display: block; width: 16px; height: 1.5px;
+  background: #fff; transition: all 300ms ease;
+}
+
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* ── Overlay base ── */
+.overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--black); z-index: 5;
+  display: flex; flex-direction: column;
+}
+.overlay-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 40px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.close-btn {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+  color: #fff; font-size: 18px; transition: all 200ms ease;
+}
+.close-btn:hover { background: rgba(255,255,255,0.12); }
+
+/* ── Menu footer ── */
+.menu-footer {
+  padding: 20px 40px; border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; flex-shrink: 0;
+}
+.menu-footer .socials { display: flex; gap: 20px; }
+.menu-footer .socials a { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; text-transform: uppercase; }
+.menu-footer .socials a:hover { color: var(--green); }
+.menu-footer .legal { font-size: 11px; color: rgba(255,255,255,0.2); display: flex; gap: 16px; }
+.menu-footer .legal a:hover { color: rgba(255,255,255,0.5); }
+
+/* ── Eyebrow ── */
+.eyebrow {
+  font-family: var(--font-aeonik); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.25); margin-bottom: 20px;
+}
+
+/* ── Coming soon tag ── */
+.soon-tag {
+  display: inline-block; font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--r-pill); padding: 3px 8px; margin-left: 8px;
+  vertical-align: middle;
+}
+
+
+/* ════════════════════════════════════════
+   MENU A — Big Left, Small Right (updated)
+════════════════════════════════════════ */
+.menu-a-body {
+  flex: 1; display: grid; grid-template-columns: 1.4fr 1fr;
+  padding: 48px 40px; gap: 60px;
+}
+.menu-a-main { display: flex; flex-direction: column; }
+.menu-a-main a {
+  font-family: var(--font-aeonik); font-size: 44px; font-weight: 300;
+  color: rgba(255,255,255,0.15); padding: 10px 0;
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; align-items: center; gap: 16px;
+}
+.menu-a-main a:hover { color: #fff; padding-left: 12px; }
+.menu-a-main a:hover .link-arrow { opacity: 1; transform: translateX(0); }
+.link-arrow {
+  font-size: 18px; color: var(--green); opacity: 0;
+  transform: translateX(-10px); transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-a-side { padding-top: 8px; }
+.menu-a-side .side-group { margin-bottom: 28px; }
+.menu-a-side .side-group a {
+  display: block; font-size: 15px; color: rgba(255,255,255,0.4);
+  padding: 6px 0; transition: all 200ms ease;
+}
+.menu-a-side .side-group a:hover { color: #fff; padding-left: 8px; }
+.menu-a-side .side-group a.dimmed { color: rgba(255,255,255,0.18); pointer-events: none; }
+.products-list { margin-top: 8px; padding-left: 16px; border-left: 1px solid rgba(255,255,255,0.06); }
+.products-list a { font-size: 13px !important; color: rgba(255,255,255,0.3) !important; }
+.products-list a:hover { color: var(--green) !important; }
+
+
+/* ════════════════════════════════════════
+   MENU B — Centered Stack (updated)
+════════════════════════════════════════ */
+.menu-b-body {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px; gap: 0;
+}
+.menu-b-body > a {
+  font-family: var(--font-aeonik); font-size: 48px; font-weight: 300;
+  color: rgba(255,255,255,0.12); padding: 8px 0;
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.menu-b-body > a:hover { color: #fff; letter-spacing: 2px; }
+.menu-b-body > a::after {
+  content: ''; position: absolute; bottom: 6px; left: 0; right: 0;
+  height: 1px; background: var(--green); transform: scaleX(0);
+  transform-origin: left; transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu-b-body > a:hover::after { transform: scaleX(1); }
+.menu-b-secondary {
+  display: flex; gap: 24px; margin-top: 36px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.menu-b-secondary a {
+  font-size: 13px !important; color: rgba(255,255,255,0.3) !important;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.menu-b-secondary a:hover { color: rgba(255,255,255,0.7) !important; letter-spacing: 0.05em !important; }
+.menu-b-secondary a::after { display: none !important; }
+
+
+/* ════════════════════════════════════════
+   MENU C — Three Columns (Editorial, updated)
+════════════════════════════════════════ */
+.menu-c-body {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr;
+  padding: 48px 40px; gap: 40px; align-content: start;
+}
+.menu-c-col a {
+  display: flex; align-items: center; font-family: var(--font-haas); font-size: 16px;
+  color: rgba(255,255,255,0.5); padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: all 250ms ease; position: relative;
+}
+.menu-c-col a:hover { color: #fff; padding-left: 12px; }
+.menu-c-col a:hover::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--green);
+}
+.menu-c-col a.dimmed { color: rgba(255,255,255,0.18); pointer-events: none; }
+.menu-c-col a.dimmed:hover { padding-left: 0; }
+.menu-c-col a.dimmed:hover::before { display: none; }
+
+/* ── Coming soon row in C ── */
+.menu-c-coming {
+  grid-column: 1 / -1; padding-top: 16px; margin-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  display: flex; gap: 24px; align-items: center;
+}
+.menu-c-coming .eyebrow { margin-bottom: 0; margin-right: 8px; }
+.menu-c-coming a {
+  font-size: 13px; color: rgba(255,255,255,0.18);
+}
+
+
+/* ════════════════════════════════════════
+   MENU F — Staggered Two-Column (NEW)
+════════════════════════════════════════ */
+.menu-f-body {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+  padding: 48px 40px; gap: 0;
+}
+.menu-f-left { display: flex; flex-direction: column; justify-content: center; }
+.menu-f-left a {
+  font-family: var(--font-aeonik); font-size: 56px; font-weight: 300;
+  color: rgba(255,255,255,0.08); padding: 6px 0;
+  transition: all 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1.1;
+}
+.menu-f-left a:hover { color: #fff; transform: translateX(16px); }
+.menu-f-left a:hover .f-num { opacity: 1; }
+.f-num {
+  font-size: 12px; font-weight: 400; color: var(--green);
+  opacity: 0; transition: opacity 400ms ease;
+  margin-right: 12px; vertical-align: super;
+  letter-spacing: 0.05em;
+}
+.menu-f-right {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 8px 0 8px 60px; border-left: 1px solid rgba(255,255,255,0.04);
+}
+.menu-f-right .side-block { margin-bottom: 24px; }
+.menu-f-right .side-block a {
+  display: flex; align-items: center; font-size: 15px;
+  color: rgba(255,255,255,0.35); padding: 7px 0;
+  transition: all 200ms ease;
+}
+.menu-f-right .side-block a:hover { color: #fff; padding-left: 8px; }
+.menu-f-right .side-block a.dimmed { color: rgba(255,255,255,0.15); pointer-events: none; }
+
+.menu-f-products a {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,0.3); padding: 6px 0;
+  transition: all 200ms ease;
+}
+.menu-f-products a:hover { color: var(--green); }
+.product-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); opacity: 0.4;
+  transition: opacity 200ms ease;
+}
+.menu-f-products a:hover .product-dot { opacity: 1; }
+
+
+/* ════════════════════════════════════════
+   MENU G — Horizontal Split (NEW)
+════════════════════════════════════════ */
+.menu-g-body {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 0 40px;
+}
+.menu-g-main {
+  display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex: 1;
+}
+.menu-g-main a {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px;
+  font-family: var(--font-aeonik); font-size: 32px; font-weight: 300;
+  color: rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 40px 20px;
+  position: relative;
+}
+.menu-g-main a:last-child { border-right: none; }
+.menu-g-main a:hover { color: #fff; background: rgba(255,255,255,0.02); }
+.menu-g-main a:hover .g-line {
+  transform: scaleX(1);
+}
+.g-line {
+  position: absolute; bottom: 0; left: 20%; right: 20%;
+  height: 2px; background: var(--green);
+  transform: scaleX(0); transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.g-sub {
+  font-family: var(--font-haas); font-size: 11px;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+  letter-spacing: 0.1em; transition: color 400ms ease;
+}
+.menu-g-main a:hover .g-sub { color: rgba(255,255,255,0.4); }
+
+.menu-g-bottom {
+  display: flex; gap: 40px; padding: 24px 0;
+  align-items: flex-start;
+}
+.menu-g-bottom-col {}
+.menu-g-bottom-col a {
+  display: flex; align-items: center; font-size: 13px;
+  color: rgba(255,255,255,0.3); padding: 5px 0;
+  transition: all 200ms ease;
+}
+.menu-g-bottom-col a:hover { color: #fff; }
+.menu-g-bottom-col a.dimmed { color: rgba(255,255,255,0.13); pointer-events: none; }
+.menu-g-divider {
+  width: 1px; height: 60px; background: rgba(255,255,255,0.06);
+  align-self: center;
+}
+
+
+/* ════════════════════════════════════════
+   MENU H — Numbered List (NEW)
+════════════════════════════════════════ */
+.menu-h-body {
+  flex: 1; display: grid; grid-template-columns: 2fr 1fr;
+  padding: 40px; gap: 40px;
+}
+.menu-h-list { counter-reset: menu-counter; }
+.menu-h-list a {
+  display: flex; align-items: center; gap: 20px;
+  font-family: var(--font-aeonik); font-size: 36px; font-weight: 300;
+  color: rgba(255,255,255,0.12); padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  counter-increment: menu-counter;
+}
+.menu-h-list a::before {
+  content: counter(menu-counter, decimal-leading-zero);
+  font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.15);
+  min-width: 24px; transition: color 400ms ease;
+  font-family: var(--font-aeonik); letter-spacing: 0.05em;
+}
+.menu-h-list a:hover { color: #fff; padding-left: 8px; }
+.menu-h-list a:hover::before { color: var(--green); }
+
+.menu-h-right { display: flex; flex-direction: column; justify-content: space-between; }
+.menu-h-right .side-block { margin-bottom: 20px; }
+.menu-h-right .side-block a {
+  display: flex; align-items: center; font-size: 14px;
+  color: rgba(255,255,255,0.35); padding: 6px 0; transition: all 200ms ease;
+}
+.menu-h-right .side-block a:hover { color: #fff; padding-left: 8px; }
+.menu-h-right .side-block a.dimmed { color: rgba(255,255,255,0.15); pointer-events: none; }
+
+.menu-h-products {
+  padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04);
+}
+.menu-h-products a {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: rgba(255,255,255,0.3); padding: 5px 0;
+  transition: all 200ms ease;
+}
+.menu-h-products a:hover { color: var(--green); }
+
+
+/* ════════════════════════════════════════
+   CTA SHOWCASE
+════════════════════════════════════════ */
+.cta-showcase {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  align-items: center; justify-content: center; padding: 40px;
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .v-header { padding: 12px 20px; }
+  .nav-pill { display: none; }
+  .cta-btn { font-size: 12px; padding: 0 14px; height: 32px; }
+  .overlay-header { padding: 12px 20px; }
+  .menu-footer { padding: 16px 20px; flex-direction: column; gap: 12px; }
+  .logo-img { height: 18px; }
+
+  .menu-a-body { grid-template-columns: 1fr; gap: 32px; padding: 28px 20px; }
+  .menu-a-main a { font-size: 30px; }
+
+  .menu-b-body > a { font-size: 32px; }
+  .menu-b-secondary { flex-wrap: wrap; gap: 16px; }
+
+  .menu-c-body { grid-template-columns: 1fr; padding: 28px 20px; gap: 20px; }
+  .menu-c-coming { flex-wrap: wrap; gap: 12px; }
+
+  .menu-f-body { grid-template-columns: 1fr; padding: 28px 20px; }
+  .menu-f-left a { font-size: 36px; }
+  .menu-f-right { padding: 20px 0 0 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.04); }
+
+  .menu-g-main { flex-direction: column; }
+  .menu-g-main a { font-size: 24px; padding: 24px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .menu-g-main a:last-child { border-bottom: none; }
+  .menu-g-bottom { flex-direction: column; gap: 20px; padding: 20px 0; }
+  .menu-g-divider { display: none; }
+
+  .menu-h-body { grid-template-columns: 1fr; padding: 28px 20px; }
+  .menu-h-list a { font-size: 26px; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .menu-a-main a { font-size: 24px; }
+  .menu-b-body > a { font-size: 26px; }
+  .menu-f-left a { font-size: 28px; }
+  .menu-g-main a { font-size: 20px; }
+  .menu-h-list a { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU A — Big Left, Small Right (Updated content)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu A — Big Left, Small Right
+  <span>Large links left with arrow reveal. Company, Products, Coming Soon stacked right.</span>
+</div>
+
+<div class="variant" style="min-height:680px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-muted">Book a Call</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-a-body">
+      <div class="menu-a-main">
+        <a href="#">Home <span class="link-arrow">→</span></a>
+        <a href="#">Work <span class="link-arrow">→</span></a>
+        <a href="#">Services <span class="link-arrow">→</span></a>
+        <a href="#">Blog <span class="link-arrow">→</span></a>
+        <a href="#">Contact <span class="link-arrow">→</span></a>
+      </div>
+      <div class="menu-a-side">
+        <div class="side-group">
+          <div class="eyebrow">// Company</div>
+          <a href="#">Studio</a>
+          <a href="#">Careers</a>
+          <a href="#">Growth Plan</a>
+          <a href="#">Charity</a>
+        </div>
+        <div class="side-group">
+          <div class="eyebrow">// Products</div>
+          <div class="products-list">
+            <a href="#">Mappire</a>
+            <a href="#">Nemo CRM</a>
+            <a href="#">Nemo GO</a>
+          </div>
+        </div>
+        <div class="side-group">
+          <div class="eyebrow">// Coming Soon</div>
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliate Marketing</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU B — Centered Stack (Updated content)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu B — Centered Stack
+  <span>Fashion-house aesthetic. Green underline sweep. Secondary as dot row.</span>
+</div>
+
+<div class="variant" style="min-height:640px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-outline">Get in Touch</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-b-body">
+      <a href="#">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+      <div class="menu-b-secondary">
+        <a href="#">Studio</a>
+        <a href="#">Careers</a>
+        <a href="#">Growth Plan</a>
+        <a href="#">Charity</a>
+        <a href="#">Products</a>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU C — Three Columns (Editorial, updated)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu C — Three Columns (Editorial)
+  <span>// EYEBROW columns: Menu, Company, Products. Coming soon row at bottom.</span>
+</div>
+
+<div class="variant" style="min-height:600px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-muted">Work With Us</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-c-body">
+      <div class="menu-c-col">
+        <div class="eyebrow">// Menu</div>
+        <a href="#">Home</a>
+        <a href="#">Work</a>
+        <a href="#">Services</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="menu-c-col">
+        <div class="eyebrow">// Company</div>
+        <a href="#">Studio</a>
+        <a href="#">Careers</a>
+        <a href="#">Growth Plan</a>
+        <a href="#">Charity</a>
+      </div>
+      <div class="menu-c-col">
+        <div class="eyebrow">// Products</div>
+        <a href="#">Mappire</a>
+        <a href="#">Nemo CRM</a>
+        <a href="#">Nemo GO</a>
+      </div>
+      <div class="menu-c-coming">
+        <div class="eyebrow">// Coming Soon</div>
+        <a href="#" class="dimmed">Partner Program</a>
+        <a href="#" class="dimmed">Affiliate Marketing</a>
+        <a href="#" class="dimmed">Sitemap</a>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU F — Staggered Two-Column (NEW)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu F — Staggered Two-Column
+  <span>Massive links left with number reveal. Right side has company + products + coming soon with divider.</span>
+</div>
+
+<div class="variant" style="min-height:660px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-solid">Get in Touch</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-f-body">
+      <div class="menu-f-left">
+        <a href="#"><span class="f-num">01</span>Home</a>
+        <a href="#"><span class="f-num">02</span>Work</a>
+        <a href="#"><span class="f-num">03</span>Services</a>
+        <a href="#"><span class="f-num">04</span>Blog</a>
+        <a href="#"><span class="f-num">05</span>Contact</a>
+      </div>
+      <div class="menu-f-right">
+        <div>
+          <div class="side-block">
+            <div class="eyebrow">// Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="side-block menu-f-products">
+            <div class="eyebrow">// Products</div>
+            <a href="#"><span class="product-dot"></span> Mappire</a>
+            <a href="#"><span class="product-dot"></span> Nemo CRM</a>
+            <a href="#"><span class="product-dot"></span> Nemo GO</a>
+          </div>
+        </div>
+        <div class="side-block" style="margin-top:auto;">
+          <div class="eyebrow">// Coming Soon</div>
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliate Marketing</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU G — Horizontal Split (NEW)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu G — Horizontal Split
+  <span>Main links as big equal-width cells. Bottom bar for secondary. Green line on hover.</span>
+</div>
+
+<div class="variant" style="min-height:560px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-outline">Book a Call</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-g-body">
+      <div class="menu-g-main">
+        <a href="#">Home<span class="g-sub">Landing</span><span class="g-line"></span></a>
+        <a href="#">Work<span class="g-sub">Case Studies</span><span class="g-line"></span></a>
+        <a href="#">Services<span class="g-sub">Capabilities</span><span class="g-line"></span></a>
+        <a href="#">Blog<span class="g-sub">Insights</span><span class="g-line"></span></a>
+        <a href="#">Contact<span class="g-sub">Get in Touch</span><span class="g-line"></span></a>
+      </div>
+      <div class="menu-g-bottom">
+        <div class="menu-g-bottom-col">
+          <div class="eyebrow">// Company</div>
+          <a href="#">Studio</a>
+          <a href="#">Careers</a>
+          <a href="#">Growth Plan</a>
+          <a href="#">Charity</a>
+        </div>
+        <div class="menu-g-divider"></div>
+        <div class="menu-g-bottom-col">
+          <div class="eyebrow">// Products</div>
+          <a href="#">Mappire</a>
+          <a href="#">Nemo CRM</a>
+          <a href="#">Nemo GO</a>
+        </div>
+        <div class="menu-g-divider"></div>
+        <div class="menu-g-bottom-col">
+          <div class="eyebrow">// Coming Soon</div>
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliate Marketing</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     MENU H — Numbered List (NEW)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu H — Numbered List
+  <span>Auto-numbered main links with green counter on hover. Right sidebar for secondary.</span>
+</div>
+
+<div class="variant" style="min-height:620px;">
+  <header class="v-header">
+    <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+    <nav class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="cta-btn cta-solid">Work With Us</a>
+      <div class="hamburger"><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="overlay">
+    <div class="overlay-header">
+      <a href="#"><img src="https://madebynemo.com/storage/2025/05/nemo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="close-btn">✕</div>
+    </div>
+    <div class="menu-h-body">
+      <div class="menu-h-list">
+        <a href="#">Home</a>
+        <a href="#">Work</a>
+        <a href="#">Services</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="menu-h-right">
+        <div>
+          <div class="side-block">
+            <div class="eyebrow">// Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="side-block menu-h-products">
+            <div class="eyebrow">// Products</div>
+            <a href="#">Mappire</a>
+            <a href="#">Nemo CRM</a>
+            <a href="#">Nemo GO</a>
+          </div>
+        </div>
+        <div class="side-block">
+          <div class="eyebrow">// Coming Soon</div>
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliate Marketing</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+    </div>
+    <div class="menu-footer">
+      <div class="socials">
+        <a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a>
+      </div>
+      <div class="legal">
+        <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     CTA BUTTON SHOWCASE (kept: Book a Call, Get in Touch, Work With Us)
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">
+  CTA Button Showcase
+  <span>Your picks: Book a Call, Get in Touch, Work With Us — in all 3 styles.</span>
+</div>
+
+<div class="variant" style="min-height:auto;">
+  <div class="cta-showcase">
+    <a href="#" class="cta-btn cta-solid">Book a Call</a>
+    <a href="#" class="cta-btn cta-solid">Get in Touch</a>
+    <a href="#" class="cta-btn cta-solid">Work With Us</a>
+  </div>
+  <div class="cta-showcase" style="padding-top:0;">
+    <a href="#" class="cta-btn cta-outline">Book a Call</a>
+    <a href="#" class="cta-btn cta-outline">Get in Touch</a>
+    <a href="#" class="cta-btn cta-outline">Work With Us</a>
+  </div>
+  <div class="cta-showcase" style="padding-top:0;">
+    <a href="#" class="cta-btn cta-muted">Book a Call</a>
+    <a href="#" class="cta-btn cta-muted">Get in Touch</a>
+    <a href="#" class="cta-btn cta-muted">Work With Us</a>
+  </div>
+</div>
+
+<div style="height:80px;"></div>
+
+</body>
+</html>

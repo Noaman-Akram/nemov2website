@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Menu Lab 16.0 (Typography-Led)</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; }
+
+:root {
+  --green:#35D687; --green-dim:rgba(53,214,135,0.12); --green-hover:#29c275;
+  --black:#080808; --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif; --r-pill:9999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+
+.lab-title{text-align:center;font-family:var(--font-aeonik);font-size:11px;text-transform:uppercase;letter-spacing:.12em;padding:48px 20px 20px;color:rgba(0,0,0,.4);line-height:1.6;}
+.lab-title span{display:block;font-size:9px;margin-top:6px;letter-spacing:.15em;color:rgba(0,0,0,.25);}
+
+/* Preview system */
+.pw{max-width:1400px;margin:0 auto 80px;}
+.pt{display:flex;gap:2px;margin-bottom:-1px;padding:0 16px;position:relative;z-index:2;}
+.pt div{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:10px 20px;background:rgba(0,0,0,.06);color:rgba(0,0,0,.35);border-radius:8px 8px 0 0;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:all 150ms ease;}
+.pt div.a{background:var(--black);color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.06);}
+.pt div:hover:not(.a){background:rgba(0,0,0,.1);}
+.fd{background:var(--black);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;}
+.fm{background:var(--black);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);width:390px;margin:0 auto;border:3px solid #222;display:none;position:relative;}
+.pw.mob .fd{display:none;} .pw.mob .fm{display:block;}
+
+/* Shared */
+.mo{background:var(--black);display:flex;flex-direction:column;}
+.mt{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;}
+.fm .mt{padding:14px 20px;}
+.li{height:20px;width:auto;} .fm .li{height:16px;}
+.ha{display:flex;gap:10px;align-items:center;}
+.cb{font-family:var(--font-haas);font-size:13px;border-radius:var(--r-pill);padding:0 20px;height:36px;display:inline-flex;align-items:center;border:none;cursor:pointer;transition:all 200ms ease;white-space:nowrap;}
+.cg{background:var(--green);color:var(--black);} .cg:hover{background:var(--green-hover);}
+.co{background:transparent;color:var(--green);border:1px solid rgba(53,214,135,.35);} .co:hover{background:var(--green-dim);border-color:var(--green);}
+.cl{background:#E9EBDF;color:#151515;} .cl:hover{background:#d6d8c6;}
+.fm .cb{font-size:11px;padding:0 14px;height:30px;}
+.cx{width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#fff;font-size:18px;transition:all 200ms ease;}
+.cx:hover{background:rgba(255,255,255,.12);}
+.fm .cx{width:30px;height:30px;font-size:15px;}
+.mb{padding:20px 32px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;margin-top:auto;flex-shrink:0;}
+.fm .mb{padding:16px 20px;flex-direction:column;gap:10px;}
+.mb .sc{display:flex;gap:20px;} .mb .sc a{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;} .mb .sc a:hover{color:var(--green);}
+.mb .lg{font-size:10px;color:rgba(255,255,255,.15);display:flex;gap:14px;} .mb .lg a:hover{color:rgba(255,255,255,.4);}
+.dim{color:rgba(255,255,255,.12)!important;pointer-events:none;}
+.lbl{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.18);margin-bottom:14px;}
+
+/* ── Original header bar (closed state) ── */
+.orig-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.fm .orig-header{padding:14px 20px;}
+.orig-header .logo-area{display:flex;align-items:center;}
+.pill{
+  display:flex;gap:4px;list-style:none;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill);padding:5px;
+}
+.pill a{
+  display:inline-block;font-family:var(--font-haas);font-size:13px;
+  color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--r-pill);transition:all 200ms ease;
+}
+.pill a:hover{color:#fff;background:rgba(255,255,255,.06);}
+.pill a.ac{color:#fff;background:rgba(255,255,255,.1);}
+.fm .pill{display:none;}
+.hb{
+  width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);transition:all 200ms ease;
+}
+.hb:hover{background:rgba(255,255,255,.1);}
+.hb span{display:block;width:16px;height:1.5px;background:#fff;}
+.fm .hb{width:30px;height:30px;} .fm .hb span{width:13px;}
+
+/* Section label between header and overlay */
+.state-label{
+  font-family:var(--font-aeonik);font-size:9px;text-transform:uppercase;
+  letter-spacing:.15em;color:rgba(255,255,255,.15);text-align:center;
+  padding:12px 0;border-bottom:1px solid rgba(255,255,255,.03);
+}
+
+
+/* ════════════════════════════════════════
+   M16 — Weighted Hierarchy
+   Main links are HUGE, secondary medium, products small
+   Pure size difference creates the hierarchy
+════════════════════════════════════════ */
+.m16{flex:1;padding:32px;display:flex;flex-direction:column;justify-content:center;}
+.m16-main{margin-bottom:24px;}
+.m16-main a{
+  display:block;font-family:var(--font-aeonik);font-size:72px;font-weight:300;
+  color:rgba(255,255,255,.06);line-height:1.05;letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);
+}
+.m16-main a:hover{color:#fff;letter-spacing:0;}
+.m16-mid{display:flex;gap:0;margin-bottom:16px;border-top:1px solid rgba(255,255,255,.03);padding-top:16px;}
+.m16-mid a{
+  font-family:var(--font-aeonik);font-size:22px;font-weight:300;
+  color:rgba(255,255,255,.12);padding:4px 24px 4px 0;
+  transition:all 300ms ease;
+}
+.m16-mid a:hover{color:#fff;}
+.m16-low{display:flex;gap:20px;padding-top:12px;border-top:1px solid rgba(255,255,255,.02);}
+.m16-low a{font-size:13px;color:rgba(255,255,255,.2);transition:color 200ms ease;}
+.m16-low a:hover{color:rgba(255,255,255,.6);}
+.m16-soon{display:flex;gap:16px;margin-top:12px;}
+.m16-soon a{font-size:11px;color:rgba(255,255,255,.08);}
+
+.fm .m16-main a{font-size:42px;letter-spacing:-1px;}
+.fm .m16-mid a{font-size:17px;padding-right:16px;}
+.fm .m16-mid{flex-wrap:wrap;}
+.fm .m16-low{flex-wrap:wrap;gap:14px;}
+.fm .m16{padding:24px 20px;}
+
+
+/* ════════════════════════════════════════
+   M17 — Rhythm Grid
+   Left: main links with large line-height spacing
+   Right: everything else set tight, creating visual rhythm contrast
+════════════════════════════════════════ */
+.m17{flex:1;display:grid;grid-template-columns:1fr 1fr;padding:32px;}
+.m17-left{display:flex;flex-direction:column;justify-content:center;padding-right:40px;}
+.m17-left a{
+  font-family:var(--font-aeonik);font-size:48px;font-weight:300;
+  color:rgba(255,255,255,.07);line-height:1.6;letter-spacing:-1px;
+  transition:all 400ms cubic-bezier(.16,1,.3,1);display:block;
+}
+.m17-left a:hover{color:#fff;letter-spacing:1px;}
+.m17-right{
+  display:flex;flex-direction:column;justify-content:center;gap:0;
+  border-left:1px solid rgba(255,255,255,.03);padding-left:40px;
+}
+.m17-right a{
+  font-family:var(--font-haas);font-size:14px;color:rgba(255,255,255,.25);
+  padding:6px 0;line-height:1.4;transition:all 200ms ease;
+  border-bottom:1px solid rgba(255,255,255,.02);
+}
+.m17-right a:hover{color:#fff;padding-left:8px;}
+.m17-right .spacer{height:16px;border-bottom:none;}
+.m17-right .grp-title{
+  font-family:var(--font-aeonik);font-size:18px;font-weight:300;
+  color:rgba(255,255,255,.1);padding:12px 0 6px;border-bottom:none;
+}
+.m17-right .grp-title:hover{color:rgba(255,255,255,.3);padding-left:0;}
+
+.fm .m17{grid-template-columns:1fr;padding:24px 20px;}
+.fm .m17-left{padding-right:0;padding-bottom:20px;}
+.fm .m17-left a{font-size:32px;line-height:1.4;}
+.fm .m17-right{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.03);padding-top:16px;}
+
+
+/* ════════════════════════════════════════
+   M18 — Monospace Terminal
+   Everything in monospace-feel grid, code-aesthetic
+════════════════════════════════════════ */
+.m18{flex:1;padding:32px;font-family:var(--font-aeonik);}
+.m18-block{margin-bottom:20px;}
+.m18-header{
+  font-size:10px;text-transform:uppercase;letter-spacing:.2em;
+  color:rgba(53,214,135,.35);margin-bottom:10px;
+}
+.m18-links a{
+  display:flex;align-items:baseline;gap:12px;
+  font-size:15px;color:rgba(255,255,255,.3);padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.02);transition:all 200ms ease;
+}
+.m18-links a:hover{color:#fff;padding-left:6px;}
+.m18-links a .idx{
+  font-size:11px;color:rgba(255,255,255,.1);min-width:32px;
+  font-variant-numeric:tabular-nums;transition:color 200ms ease;
+}
+.m18-links a:hover .idx{color:var(--green);}
+.m18-links.main a{font-size:36px;font-weight:300;color:rgba(255,255,255,.08);letter-spacing:-1px;}
+.m18-links.main a:hover{color:#fff;letter-spacing:0;}
+.m18-links.main a .idx{font-size:12px;}
+.m18-row{display:flex;gap:48px;margin-top:8px;}
+.m18-col{flex:1;}
+
+.fm .m18{padding:24px 20px;}
+.fm .m18-links.main a{font-size:26px;}
+.fm .m18-row{flex-direction:column;gap:20px;}
+
+
+/* ════════════════════════════════════════
+   M19 — Oversized + Inline Secondary
+   Main links massive, secondary links INLINE within the flow
+════════════════════════════════════════ */
+.m19{flex:1;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;}
+.m19 a.big{
+  font-family:var(--font-aeonik);font-size:68px;font-weight:300;
+  color:rgba(255,255,255,.06);display:block;line-height:1.08;letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);
+}
+.m19 a.big:hover{color:#fff;letter-spacing:-1px;}
+.m19 .inline-row{
+  display:flex;flex-wrap:wrap;gap:6px 16px;padding:8px 0 4px;
+}
+.m19 .inline-row a{
+  font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.2);
+  transition:color 200ms ease;
+}
+.m19 .inline-row a:hover{color:#fff;}
+.m19 .inline-row .sep{color:rgba(255,255,255,.06);font-size:13px;user-select:none;}
+.m19 .section-break{
+  height:1px;background:rgba(255,255,255,.03);margin:8px 0;
+}
+
+.fm .m19{padding:24px 20px;}
+.fm .m19 a.big{font-size:38px;letter-spacing:-1px;}
+.fm .m19 a.big:hover{letter-spacing:0;}
+
+
+/* ════════════════════════════════════════
+   M20 — Vertical Marquee Stack
+   Each link in its own horizontal band, fills width
+════════════════════════════════════════ */
+.m20{flex:1;display:flex;flex-direction:column;}
+.m20-band{
+  flex:1;display:flex;align-items:center;padding:0 32px;
+  border-bottom:1px solid rgba(255,255,255,.02);
+  transition:all 300ms cubic-bezier(.16,1,.3,1);cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.m20-band:last-child{border-bottom:none;}
+.m20-band::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--green);transform:scaleY(0);transition:transform 300ms cubic-bezier(.16,1,.3,1);
+}
+.m20-band:hover::after{transform:scaleY(1);}
+.m20-band:hover{padding-left:44px;background:rgba(255,255,255,.01);}
+.m20-band .name{
+  font-family:var(--font-aeonik);font-size:40px;font-weight:300;
+  color:rgba(255,255,255,.07);transition:color 300ms ease;
+  flex:1;letter-spacing:-1px;
+}
+.m20-band:hover .name{color:#fff;}
+.m20-band .desc{
+  font-size:12px;color:rgba(255,255,255,.08);text-transform:uppercase;
+  letter-spacing:.1em;transition:color 300ms ease;
+}
+.m20-band:hover .desc{color:rgba(255,255,255,.25);}
+
+.m20-tray{
+  padding:16px 32px;border-top:1px solid rgba(255,255,255,.04);
+  display:flex;gap:32px;flex-wrap:wrap;
+}
+.m20-tray-grp{display:flex;gap:12px;align-items:center;}
+.m20-tray-grp .tray-title{font-size:10px;color:rgba(255,255,255,.12);text-transform:uppercase;letter-spacing:.1em;font-family:var(--font-aeonik);}
+.m20-tray-grp a{font-size:13px;color:rgba(255,255,255,.2);transition:color 200ms ease;}
+.m20-tray-grp a:hover{color:#fff;}
+
+.fm .m20-band{padding:0 20px;}
+.fm .m20-band:hover{padding-left:28px;}
+.fm .m20-band .name{font-size:26px;}
+.fm .m20-band .desc{display:none;}
+.fm .m20-tray{padding:12px 20px;flex-direction:column;gap:12px;}
+
+
+/* ════════════════════════════════════════
+   M21 — Two-Weight Contrast
+   Main links in ultra-light, secondary in bold
+   Weight difference = hierarchy
+════════════════════════════════════════ */
+.m21{flex:1;padding:32px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;}
+.m21-primary{display:flex;flex-direction:column;justify-content:center;}
+.m21-primary a{
+  font-family:var(--font-aeonik);font-size:56px;font-weight:300;
+  color:rgba(255,255,255,.06);line-height:1.1;letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);display:block;
+}
+.m21-primary a:hover{color:#fff;letter-spacing:-1px;}
+
+.m21-secondary{
+  display:flex;flex-direction:column;justify-content:space-between;
+  border-left:1px solid rgba(255,255,255,.03);padding-left:32px;
+}
+.m21-grp{margin-bottom:16px;}
+.m21-grp-title{
+  font-family:var(--font-aeonik);font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:rgba(255,255,255,.08);margin-bottom:10px;
+}
+.m21-grp a{
+  display:block;font-family:var(--font-haas);font-size:15px;font-weight:400;
+  color:rgba(255,255,255,.3);padding:5px 0;transition:all 200ms ease;
+}
+.m21-grp a:hover{color:#fff;padding-left:6px;}
+.m21-grp.products .p-title{
+  font-family:var(--font-aeonik);font-size:14px;font-weight:500;
+  color:rgba(255,255,255,.25);
+}
+.m21-grp.products a:hover .p-title{color:var(--green);}
+.m21-grp.products .p-sub{
+  font-size:11px;color:rgba(255,255,255,.12);margin-top:1px;
+}
+
+.fm .m21{grid-template-columns:1fr;padding:24px 20px;gap:24px;}
+.fm .m21-primary a{font-size:36px;letter-spacing:-1px;}
+.fm .m21-secondary{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.03);padding-top:16px;}
+
+
+/* ════════════════════════════════════════
+   M22 — Flush Left with Scale Shift
+   All links flush left, main huge, groups smaller, pure vertical rhythm
+════════════════════════════════════════ */
+.m22{flex:1;padding:28px 32px;display:flex;flex-direction:column;justify-content:center;}
+.m22 a.h{
+  font-family:var(--font-aeonik);font-size:58px;font-weight:300;
+  color:rgba(255,255,255,.06);display:block;line-height:1.12;letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);
+}
+.m22 a.h:hover{color:#fff;letter-spacing:-1px;}
+.m22 .divider{height:1px;background:rgba(255,255,255,.03);margin:16px 0;}
+.m22 .row{display:flex;gap:0;flex-wrap:wrap;}
+.m22 .row a{
+  font-family:var(--font-aeonik);font-size:28px;font-weight:300;
+  color:rgba(255,255,255,.08);padding:2px 28px 2px 0;
+  transition:all 300ms ease;letter-spacing:-.5px;
+}
+.m22 .row a:hover{color:#fff;}
+.m22 .sub-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+.m22 .sub-row a{
+  font-size:13px;color:rgba(255,255,255,.15);transition:color 200ms ease;
+}
+.m22 .sub-row a:hover{color:rgba(255,255,255,.6);}
+.m22 .ghost-row{display:flex;gap:16px;margin-top:8px;}
+.m22 .ghost-row a{font-size:11px;color:rgba(255,255,255,.06);}
+
+.fm .m22{padding:24px 20px;}
+.fm .m22 a.h{font-size:36px;letter-spacing:-1px;}
+.fm .m22 .row a{font-size:20px;padding-right:20px;}
+
+
+/* ════════════════════════════════════════
+   M23 — Asymmetric Baseline
+   Links share a common baseline but at wildly different sizes
+════════════════════════════════════════ */
+.m23{flex:1;padding:32px;display:flex;flex-direction:column;justify-content:center;}
+.m23-line{
+  display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;
+  padding:6px 0;border-bottom:1px solid rgba(255,255,255,.02);
+}
+.m23-line a.xl{
+  font-family:var(--font-aeonik);font-size:64px;font-weight:300;
+  color:rgba(255,255,255,.06);letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);
+}
+.m23-line a.xl:hover{color:#fff;letter-spacing:-1px;}
+.m23-line a.md{
+  font-family:var(--font-aeonik);font-size:20px;font-weight:400;
+  color:rgba(255,255,255,.1);transition:all 300ms ease;
+}
+.m23-line a.md:hover{color:#fff;}
+.m23-line a.sm{
+  font-size:13px;color:rgba(255,255,255,.15);transition:color 200ms ease;
+}
+.m23-line a.sm:hover{color:rgba(255,255,255,.6);}
+.m23-ghost{display:flex;gap:16px;margin-top:12px;}
+.m23-ghost a{font-size:11px;color:rgba(255,255,255,.06);}
+
+.fm .m23{padding:24px 20px;}
+.fm .m23-line a.xl{font-size:38px;}
+.fm .m23-line a.md{font-size:16px;}
+.fm .m23-line{gap:12px;}
+
+
+/* ════════════════════════════════════════
+   M24 — Blackout Reveal
+   All text nearly invisible, each link lights up only on hover
+   Entire menu feels like dark space until you explore
+════════════════════════════════════════ */
+.m24{flex:1;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;}
+.m24 a{
+  font-family:var(--font-aeonik);font-size:52px;font-weight:300;
+  color:rgba(255,255,255,.02);display:block;line-height:1.15;
+  letter-spacing:-1px;transition:all 600ms cubic-bezier(.16,1,.3,1);
+  position:relative;
+}
+.m24 a:hover{
+  color:#fff;text-shadow:0 0 60px rgba(53,214,135,.12);
+}
+.m24 .mid{
+  margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.02);
+  display:flex;flex-wrap:wrap;gap:0;
+}
+.m24 .mid a{
+  font-size:20px;padding:2px 24px 2px 0;letter-spacing:0;
+}
+.m24 .low{
+  margin-top:12px;display:flex;flex-wrap:wrap;gap:16px;
+}
+.m24 .low a{font-size:13px;letter-spacing:0;}
+.m24 .low a:hover{text-shadow:none;color:rgba(255,255,255,.5);}
+
+.fm .m24{padding:24px 20px;}
+.fm .m24 a{font-size:34px;}
+.fm .m24 .mid a{font-size:16px;padding-right:16px;}
+
+
+/* ════════════════════════════════════════
+   M25 — Mixed Direction
+   Main links right-aligned, secondary left-aligned
+   Creates tension and visual pull
+════════════════════════════════════════ */
+.m25{flex:1;padding:32px;display:flex;flex-direction:column;justify-content:center;}
+.m25-main{text-align:right;margin-bottom:20px;}
+.m25-main a{
+  font-family:var(--font-aeonik);font-size:60px;font-weight:300;
+  color:rgba(255,255,255,.06);display:block;line-height:1.1;letter-spacing:-2px;
+  transition:all 500ms cubic-bezier(.16,1,.3,1);
+}
+.m25-main a:hover{color:#fff;letter-spacing:-1px;transform:translateX(-12px);}
+.m25-bottom{
+  text-align:left;padding-top:16px;border-top:1px solid rgba(255,255,255,.03);
+}
+.m25-row{display:flex;gap:0;flex-wrap:wrap;margin-bottom:8px;}
+.m25-row a{
+  font-family:var(--font-aeonik);font-size:22px;font-weight:300;
+  color:rgba(255,255,255,.1);padding:2px 24px 2px 0;transition:all 300ms ease;
+}
+.m25-row a:hover{color:#fff;}
+.m25-sub{display:flex;gap:16px;flex-wrap:wrap;}
+.m25-sub a{font-size:13px;color:rgba(255,255,255,.18);transition:color 200ms ease;}
+.m25-sub a:hover{color:rgba(255,255,255,.6);}
+.m25-ghost{display:flex;gap:16px;margin-top:8px;}
+.m25-ghost a{font-size:11px;color:rgba(255,255,255,.06);}
+
+.fm .m25-main a{font-size:36px;letter-spacing:-1px;}
+.fm .m25-main a:hover{transform:translateX(-6px);}
+.fm .m25-row a{font-size:17px;padding-right:16px;}
+.fm .m25{padding:24px 20px;}
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:40px 20px 0;">
+  <div style="font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(0,0,0,.7);letter-spacing:-1px;">Menu Lab v4 — Typography-Led</div>
+  <div style="font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,0,0,.25);margin-top:8px;">No icons. No badges. Pure type hierarchy and spatial layout.</div>
+</div>
+
+
+<!-- ═══════════ M16 — Weighted Hierarchy ═══════════ -->
+<div class="lab-title">Menu 16 — Weighted Hierarchy<span>72px main, 22px company, 13px products. Size IS the hierarchy. Nothing else needed.</span></div>
+<div class="pw" id="p16">
+  <div class="pt"><div class="a" onclick="sv('p16','d')">Desktop</div><div onclick="sv('p16','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="orig-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="ha"><a href="#" class="cb cl">Let's talk</a><div class="hb"><span></span><span></span></div></div>
+    </div>
+    <div class="state-label">↓ Menu expands to ↓</div>
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cg">Get in Touch</a><div class="cx">✕</div></div></div>
+    <div class="m16">
+      <div class="m16-main"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m16-mid"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="m16-low"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      <div class="m16-soon"><a href="#" class="dim">Partner Program</a><a href="#" class="dim">Affiliate Marketing</a><a href="#" class="dim">Sitemap</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m16">
+      <div class="m16-main"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m16-mid"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="m16-low"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M17 — Rhythm Grid ═══════════ -->
+<div class="lab-title">Menu 17 — Rhythm Grid<span>Left: 48px with generous line-height (1.6). Right: tight 14px list. Rhythm contrast creates hierarchy.</span></div>
+<div class="pw" id="p17">
+  <div class="pt"><div class="a" onclick="sv('p17','d')">Desktop</div><div onclick="sv('p17','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="orig-header"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav><div class="ha"><a href="#" class="cb cl">Let's talk</a><div class="hb"><span></span><span></span></div></div></div>
+    <div class="state-label">↓ Menu expands to ↓</div>
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb co">Book a Call</a><div class="cx">✕</div></div></div>
+    <div class="m17">
+      <div class="m17-left"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m17-right">
+        <span class="m17-right grp-title">Company</span>
+        <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        <div class="spacer"></div>
+        <span class="m17-right grp-title">Products</span>
+        <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+        <div class="spacer"></div>
+        <span class="m17-right grp-title" style="color:rgba(255,255,255,.05);">Coming Soon</span>
+        <a href="#" class="dim">Partner Program</a><a href="#" class="dim">Affiliate Marketing</a><a href="#" class="dim">Sitemap</a>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m17">
+      <div class="m17-left"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m17-right">
+        <span class="m17-right grp-title">Company</span><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        <div class="spacer"></div>
+        <span class="m17-right grp-title">Products</span><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M18 — Monospace Terminal ═══════════ -->
+<div class="lab-title">Menu 18 — Monospace Terminal<span>Index numbers + structured blocks. Developer/hacker aesthetic. Green section headers.</span></div>
+<div class="pw" id="p18">
+  <div class="pt"><div class="a" onclick="sv('p18','d')">Desktop</div><div onclick="sv('p18','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cl">Work With Us</a><div class="cx">✕</div></div></div>
+    <div class="m18">
+      <div class="m18-block">
+        <div class="m18-header">navigate</div>
+        <div class="m18-links main">
+          <a href="#"><span class="idx">001</span>Home</a><a href="#"><span class="idx">002</span>Work</a><a href="#"><span class="idx">003</span>Services</a><a href="#"><span class="idx">004</span>Blog</a><a href="#"><span class="idx">005</span>Contact</a>
+        </div>
+      </div>
+      <div class="m18-row">
+        <div class="m18-col">
+          <div class="m18-header">company</div>
+          <div class="m18-links"><a href="#"><span class="idx">006</span>Studio</a><a href="#"><span class="idx">007</span>Careers</a><a href="#"><span class="idx">008</span>Growth Plan</a><a href="#"><span class="idx">009</span>Charity</a></div>
+        </div>
+        <div class="m18-col">
+          <div class="m18-header">products</div>
+          <div class="m18-links"><a href="#"><span class="idx">010</span>Mappire</a><a href="#"><span class="idx">011</span>Nemo CRM</a><a href="#"><span class="idx">012</span>Nemo GO</a></div>
+        </div>
+        <div class="m18-col">
+          <div class="m18-header" style="opacity:.4;">queued</div>
+          <div class="m18-links"><a href="#" class="dim"><span class="idx" style="color:rgba(255,255,255,.05)!important;">---</span>Partner Program</a><a href="#" class="dim"><span class="idx" style="color:rgba(255,255,255,.05)!important;">---</span>Affiliate Marketing</a><a href="#" class="dim"><span class="idx" style="color:rgba(255,255,255,.05)!important;">---</span>Sitemap</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m18">
+      <div class="m18-block"><div class="m18-header">navigate</div><div class="m18-links main"><a href="#"><span class="idx">001</span>Home</a><a href="#"><span class="idx">002</span>Work</a><a href="#"><span class="idx">003</span>Services</a><a href="#"><span class="idx">004</span>Blog</a><a href="#"><span class="idx">005</span>Contact</a></div></div>
+      <div class="m18-row">
+        <div class="m18-col"><div class="m18-header">company</div><div class="m18-links"><a href="#"><span class="idx">006</span>Studio</a><a href="#"><span class="idx">007</span>Careers</a><a href="#"><span class="idx">008</span>Growth Plan</a><a href="#"><span class="idx">009</span>Charity</a></div></div>
+        <div class="m18-col"><div class="m18-header">products</div><div class="m18-links"><a href="#"><span class="idx">010</span>Mappire</a><a href="#"><span class="idx">011</span>CRM</a><a href="#"><span class="idx">012</span>GO</a></div></div>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M19 — Oversized + Inline ═══════════ -->
+<div class="lab-title">Menu 19 — Oversized + Inline Secondary<span>68px main links. Company and products woven inline between them. No columns, pure flow.</span></div>
+<div class="pw" id="p19">
+  <div class="pt"><div class="a" onclick="sv('p19','d')">Desktop</div><div onclick="sv('p19','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cg">Get in Touch</a><div class="cx">✕</div></div></div>
+    <div class="m19">
+      <a href="#" class="big">Home</a>
+      <a href="#" class="big">Work</a>
+      <a href="#" class="big">Services</a>
+      <div class="inline-row"><a href="#">Studio</a><span class="sep">/</span><a href="#">Careers</a><span class="sep">/</span><a href="#">Growth Plan</a><span class="sep">/</span><a href="#">Charity</a></div>
+      <a href="#" class="big">Blog</a>
+      <a href="#" class="big">Contact</a>
+      <div class="section-break"></div>
+      <div class="inline-row"><a href="#">Mappire</a><span class="sep">/</span><a href="#">Nemo CRM</a><span class="sep">/</span><a href="#">Nemo GO</a></div>
+      <div class="inline-row" style="margin-top:4px;"><a href="#" style="color:rgba(255,255,255,.07);">Partner Program</a><span class="sep">/</span><a href="#" style="color:rgba(255,255,255,.07);">Affiliates</a><span class="sep">/</span><a href="#" style="color:rgba(255,255,255,.07);">Sitemap</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m19">
+      <a href="#" class="big">Home</a><a href="#" class="big">Work</a><a href="#" class="big">Services</a>
+      <div class="inline-row"><a href="#">Studio</a><span class="sep">/</span><a href="#">Careers</a><span class="sep">/</span><a href="#">Growth Plan</a><span class="sep">/</span><a href="#">Charity</a></div>
+      <a href="#" class="big">Blog</a><a href="#" class="big">Contact</a>
+      <div class="section-break"></div>
+      <div class="inline-row"><a href="#">Mappire</a><span class="sep">/</span><a href="#">CRM</a><span class="sep">/</span><a href="#">GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M20 — Vertical Bands ═══════════ -->
+<div class="lab-title">Menu 20 — Vertical Bands<span>Each link is a full-width horizontal band. Green left-edge bar on hover. Tag on the right.</span></div>
+<div class="pw" id="p20">
+  <div class="pt"><div class="a" onclick="sv('p20','d')">Desktop</div><div onclick="sv('p20','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb co">Book a Call</a><div class="cx">✕</div></div></div>
+    <div class="m20">
+      <a class="m20-band" href="#"><span class="name">Home</span><span class="desc">Landing</span></a>
+      <a class="m20-band" href="#"><span class="name">Work</span><span class="desc">Case Studies</span></a>
+      <a class="m20-band" href="#"><span class="name">Services</span><span class="desc">Capabilities</span></a>
+      <a class="m20-band" href="#"><span class="name">Blog</span><span class="desc">Insights</span></a>
+      <a class="m20-band" href="#"><span class="name">Contact</span><span class="desc">Inquiry</span></a>
+    </div>
+    <div class="m20-tray">
+      <div class="m20-tray-grp"><span class="tray-title">Company</span><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="m20-tray-grp"><span class="tray-title">Products</span><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      <div class="m20-tray-grp"><span class="tray-title" style="opacity:.4;">Soon</span><a href="#" class="dim">Partners</a><a href="#" class="dim">Affiliates</a><a href="#" class="dim">Sitemap</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m20">
+      <a class="m20-band" href="#"><span class="name">Home</span></a><a class="m20-band" href="#"><span class="name">Work</span></a><a class="m20-band" href="#"><span class="name">Services</span></a><a class="m20-band" href="#"><span class="name">Blog</span></a><a class="m20-band" href="#"><span class="name">Contact</span></a>
+    </div>
+    <div class="m20-tray">
+      <div class="m20-tray-grp"><span class="tray-title">Company</span><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="m20-tray-grp"><span class="tray-title">Products</span><a href="#">Mappire</a><a href="#">CRM</a><a href="#">GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M21 — Two-Weight Contrast ═══════════ -->
+<div class="lab-title">Menu 21 — Two-Weight Contrast<span>Main links ultra-light 300. Group titles bold 700 uppercase. Weight difference = hierarchy.</span></div>
+<div class="pw" id="p21">
+  <div class="pt"><div class="a" onclick="sv('p21','d')">Desktop</div><div onclick="sv('p21','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cl">Work With Us</a><div class="cx">✕</div></div></div>
+    <div class="m21">
+      <div class="m21-primary"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m21-secondary">
+        <div><div class="m21-grp"><div class="m21-grp-title">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="m21-grp products"><div class="m21-grp-title">Products</div><a href="#"><span class="p-title">Mappire</span></a><a href="#"><span class="p-title">Nemo CRM</span></a><a href="#"><span class="p-title">Nemo GO</span></a></div></div>
+        <div class="m21-grp"><div class="m21-grp-title" style="opacity:.3;">Coming Soon</div><a href="#" class="dim">Partner Program</a><a href="#" class="dim">Affiliate Marketing</a><a href="#" class="dim">Sitemap</a></div>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m21">
+      <div class="m21-primary"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m21-secondary"><div><div class="m21-grp"><div class="m21-grp-title">Company</div><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div><div class="m21-grp products"><div class="m21-grp-title">Products</div><a href="#"><span class="p-title">Mappire</span></a><a href="#"><span class="p-title">Nemo CRM</span></a><a href="#"><span class="p-title">Nemo GO</span></a></div></div></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M22 — Flush Left Scale Shift ═══════════ -->
+<div class="lab-title">Menu 22 — Flush Left Scale Shift<span>Everything flush left. 58px main → 28px company → 13px products. Pure vertical cascade.</span></div>
+<div class="pw" id="p22">
+  <div class="pt"><div class="a" onclick="sv('p22','d')">Desktop</div><div onclick="sv('p22','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cg">Get in Touch</a><div class="cx">✕</div></div></div>
+    <div class="m22">
+      <a href="#" class="h">Home</a><a href="#" class="h">Work</a><a href="#" class="h">Services</a><a href="#" class="h">Blog</a><a href="#" class="h">Contact</a>
+      <div class="divider"></div>
+      <div class="row"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="divider"></div>
+      <div class="sub-row"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      <div class="ghost-row"><a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m22">
+      <a href="#" class="h">Home</a><a href="#" class="h">Work</a><a href="#" class="h">Services</a><a href="#" class="h">Blog</a><a href="#" class="h">Contact</a>
+      <div class="divider"></div>
+      <div class="row"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="divider"></div>
+      <div class="sub-row"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M23 — Asymmetric Baseline ═══════════ -->
+<div class="lab-title">Menu 23 — Asymmetric Baseline<span>Main and secondary links share a baseline but at wildly different sizes. Tension through scale.</span></div>
+<div class="pw" id="p23">
+  <div class="pt"><div class="a" onclick="sv('p23','d')">Desktop</div><div onclick="sv('p23','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb co">Book a Call</a><div class="cx">✕</div></div></div>
+    <div class="m23">
+      <div class="m23-line"><a href="#" class="xl">Home</a><a href="#" class="md">Studio</a><a href="#" class="md">Careers</a></div>
+      <div class="m23-line"><a href="#" class="xl">Work</a><a href="#" class="md">Growth Plan</a><a href="#" class="md">Charity</a></div>
+      <div class="m23-line"><a href="#" class="xl">Services</a><a href="#" class="sm">Mappire</a><a href="#" class="sm">Nemo CRM</a><a href="#" class="sm">Nemo GO</a></div>
+      <div class="m23-line"><a href="#" class="xl">Blog</a></div>
+      <div class="m23-line"><a href="#" class="xl">Contact</a></div>
+      <div class="m23-ghost"><a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m23">
+      <div class="m23-line"><a href="#" class="xl">Home</a><a href="#" class="md">Studio</a></div>
+      <div class="m23-line"><a href="#" class="xl">Work</a><a href="#" class="md">Careers</a></div>
+      <div class="m23-line"><a href="#" class="xl">Services</a><a href="#" class="sm">Mappire</a><a href="#" class="sm">CRM</a></div>
+      <div class="m23-line"><a href="#" class="xl">Blog</a><a href="#" class="sm">Nemo GO</a></div>
+      <div class="m23-line"><a href="#" class="xl">Contact</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M24 — Blackout Reveal ═══════════ -->
+<div class="lab-title">Menu 24 — Blackout Reveal<span>Everything nearly invisible (2% opacity). Links reveal ONLY on hover with green glow. Explore to discover.</span></div>
+<div class="pw" id="p24">
+  <div class="pt"><div class="a" onclick="sv('p24','d')">Desktop</div><div onclick="sv('p24','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cg">Get in Touch</a><div class="cx">✕</div></div></div>
+    <div class="m24">
+      <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a>
+      <div class="mid"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="low"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m24">
+      <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a>
+      <div class="mid"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+      <div class="low"><a href="#">Mappire</a><a href="#">CRM</a><a href="#">GO</a></div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<!-- ═══════════ M25 — Mixed Direction ═══════════ -->
+<div class="lab-title">Menu 25 — Mixed Direction<span>Main links right-aligned, secondary left-aligned. Creates tension and visual pull across the page.</span></div>
+<div class="pw" id="p25">
+  <div class="pt"><div class="a" onclick="sv('p25','d')">Desktop</div><div onclick="sv('p25','m')">Mobile</div></div>
+  <div class="fd"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="ha"><a href="#" class="cb cl">Work With Us</a><div class="cx">✕</div></div></div>
+    <div class="m25">
+      <div class="m25-main"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m25-bottom">
+        <div class="m25-row"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="m25-sub"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+        <div class="m25-ghost"><a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a></div>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+  </div></div>
+  <div class="fm"><div class="mo">
+    <div class="mt"><a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="li" /></a><div class="cx">✕</div></div>
+    <div class="m25">
+      <div class="m25-main"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+      <div class="m25-bottom">
+        <div class="m25-row"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="m25-sub"><a href="#">Mappire</a><a href="#">CRM</a><a href="#">GO</a></div>
+      </div>
+    </div>
+    <div class="mb"><div class="sc"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="lg"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+  </div></div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+function sv(id,mode){
+  const w=document.getElementById(id),t=w.querySelectorAll('.pt div');
+  if(mode==='m'){w.classList.add('mob');t[0].classList.remove('a');t[1].classList.add('a');}
+  else{w.classList.remove('mob');t[0].classList.add('a');t[1].classList.remove('a');}
+}
+</script>
+</body>
+</html>

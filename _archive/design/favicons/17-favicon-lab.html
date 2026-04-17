@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Animated Favicon Lab 17.0</title>
+<link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green: #35D687;
+  --black: #080808;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+  --sp20: 80px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; padding: 40px; }
+
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: clamp(32px, 5vw, 48px);
+  letter-spacing: -1.5px; margin-bottom: 20px;
+}
+.lab-subtitle {
+  text-align: center; font-size: 14px; color: rgba(0,0,0,0.5); margin-bottom: 60px;
+}
+
+.options-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.option-card {
+  background: #fff; padding: 32px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  transition: transform 0.3s ease;
+}
+.option-card:hover { transform: translateY(-5px); }
+
+.preview-box {
+  width: 64px; height: 64px; background: var(--black); border-radius: 12px; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  position: relative;
+}
+.preview-box canvas { width: 100%; height: 100%; image-rendering: pixelated; }
+
+.option-name { font-family: var(--font-aeonik); font-size: 18px; margin-bottom: 12px; }
+.option-desc { font-size: 13px; color: rgba(0,0,0,0.5); margin-bottom: 24px; line-height: 1.5; }
+
+.btn-active {
+  background: var(--black); color: #fff; border: none; padding: 12px 24px; border-radius: 99px;
+  font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.3s;
+}
+.btn-active:hover { background: var(--green); color: #000; }
+.btn-active.current { background: var(--green); color: #000; pointer-events: none; }
+
+.hint { margin-top: 60px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+
+<h1 class="lab-title">The Animated Favicon Lab</h1>
+<p class="lab-subtitle">Look at your Browser Tab while you switch between these options.</p>
+
+<div class="options-grid">
+  <!-- Option 1: The Pulse -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-pulse"></canvas></div>
+    <h3 class="option-name">1. The Breathing Logo</h3>
+    <p class="option-desc">A subtle, premium pulse that makes the tab feel "alive". Smooth expansion of the NEMO 'N'.</p>
+    <button class="btn-active" onclick="activateFav('pulse')">Activate Tab Pulse</button>
+  </div>
+
+  <!-- Option 2: The Horizon Slide -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-slide"></canvas></div>
+    <h3 class="option-name">2. The Infinite Scroll</h3>
+    <p class="option-desc">The word NEMO scrolls infinitely like a marquee. Perfect for high-energy tech projects.</p>
+    <button class="btn-active" onclick="activateFav('slide')">Activate Tab Scroll</button>
+  </div>
+
+  <!-- Option 3: The Cairo Phase -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-dot"></canvas></div>
+    <h3 class="option-name">3. The Neon Pulse</h3>
+    <p class="option-desc">Inspired by your breathing line. A single neon green dot that flows and glows.</p>
+    <button class="btn-active" onclick="activateFav('dot')">Activate Green Dot</button>
+  </div>
+
+  <!-- Option 4: The Progress -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-clock"></canvas></div>
+    <h3 class="option-name">4. The Live Clock</h3>
+    <p class="option-desc">A tiny minimal clock that actually ticks. Deeply linked to Istanbul/Cairo theme.</p>
+    <button class="btn-active" onclick="activateFav('clock')">Activate Tab Clock</button>
+  </div>
+</div>
+
+<div class="hint">Watch the tab bar closely ☝️</div>
+
+<script>
+const favicon = document.getElementById('favicon');
+const canvases = {
+  pulse: document.getElementById('canvas-pulse'),
+  slide: document.getElementById('canvas-slide'),
+  dot: document.getElementById('canvas-dot'),
+  clock: document.getElementById('canvas-clock')
+};
+
+const contexts = {
+  pulse: canvases.pulse.getContext('2d'),
+  slide: canvases.slide.getContext('2d'),
+  dot: canvases.dot.getContext('2d'),
+  clock: canvases.clock.getContext('2d')
+};
+
+// Set size for all
+Object.values(canvases).forEach(c => { c.width = 32; c.height = 32; });
+
+let currentMode = null;
+let frame = 0;
+
+function drawPulse() {
+  const ctx = contexts.pulse;
+  frame += 0.05;
+  const size = 16 + Math.sin(frame) * 4;
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  ctx.fillStyle = '#35D687';
+  ctx.beginPath();
+  ctx.arc(16, 16, size/2, 0, Math.PI * 2);
+  ctx.fill();
+  
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 20px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('N', 16, 16);
+  
+  if(currentMode === 'pulse') updateFavicon(canvases.pulse);
+}
+
+function drawSlide() {
+  const ctx = contexts.slide;
+  frame += 1;
+  const x = (frame % 64);
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 12px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('NEMO', 32 - x, 16);
+  ctx.fillText('NEMO', 32 - x + 40, 16);
+  
+  if(currentMode === 'slide') updateFavicon(canvases.slide);
+}
+
+function drawDot() {
+  const ctx = contexts.dot;
+  frame += 0.1;
+  const glow = 5 + Math.sin(frame) * 3;
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  // Neon Green
+  ctx.shadowBlur = glow;
+  ctx.shadowColor = '#35D687';
+  ctx.fillStyle = '#35D687';
+  ctx.beginPath();
+  ctx.arc(16, 16, 4, 0, Math.PI * 2);
+  ctx.fill();
+  
+  if(currentMode === 'dot') updateFavicon(canvases.dot);
+}
+
+function drawClock() {
+  const ctx = contexts.clock;
+  const now = new Date();
+  const s = now.getSeconds();
+  const m = now.getMinutes();
+  const h = now.getHours();
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  // Circle
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(16, 16, 14, 0, Math.PI * 2);
+  ctx.stroke();
+  
+  // Hands
+  const drawHand = (val, max, len, color, wide) => {
+    const angle = (val / max) * Math.PI * 2 - Math.PI / 2;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = wide;
+    ctx.beginPath();
+    ctx.moveTo(16, 16);
+    ctx.lineTo(16 + Math.cos(angle) * len, 16 + Math.sin(angle) * len);
+    ctx.stroke();
+  }
+  
+  drawHand(h % 12, 12, 8, '#fff', 2);
+  drawHand(m, 60, 12, '#fff', 1);
+  drawHand(s, 60, 14, '#35D687', 1);
+  
+  if(currentMode === 'clock') updateFavicon(canvases.clock);
+}
+
+function updateFavicon(canvas) {
+  favicon.href = canvas.toDataURL('image/png');
+}
+
+function activateFav(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.btn-active').forEach(b => {
+    b.classList.remove('current');
+    if(b.getAttribute('onclick').includes(mode)) b.classList.add('current');
+  });
+}
+
+function loop() {
+  drawPulse();
+  drawSlide();
+  drawDot();
+  drawClock();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>

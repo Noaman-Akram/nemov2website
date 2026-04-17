@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Header Options Lab 20.0</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../public/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../public/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green: #35D687;
+  --black: #080808;
+  --white: #FFFFFF;
+  --off-white: #FAFBFC;
+  --warm-cream: #E9EBDF;
+  --gray: #868788;
+  --b-dark: rgba(0, 0, 0, 0.15);
+  
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+  
+  --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px; --sp5: 20px;
+  --sp6: 24px; --sp8: 32px; --sp10: 40px; --sp20: 80px;
+  
+  --r-pill: 9999px;
+  --r-lg: 16px;
+  --e-normal: 300ms ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #E8E8E3; color: var(--black); font-family: var(--font-haas); -webkit-font-smoothing: antialiased; }
+
+/* ── Lab Chrome ── */
+.meta { text-align: center; padding: var(--sp10); font-family: var(--font-aeonik); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+.preview { margin: var(--sp10) auto var(--sp20); max-width: 1200px; background: var(--black); border-radius: 20px; overflow: hidden; position: relative; min-height: 600px; box-shadow: 0 40px 100px rgba(0,0,0,0.2); }
+
+/* ── ORIGINAL HEADER REPLICA ── */
+.header-root { display: flex; align-items: center; justify-content: space-between; padding: 12px 64px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; position: relative; z-index: 1000; }
+.logo-txt { font-family: var(--font-aeonik); font-size: 17px; font-weight: 500; letter-spacing: -0.3px; display: flex; align-items: center; gap: 6px; }
+.logo-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+.nav-pill { display: flex; gap: 4px; background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--r-pill); padding: 6px; }
+.nav-pill a { font-size: 14px; color: rgba(255,255,255,0.7); padding: 8px 18px; border-radius: var(--r-pill); text-decoration: none; }
+.nav-pill a.active { color: #fff; background: rgba(255,255,255,0.1); }
+
+.cta-pill { background: var(--warm-cream); color: #151515; padding: 0 20px; height: 36px; border-radius: var(--r-pill); display: flex; align-items: center; font-size: 13px; font-weight: 400; text-decoration: none; }
+
+.burger { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; }
+.burger span { width: 14px; height: 1.5px; background: #fff; border-radius: 1px; }
+
+/* ── OVERLAY OPTIONS ── */
+.overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(20px); z-index: 900; display: flex; align-items: center; justify-content: center; padding: 100px 40px 40px; }
+.card { background: var(--white); border-radius: var(--r-lg); padding: var(--sp10); color: var(--black); box-shadow: 0 24px 48px rgba(0,0,0,0.2); }
+
+/* Option A: The Final 6 Refined */
+.oa-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; width: 100%; max-width: 1100px; }
+.eyebrow { font-family: var(--font-aeonik); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: var(--green); margin-bottom: 24px; }
+.oa-main-link { display: flex; align-items: center; justify-content: space-between; font-family: var(--font-aeonik); font-size: 42px; letter-spacing: -1px; padding: 12px 0; border-bottom: 1px solid var(--b-dark); text-decoration: none; color: inherit; }
+.oa-main-link:hover { color: var(--green); padding-left: 10px; }
+
+/* Option B: Three Column Editorial */
+.ob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 1200px; }
+.ob-card { min-height: 400px; display: flex; flex-direction: column; }
+.ob-link { font-family: var(--font-aeonik); font-size: 24px; padding: 16px 0; border-bottom: 1px solid var(--b-dark); text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; }
+.ob-link span { font-size: 12px; color: var(--gray); font-weight: 700; font-family: var(--font-haas); }
+.ob-link:hover { color: var(--green); }
+
+/* Option C: Split Depth (Numbers) */
+.oc-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; width: 100%; max-width: 1100px; }
+.oc-card-left { background: transparent; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; }
+.oc-num-link { font-family: var(--font-aeonik); font-size: 56px; line-height: 1; margin-bottom: 20px; display: flex; align-items: baseline; gap: 20px; text-decoration: none; color: rgba(255,255,255,0.2); transition: all 0.4s ease; }
+.oc-num-link:hover { color: #fff; transform: translateX(20px); }
+.oc-num-link b { font-size: 14px; font-weight: 700; color: var(--green); }
+
+</style>
+</head>
+<body>
+
+<div class="meta">NEMO — Navigation Strategy Lab 20.0</div>
+
+<!-- OPTION A: REFINED FINAL 6 -->
+<div class="meta">Option A: The Refined Final 6 (Premium Split)</div>
+<div class="preview">
+  <header class="header-root">
+    <div class="logo-txt">NEMO <div class="logo-dot"></div></div>
+    <div class="nav-pill">
+      <a href="#" class="active">Work</a><a href="#">Services</a><a href="#">Studio</a>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="#" class="cta-pill">Let's talk</a>
+      <div class="burger"><span></span><span></span></div>
+    </div>
+  </header>
+  <div class="overlay">
+    <div class="oa-grid">
+      <div class="card">
+        <div class="eyebrow">// Index 01</div>
+        <a href="#" class="oa-main-link">Work</a>
+        <a href="#" class="oa-main-link">Services</a>
+        <a href="#" class="oa-main-link">Studio</a>
+        <a href="#" class="oa-main-link">Journal</a>
+      </div>
+      <div class="card">
+        <div class="eyebrow">// Directory 02</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+          <div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--green); margin-bottom: 16px; display: inline-block;">Company</div>
+            <a href="#" style="display: block; font-size: 14px; padding: 5px 0; color: var(--gray);">Culture</a>
+            <a href="#" style="display: block; font-size: 14px; padding: 5px 0; color: var(--gray);">Careers</a>
+          </div>
+          <div>
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid #000; margin-bottom: 16px; display: inline-block;">Products</div>
+            <a href="#" style="display: block; font-size: 14px; padding: 5px 0; color: var(--gray);">Mappire</a>
+            <a href="#" style="display: block; font-size: 14px; padding: 5px 0; color: var(--gray);">Nemo CRM</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B: THREE COLUMN EDITORIAL -->
+<div class="meta">Option B: Three Column Editorial (Agency Grid)</div>
+<div class="preview">
+  <header class="header-root">
+    <div class="logo-txt">NEMO <div class="logo-dot"></div></div>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <a href="#" class="cta-pill">Inquire</a>
+      <div class="burger"><span></span><span></span></div>
+    </div>
+  </header>
+  <div class="overlay">
+    <div class="ob-grid">
+      <div class="card ob-card">
+        <div class="eyebrow">// Capabilities</div>
+        <a href="#" class="ob-link"><span>01</span> Branding</a>
+        <a href="#" class="ob-link"><span>02</span> WebGL</a>
+        <a href="#" class="ob-link"><span>03</span> UX Design</a>
+      </div>
+      <div class="card ob-card">
+        <div class="eyebrow">// Philosophy</div>
+        <a href="#" class="ob-link">Manifesto</a>
+        <a href="#" class="ob-link">Practice</a>
+        <a href="#" class="ob-link">Careers</a>
+      </div>
+      <div class="card ob-card" style="background: var(--green); color: #000; border: none;">
+        <div class="eyebrow" style="color: rgba(0,0,0,0.4)">// Action</div>
+        <div style="margin-top: auto; font-family: var(--font-aeonik); font-size: 32px; line-height: 1.1;">Let's build<br>the future.</div>
+        <a href="#" style="margin-top: 24px; font-size: 14px; font-weight: 700; text-decoration: underline;">Contact Store</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION C: SPLIT DEPTH NUMBERS -->
+<div class="meta">Option C: Split Depth (Large Index)</div>
+<div class="preview">
+  <header class="header-root">
+    <div class="logo-txt">NEMO <div class="logo-dot"></div></div>
+    <div class="burger"><span></span><span></span></div>
+  </header>
+  <div class="overlay">
+    <div class="oc-grid">
+      <div class="oc-card-left">
+        <a href="#" class="oc-num-link"><b>01</b> Work</a>
+        <a href="#" class="oc-num-link"><b>02</b> Studio</a>
+        <a href="#" class="oc-num-link"><b>03</b> Growth</a>
+      </div>
+      <div class="card">
+        <div class="eyebrow">// Context</div>
+        <p style="font-size: 18px; color: var(--gray); margin-bottom: 32px;">We are a boutique agency specializing in ultra-high fidelity digital experiences.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+             <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 8px;">Studio</div>
+             <a href="#" style="display: block; color: var(--gray); padding: 4px 0;">About</a>
+             <a href="#" style="display: block; color: var(--gray); padding: 4px 0;">Journal</a>
+          </div>
+          <div>
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--black); margin-bottom: 8px;">Socials</div>
+             <a href="#" style="display: block; color: var(--gray); padding: 4px 0;">Instagram</a>
+             <a href="#" style="display: block; color: var(--gray); padding: 4px 0;">Twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

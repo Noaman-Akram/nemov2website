@@ -22,6 +22,8 @@ const neueHaas = localFont({
   preload: true,
 });
 
+import { DynamicFavicon } from "@/components/layout/Favicon";
+
 export const metadata: Metadata = {
   title: {
     default: "NEMO — Turn your ideas into reality",
@@ -50,6 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${aeonikPro.variable} ${neueHaas.variable}`}>
+      <head>
+        <DynamicFavicon />
+      </head>
       <body style={{
         fontFamily: "var(--font-haas), 'Inter', sans-serif",
       }}>

@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Menu Lab 17.0 (Interactive)</title>
+<style>
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');font-weight:400;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype');font-weight:500;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype');font-weight:300;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype');font-weight:700;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;}
+
+:root{
+  --green:#35D687;--green-dim:rgba(53,214,135,0.12);--green-hover:#29c275;
+  --black:#080808;--charcoal:#131313;--surface:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.04);
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --r-pill:9999px;--r-lg:16px;--r-md:12px;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+
+/* ── Lab chrome ── */
+.lab-title{text-align:center;font-family:var(--font-aeonik);font-size:11px;text-transform:uppercase;letter-spacing:.12em;padding:48px 20px 16px;color:rgba(0,0,0,.4);line-height:1.6;}
+.lab-title span{display:block;font-size:9px;margin-top:6px;letter-spacing:.15em;color:rgba(0,0,0,.25);}
+
+/* ── Preview system ── */
+.pw{max-width:1400px;margin:0 auto 80px;}
+.pt{display:flex;gap:2px;margin-bottom:-1px;padding:0 16px;position:relative;z-index:2;}
+.pt div{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:10px 20px;background:rgba(0,0,0,.06);color:rgba(0,0,0,.35);border-radius:8px 8px 0 0;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:all 150ms ease;}
+.pt div.a{background:var(--black);color:rgba(255,255,255,.6);border-color:var(--border);}
+.pt div:hover:not(.a){background:rgba(0,0,0,.1);}
+.fd{background:var(--black);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;min-height:600px;}
+.fm{background:var(--black);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);width:390px;margin:0 auto;border:3px solid #222;display:none;position:relative;min-height:700px;}
+.pw.mob .fd{display:none;}.pw.mob .fm{display:block;}
+
+/* ══════════════════════════════════════════
+   ORIGINAL HEADER BAR (the starting state)
+══════════════════════════════════════════ */
+.site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;position:relative;z-index:100;
+}
+.fm .site-header{padding:14px 20px;}
+.logo-img{height:20px;width:auto;}
+.fm .logo-img{height:16px;}
+
+/* Pill nav */
+.pill{
+  display:flex;gap:4px;
+  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill);padding:5px;
+}
+.pill a{
+  display:inline-block;font-family:var(--font-haas);font-size:13px;
+  color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--r-pill);transition:all 200ms ease;
+}
+.pill a:hover{color:#fff;background:rgba(255,255,255,.06);}
+.pill a.ac{color:#fff;background:rgba(255,255,255,.1);}
+.fm .pill{display:none;}
+
+/* Header actions */
+.h-actions{display:flex;gap:10px;align-items:center;}
+.cta{
+  font-family:var(--font-haas);font-size:13px;border-radius:var(--r-pill);
+  padding:0 20px;height:36px;display:inline-flex;align-items:center;
+  border:none;cursor:pointer;transition:all 200ms ease;white-space:nowrap;
+  background:#E9EBDF;color:#151515;
+}
+.cta:hover{background:#d6d8c6;}
+.fm .cta{font-size:11px;padding:0 14px;height:30px;}
+
+/* Hamburger / close toggle */
+.menu-toggle{
+  width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);transition:all 200ms ease;position:relative;
+}
+.menu-toggle:hover{background:rgba(255,255,255,.1);}
+.menu-toggle .bar{display:block;width:16px;height:1.5px;background:#fff;transition:all 400ms var(--ease-out);transform-origin:center;}
+.fm .menu-toggle{width:30px;height:30px;}
+.fm .menu-toggle .bar{width:13px;}
+
+/* Toggle X state */
+.menu-toggle.open .bar:nth-child(1){transform:rotate(45deg) translate(2.3px,2.3px);}
+.menu-toggle.open .bar:nth-child(2){transform:rotate(-45deg) translate(2.3px,-2.3px);}
+
+/* ── Menu label next to hamburger ── */
+.menu-label{
+  font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,.5);
+  margin-right:4px;transition:all 200ms ease;display:none;
+}
+.menu-toggle.open ~ .menu-label-close{display:none;}
+
+/* ══════════════════════════════════════════
+   MENU PANEL — drops down from header
+══════════════════════════════════════════ */
+.menu-panel{
+  position:absolute;top:68px;left:16px;right:16px;z-index:90;
+  background:var(--charcoal);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+  /* Animation */
+  transform:translateY(-8px) scale(0.98);opacity:0;
+  pointer-events:none;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+  transform-origin:top center;
+}
+.menu-panel.open{
+  transform:translateY(0) scale(1);opacity:1;pointer-events:auto;
+}
+.fm .menu-panel{top:58px;left:10px;right:10px;}
+
+/* Backdrop dim */
+.menu-backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:80;
+  opacity:0;pointer-events:none;transition:opacity 400ms ease;
+}
+.menu-backdrop.open{opacity:1;pointer-events:auto;}
+
+/* ── Panel inner content ── */
+.panel-body{padding:20px;display:flex;flex-direction:column;gap:12px;}
+.fm .panel-body{padding:16px;}
+
+/* Section cards inside the panel */
+.section-card{
+  background:var(--surface);border:1px solid var(--border-light);
+  border-radius:var(--r-md);padding:20px;
+  /* Stagger animation */
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .section-card{transform:translateY(0);opacity:1;}
+.menu-panel.open .section-card:nth-child(1){transition-delay:80ms;}
+.menu-panel.open .section-card:nth-child(2){transition-delay:140ms;}
+.menu-panel.open .section-card:nth-child(3){transition-delay:200ms;}
+.menu-panel.open .section-card:nth-child(4){transition-delay:260ms;}
+
+.section-label{
+  font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;
+  letter-spacing:.15em;color:rgba(255,255,255,.2);margin-bottom:12px;
+}
+
+/* Main nav links inside cards */
+.nav-link{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--font-aeonik);font-size:24px;font-weight:300;
+  color:rgba(255,255,255,.7);padding:12px 0;
+  border-bottom:1px solid var(--border-light);
+  transition:all 300ms var(--ease-out);letter-spacing:-.3px;
+}
+.nav-link:last-child{border-bottom:none;}
+.nav-link:hover{color:#fff;padding-left:8px;}
+.nav-link .link-arrow{
+  font-size:14px;color:rgba(255,255,255,.1);
+  transition:all 300ms var(--ease-out);transform:translateX(-4px);opacity:0;
+}
+.nav-link:hover .link-arrow{color:var(--green);transform:translateX(0);opacity:1;}
+
+.fm .nav-link{font-size:20px;padding:10px 0;}
+
+/* Secondary links */
+.sec-link{
+  display:block;font-size:15px;color:rgba(255,255,255,.45);padding:8px 0;
+  border-bottom:1px solid var(--border-light);transition:all 200ms ease;
+}
+.sec-link:last-child{border-bottom:none;}
+.sec-link:hover{color:#fff;padding-left:6px;}
+.fm .sec-link{font-size:14px;padding:7px 0;}
+
+/* Product links */
+.prod-link{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:15px;color:rgba(255,255,255,.4);padding:8px 0;
+  border-bottom:1px solid var(--border-light);transition:all 200ms ease;
+}
+.prod-link:last-child{border-bottom:none;}
+.prod-link:hover{color:var(--green);padding-left:6px;}
+.prod-link .prod-desc{font-size:11px;color:rgba(255,255,255,.15);transition:color 200ms ease;}
+.prod-link:hover .prod-desc{color:rgba(255,255,255,.3);}
+.fm .prod-link{font-size:14px;padding:7px 0;}
+
+/* Coming soon */
+.soon-link{
+  display:inline-block;font-size:12px;color:rgba(255,255,255,.12);
+  margin-right:16px;padding:4px 0;
+}
+
+/* Panel footer */
+.panel-footer{
+  padding:16px 20px;border-top:1px solid var(--border-light);
+  display:flex;justify-content:space-between;align-items:center;
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .panel-footer{transform:translateY(0);opacity:1;transition-delay:300ms;}
+.panel-footer .socials{display:flex;gap:16px;}
+.panel-footer .socials a{font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.06em;text-transform:uppercase;}
+.panel-footer .socials a:hover{color:var(--green);}
+.panel-footer .legal{display:flex;gap:12px;font-size:10px;color:rgba(255,255,255,.12);}
+.panel-footer .legal a:hover{color:rgba(255,255,255,.35);}
+.fm .panel-footer{padding:12px 16px;flex-direction:column;gap:8px;}
+
+/* CTA buttons inside panel */
+.panel-ctas{
+  display:flex;gap:8px;padding:4px 20px 0;
+  transform:translateY(12px);opacity:0;
+  transition:transform 500ms var(--ease-out),opacity 400ms ease;
+}
+.menu-panel.open .panel-ctas{transform:translateY(0);opacity:1;transition-delay:320ms;}
+.panel-cta{
+  flex:1;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-haas);font-size:14px;cursor:pointer;transition:all 200ms ease;
+}
+.panel-cta.primary{background:var(--green);color:var(--black);}
+.panel-cta.primary:hover{background:var(--green-hover);}
+.panel-cta.secondary{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);border:1px solid var(--border);}
+.panel-cta.secondary:hover{background:rgba(255,255,255,.1);color:#fff;}
+
+
+/* ══════════════════════════════════════════
+   LAYOUT VARIATIONS
+══════════════════════════════════════════ */
+
+/* ── Layout A: Two cards side by side (Menu | Company+Products) ── */
+.layout-a .panel-body{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;}
+.layout-a .panel-body .card-full{grid-column:1/-1;}
+.fm .layout-a .panel-body{grid-template-columns:1fr;}
+
+/* ── Layout B: Three cards (Menu | Company | Products) ── */
+.layout-b .panel-body{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;}
+.layout-b .panel-body .card-full{grid-column:1/-1;}
+.fm .layout-b .panel-body{grid-template-columns:1fr;}
+
+/* ── Layout C: Single column, no cards, clean list ── */
+.layout-c .section-card{background:transparent;border:none;border-radius:0;padding:0 4px;}
+.layout-c .panel-body{gap:0;}
+.layout-c .nav-link{font-size:36px;padding:14px 0;letter-spacing:-1px;color:rgba(255,255,255,.12);}
+.layout-c .nav-link:hover{color:#fff;letter-spacing:0;}
+.fm .layout-c .nav-link{font-size:24px;padding:10px 0;}
+.layout-c .sec-row{display:flex;flex-wrap:wrap;gap:0;padding:12px 4px 0;border-top:1px solid var(--border-light);}
+.layout-c .sec-row a{
+  font-family:var(--font-aeonik);font-size:18px;font-weight:300;
+  color:rgba(255,255,255,.12);padding:4px 20px 4px 0;transition:all 200ms ease;
+}
+.layout-c .sec-row a:hover{color:#fff;}
+.layout-c .prod-row{display:flex;gap:16px;padding:8px 4px 0;}
+.layout-c .prod-row a{font-size:13px;color:rgba(255,255,255,.2);transition:color 200ms ease;}
+.layout-c .prod-row a:hover{color:var(--green);}
+.fm .layout-c .sec-row a{font-size:15px;padding-right:14px;}
+
+/* ── Layout D: Big type left, stacked cards right ── */
+.layout-d .panel-body{display:grid;grid-template-columns:1.3fr 1fr;gap:12px;}
+.layout-d .big-links{display:flex;flex-direction:column;justify-content:center;}
+.layout-d .big-links .section-card{background:transparent;border:none;padding:0;}
+.layout-d .big-links .nav-link{
+  font-size:42px;letter-spacing:-1.5px;color:rgba(255,255,255,.1);border-bottom-color:rgba(255,255,255,.02);
+}
+.layout-d .big-links .nav-link:hover{color:#fff;letter-spacing:-.5px;}
+.layout-d .right-stack{display:flex;flex-direction:column;gap:12px;}
+.fm .layout-d .panel-body{grid-template-columns:1fr;}
+.fm .layout-d .big-links .nav-link{font-size:28px;}
+
+/* ── Layout E: Horizontal bands, no cards ── */
+.layout-e .section-card{background:transparent;border:none;border-radius:0;padding:0;}
+.layout-e .panel-body{gap:0;padding:0;}
+.layout-e .band{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;border-bottom:1px solid var(--border-light);
+  transition:all 300ms var(--ease-out);cursor:pointer;
+}
+.layout-e .band:hover{background:rgba(255,255,255,.02);padding-left:32px;}
+.layout-e .band .b-name{
+  font-family:var(--font-aeonik);font-size:28px;font-weight:300;
+  color:rgba(255,255,255,.1);transition:color 300ms ease;letter-spacing:-.5px;
+}
+.layout-e .band:hover .b-name{color:#fff;}
+.layout-e .band .b-tag{
+  font-size:10px;text-transform:uppercase;letter-spacing:.1em;
+  color:rgba(255,255,255,.08);transition:color 300ms ease;
+}
+.layout-e .band:hover .b-tag{color:rgba(255,255,255,.25);}
+.layout-e .band::before{
+  content:'';width:3px;height:0;background:var(--green);border-radius:2px;
+  margin-right:12px;transition:height 300ms var(--ease-out);flex-shrink:0;
+}
+.layout-e .band:hover::before{height:24px;}
+.layout-e .bottom-tray{padding:16px 24px;display:flex;gap:24px;flex-wrap:wrap;}
+.layout-e .tray-group{display:flex;gap:12px;align-items:center;}
+.layout-e .tray-group .tray-label{font-size:10px;color:rgba(255,255,255,.12);text-transform:uppercase;letter-spacing:.1em;font-family:var(--font-aeonik);}
+.layout-e .tray-group a{font-size:13px;color:rgba(255,255,255,.2);transition:color 200ms ease;}
+.layout-e .tray-group a:hover{color:#fff;}
+.fm .layout-e .band{padding:10px 16px;}
+.fm .layout-e .band .b-name{font-size:20px;}
+.fm .layout-e .band .b-tag{display:none;}
+.fm .layout-e .bottom-tray{flex-direction:column;gap:12px;padding:12px 16px;}
+
+/* ── Layout F: Scale hierarchy, no cards, flush left ── */
+.layout-f .section-card{background:transparent;border:none;border-radius:0;padding:0 4px;}
+.layout-f .panel-body{gap:0;padding:20px 24px;}
+.layout-f .f-main a{
+  display:block;font-family:var(--font-aeonik);font-size:48px;font-weight:300;
+  color:rgba(255,255,255,.06);line-height:1.1;letter-spacing:-1.5px;
+  transition:all 500ms var(--ease-out);
+}
+.layout-f .f-main a:hover{color:#fff;letter-spacing:-.5px;}
+.layout-f .f-mid{
+  display:flex;flex-wrap:wrap;gap:0;padding:14px 0 0;margin-top:10px;
+  border-top:1px solid var(--border-light);
+}
+.layout-f .f-mid a{
+  font-family:var(--font-aeonik);font-size:20px;font-weight:300;
+  color:rgba(255,255,255,.1);padding:3px 22px 3px 0;transition:all 300ms ease;
+}
+.layout-f .f-mid a:hover{color:#fff;}
+.layout-f .f-low{display:flex;gap:16px;padding:10px 0 0;}
+.layout-f .f-low a{font-size:13px;color:rgba(255,255,255,.18);transition:color 200ms ease;}
+.layout-f .f-low a:hover{color:rgba(255,255,255,.6);}
+.layout-f .f-ghost{display:flex;gap:14px;padding:6px 0 0;}
+.layout-f .f-ghost a{font-size:11px;color:rgba(255,255,255,.06);}
+.fm .layout-f .f-main a{font-size:30px;}
+.fm .layout-f .f-mid a{font-size:16px;padding-right:16px;}
+.fm .layout-f .panel-body{padding:16px;}
+
+/* Dummy page content behind the menu */
+.page-content{
+  padding:100px 32px 60px;
+  font-family:var(--font-aeonik);font-size:56px;font-weight:300;
+  color:rgba(255,255,255,.04);line-height:1.15;letter-spacing:-2px;
+  transition:filter 400ms ease;
+}
+.page-content.dimmed{filter:blur(2px);}
+.fm .page-content{padding:80px 20px 40px;font-size:32px;}
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:40px 20px 0;">
+  <div style="font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(0,0,0,.7);letter-spacing:-1px;">Menu Lab v5 — Interactive</div>
+  <div style="font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,0,0,.25);margin-top:8px;">Click the hamburger to open/close. Real animation. Drops from your existing header.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT A — Two Cards (Menu | Company+Products)
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout A — Two Cards<span>Menu links in left card, Company + Products stacked in right card. Osmo-style grouped sections.</span></div>
+<div class="pw" id="pA">
+  <div class="pt"><div class="a" onclick="sv('pA','d')">Desktop</div><div onclick="sv('pA','m')">Mobile</div></div>
+
+  <div class="fd layout-a">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <div class="section-label">Menu</div>
+          <a href="#" class="nav-link">Home <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Work <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Services <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a>
+        </div>
+        <div class="section-card">
+          <div class="section-label">Company</div>
+          <a href="#" class="sec-link">Studio</a>
+          <a href="#" class="sec-link">Careers</a>
+          <a href="#" class="sec-link">Growth Plan</a>
+          <a href="#" class="sec-link">Charity</a>
+          <div style="height:12px;"></div>
+          <div class="section-label">Products</div>
+          <a href="#" class="prod-link">Mappire <span class="prod-desc">Mapping tool</span></a>
+          <a href="#" class="prod-link">Nemo CRM <span class="prod-desc">Client mgmt</span></a>
+          <a href="#" class="prod-link">Nemo GO <span class="prod-desc">Quick launch</span></a>
+          <div style="height:8px;"></div>
+          <a href="#" class="soon-link">Partner Program</a>
+          <a href="#" class="soon-link">Affiliates</a>
+          <a href="#" class="soon-link">Sitemap</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm layout-a">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <div class="section-label">Menu</div>
+          <a href="#" class="nav-link">Home <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Work <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Services <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a>
+        </div>
+        <div class="section-card">
+          <div class="section-label">Company</div>
+          <a href="#" class="sec-link">Studio</a><a href="#" class="sec-link">Careers</a><a href="#" class="sec-link">Growth Plan</a><a href="#" class="sec-link">Charity</a>
+          <div style="height:12px;"></div>
+          <div class="section-label">Products</div>
+          <a href="#" class="prod-link">Mappire</a><a href="#" class="prod-link">Nemo CRM</a><a href="#" class="prod-link">Nemo GO</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT B — Three Cards
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout B — Three Cards<span>Menu, Company, Products each in their own card. Clean separation. Staggered card reveal.</span></div>
+<div class="pw" id="pB">
+  <div class="pt"><div class="a" onclick="sv('pB','d')">Desktop</div><div onclick="sv('pB','m')">Mobile</div></div>
+  <div class="fd layout-b">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <div class="section-label">Menu</div>
+          <a href="#" class="nav-link">Home <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Work <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Services <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a>
+          <a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a>
+        </div>
+        <div class="section-card">
+          <div class="section-label">Company</div>
+          <a href="#" class="sec-link">Studio</a><a href="#" class="sec-link">Careers</a><a href="#" class="sec-link">Growth Plan</a><a href="#" class="sec-link">Charity</a>
+        </div>
+        <div class="section-card">
+          <div class="section-label">Products</div>
+          <a href="#" class="prod-link">Mappire <span class="prod-desc">Mapping tool</span></a>
+          <a href="#" class="prod-link">Nemo CRM <span class="prod-desc">Client mgmt</span></a>
+          <a href="#" class="prod-link">Nemo GO <span class="prod-desc">Quick launch</span></a>
+        </div>
+        <div class="section-card card-full" style="background:transparent;border:none;padding:4px;">
+          <a href="#" class="soon-link">Partner Program</a><a href="#" class="soon-link">Affiliate Marketing</a><a href="#" class="soon-link">Sitemap</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+  <div class="fm layout-b">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card"><div class="section-label">Menu</div><a href="#" class="nav-link">Home <span class="link-arrow">→</span></a><a href="#" class="nav-link">Work <span class="link-arrow">→</span></a><a href="#" class="nav-link">Services <span class="link-arrow">→</span></a><a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a><a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a></div>
+        <div class="section-card"><div class="section-label">Company</div><a href="#" class="sec-link">Studio</a><a href="#" class="sec-link">Careers</a><a href="#" class="sec-link">Growth Plan</a><a href="#" class="sec-link">Charity</a></div>
+        <div class="section-card"><div class="section-label">Products</div><a href="#" class="prod-link">Mappire</a><a href="#" class="prod-link">Nemo CRM</a><a href="#" class="prod-link">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer"><div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT C — No Cards, Clean Typography
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout C — Clean Typography Panel<span>No cards. Big type for main, medium for company, small for products. Pure scale hierarchy in a dropdown panel.</span></div>
+<div class="pw" id="pC">
+  <div class="pt"><div class="a" onclick="sv('pC','d')">Desktop</div><div onclick="sv('pC','m')">Mobile</div></div>
+  <div class="fd layout-c">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <a href="#" class="nav-link">Home</a><a href="#" class="nav-link">Work</a><a href="#" class="nav-link">Services</a><a href="#" class="nav-link">Blog</a><a href="#" class="nav-link">Contact</a>
+        </div>
+        <div class="sec-row section-card">
+          <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        </div>
+        <div class="prod-row section-card">
+          <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+  <div class="fm layout-c">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card"><a href="#" class="nav-link">Home</a><a href="#" class="nav-link">Work</a><a href="#" class="nav-link">Services</a><a href="#" class="nav-link">Blog</a><a href="#" class="nav-link">Contact</a></div>
+        <div class="sec-row section-card"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="prod-row section-card"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer"><div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT D — Big Type Left, Cards Right
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout D — Big Type + Cards<span>Large typography left for main links. Company + Products in stacked cards on the right.</span></div>
+<div class="pw" id="pD">
+  <div class="pt"><div class="a" onclick="sv('pD','d')">Desktop</div><div onclick="sv('pD','m')">Mobile</div></div>
+  <div class="fd layout-d">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="big-links">
+          <div class="section-card">
+            <a href="#" class="nav-link">Home <span class="link-arrow">→</span></a>
+            <a href="#" class="nav-link">Work <span class="link-arrow">→</span></a>
+            <a href="#" class="nav-link">Services <span class="link-arrow">→</span></a>
+            <a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a>
+            <a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a>
+          </div>
+        </div>
+        <div class="right-stack">
+          <div class="section-card">
+            <div class="section-label">Company</div>
+            <a href="#" class="sec-link">Studio</a><a href="#" class="sec-link">Careers</a><a href="#" class="sec-link">Growth Plan</a><a href="#" class="sec-link">Charity</a>
+          </div>
+          <div class="section-card">
+            <div class="section-label">Products</div>
+            <a href="#" class="prod-link">Mappire <span class="prod-desc">Mapping tool</span></a>
+            <a href="#" class="prod-link">Nemo CRM <span class="prod-desc">Client mgmt</span></a>
+            <a href="#" class="prod-link">Nemo GO <span class="prod-desc">Quick launch</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-ctas">
+        <a href="#" class="panel-cta secondary">Careers</a>
+        <a href="#" class="panel-cta primary">Start a Project</a>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+  <div class="fm layout-d">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="big-links"><div class="section-card"><a href="#" class="nav-link">Home <span class="link-arrow">→</span></a><a href="#" class="nav-link">Work <span class="link-arrow">→</span></a><a href="#" class="nav-link">Services <span class="link-arrow">→</span></a><a href="#" class="nav-link">Blog <span class="link-arrow">→</span></a><a href="#" class="nav-link">Contact <span class="link-arrow">→</span></a></div></div>
+        <div class="right-stack">
+          <div class="section-card"><div class="section-label">Company</div><a href="#" class="sec-link">Studio</a><a href="#" class="sec-link">Careers</a><a href="#" class="sec-link">Growth Plan</a><a href="#" class="sec-link">Charity</a></div>
+          <div class="section-card"><div class="section-label">Products</div><a href="#" class="prod-link">Mappire</a><a href="#" class="prod-link">Nemo CRM</a><a href="#" class="prod-link">Nemo GO</a></div>
+        </div>
+      </div>
+      <div class="panel-ctas"><a href="#" class="panel-cta primary">Start a Project</a></div>
+      <div class="panel-footer"><div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT E — Horizontal Bands
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout E — Horizontal Bands<span>Each link is a full-width band with green bar on hover. Secondary in bottom tray.</span></div>
+<div class="pw" id="pE">
+  <div class="pt"><div class="a" onclick="sv('pE','d')">Desktop</div><div onclick="sv('pE','m')">Mobile</div></div>
+  <div class="fd layout-e">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <a href="#" class="band"><span class="b-name">Home</span><span class="b-tag">Landing</span></a>
+          <a href="#" class="band"><span class="b-name">Work</span><span class="b-tag">Case Studies</span></a>
+          <a href="#" class="band"><span class="b-name">Services</span><span class="b-tag">Capabilities</span></a>
+          <a href="#" class="band"><span class="b-name">Blog</span><span class="b-tag">Insights</span></a>
+          <a href="#" class="band"><span class="b-name">Contact</span><span class="b-tag">Inquiry</span></a>
+        </div>
+        <div class="bottom-tray section-card">
+          <div class="tray-group"><span class="tray-label">Company</span><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+          <div class="tray-group"><span class="tray-label">Products</span><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+          <div class="tray-group"><span class="tray-label" style="opacity:.4;">Soon</span><a href="#" style="color:rgba(255,255,255,.08);">Partners</a><a href="#" style="color:rgba(255,255,255,.08);">Affiliates</a></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+  <div class="fm layout-e">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="section-card">
+          <a href="#" class="band"><span class="b-name">Home</span></a><a href="#" class="band"><span class="b-name">Work</span></a><a href="#" class="band"><span class="b-name">Services</span></a><a href="#" class="band"><span class="b-name">Blog</span></a><a href="#" class="band"><span class="b-name">Contact</span></a>
+        </div>
+        <div class="bottom-tray section-card">
+          <div class="tray-group"><span class="tray-label">Company</span><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+          <div class="tray-group"><span class="tray-label">Products</span><a href="#">Mappire</a><a href="#">CRM</a><a href="#">GO</a></div>
+        </div>
+      </div>
+      <div class="panel-footer"><div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     LAYOUT F — Scale Hierarchy Panel
+═══════════════════════════════════════════════════════ -->
+<div class="lab-title">Layout F — Scale Hierarchy Panel<span>No cards. 48px main → 20px company → 13px products. Pure weight/size cascade inside dropdown.</span></div>
+<div class="pw" id="pF">
+  <div class="pt"><div class="a" onclick="sv('pF','d')">Desktop</div><div onclick="sv('pF','m')">Mobile</div></div>
+  <div class="fd layout-f">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="f-main section-card">
+          <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a>
+        </div>
+        <div class="f-mid section-card">
+          <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+        </div>
+        <div class="f-low section-card">
+          <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+        </div>
+        <div class="f-ghost section-card">
+          <a href="#">Partner Program</a><a href="#">Affiliate Marketing</a><a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+  <div class="fm layout-f">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="f-main section-card"><a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div class="f-mid section-card"><a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a></div>
+        <div class="f-low section-card"><a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a></div>
+      </div>
+      <div class="panel-footer"><div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div><div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div></div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+function toggle(btn){
+  const frame = btn.closest('.fd') || btn.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const backdrop = frame.querySelector('.menu-backdrop');
+  const page = frame.querySelector('.page-content');
+  const isOpen = panel.classList.contains('open');
+
+  if(isOpen){
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    btn.classList.remove('open');
+    if(page) page.classList.remove('dimmed');
+  } else {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    btn.classList.add('open');
+    if(page) page.classList.add('dimmed');
+  }
+}
+
+function closeMenu(backdrop){
+  const frame = backdrop.closest('.fd') || backdrop.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const btn = frame.querySelector('.menu-toggle');
+  const page = frame.querySelector('.page-content');
+  panel.classList.remove('open');
+  backdrop.classList.remove('open');
+  btn.classList.remove('open');
+  if(page) page.classList.remove('dimmed');
+}
+
+function sv(id,mode){
+  const w=document.getElementById(id),t=w.querySelectorAll('.pt div');
+  if(mode==='m'){w.classList.add('mob');t[0].classList.remove('a');t[1].classList.add('a');}
+  else{w.classList.remove('mob');t[0].classList.add('a');t[1].classList.remove('a');}
+}
+</script>
+</body>
+</html>

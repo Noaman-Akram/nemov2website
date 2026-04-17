@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Header Refinement Lab</title>
+<style>
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');font-weight:400;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype');font-weight:500;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype');font-weight:300;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype');font-weight:700;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;}
+
+:root{
+  --green:#35D687;--green-dim:rgba(53,214,135,0.12);--green-hover:#29c275;
+  --black:#080808;--charcoal:#131313;--surface:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.04);
+  --off-white:#F5F5F0;
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --r-pill:9999px;--r-lg:16px;--r-md:12px;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8e8e3;color:#111;font-family:var(--font-haas);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+
+/* ── Lab chrome ── */
+.lab-title{text-align:center;font-family:var(--font-aeonik);font-size:11px;text-transform:uppercase;letter-spacing:.12em;padding:48px 20px 16px;color:rgba(0,0,0,.4);line-height:1.6;}
+.lab-title span{display:block;font-size:9px;margin-top:6px;letter-spacing:.15em;color:rgba(0,0,0,.25);}
+
+/* ── Preview system ── */
+.pw{max-width:1400px;margin:0 auto 80px;}
+.pt{display:flex;gap:2px;margin-bottom:-1px;padding:0 16px;position:relative;z-index:2;}
+.pt div{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:10px 20px;background:rgba(0,0,0,.06);color:rgba(0,0,0,.35);border-radius:8px 8px 0 0;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:all 150ms ease;}
+.pt div.a{background:var(--black);color:rgba(255,255,255,.6);border-color:var(--border);}
+.pt div:hover:not(.a){background:rgba(0,0,0,.1);}
+.fd{background:var(--black);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;min-height:600px;}
+.fm{background:var(--black);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15);width:390px;margin:0 auto;border:3px solid #222;display:none;position:relative;min-height:700px;}
+.pw.mob .fd{display:none;}.pw.mob .fm{display:block;}
+
+/* ── Shared Header ── */
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;position:relative;z-index:100;}
+.logo-img{height:20px;width:auto;}
+
+.pill{display:flex;gap:4px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill);padding:5px;}
+.pill a{display:inline-block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--r-pill);transition:all 200ms ease;}
+.pill a:hover{color:#fff;background:rgba(255,255,255,.06);}
+.pill a.ac{color:#fff;background:rgba(255,255,255,.1);}
+.fm .pill{display:none;}
+
+.h-actions{display:flex;gap:10px;align-items:center;}
+.cta{font-family:var(--font-haas);font-size:13px;border-radius:var(--r-pill);padding:0 20px;height:36px;display:inline-flex;align-items:center;border:none;cursor:pointer;transition:all 200ms ease;white-space:nowrap;background:#E9EBDF;color:#151515;}
+.cta:hover{background:#d6d8c6;}
+
+/* Hamburger */
+.menu-toggle{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);transition:all 200ms ease;position:relative;}
+.menu-toggle:hover{background:rgba(255,255,255,.1);}
+.menu-toggle .bar{display:block;width:16px;height:1.5px;background:#fff;transition:all 400ms var(--ease-out);transform-origin:center;}
+.menu-toggle.open .bar:nth-child(1){transform:rotate(45deg) translate(2.3px,2.3px);}
+.menu-toggle.open .bar:nth-child(2){transform:rotate(-45deg) translate(2.3px,-2.3px);}
+
+/* Menu Panel Base */
+.menu-panel{position:absolute;top:68px;left:16px;right:16px;z-index:90;background:var(--charcoal);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transform:translateY(-8px) scale(0.98);opacity:0;pointer-events:none;transition:transform 500ms var(--ease-out),opacity 400ms ease;transform-origin:top center;}
+.menu-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+.fm .menu-panel{top:58px;left:10px;right:10px;}
+
+.menu-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4);z-index:80;opacity:0;pointer-events:none;transition:opacity 400ms ease;}
+.menu-backdrop.open{opacity:1;pointer-events:auto;}
+
+.page-content{padding:100px 32px 60px;font-family:var(--font-aeonik);font-size:56px;font-weight:300;color:rgba(255,255,255,.04);line-height:1.15;letter-spacing:-2px;transition:filter 400ms ease;}
+.page-content.dimmed{filter:blur(2px);}
+.fm .page-content{padding:80px 20px 40px;font-size:32px;}
+
+/* Panel Footer */
+.panel-footer{padding:16px 24px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;transform:translateY(12px);opacity:0;transition:transform 500ms var(--ease-out),opacity 400ms ease;}
+.menu-panel.open .panel-footer{transform:translateY(0);opacity:1;transition-delay:340ms;}
+.panel-footer .socials{display:flex;gap:24px;}
+.panel-footer .socials a{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.06em;text-transform:uppercase;transition:color 200ms ease;}
+.panel-footer .socials a:hover{color:#fff;}
+.panel-footer .tagline{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.15);letter-spacing:.02em;}
+
+/* Stagger Animations */
+.stagger-item{transform:translateY(12px);opacity:0;transition:transform 500ms var(--ease-out),opacity 400ms ease;}
+.menu-panel.open .stagger-item{transform:translateY(0);opacity:1;}
+.menu-panel.open .stagger-item:nth-child(1){transition-delay:60ms;}
+.menu-panel.open .stagger-item:nth-child(2){transition-delay:120ms;}
+.menu-panel.open .stagger-item:nth-child(3){transition-delay:180ms;}
+.menu-panel.open .stagger-item:nth-child(4){transition-delay:240ms;}
+.menu-panel.open .stagger-item:nth-child(5){transition-delay:300ms;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT A — Bold Weight Contrast
+   Left: MASSIVE light links (ghost state)
+   Right: Tight stacked groups with underlines
+   Heavy/light weight play throughout
+══════════════════════════════════════════════════════════ */
+.ref-a .panel-inner{display:grid;grid-template-columns:1.5fr 1fr;gap:0;padding:24px 28px 0;}
+.ref-a .main-col{padding-right:32px;}
+.ref-a .main-link{display:block;font-family:var(--font-aeonik);font-size:64px;font-weight:300;color:rgba(255,255,255,.08);line-height:1.1;letter-spacing:-2px;transition:all 500ms var(--ease-out);padding:4px 0;}
+.ref-a .main-link:hover{color:#fff;letter-spacing:-1px;}
+.ref-a .main-link .arrow{font-size:24px;opacity:0;transform:translateX(-12px);transition:all 400ms var(--ease-out);display:inline-block;margin-left:8px;color:var(--green);}
+.ref-a .main-link:hover .arrow{opacity:1;transform:translateX(0);}
+
+.ref-a .side-col{border-left:1px solid var(--border-light);padding-left:32px;display:flex;flex-direction:column;gap:24px;}
+.ref-a .link-group{}
+.ref-a .grp-head{font-family:var(--font-aeonik);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.15);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border-light);}
+.ref-a .grp-head span{color:var(--green);}
+.ref-a .link-group a{display:block;font-family:var(--font-haas);font-size:14px;color:rgba(255,255,255,.35);padding:6px 0;transition:all 200ms ease;}
+.ref-a .link-group a:hover{color:#fff;padding-left:6px;}
+.ref-a .link-group.products a{font-family:var(--font-aeonik);font-size:13px;font-weight:500;color:rgba(255,255,255,.25);}
+.ref-a .link-group.products a:hover{color:var(--green);padding-left:6px;}
+
+.fm .ref-a .panel-inner{grid-template-columns:1fr;padding:20px 20px 0;}
+.fm .ref-a .main-col{padding-right:0;margin-bottom:20px;}
+.fm .ref-a .main-link{font-size:40px;}
+.fm .ref-a .side-col{border-left:none;border-top:1px solid var(--border-light);padding-left:0;padding-top:16px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT B — Inverted Cards (Dark Cards on Dark BG)
+   Two cards with subtle borders, slightly raised feel
+   Left card: vertical stacked with numbered items
+   Right card: compact grid
+══════════════════════════════════════════════════════════ */
+.ref-b .panel-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;padding:20px;}
+.ref-b .card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-md);padding:20px;transform:translateY(12px);opacity:0;transition:transform 500ms var(--ease-out),opacity 400ms ease;}
+.menu-panel.open .ref-b .card:nth-child(1){transform:translateY(0);opacity:1;transition-delay:80ms;}
+.menu-panel.open .ref-b .card:nth-child(2){transform:translateY(0);opacity:1;transition-delay:150ms;}
+
+.ref-b .card-head{font-family:var(--font-aeonik);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.12);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.ref-b .card-head::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--green);opacity:0.6;}
+
+.ref-b .num-link{display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border-light);}
+.ref-b .num-link:last-child{border-bottom:none;}
+.ref-b .num-link .num{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.1);min-width:20px;}
+.ref-b .num-link .label{font-family:var(--font-aeonik);font-size:22px;font-weight:300;color:rgba(255,255,255,.4);flex:1;transition:all 300ms ease;}
+.ref-b .num-link:hover .label{color:#fff;padding-left:4px;}
+.ref-b .num-link .arrow{font-size:14px;color:rgba(255,255,255,.06);opacity:0;transform:translateX(-6px);transition:all 300ms ease;}
+.ref-b .num-link:hover .arrow{opacity:1;transform:translateX(0);color:var(--green);}
+
+.ref-b .mini-grp{margin-bottom:16px;}
+.ref-b .mini-grp:last-child{margin-bottom:0;}
+.ref-b .mini-head{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.1);margin-bottom:8px;}
+.ref-b .mini-link{display:block;font-size:13px;color:rgba(255,255,255,.25);padding:4px 0;transition:all 200ms ease;}
+.ref-b .mini-link:hover{color:#fff;padding-left:4px;}
+.ref-b .mini-link.prod{font-family:var(--font-aeonik);font-size:12px;font-weight:500;color:rgba(255,255,255,.2);}
+.ref-b .mini-link.prod:hover{color:var(--green);}
+
+.fm .ref-b .panel-inner{grid-template-columns:1fr;padding:16px;}
+.fm .ref-b .num-link .label{font-size:18px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT C — Minimal Pill + Ghost Row
+   Horizontal pill with icons, ghost items below
+   Clean and spacious
+══════════════════════════════════════════════════════════ */
+.ref-c .panel-inner{padding:20px 24px;}
+.ref-c .pill-row{display:flex;gap:8px;margin-bottom:20px;}
+.ref-c .pill-link{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-pill);font-family:var(--font-aeonik);font-size:16px;font-weight:400;color:rgba(255,255,255,.3);transition:all 300ms ease;}
+.ref-c .pill-link:hover{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.12);}
+.ref-c .pill-link .icon{font-size:14px;opacity:0.5;}
+.ref-c .pill-link:hover .icon{opacity:1;}
+
+.ref-c .ghost-section{padding-top:16px;border-top:1px solid var(--border-light);}
+.ref-c .ghost-label{font-family:var(--font-aeonik);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.08);margin-bottom:10px;}
+.ref-c .ghost-row{display:flex;gap:20px;}
+.ref-c .ghost-link{font-size:12px;color:rgba(255,255,255,.12);transition:color 200ms ease;}
+.ref-c .ghost-link:hover{color:rgba(255,255,255,.4);}
+
+.fm .ref-c .panel-inner{padding:16px;}
+.fm .ref-c .pill-row{flex-wrap:wrap;}
+.fm .ref-c .pill-link{font-size:14px;padding:10px 16px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT D — Editorial Three-Column
+   Classic editorial layout: 1 big | 2 small
+   Heavy typographic hierarchy
+══════════════════════════════════════════════════════════ */
+.ref-d .panel-inner{display:grid;grid-template-columns:1.4fr 1fr;gap:0;padding:24px 28px 0;}
+.ref-d .big-col{}
+.ref-d .big-link{display:block;font-family:var(--font-aeonik);font-size:48px;font-weight:300;color:rgba(255,255,255,.06);line-height:1.15;letter-spacing:-1.5px;padding:10px 0;border-bottom:1px solid var(--border-light);transition:all 400ms var(--ease-out);}
+.ref-d .big-link:last-child{border-bottom:none;}
+.ref-d .big-link:hover{color:rgba(255,255,255,.9);padding-left:8px;}
+.ref-d .big-link .arrow{font-size:18px;opacity:0;transform:translateX(-8px);transition:all 300ms ease;display:inline-block;margin-left:8px;}
+.ref-d .big-link:hover .arrow{opacity:1;transform:translateX(0);color:var(--green);}
+
+.ref-d .small-col{border-left:1px solid var(--border-light);padding-left:28px;display:flex;flex-direction:column;gap:20px;}
+.ref-d .small-head{font-family:var(--font-aeonik);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.12);margin-bottom:10px;position:relative;padding-bottom:8px;}
+.ref-d .small-head::after{content:'';position:absolute;bottom:0;left:0;width:20px;height:1px;background:var(--green);}
+.ref-d .small-link{display:block;font-family:var(--font-haas);font-size:14px;color:rgba(255,255,255,.25);padding:5px 0;transition:all 200ms ease;}
+.ref-d .small-link:hover{color:#fff;padding-left:5px;}
+.ref-d .small-link.bold{font-family:var(--font-aeonik);font-size:13px;font-weight:500;color:rgba(255,255,255,.2);}
+.ref-d .small-link.bold:hover{color:var(--green);}
+
+.fm .ref-d .panel-inner{grid-template-columns:1fr;padding:20px 20px 0;}
+.fm .ref-d .big-col{margin-bottom:16px;}
+.fm .ref-d .big-link{font-size:32px;}
+.fm .ref-d .small-col{border-left:none;border-top:1px solid var(--border-light);padding-left:0;padding-top:16px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT E — Hover Reverb (Full Width Bands)
+   Each link is a full-width band
+   Left-to-right reveal on hover with scale
+══════════════════════════════════════════════════════════ */
+.ref-e .panel-inner{padding:0;}
+.ref-e .band{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--border-light);cursor:pointer;position:relative;overflow:hidden;transition:all 350ms var(--ease-out);}
+.ref-e .band::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,rgba(53,214,135,0.08) 0%,transparent 100%);transition:width 400ms var(--ease-out);}
+.ref-e .band:hover::before{width:100%;}
+.ref-e .band-name{font-family:var(--font-aeonik);font-size:36px;font-weight:300;color:rgba(255,255,255,.08);letter-spacing:-1px;transition:all 350ms ease;position:relative;z-index:1;}
+.ref-e .band:hover .band-name{color:#fff;padding-left:12px;}
+.ref-e .band-num{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.06);transition:all 350ms ease;position:relative;z-index:1;}
+.ref-e .band:hover .band-num{color:rgba(255,255,255,.2);}
+.ref-e .band-arrow{font-size:16px;color:rgba(255,255,255,.05);transform:translateX(-8px);transition:all 350ms ease;position:relative;z-index:1;}
+.ref-e .band:hover .band-arrow{color:var(--green);transform:translateX(0);}
+
+.ref-e .mini-row{display:flex;padding:14px 28px 0;gap:40px;}
+.ref-e .mini-col{}
+.ref-e .mini-head{font-family:var(--font-aeonik);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.08);margin-bottom:8px;}
+.ref-e .mini-link{font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.18);padding:3px 0;display:block;transition:color 200ms ease;}
+.ref-e .mini-link:hover{color:#fff;}
+.ref-e .mini-link.prod{font-family:var(--font-aeonik);font-size:12px;font-weight:500;color:rgba(255,255,255,.12);}
+.ref-e .mini-link.prod:hover{color:var(--green);}
+
+.fm .ref-e .band{padding:14px 20px;}
+.fm .ref-e .band-name{font-size:24px;}
+.fm .ref-e .mini-row{flex-direction:column;gap:14px;padding:12px 20px 0;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT F — Floating Card Stack
+   Cards appear to float with subtle shadows
+   Soft rounded corners, generous padding
+══════════════════════════════════════════════════════════ */
+.ref-f .panel-inner{position:relative;padding:20px;min-height:300px;}
+.ref-f .float-card{position:absolute;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:20px;opacity:0;transform:translateY(20px);transition:all 600ms var(--ease-out);}
+.menu-panel.open .ref-f .float-card:nth-child(1){transform:translateY(0);opacity:1;transition-delay:60ms;}
+.menu-panel.open .ref-f .float-card:nth-child(2){transform:translateY(0);opacity:1;transition-delay:120ms;}
+.menu-panel.open .ref-f .float-card:nth-child(3){transform:translateY(0);opacity:1;transition-delay:180ms;}
+
+.ref-f .float-card:nth-child(1){left:20px;top:20px;right:45%;}
+.ref-f .float-card:nth-child(2){left:45%;top:20px;right:20px;}
+.ref-f .float-card:nth-child(3){left:20px;top:160px;right:20px;}
+
+.ref-f .fc-head{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.15);margin-bottom:12px;}
+.ref-f .fc-link{display:block;font-family:var(--font-aeonik);font-size:18px;font-weight:300;color:rgba(255,255,255,.25);padding:6px 0;transition:all 250ms ease;}
+.ref-f .fc-link:hover{color:#fff;padding-left:6px;}
+.ref-f .fc-link .arrow{opacity:0;transition:opacity 250ms ease;display:inline-block;margin-left:4px;}
+.ref-f .fc-link:hover .arrow{opacity:1;color:var(--green);}
+
+.fm .ref-f .panel-inner{padding:16px;}
+.fm .ref-f .float-card{position:relative;left:auto;top:auto;right:auto;margin-bottom:12px;}
+.fm .ref-f .float-card:nth-child(3){margin-bottom:0;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT G — Accordion Drop
+   Links expand to reveal sub-items
+   Smooth accordion animation
+══════════════════════════════════════════════════════════ */
+.ref-g .panel-inner{padding:12px 20px;}
+.ref-g .accordion-item{border-bottom:1px solid var(--border-light);}
+.ref-g .accordion-item:last-child{border-bottom:none;}
+.ref-g .acc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 8px;cursor:pointer;transition:all 200ms ease;}
+.ref-g .acc-header:hover{padding-left:12px;}
+.ref-g .acc-title{font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(255,255,255,.3);transition:all 300ms ease;}
+.ref-g .acc-header:hover .acc-title{color:#fff;}
+.ref-g .acc-icon{font-size:12px;color:rgba(255,255,255,.1);transition:all 300ms ease;}
+.ref-g .acc-header:hover .acc-icon{color:var(--green);}
+
+.ref-g .acc-content{max-height:0;overflow:hidden;transition:max-height 400ms var(--ease-out);}
+.ref-g .acc-item.open .acc-content{max-height:200px;}
+.ref-g .acc-item.open .acc-icon{transform:rotate(45deg);color:var(--green);}
+.ref-g .acc-link{display:block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.2);padding:6px 8px 6px 20px;transition:all 200ms ease;}
+.ref-g .acc-link:hover{color:#fff;padding-left:24px;}
+
+.fm .ref-g .panel-inner{padding:12px 16px;}
+.fm .ref-g .acc-title{font-size:22px;}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT H — Sidebar Slide
+   Main nav stays, secondary slides in from right
+   Split view feel
+══════════════════════════════════════════════════════════ */
+.ref-h .panel-inner{display:grid;grid-template-columns:1fr 0;gap:0;padding:0;transition:grid-template-columns 500ms var(--ease-out);}
+.ref-h.menu-open .panel-inner{grid-template-columns:1fr 1fr;}
+.ref-h .nav-col{padding:24px 28px;border-right:1px solid var(--border-light);transform:translateX(0);transition:transform 500ms var(--ease-out),opacity 400ms ease;}
+.ref-h.menu-open .nav-col{opacity:0.5;transform:translateX(-20px);}
+.ref-h .nav-link{display:block;font-family:var(--font-aeonik);font-size:36px;font-weight:300;color:rgba(255,255,255,.2);padding:12px 0;transition:all 300ms ease;border-bottom:1px solid var(--border-light);}
+.ref-h .nav-link:last-child{border-bottom:none;}
+.ref-h .nav-link:hover{color:#fff;padding-left:8px;}
+.ref-h .nav-link:hover .arrow{opacity:1;transform:translateX(0);}
+.ref-h .nav-link .arrow{font-size:16px;opacity:0;transform:translateX(-8px);transition:all 300ms ease;display:inline-block;margin-left:8px;}
+.ref-h .side-col{background:rgba(0,0,0,.3);padding:24px 28px;transform:translateX(100%);opacity:0;transition:transform 500ms var(--ease-out),opacity 400ms ease;transition-delay:100ms;}
+.ref-h.menu-open .side-col{transform:translateX(0);opacity:1;}
+.ref-h .side-head{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.12);margin-bottom:12px;}
+.ref-h .side-link{font-family:var(--font-haas);font-size:14px;color:rgba(255,255,255,.25);padding:5px 0;display:block;transition:all 200ms ease;}
+.ref-h .side-link:hover{color:#fff;padding-left:5px;}
+
+.fm .ref-h .panel-inner{grid-template-columns:1fr;}
+.fm .ref-h.menu-open .panel-inner{grid-template-columns:1fr;}
+.fm .ref-h .nav-col{border-right:none;padding:20px;}
+.fm .ref-h .side-col{position:absolute;left:0;right:0;top:100%;background:var(--charcoal);border-radius:0 0 var(--r-lg) var(--r-lg);}
+
+
+/* ══════════════════════════════════════════════════════════
+   REFINEMENT I — Glow Effect
+   Subtle green glow on hover
+   Modern tech feel
+══════════════════════════════════════════════════════════ */
+.ref-i .panel-inner{padding:20px;}
+.ref-i .glow-link{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;margin-bottom:4px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:var(--r-md);cursor:pointer;transition:all 400ms ease;position:relative;}
+.ref-i .glow-link::before{content:'';position:absolute;inset:0;border-radius:var(--r-md);box-shadow:inset 0 0 0 0 rgba(53,214,135,0);transition:box-shadow 400ms ease;}
+.ref-i .glow-link:hover::before{box-shadow:inset 0 0 30px rgba(53,214,135,0.06);}
+.ref-i .glow-link:hover{border-color:rgba(53,214,135,0.2);background:rgba(53,214,135,0.03);padding-left:28px;}
+.ref-i .glow-name{font-family:var(--font-aeonik);font-size:24px;font-weight:300;color:rgba(255,255,255,.3);transition:color 300ms ease;}
+.ref-i .glow-link:hover .glow-name{color:#fff;}
+.ref-i .glow-icon{font-size:14px;color:rgba(255,255,255,.1);transition:all 300ms ease;}
+.ref-i .glow-link:hover .glow-icon{color:var(--green);transform:translateX(4px);}
+
+.ref-i .mini-row{display:flex;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-light);}
+.ref-i .mini-pill{display:inline-block;font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,.15);padding:6px 12px;background:rgba(255,255,255,.03);border-radius:var(--r-pill);transition:all 200ms ease;}
+.ref-i .mini-pill:hover{color:#fff;background:rgba(255,255,255,.06);}
+
+.fm .ref-i .panel-inner{padding:16px;}
+.fm .ref-i .glow-name{font-size:18px;}
+
+
+</style>
+</head>
+<body>
+
+<div style="text-align:center;padding:40px 20px 0;">
+  <div style="font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(0,0,0,.7);letter-spacing:-1px;">Header Refinement Lab</div>
+  <div style="font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:rgba(0,0,0,.25);margin-top:8px;">Fresh concepts for the Nemo header menu. Click hamburger to test each.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT A — Bold Weight Contrast
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement A — Bold Weight Contrast<span>Massive ghost links left, tight grouped links right. Heavy/light play throughout.</span></div>
+<div class="pw" id="pa">
+  <div class="pt"><div class="a" onclick="sv('pa','d')">Desktop</div><div onclick="sv('pa','m')">Mobile</div></div>
+  <div class="fd ref-a">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="main-col">
+          <a href="#" class="main-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Services <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Studio <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="side-col">
+          <div class="link-group">
+            <div class="grp-head"><span>//</span> Company</div>
+            <a href="#">Culture</a>
+            <a href="#">Careers</a>
+            <a href="#">Manifesto</a>
+          </div>
+          <div class="link-group products">
+            <div class="grp-head">// Products</div>
+            <a href="#">Mappire</a>
+            <a href="#">Nemo CRM</a>
+            <a href="#">Nemo GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-a">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="main-col">
+          <a href="#" class="main-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="main-link">Services <span class="arrow">→</span></a>
+        </div>
+        <div class="side-col">
+          <div class="link-group">
+            <div class="grp-head"><span>//</span> Company</div>
+            <a href="#">Culture</a><a href="#">Careers</a><a href="#">Manifesto</a>
+          </div>
+          <div class="link-group products">
+            <div class="grp-head">// Products</div>
+            <a href="#">Mappire</a><a href="#">Nemo CRM</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT B — Inverted Cards
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement B — Inverted Cards<span>Subtle dark cards with border. Numbered items with hover reveal.</span></div>
+<div class="pw" id="pb">
+  <div class="pt"><div class="a" onclick="sv('pb','d')">Desktop</div><div onclick="sv('pb','m')">Mobile</div></div>
+  <div class="fd ref-b">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner ref-b">
+        <div class="card">
+          <div class="card-head">Main Navigation</div>
+          <a href="#" class="num-link"><span class="num">01</span><span class="label">Home</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">02</span><span class="label">Work</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">03</span><span class="label">Services</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">04</span><span class="label">Studio</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">05</span><span class="label">Contact</span><span class="arrow">→</span></a>
+        </div>
+        <div class="card">
+          <div class="card-head">Directory</div>
+          <div class="mini-grp">
+            <div class="mini-head">Company</div>
+            <a href="#" class="mini-link">Culture</a>
+            <a href="#" class="mini-link">Careers</a>
+            <a href="#" class="mini-link">Manifesto</a>
+          </div>
+          <div class="mini-grp">
+            <div class="mini-head">Products</div>
+            <a href="#" class="mini-link prod">Mappire</a>
+            <a href="#" class="mini-link prod">Nemo CRM</a>
+            <a href="#" class="mini-link prod">Nemo GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-b">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner ref-b">
+        <div class="card">
+          <div class="card-head">Navigation</div>
+          <a href="#" class="num-link"><span class="num">01</span><span class="label">Home</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">02</span><span class="label">Work</span><span class="arrow">→</span></a>
+          <a href="#" class="num-link"><span class="num">03</span><span class="label">Services</span><span class="arrow">→</span></a>
+        </div>
+        <div class="card">
+          <div class="mini-grp">
+            <div class="mini-head">Company</div>
+            <a href="#" class="mini-link">Culture</a><a href="#" class="mini-link">Careers</a>
+          </div>
+          <div class="mini-grp">
+            <div class="mini-head">Products</div>
+            <a href="#" class="mini-link prod">Mappire</a><a href="#" class="mini-link prod">Nemo CRM</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT C — Minimal Pill
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement C — Minimal Pill Row<span>Horizontal pill navigation with icons, ghost items below.</span></div>
+<div class="pw" id="pc">
+  <div class="pt"><div class="a" onclick="sv('pc','d')">Desktop</div><div onclick="sv('pc','m')">Mobile</div></div>
+  <div class="fd ref-c">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item ref-c">
+        <div class="pill-row">
+          <a href="#" class="pill-link"><span class="icon">◆</span> Home</a>
+          <a href="#" class="pill-link"><span class="icon">■</span> Work</a>
+          <a href="#" class="pill-link"><span class="icon">●</span> Services</a>
+          <a href="#" class="pill-link"><span class="icon">▲</span> Studio</a>
+          <a href="#" class="pill-link"><span class="icon">★</span> Contact</a>
+        </div>
+        <div class="ghost-section">
+          <div class="ghost-label">Also explore</div>
+          <div class="ghost-row">
+            <a href="#" class="ghost-link">Careers</a>
+            <a href="#" class="ghost-link">Manifesto</a>
+            <a href="#" class="ghost-link">Mappire</a>
+            <a href="#" class="ghost-link">Nemo CRM</a>
+            <a href="#" class="ghost-link">Nemo GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-c">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item ref-c">
+        <div class="pill-row">
+          <a href="#" class="pill-link"><span class="icon">◆</span> Home</a>
+          <a href="#" class="pill-link"><span class="icon">■</span> Work</a>
+          <a href="#" class="pill-link"><span class="icon">●</span> Services</a>
+        </div>
+        <div class="ghost-section">
+          <div class="ghost-label">Also explore</div>
+          <div class="ghost-row">
+            <a href="#" class="ghost-link">Careers</a>
+            <a href="#" class="ghost-link">Manifesto</a>
+            <a href="#" class="ghost-link">Mappire</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT D — Editorial Three-Column
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement D — Editorial Columns<span>Classic editorial: 1 big | 2 small. Heavy typographic hierarchy.</span></div>
+<div class="pw" id="pd">
+  <div class="pt"><div class="a" onclick="sv('pd','d')">Desktop</div><div onclick="sv('pd','m')">Mobile</div></div>
+  <div class="fd ref-d">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="big-col">
+          <a href="#" class="big-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Services <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Studio <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="small-col">
+          <div>
+            <div class="small-head">Company</div>
+            <a href="#" class="small-link">Culture</a>
+            <a href="#" class="small-link">Careers</a>
+            <a href="#" class="small-link">Manifesto</a>
+            <a href="#" class="small-link">Privacy</a>
+          </div>
+          <div>
+            <div class="small-head">Products</div>
+            <a href="#" class="small-link bold">Mappire</a>
+            <a href="#" class="small-link bold">Nemo CRM</a>
+            <a href="#" class="small-link bold">Nemo GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-d">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="big-col">
+          <a href="#" class="big-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="big-link">Services <span class="arrow">→</span></a>
+        </div>
+        <div class="small-col">
+          <div><div class="small-head">Company</div><a href="#" class="small-link">Culture</a><a href="#" class="small-link">Careers</a></div>
+          <div><div class="small-head">Products</div><a href="#" class="small-link bold">Mappire</a><a href="#" class="small-link bold">Nemo CRM</a></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT E — Hover Reverb
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement E — Hover Reverb<span>Full-width bands with left-to-right green reveal on hover.</span></div>
+<div class="pw" id="pe">
+  <div class="pt"><div class="a" onclick="sv('pe','d')">Desktop</div><div onclick="sv('pe','m')">Mobile</div></div>
+  <div class="fd ref-e">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a href="#" class="band"><span class="band-num">01</span><span class="band-name">Home</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">02</span><span class="band-name">Work</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">03</span><span class="band-name">Services</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">04</span><span class="band-name">Studio</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">05</span><span class="band-name">Contact</span><span class="band-arrow">→</span></a>
+      </div>
+      <div class="mini-row stagger-item">
+        <div class="mini-col">
+          <div class="mini-head">Company</div>
+          <a href="#" class="mini-link">Culture</a>
+          <a href="#" class="mini-link">Careers</a>
+          <a href="#" class="mini-link">Manifesto</a>
+        </div>
+        <div class="mini-col">
+          <div class="mini-head">Products</div>
+          <a href="#" class="mini-link prod">Mappire</a>
+          <a href="#" class="mini-link prod">Nemo CRM</a>
+          <a href="#" class="mini-link prod">Nemo GO</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-e">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a href="#" class="band"><span class="band-num">01</span><span class="band-name">Home</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">02</span><span class="band-name">Work</span><span class="band-arrow">→</span></a>
+        <a href="#" class="band"><span class="band-num">03</span><span class="band-name">Services</span><span class="band-arrow">→</span></a>
+      </div>
+      <div class="mini-row stagger-item">
+        <div class="mini-col"><div class="mini-head">Company</div><a href="#" class="mini-link">Culture</a><a href="#" class="mini-link">Careers</a></div>
+        <div class="mini-col"><div class="mini-head">Products</div><a href="#" class="mini-link prod">Mappire</a><a href="#" class="mini-link prod">Nemo CRM</a></div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT F — Floating Card Stack
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement F — Floating Card Stack<span>Cards appear to float with subtle borders and staggered positions.</span></div>
+<div class="pw" id="pf">
+  <div class="pt"><div class="a" onclick="sv('pf','d')">Desktop</div><div onclick="sv('pf','m')">Mobile</div></div>
+  <div class="fd ref-f">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner ref-f">
+        <div class="float-card">
+          <div class="fc-head">Navigation</div>
+          <a href="#" class="fc-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Services <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Studio <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="float-card">
+          <div class="fc-head">Company</div>
+          <a href="#" class="fc-link">Culture</a>
+          <a href="#" class="fc-link">Careers</a>
+          <a href="#" class="fc-link">Manifesto</a>
+          <a href="#" class="fc-link">Privacy</a>
+        </div>
+        <div class="float-card">
+          <div class="fc-head">Products</div>
+          <a href="#" class="fc-link">Mappire</a>
+          <a href="#" class="fc-link">Nemo CRM</a>
+          <a href="#" class="fc-link">Nemo GO</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-f">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner ref-f">
+        <div class="float-card">
+          <div class="fc-head">Navigation</div>
+          <a href="#" class="fc-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="fc-link">Services <span class="arrow">→</span></a>
+        </div>
+        <div class="float-card">
+          <div class="fc-head">Company</div>
+          <a href="#" class="fc-link">Culture</a>
+          <a href="#" class="fc-link">Careers</a>
+        </div>
+        <div class="float-card">
+          <div class="fc-head">Products</div>
+          <a href="#" class="fc-link">Mappire</a>
+          <a href="#" class="fc-link">Nemo CRM</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT G — Accordion Drop
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement G — Accordion Drop<span>Links expand to reveal sub-items with smooth accordion animation.</span></div>
+<div class="pw" id="pg">
+  <div class="pt"><div class="a" onclick="sv('pg','d')">Desktop</div><div onclick="sv('pg','m')">Mobile</div></div>
+  <div class="fd ref-g">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAccordion(this)">
+            <span class="acc-title">Navigation</span>
+            <span class="acc-icon">+</span>
+          </div>
+          <div class="acc-content">
+            <a href="#" class="acc-link">Home</a>
+            <a href="#" class="acc-link">Work</a>
+            <a href="#" class="acc-link">Services</a>
+            <a href="#" class="acc-link">Studio</a>
+            <a href="#" class="acc-link">Contact</a>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAccordion(this)">
+            <span class="acc-title">Company</span>
+            <span class="acc-icon">+</span>
+          </div>
+          <div class="acc-content">
+            <a href="#" class="acc-link">Culture</a>
+            <a href="#" class="acc-link">Careers</a>
+            <a href="#" class="acc-link">Manifesto</a>
+            <a href="#" class="acc-link">Privacy</a>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAccordion(this)">
+            <span class="acc-title">Products</span>
+            <span class="acc-icon">+</span>
+          </div>
+          <div class="acc-content">
+            <a href="#" class="acc-link">Mappire</a>
+            <a href="#" class="acc-link">Nemo CRM</a>
+            <a href="#" class="acc-link">Nemo GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-g">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAccordion(this)">
+            <span class="acc-title">Navigation</span>
+            <span class="acc-icon">+</span>
+          </div>
+          <div class="acc-content">
+            <a href="#" class="acc-link">Home</a>
+            <a href="#" class="acc-link">Work</a>
+            <a href="#" class="acc-link">Services</a>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="acc-header" onclick="toggleAccordion(this)">
+            <span class="acc-title">Company</span>
+            <span class="acc-icon">+</span>
+          </div>
+          <div class="acc-content">
+            <a href="#" class="acc-link">Culture</a>
+            <a href="#" class="acc-link">Careers</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT H — Sidebar Slide
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement H — Sidebar Slide<span>Split view: main nav fades, secondary slides in from right.</span></div>
+<div class="pw" id="ph">
+  <div class="pt"><div class="a" onclick="sv('ph','d')">Desktop</div><div onclick="sv('ph','m')">Mobile</div></div>
+  <div class="fd ref-h" id="refh-frame">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggleH(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner">
+        <div class="nav-col">
+          <a href="#" class="nav-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Services <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Studio <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Contact <span class="arrow">→</span></a>
+        </div>
+        <div class="side-col">
+          <div class="side-head">Company</div>
+          <a href="#" class="side-link">Culture</a>
+          <a href="#" class="side-link">Careers</a>
+          <a href="#" class="side-link">Manifesto</a>
+          <a href="#" class="side-link">Privacy</a>
+          <div class="side-head" style="margin-top:20px;">Products</div>
+          <a href="#" class="side-link">Mappire</a>
+          <a href="#" class="side-link">Nemo CRM</a>
+          <a href="#" class="side-link">Nemo GO</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-h" id="refh-mobile">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggleH(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner">
+        <div class="nav-col">
+          <a href="#" class="nav-link">Home <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Work <span class="arrow">→</span></a>
+          <a href="#" class="nav-link">Services <span class="arrow">→</span></a>
+        </div>
+        <div class="side-col">
+          <div class="side-head">Company</div>
+          <a href="#" class="side-link">Culture</a>
+          <a href="#" class="side-link">Careers</a>
+          <div class="side-head" style="margin-top:16px;">Products</div>
+          <a href="#" class="side-link">Mappire</a>
+          <a href="#" class="side-link">Nemo CRM</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     REFINEMENT I — Glow Effect
+══════════════════════════════════════════════════════ -->
+<div class="lab-title">Refinement I — Glow Effect<span>Subtle green glow on hover. Modern tech feel.</span></div>
+<div class="pw" id="pi">
+  <div class="pt"><div class="a" onclick="sv('pi','d')">Desktop</div><div onclick="sv('pi','m')">Mobile</div></div>
+  <div class="fd ref-i">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="pill"><a href="#" class="ac">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a></nav>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a href="#" class="glow-link"><span class="glow-name">Home</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Work</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Services</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Studio</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Contact</span><span class="glow-icon">→</span></a>
+        
+        <div class="mini-row">
+          <a href="#" class="mini-pill">Culture</a>
+          <a href="#" class="mini-pill">Careers</a>
+          <a href="#" class="mini-pill">Mappire</a>
+          <a href="#" class="mini-pill">Nemo CRM</a>
+          <a href="#" class="mini-pill">Manifesto</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div>
+        <div class="tagline">Independent studio. Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture<br>forward.</div>
+  </div>
+
+  <div class="fm ref-i">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="h-actions"><a href="#" class="cta">Let's talk</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-inner stagger-item">
+        <a href="#" class="glow-link"><span class="glow-name">Home</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Work</span><span class="glow-icon">→</span></a>
+        <a href="#" class="glow-link"><span class="glow-name">Services</span><span class="glow-icon">→</span></a>
+        
+        <div class="mini-row">
+          <a href="#" class="mini-pill">Culture</a>
+          <a href="#" class="mini-pill">Careers</a>
+          <a href="#" class="mini-pill">Mappire</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo.</div>
+      </div>
+    </div>
+    <div class="page-content">Building brands<br>that move culture.</div>
+  </div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+function toggle(btn){
+  const frame = btn.closest('.fd') || btn.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const backdrop = frame.querySelector('.menu-backdrop');
+  const page = frame.querySelector('.page-content');
+  const isOpen = panel.classList.contains('open');
+
+  if(isOpen){
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    btn.classList.remove('open');
+    if(page) page.classList.remove('dimmed');
+  } else {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    btn.classList.add('open');
+    if(page) page.classList.add('dimmed');
+  }
+}
+
+function closeMenu(backdrop){
+  const frame = backdrop.closest('.fd') || backdrop.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const btn = frame.querySelector('.menu-toggle');
+  const page = frame.querySelector('.page-content');
+  panel.classList.remove('open');
+  backdrop.classList.remove('open');
+  btn.classList.remove('open');
+  if(page) page.classList.remove('dimmed');
+}
+
+function sv(id,mode){
+  const w=document.getElementById(id),t=w.querySelectorAll('.pt div');
+  if(mode==='m'){w.classList.add('mob');t[0].classList.remove('a');t[1].classList.add('a');}
+  else{w.classList.remove('mob');t[0].classList.add('a');t[1].classList.remove('a');}
+}
+
+function toggleAccordion(header){
+  const item = header.closest('.accordion-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+function toggleH(btn){
+  const frame = btn.closest('.fd') || btn.closest('.fm');
+  const panel = frame.querySelector('.menu-panel');
+  const backdrop = frame.querySelector('.menu-backdrop');
+  const page = frame.querySelector('.page-content');
+  const isOpen = panel.classList.contains('open');
+
+  if(isOpen){
+    panel.classList.remove('open');
+    backdrop.classList.remove('open');
+    btn.classList.remove('open');
+    frame.classList.remove('menu-open');
+    if(page) page.classList.remove('dimmed');
+  } else {
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    btn.classList.add('open');
+    frame.classList.add('menu-open');
+    if(page) page.classList.add('dimmed');
+  }
+}
+</script>
+</body>
+</html>

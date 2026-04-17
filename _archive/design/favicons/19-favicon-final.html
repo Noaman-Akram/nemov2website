@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Favicon Lab 19.0 (FINAL SQUAD)</title>
+<link id="favicon" rel="icon" href="../../public/logos/nemo-black.webp" type="image/webp">
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green: #35D687;
+  --black: #080808;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; padding: 40px; }
+
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: clamp(32px, 5vw, 48px);
+  letter-spacing: -1.5px; margin-bottom: 20px;
+}
+.lab-subtitle {
+  text-align: center; font-size: 14px; color: rgba(0,0,0,0.5); margin-bottom: 60px;
+}
+
+.options-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.option-card {
+  background: #fff; padding: 32px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+
+.preview-box {
+  width: 128px; height: 128px; background: var(--black); border-radius: 12px; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  position: relative;
+}
+.preview-box canvas { width: 100%; height: 100%; }
+
+.option-name { font-family: var(--font-aeonik); font-size: 20px; margin-bottom: 12px; }
+.option-desc { font-size: 13px; color: rgba(0,0,0,0.5); margin-bottom: 24px; line-height: 1.5; }
+
+.btn-active {
+  background: var(--black); color: #fff; border: none; padding: 14px 28px; border-radius: 99px;
+  font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.3s; width: 100%;
+}
+.btn-active:hover { background: var(--green); color: #000; letter-spacing: 1px; }
+.btn-active.current { background: var(--green); color: #000; pointer-events: none; }
+
+.hint { margin-top: 60px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+
+<h1 class="lab-title">NEMO — Favicon Lab 19.0</h1>
+<p class="lab-subtitle">Local Logo Final Assets Loaded. Look at the tab above ☝️</p>
+
+<div class="options-grid">
+  <!-- Option 1: Green Accent Mode (Black Logo on Green) -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-accent"></canvas></div>
+    <h3 class="option-name">1. Green Accent Mode</h3>
+    <p class="option-desc">Black logo on your signature green background. High energy and unmistakable Nemo brand.</p>
+    <button class="btn-active" onclick="activateFav('accent')">Activate Green Mode</button>
+  </div>
+
+  <!-- Option 2: The Horizon Laser (White Logo + Scanline) -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-scan"></canvas></div>
+    <h3 class="option-name">2. The Horizon Laser</h3>
+    <p class="option-desc">A green frequency line scanning through the white logo. Tech-focused and elite.</p>
+    <button class="btn-active" onclick="activateFav('scan')">Activate Scanline</button>
+  </div>
+
+  <!-- Option 3: The Pulse (White Logo Breathing) -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-pulse"></canvas></div>
+    <h3 class="option-name">3. The Minimal Pulse</h3>
+    <p class="option-desc">A purely minimal, white logo breathing in the dark tab. Ultra clean.</p>
+    <button class="btn-active" onclick="activateFav('pulse')">Activate Pulse</button>
+  </div>
+
+  <!-- Option 4: The Glitch Flash (Tech Mode) -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-glitch"></canvas></div>
+    <h3 class="option-name">4. The Tech Glitch</h3>
+    <p class="option-desc">Slight horizontal offsets with occasional green flashes. Sharp and futuristic.</p>
+    <button class="btn-active" onclick="activateFav('glitch')">Activate Glitch</button>
+  </div>
+</div>
+
+<div class="hint">Watch the tab bar closely ☝️</div>
+
+<script>
+const favicon = document.getElementById('favicon');
+const logoWhite = new Image(); logoWhite.src = "../../public/logos/nemo-white.png";
+const logoBlack = new Image(); logoBlack.src = "../../public/logos/nemo-black.webp";
+
+const canvases = {
+  accent: document.getElementById('canvas-accent'),
+  scan: document.getElementById('canvas-scan'),
+  pulse: document.getElementById('canvas-pulse'),
+  glitch: document.getElementById('canvas-glitch')
+};
+
+const contexts = {
+  accent: canvases.accent.getContext('2d'),
+  scan: canvases.scan.getContext('2d'),
+  pulse: canvases.pulse.getContext('2d'),
+  glitch: canvases.glitch.getContext('2d')
+};
+
+Object.values(canvases).forEach(c => { c.width = 64; c.height = 64; });
+
+let currentMode = null;
+let frame = 0;
+
+function drawAccent() {
+  const ctx = contexts.accent;
+  frame += 0.04;
+  const opacity = 0.8 + Math.sin(frame) * 0.2;
+  
+  ctx.clearRect(0, 0, 64, 64);
+  ctx.fillStyle = '#35D687';
+  ctx.fillRect(0, 0, 64, 64);
+  
+  if (logoBlack.complete) {
+    const w = 54, h = (logoBlack.height / logoBlack.width) * w;
+    ctx.globalAlpha = opacity;
+    ctx.drawImage(logoBlack, 32 - (w/2), 32 - (h/2), w, h);
+    ctx.globalAlpha = 1;
+  }
+  if(currentMode === 'accent') updateFavicon(canvases.accent);
+}
+
+function drawScan() {
+  const ctx = contexts.scan;
+  frame += 1.2;
+  const scanY = (frame % 84) - 10;
+  
+  ctx.clearRect(0, 0, 64, 64);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 64, 64);
+  
+  if (logoWhite.complete) {
+    const w = 50, h = (logoWhite.height / logoWhite.width) * w;
+    ctx.drawImage(logoWhite, 32 - (w/2), 32 - (h/2), w, h);
+    
+    // Laser Line
+    ctx.fillStyle = '#35D687';
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#35D687';
+    ctx.fillRect(32 - (w/2) - 4, scanY, w + 8, 3);
+    ctx.shadowBlur = 0;
+  }
+  if(currentMode === 'scan') updateFavicon(canvases.scan);
+}
+
+function drawPulse() {
+  const ctx = contexts.pulse;
+  frame += 0.05;
+  const scale = 0.9 + Math.sin(frame) * 0.1;
+  
+  ctx.clearRect(0, 0, 64, 64);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 64, 64);
+  
+  if (logoWhite.complete) {
+    const w = 50 * scale, h = ((logoWhite.height / logoWhite.width) * 50) * scale;
+    ctx.drawImage(logoWhite, 32 - (w/2), 32 - (h/2), w, h);
+  }
+  if(currentMode === 'pulse') updateFavicon(canvases.pulse);
+}
+
+function drawGlitch() {
+  const ctx = contexts.glitch;
+  frame += 1;
+  ctx.clearRect(0, 0, 64, 64);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 64, 64);
+  
+  if (logoWhite.complete) {
+    const w = 50, h = (logoWhite.height / logoWhite.width) * w;
+    const x = 32 - (w/2), y = 32 - (h/2);
+    
+    for (let i = 0; i < h; i += 3) {
+      const off = (Math.random() > 0.95) ? (Math.random() - 0.5) * 12 : 0;
+      ctx.drawImage(logoWhite, 0, (i / h) * logoWhite.height, logoWhite.width, (3 / h) * logoWhite.height, x + off, y + i, w, 3);
+    }
+    
+    if (Math.random() > 0.985) {
+      ctx.fillStyle = 'rgba(53, 214, 135, 0.4)';
+      ctx.fillRect(x, y, w, h);
+    }
+  }
+  if(currentMode === 'glitch') updateFavicon(canvases.glitch);
+}
+
+function updateFavicon(canvas) {
+  favicon.href = canvas.toDataURL('image/png');
+}
+
+function activateFav(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.btn-active').forEach(b => {
+    b.classList.remove('current');
+    if(b.getAttribute('onclick').includes(mode)) b.classList.add('current');
+  });
+}
+
+function loop() {
+  drawAccent();
+  drawScan();
+  drawPulse();
+  drawGlitch();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>

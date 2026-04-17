@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Menu Lab 14.0</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+
+:root {
+  --green: #35D687;
+  --green-dim: rgba(53,214,135,0.12);
+  --green-hover: #29c275;
+  --black: #080808;
+  --off-white: #F5F5F0;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+  --r-pill: 9999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; cursor: pointer; }
+
+/* ── Lab chrome ── */
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.12em; padding: 48px 20px 20px;
+  color: rgba(0,0,0,0.4); line-height: 1.6;
+}
+.lab-title span { display: block; font-size: 9px; margin-top: 6px; letter-spacing: 0.15em; color: rgba(0,0,0,0.25); }
+
+/* ── Preview frame system ── */
+.preview-wrap {
+  max-width: 1400px; margin: 0 auto 80px;
+}
+.preview-tabs {
+  display: flex; gap: 2px; margin-bottom: -1px; padding: 0 16px;
+  position: relative; z-index: 2;
+}
+.preview-tab {
+  font-family: var(--font-aeonik); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.12em; padding: 10px 20px;
+  background: rgba(0,0,0,0.06); color: rgba(0,0,0,0.35);
+  border-radius: 8px 8px 0 0; cursor: pointer;
+  border: 1px solid transparent; border-bottom: none;
+  transition: all 150ms ease;
+}
+.preview-tab.active {
+  background: var(--black); color: rgba(255,255,255,0.6);
+  border-color: rgba(255,255,255,0.06);
+}
+.preview-tab:hover:not(.active) { background: rgba(0,0,0,0.1); }
+
+.frame-desktop {
+  background: var(--black); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  position: relative;
+}
+.frame-mobile {
+  background: var(--black); border-radius: 28px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  width: 390px; margin: 0 auto;
+  border: 3px solid #222;
+  display: none; position: relative;
+}
+.preview-wrap.mobile .frame-desktop { display: none; }
+.preview-wrap.mobile .frame-mobile { display: block; }
+
+/* ── Header (inside each frame) ── */
+.nav-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px; position: relative; z-index: 10;
+}
+.frame-mobile .nav-header { padding: 14px 20px; }
+
+.logo-img { height: 20px; width: auto; }
+.frame-mobile .logo-img { height: 16px; }
+
+/* ── Nav pill ── */
+.nav-pill {
+  display: flex; gap: 4px; list-style: none;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-pill); padding: 5px;
+}
+.nav-pill a {
+  display: inline-block; font-family: var(--font-haas);
+  font-size: 13px; color: rgba(255,255,255,0.7);
+  padding: 8px 16px; border-radius: var(--r-pill);
+  transition: all 200ms ease;
+}
+.nav-pill a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+.nav-pill a.active { color: #fff; background: rgba(255,255,255,0.1); }
+.frame-mobile .nav-pill { display: none; }
+
+/* ── CTA ── */
+.cta-btn {
+  font-family: var(--font-haas); font-size: 13px;
+  border-radius: var(--r-pill); padding: 0 20px; height: 36px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; cursor: pointer; transition: all 200ms ease;
+  white-space: nowrap;
+}
+.cta-green { background: var(--green); color: var(--black); }
+.cta-green:hover { background: var(--green-hover); }
+.cta-ghost { background: transparent; color: var(--green); border: 1px solid rgba(53,214,135,0.35); }
+.cta-ghost:hover { background: var(--green-dim); border-color: var(--green); }
+.cta-light { background: #E9EBDF; color: #151515; }
+.cta-light:hover { background: #d6d8c6; }
+.frame-mobile .cta-btn { font-size: 11px; padding: 0 14px; height: 30px; }
+
+/* ── Hamburger ── */
+.hamburger {
+  width: 36px; height: 36px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  cursor: pointer; border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+  transition: all 200ms ease;
+}
+.hamburger:hover { background: rgba(255,255,255,0.1); }
+.hamburger span {
+  display: block; width: 16px; height: 1.5px;
+  background: #fff; transition: all 300ms ease;
+}
+.frame-mobile .hamburger { width: 30px; height: 30px; }
+.frame-mobile .hamburger span { width: 13px; }
+
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* ── Menu overlay (shown statically in lab) ── */
+.menu-overlay {
+  background: var(--black);
+  display: flex; flex-direction: column;
+}
+
+/* ── Overlay top bar — replaces header when open ── */
+.menu-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.frame-mobile .menu-topbar { padding: 14px 20px; }
+.close-x {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+  color: #fff; font-size: 18px; transition: all 200ms ease;
+}
+.close-x:hover { background: rgba(255,255,255,0.12); }
+.frame-mobile .close-x { width: 30px; height: 30px; font-size: 15px; }
+
+/* ── Menu footer ── */
+.menu-bottom {
+  padding: 20px 32px; border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; flex-shrink: 0;
+}
+.frame-mobile .menu-bottom { padding: 16px 20px; flex-direction: column; gap: 10px; }
+.menu-bottom .socials { display: flex; gap: 20px; }
+.menu-bottom .socials a { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; text-transform: uppercase; }
+.menu-bottom .socials a:hover { color: var(--green); }
+.menu-bottom .legal { font-size: 10px; color: rgba(255,255,255,0.15); display: flex; gap: 14px; }
+.menu-bottom .legal a:hover { color: rgba(255,255,255,0.4); }
+
+/* ── Shared label styles ── */
+.label {
+  font-family: var(--font-aeonik); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.2); margin-bottom: 16px;
+}
+.label-green { color: rgba(53,214,135,0.5); }
+.label-dot::before {
+  content: ''; display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--green); margin-right: 8px;
+  vertical-align: middle; opacity: 0.5;
+}
+.label-dash::before {
+  content: '— '; color: rgba(255,255,255,0.15);
+}
+.label-bracket::before { content: '[ '; color: rgba(255,255,255,0.12); }
+.label-bracket::after { content: ' ]'; color: rgba(255,255,255,0.12); }
+
+.dimmed { color: rgba(255,255,255,0.13) !important; pointer-events: none; }
+.soon-badge {
+  display: inline-block; font-size: 8px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+  border-radius: var(--r-pill); padding: 2px 7px; margin-left: 6px;
+}
+
+
+/* ════════════════════════════════════════════════
+   MENU 1 — Asymmetric Grid
+   Big links top-left, 3 small blocks bottom-right
+════════════════════════════════════════════════ */
+.m1-body {
+  flex: 1; display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: 1fr auto;
+  padding: 40px 32px; gap: 0;
+}
+.m1-main {
+  grid-row: 1 / 3; display: flex; flex-direction: column; justify-content: center;
+}
+.m1-main a {
+  font-family: var(--font-aeonik); font-size: 52px; font-weight: 300;
+  color: rgba(255,255,255,0.08); line-height: 1.15;
+  padding: 8px 0; transition: all 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: block; position: relative;
+}
+.m1-main a:hover { color: #fff; transform: translateX(20px); }
+.m1-main a::before {
+  content: ''; position: absolute; left: -16px; top: 50%;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  transform: translateY(-50%) scale(0); transition: transform 300ms ease;
+}
+.m1-main a:hover::before { transform: translateY(-50%) scale(1); }
+
+.m1-right {
+  display: flex; flex-direction: column; gap: 24px;
+  padding-left: 48px; border-left: 1px solid rgba(255,255,255,0.04);
+  justify-content: center;
+}
+.m1-block a {
+  display: block; font-size: 14px; color: rgba(255,255,255,0.35);
+  padding: 5px 0; transition: all 200ms ease;
+}
+.m1-block a:hover { color: #fff; transform: translateX(6px); }
+
+.m1-products a {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: rgba(255,255,255,0.3); padding: 4px 0;
+  transition: all 200ms ease;
+}
+.m1-products a:hover { color: var(--green); }
+.p-icon {
+  width: 20px; height: 20px; border-radius: 4px;
+  background: rgba(53,214,135,0.08); border: 1px solid rgba(53,214,135,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--green); font-family: var(--font-aeonik);
+  font-weight: 700; transition: all 200ms ease;
+}
+.m1-products a:hover .p-icon { background: rgba(53,214,135,0.15); }
+
+/* Mobile */
+.frame-mobile .m1-body {
+  grid-template-columns: 1fr; grid-template-rows: auto auto;
+  padding: 24px 20px; gap: 28px;
+}
+.frame-mobile .m1-main a { font-size: 32px; }
+.frame-mobile .m1-right {
+  padding-left: 0; border-left: none;
+  border-top: 1px solid rgba(255,255,255,0.04); padding-top: 20px;
+  gap: 20px;
+}
+
+
+/* ════════════════════════════════════════════════
+   MENU 2 — Full-Width Rows
+   Each main link is a full-width row with hover bg
+════════════════════════════════════════════════ */
+.m2-body { flex: 1; display: flex; flex-direction: column; }
+.m2-rows { flex: 1; display: flex; flex-direction: column; }
+.m2-row {
+  flex: 1; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.m2-row::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(53,214,135,0.04) 0%, transparent 100%);
+  opacity: 0; transition: opacity 300ms ease;
+}
+.m2-row:hover::before { opacity: 1; }
+.m2-row:hover { padding-left: 52px; }
+.m2-row-label {
+  font-family: var(--font-aeonik); font-size: 38px; font-weight: 300;
+  color: rgba(255,255,255,0.1); transition: color 300ms ease;
+  position: relative; z-index: 1;
+}
+.m2-row:hover .m2-row-label { color: #fff; }
+.m2-row-tag {
+  font-size: 11px; color: rgba(255,255,255,0.12); text-transform: uppercase;
+  letter-spacing: 0.1em; font-family: var(--font-aeonik);
+  transition: color 300ms ease; position: relative; z-index: 1;
+}
+.m2-row:hover .m2-row-tag { color: rgba(255,255,255,0.35); }
+
+.m2-bottom-bar {
+  display: flex; gap: 32px; padding: 20px 40px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap;
+}
+.m2-bottom-group { display: flex; gap: 16px; align-items: center; }
+.m2-bottom-group .label { margin-bottom: 0; margin-right: 4px; white-space: nowrap; }
+.m2-bottom-group a {
+  font-size: 13px; color: rgba(255,255,255,0.3); transition: color 200ms ease;
+  white-space: nowrap;
+}
+.m2-bottom-group a:hover { color: #fff; }
+
+/* Mobile */
+.frame-mobile .m2-row { padding: 0 20px; }
+.frame-mobile .m2-row:hover { padding-left: 28px; }
+.frame-mobile .m2-row-label { font-size: 24px; }
+.frame-mobile .m2-row-tag { display: none; }
+.frame-mobile .m2-bottom-bar {
+  flex-direction: column; gap: 16px; padding: 16px 20px;
+}
+.frame-mobile .m2-bottom-group { flex-wrap: wrap; gap: 10px; }
+
+
+/* ════════════════════════════════════════════════
+   MENU 3 — Magazine Spread
+   Left = oversized typography, Right = structured info
+════════════════════════════════════════════════ */
+.m3-body {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 0;
+}
+.m3-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 40px 40px 40px 32px;
+  background: linear-gradient(180deg, rgba(53,214,135,0.02) 0%, transparent 60%);
+}
+.m3-left a {
+  font-family: var(--font-aeonik); font-size: 64px; font-weight: 300;
+  color: rgba(255,255,255,0.06); line-height: 1.05;
+  transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+.m3-left a:hover { color: #fff; letter-spacing: 3px; }
+.m3-left a:nth-child(even) { text-align: right; }
+
+.m3-right {
+  padding: 32px; display: flex; flex-direction: column; justify-content: space-between;
+  border-left: 1px solid rgba(255,255,255,0.04);
+}
+.m3-section { margin-bottom: 24px; }
+.m3-section a {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 15px; color: rgba(255,255,255,0.4);
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: all 200ms ease;
+}
+.m3-section a:hover { color: #fff; padding-left: 8px; }
+.m3-section a .arrow { color: rgba(255,255,255,0.1); transition: all 200ms ease; font-size: 13px; }
+.m3-section a:hover .arrow { color: var(--green); transform: translateX(4px); display: inline-block; }
+
+.m3-product-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 8px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+  transition: all 200ms ease; margin-bottom: 6px;
+}
+.m3-product-card:hover { background: rgba(255,255,255,0.04); border-color: rgba(53,214,135,0.15); }
+.m3-product-icon {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: rgba(53,214,135,0.08); border: 1px solid rgba(53,214,135,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--green); font-family: var(--font-aeonik); font-weight: 700;
+}
+.m3-product-info { flex: 1; }
+.m3-product-name { font-size: 13px; color: rgba(255,255,255,0.6); }
+.m3-product-desc { font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 2px; }
+
+/* Mobile */
+.frame-mobile .m3-body { grid-template-columns: 1fr; }
+.frame-mobile .m3-left { padding: 24px 20px; }
+.frame-mobile .m3-left a { font-size: 36px; text-align: left !important; }
+.frame-mobile .m3-right { padding: 20px; border-left: none; border-top: 1px solid rgba(255,255,255,0.04); }
+
+
+/* ════════════════════════════════════════════════
+   MENU 4 — Minimal List with Slide Reveal
+   Clean list, items slide in staggered
+════════════════════════════════════════════════ */
+.m4-body {
+  flex: 1; padding: 36px 32px; display: flex; flex-direction: column;
+}
+.m4-grid {
+  flex: 1; display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 32px; align-content: start;
+}
+.m4-col {}
+.m4-col a {
+  display: block; font-size: 14px; color: rgba(255,255,255,0.4);
+  padding: 9px 0; transition: all 200ms ease;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  position: relative;
+}
+.m4-col a:hover { color: #fff; padding-left: 10px; }
+.m4-col a:hover::before {
+  content: '→'; position: absolute; left: 0; color: var(--green); font-size: 12px;
+}
+.m4-col .main-link {
+  font-family: var(--font-aeonik); font-size: 22px; font-weight: 300;
+  color: rgba(255,255,255,0.2);
+}
+.m4-col .main-link:hover { color: #fff; }
+
+.m4-coming {
+  margin-top: auto; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  display: flex; gap: 20px;
+}
+.m4-coming a { font-size: 12px; color: rgba(255,255,255,0.12); }
+
+/* Mobile */
+.frame-mobile .m4-grid { grid-template-columns: 1fr; gap: 20px; }
+.frame-mobile .m4-coming { flex-direction: column; gap: 8px; }
+.frame-mobile .m4-body { padding: 24px 20px; }
+
+
+/* ════════════════════════════════════════════════
+   MENU 5 — Two-Tone Split
+   Left dark, right slightly lighter
+════════════════════════════════════════════════ */
+.m5-body {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 0;
+}
+.m5-dark {
+  padding: 40px 32px; display: flex; flex-direction: column;
+  justify-content: center; gap: 4px;
+}
+.m5-dark a {
+  font-family: var(--font-aeonik); font-size: 40px; font-weight: 300;
+  color: rgba(255,255,255,0.1); padding: 6px 0;
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.m5-dark a:hover { color: #fff; }
+.m5-dark a::after {
+  content: ''; position: absolute; bottom: 4px; left: 0;
+  width: 0; height: 2px; background: var(--green);
+  transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.m5-dark a:hover::after { width: 40px; }
+
+.m5-light {
+  padding: 32px; display: flex; flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.015);
+  border-left: 1px solid rgba(255,255,255,0.04);
+}
+.m5-group { margin-bottom: 20px; }
+.m5-group a {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; color: rgba(255,255,255,0.35);
+  padding: 7px 0; transition: all 200ms ease;
+}
+.m5-group a:hover { color: #fff; }
+.m5-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); transition: background 200ms ease;
+}
+.m5-group a:hover .m5-dot { background: var(--green); }
+
+.m5-products-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+}
+.m5-product-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 6px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+  font-size: 12px; color: rgba(255,255,255,0.35);
+  transition: all 200ms ease;
+}
+.m5-product-chip:hover { border-color: rgba(53,214,135,0.2); color: rgba(255,255,255,0.7); }
+.chip-icon {
+  width: 16px; height: 16px; border-radius: 3px;
+  background: rgba(53,214,135,0.1); display: flex; align-items: center; justify-content: center;
+  font-size: 7px; color: var(--green); font-family: var(--font-aeonik); font-weight: 700;
+}
+
+.m5-coming { margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.03); }
+.m5-coming a {
+  font-size: 12px; color: rgba(255,255,255,0.12); padding: 4px 0; display: block;
+}
+
+/* Mobile */
+.frame-mobile .m5-body { grid-template-columns: 1fr; }
+.frame-mobile .m5-dark a { font-size: 28px; }
+.frame-mobile .m5-dark { padding: 24px 20px; }
+.frame-mobile .m5-light { padding: 20px; border-left: none; border-top: 1px solid rgba(255,255,255,0.04); }
+.frame-mobile .m5-products-grid { grid-template-columns: 1fr; }
+</style>
+</head>
+<body>
+
+<div style="text-align:center; padding:40px 20px 0;">
+  <div style="font-family:var(--font-aeonik); font-size:28px; font-weight:300; color:rgba(0,0,0,0.7); letter-spacing:-1px;">Menu Lab v2</div>
+  <div style="font-family:var(--font-aeonik); font-size:10px; text-transform:uppercase; letter-spacing:0.15em; color:rgba(0,0,0,0.25); margin-top:8px;">
+    Click Desktop / Mobile tabs to toggle views
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     MENU 1 — Asymmetric Grid
+═══════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu 1 — Asymmetric Grid
+  <span>Green dot appears on hover. Product icons with initials. Desktop + Mobile preview.</span>
+</div>
+
+<div class="preview-wrap" id="pw1">
+  <div class="preview-tabs">
+    <div class="preview-tab active" onclick="setView('pw1','desktop')">Desktop</div>
+    <div class="preview-tab" onclick="setView('pw1','mobile')">Mobile</div>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="frame-desktop">
+    <header class="nav-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <nav class="nav-pill">
+        <a href="#" class="active">Home</a>
+        <a href="#">Work</a>
+        <a href="#">Services</a>
+        <a href="#">Studio</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#" class="cta-btn cta-green">Get in Touch</a>
+        <div class="hamburger"><span></span><span></span></div>
+      </div>
+    </header>
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="header-actions">
+          <a href="#" class="cta-btn cta-green">Get in Touch</a>
+          <div class="close-x">✕</div>
+        </div>
+      </div>
+      <div class="m1-body">
+        <div class="m1-main">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m1-right">
+          <div class="m1-block">
+            <div class="label label-dot">Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="m1-block m1-products">
+            <div class="label label-dot">Products</div>
+            <a href="#"><span class="p-icon">M</span> Mappire</a>
+            <a href="#"><span class="p-icon">C</span> Nemo CRM</a>
+            <a href="#"><span class="p-icon">G</span> Nemo GO</a>
+          </div>
+          <div class="m1-block">
+            <div class="label" style="opacity:0.4;">Coming Soon</div>
+            <a href="#" class="dimmed">Partner Program</a>
+            <a href="#" class="dimmed">Affiliate Marketing</a>
+            <a href="#" class="dimmed">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE -->
+  <div class="frame-mobile">
+    <header class="nav-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+      <div class="header-actions">
+        <a href="#" class="cta-btn cta-green">Get in Touch</a>
+        <div class="hamburger"><span></span><span></span></div>
+      </div>
+    </header>
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="close-x">✕</div>
+      </div>
+      <div class="m1-body">
+        <div class="m1-main">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m1-right">
+          <div class="m1-block">
+            <div class="label label-dot">Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="m1-block m1-products">
+            <div class="label label-dot">Products</div>
+            <a href="#"><span class="p-icon">M</span> Mappire</a>
+            <a href="#"><span class="p-icon">C</span> Nemo CRM</a>
+            <a href="#"><span class="p-icon">G</span> Nemo GO</a>
+          </div>
+          <div class="m1-block">
+            <div class="label" style="opacity:0.4;">Coming Soon</div>
+            <a href="#" class="dimmed">Partner Program</a>
+            <a href="#" class="dimmed">Affiliate Marketing</a>
+            <a href="#" class="dimmed">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     MENU 2 — Full-Width Rows
+═══════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu 2 — Full-Width Rows
+  <span>Each link is a full-width row with green gradient on hover. Tags on the right. Bottom bar for secondary.</span>
+</div>
+
+<div class="preview-wrap" id="pw2">
+  <div class="preview-tabs">
+    <div class="preview-tab active" onclick="setView('pw2','desktop')">Desktop</div>
+    <div class="preview-tab" onclick="setView('pw2','mobile')">Mobile</div>
+  </div>
+
+  <div class="frame-desktop">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="header-actions">
+          <a href="#" class="cta-btn cta-light">Work With Us</a>
+          <div class="close-x">✕</div>
+        </div>
+      </div>
+      <div class="m2-body">
+        <div class="m2-rows">
+          <a class="m2-row" href="#"><span class="m2-row-label">Home</span><span class="m2-row-tag">Landing</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Work</span><span class="m2-row-tag">Case Studies</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Services</span><span class="m2-row-tag">Capabilities</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Blog</span><span class="m2-row-tag">Insights</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Contact</span><span class="m2-row-tag">Inquiry</span></a>
+        </div>
+        <div class="m2-bottom-bar">
+          <div class="m2-bottom-group">
+            <div class="label label-green" style="margin-bottom:0;">Company</div>
+            <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+          </div>
+          <div class="m2-bottom-group">
+            <div class="label label-green" style="margin-bottom:0;">Products</div>
+            <a href="#">Mappire</a><a href="#">Nemo CRM</a><a href="#">Nemo GO</a>
+          </div>
+          <div class="m2-bottom-group">
+            <div class="label" style="margin-bottom:0; opacity:0.3;">Soon</div>
+            <a href="#" class="dimmed">Partners</a><a href="#" class="dimmed">Affiliates</a><a href="#" class="dimmed">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-mobile">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="close-x">✕</div>
+      </div>
+      <div class="m2-body">
+        <div class="m2-rows">
+          <a class="m2-row" href="#"><span class="m2-row-label">Home</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Work</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Services</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Blog</span></a>
+          <a class="m2-row" href="#"><span class="m2-row-label">Contact</span></a>
+        </div>
+        <div class="m2-bottom-bar">
+          <div class="m2-bottom-group">
+            <div class="label label-green" style="margin-bottom:0;">Company</div>
+            <a href="#">Studio</a><a href="#">Careers</a><a href="#">Growth Plan</a><a href="#">Charity</a>
+          </div>
+          <div class="m2-bottom-group">
+            <div class="label label-green" style="margin-bottom:0;">Products</div>
+            <a href="#">Mappire</a><a href="#">CRM</a><a href="#">GO</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     MENU 3 — Magazine Spread
+═══════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu 3 — Magazine Spread
+  <span>Oversized alternating-aligned text left. Structured info + product cards right.</span>
+</div>
+
+<div class="preview-wrap" id="pw3">
+  <div class="preview-tabs">
+    <div class="preview-tab active" onclick="setView('pw3','desktop')">Desktop</div>
+    <div class="preview-tab" onclick="setView('pw3','mobile')">Mobile</div>
+  </div>
+
+  <div class="frame-desktop">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="header-actions">
+          <a href="#" class="cta-btn cta-ghost">Book a Call</a>
+          <div class="close-x">✕</div>
+        </div>
+      </div>
+      <div class="m3-body">
+        <div class="m3-left">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m3-right">
+          <div>
+            <div class="m3-section">
+              <div class="label label-dash">Company</div>
+              <a href="#">Studio <span class="arrow">→</span></a>
+              <a href="#">Careers <span class="arrow">→</span></a>
+              <a href="#">Growth Plan <span class="arrow">→</span></a>
+              <a href="#">Charity <span class="arrow">→</span></a>
+            </div>
+            <div class="m3-section">
+              <div class="label label-dash">Products</div>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">M</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Mappire</div>
+                  <div class="m3-product-desc">Visual mapping tool</div>
+                </div>
+              </a>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">C</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Nemo CRM</div>
+                  <div class="m3-product-desc">Client management</div>
+                </div>
+              </a>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">G</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Nemo GO</div>
+                  <div class="m3-product-desc">Quick-launch platform</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div style="padding-top:12px; border-top:1px solid rgba(255,255,255,0.03);">
+            <div class="label" style="opacity:0.3; margin-bottom:8px;">Coming Soon</div>
+            <div style="display:flex; gap:12px;">
+              <span class="dimmed" style="font-size:12px;">Partner Program</span>
+              <span class="dimmed" style="font-size:12px;">Affiliate Marketing</span>
+              <span class="dimmed" style="font-size:12px;">Sitemap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-mobile">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="close-x">✕</div>
+      </div>
+      <div class="m3-body">
+        <div class="m3-left">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m3-right">
+          <div>
+            <div class="m3-section">
+              <div class="label label-dash">Company</div>
+              <a href="#">Studio <span class="arrow">→</span></a>
+              <a href="#">Careers <span class="arrow">→</span></a>
+              <a href="#">Growth Plan <span class="arrow">→</span></a>
+              <a href="#">Charity <span class="arrow">→</span></a>
+            </div>
+            <div class="m3-section">
+              <div class="label label-dash">Products</div>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">M</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Mappire</div>
+                  <div class="m3-product-desc">Visual mapping tool</div>
+                </div>
+              </a>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">C</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Nemo CRM</div>
+                  <div class="m3-product-desc">Client management</div>
+                </div>
+              </a>
+              <a href="#" class="m3-product-card">
+                <div class="m3-product-icon">G</div>
+                <div class="m3-product-info">
+                  <div class="m3-product-name">Nemo GO</div>
+                  <div class="m3-product-desc">Quick-launch platform</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     MENU 4 — Minimal List
+═══════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu 4 — Minimal List
+  <span>Clean three-column grid. Arrow reveals on hover. Compact, no-frills. Coming soon row at bottom.</span>
+</div>
+
+<div class="preview-wrap" id="pw4">
+  <div class="preview-tabs">
+    <div class="preview-tab active" onclick="setView('pw4','desktop')">Desktop</div>
+    <div class="preview-tab" onclick="setView('pw4','mobile')">Mobile</div>
+  </div>
+
+  <div class="frame-desktop">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="header-actions">
+          <a href="#" class="cta-btn cta-green">Book a Call</a>
+          <div class="close-x">✕</div>
+        </div>
+      </div>
+      <div class="m4-body">
+        <div class="m4-grid">
+          <div class="m4-col">
+            <div class="label label-bracket">Menu</div>
+            <a href="#" class="main-link">Home</a>
+            <a href="#" class="main-link">Work</a>
+            <a href="#" class="main-link">Services</a>
+            <a href="#" class="main-link">Blog</a>
+            <a href="#" class="main-link">Contact</a>
+          </div>
+          <div class="m4-col">
+            <div class="label label-bracket">Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="m4-col">
+            <div class="label label-bracket">Products</div>
+            <a href="#">Mappire</a>
+            <a href="#">Nemo CRM</a>
+            <a href="#">Nemo GO</a>
+          </div>
+        </div>
+        <div class="m4-coming">
+          <span class="label" style="margin-bottom:0; opacity:0.3;">Coming soon:</span>
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliate Marketing</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-mobile">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="close-x">✕</div>
+      </div>
+      <div class="m4-body">
+        <div class="m4-grid">
+          <div class="m4-col">
+            <div class="label label-bracket">Menu</div>
+            <a href="#" class="main-link">Home</a>
+            <a href="#" class="main-link">Work</a>
+            <a href="#" class="main-link">Services</a>
+            <a href="#" class="main-link">Blog</a>
+            <a href="#" class="main-link">Contact</a>
+          </div>
+          <div class="m4-col">
+            <div class="label label-bracket">Company</div>
+            <a href="#">Studio</a>
+            <a href="#">Careers</a>
+            <a href="#">Growth Plan</a>
+            <a href="#">Charity</a>
+          </div>
+          <div class="m4-col">
+            <div class="label label-bracket">Products</div>
+            <a href="#">Mappire</a>
+            <a href="#">Nemo CRM</a>
+            <a href="#">Nemo GO</a>
+          </div>
+        </div>
+        <div class="m4-coming">
+          <a href="#" class="dimmed">Partner Program</a>
+          <a href="#" class="dimmed">Affiliates</a>
+          <a href="#" class="dimmed">Sitemap</a>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     MENU 5 — Two-Tone Split
+═══════════════════════════════════════════════ -->
+<div class="lab-title">
+  Menu 5 — Two-Tone Split
+  <span>Left: dark with underline animation. Right: slightly lighter surface with dot indicators + product chips.</span>
+</div>
+
+<div class="preview-wrap" id="pw5">
+  <div class="preview-tabs">
+    <div class="preview-tab active" onclick="setView('pw5','desktop')">Desktop</div>
+    <div class="preview-tab" onclick="setView('pw5','mobile')">Mobile</div>
+  </div>
+
+  <div class="frame-desktop">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="header-actions">
+          <a href="#" class="cta-btn cta-ghost">Get in Touch</a>
+          <div class="close-x">✕</div>
+        </div>
+      </div>
+      <div class="m5-body">
+        <div class="m5-dark">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m5-light">
+          <div>
+            <div class="m5-group">
+              <div class="label label-green">Company</div>
+              <a href="#"><span class="m5-dot"></span> Studio</a>
+              <a href="#"><span class="m5-dot"></span> Careers</a>
+              <a href="#"><span class="m5-dot"></span> Growth Plan</a>
+              <a href="#"><span class="m5-dot"></span> Charity</a>
+            </div>
+            <div class="m5-group">
+              <div class="label label-green">Products</div>
+              <div class="m5-products-grid">
+                <a href="#" class="m5-product-chip"><span class="chip-icon">M</span> Mappire</a>
+                <a href="#" class="m5-product-chip"><span class="chip-icon">C</span> Nemo CRM</a>
+                <a href="#" class="m5-product-chip"><span class="chip-icon">G</span> Nemo GO</a>
+              </div>
+            </div>
+          </div>
+          <div class="m5-coming">
+            <div class="label" style="opacity:0.3; margin-bottom:8px;">Coming Soon</div>
+            <a href="#" class="dimmed">Partner Program</a>
+            <a href="#" class="dimmed">Affiliate Marketing</a>
+            <a href="#" class="dimmed">Sitemap</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Cookies</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-mobile">
+    <div class="menu-overlay">
+      <div class="menu-topbar">
+        <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" /></a>
+        <div class="close-x">✕</div>
+      </div>
+      <div class="m5-body">
+        <div class="m5-dark">
+          <a href="#">Home</a>
+          <a href="#">Work</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="m5-light">
+          <div>
+            <div class="m5-group">
+              <div class="label label-green">Company</div>
+              <a href="#"><span class="m5-dot"></span> Studio</a>
+              <a href="#"><span class="m5-dot"></span> Careers</a>
+              <a href="#"><span class="m5-dot"></span> Growth Plan</a>
+              <a href="#"><span class="m5-dot"></span> Charity</a>
+            </div>
+            <div class="m5-group">
+              <div class="label label-green">Products</div>
+              <div class="m5-products-grid">
+                <a href="#" class="m5-product-chip"><span class="chip-icon">M</span> Mappire</a>
+                <a href="#" class="m5-product-chip"><span class="chip-icon">C</span> Nemo CRM</a>
+                <a href="#" class="m5-product-chip"><span class="chip-icon">G</span> Nemo GO</a>
+              </div>
+            </div>
+          </div>
+          <div class="m5-coming">
+            <div class="label" style="opacity:0.3; margin-bottom:8px;">Coming Soon</div>
+            <a href="#" class="dimmed">Partner Program</a>
+            <a href="#" class="dimmed">Affiliates</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bottom">
+        <div class="socials"><a href="#">ig</a><a href="#">x</a><a href="#">li</a><a href="#">be</a></div>
+        <div class="legal"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+function setView(wrapperId, mode) {
+  const wrap = document.getElementById(wrapperId);
+  const tabs = wrap.querySelectorAll('.preview-tab');
+  if (mode === 'mobile') {
+    wrap.classList.add('mobile');
+    tabs[0].classList.remove('active');
+    tabs[1].classList.add('active');
+  } else {
+    wrap.classList.remove('mobile');
+    tabs[0].classList.add('active');
+    tabs[1].classList.remove('active');
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Final Simple Favicon</title>
+<link id="favicon" rel="icon" href="../../public/logos/nemo-black.webp" type="image/webp">
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+:root { --green: #35D687; --black: #080808; --font-aeonik: 'AeonikPro', system-ui, sans-serif; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: sans-serif; padding: 40px; }
+.container { max-width: 600px; margin: 80px auto; background: #fff; padding: 48px; border-radius: 24px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.05); }
+.preview-pill { width: 128px; height: 128px; background: #000; border-radius: 24px; margin: 0 auto 40px; display: flex; align-items: center; justify-content: center; }
+.lab-title { font-family: var(--font-aeonik); font-size: 24px; margin-bottom: 8px; }
+.hint { font-size: 11px; text-transform: uppercase; color: rgba(0,0,0,0.3); letter-spacing: 0.12em; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="lab-title">NEMO — Automatic Toggle</h1>
+  <p style="font-size: 14px; color: #666; margin-bottom: 32px;">This lab activates automatically on load. No button needed.</p>
+  <div class="preview-pill"><canvas id="main-canvas"></canvas></div>
+  <div class="hint">Watch the browser Tab ☝️</div>
+</div>
+
+<script>
+const favicon = document.getElementById('favicon');
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 32; canvas.height = 32;
+
+const logoWhite = new Image(); logoWhite.src = "../../public/logos/nemo-white.png";
+const logoBlack = new Image(); logoBlack.src = "../../public/logos/nemo-black.webp";
+
+let isGreenMode = true;
+
+function update() {
+    ctx.clearRect(0, 0, 32, 32);
+    if (isGreenMode) {
+        ctx.fillStyle = '#35D687';
+        ctx.fillRect(0, 0, 32, 32);
+        if (logoBlack.complete) {
+            const w = 26, h = (logoBlack.height / logoBlack.width) * w;
+            ctx.drawImage(logoBlack, 16 - (w/2), 16 - (h/2), w, h);
+        }
+    } else {
+        ctx.fillStyle = '#080808';
+        ctx.fillRect(0, 0, 32, 32);
+        if (logoWhite.complete) {
+            const w = 24, h = (logoWhite.height / logoWhite.width) * w;
+            ctx.drawImage(logoWhite, 16 - (w/2), 16 - (h/2), w, h);
+        }
+    }
+    
+    // Set favicon
+    favicon.href = canvas.toDataURL('image/png');
+    
+    // Update preview
+    const preview = document.getElementById('main-canvas');
+    if(preview) {
+        const pCtx = preview.getContext('2d');
+        preview.width = 128; preview.height = 128;
+        pCtx.drawImage(canvas, 0, 0, 128, 128);
+    }
+}
+
+function start() {
+    setInterval(() => {
+        isGreenMode = !isGreenMode;
+        update();
+    }, 1000);
+    update();
+}
+
+window.onload = () => {
+    setTimeout(start, 500);
+};
+</script>
+</body>
+</html>

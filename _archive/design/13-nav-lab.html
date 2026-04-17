@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Header & Menu Lab 13.0</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green:#35D687; 
+  --black:#050505; 
+  --charcoal:#111;
+  --off-white:#F5F5F0;
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp8:32px;--sp10:40px;--sp12:48px;--sp16:64px;--sp20:80px;
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --r-pill: 9999px;
+  --e-fast: 200ms ease-in-out;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; transition: all var(--e-fast); }
+
+.lab-meta { text-align: center; padding: var(--sp10); font-family: var(--font-aeonik); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+.preview-container { margin: var(--sp10) auto var(--sp20); max-width: 1200px; background: var(--black); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.2); }
+
+/* Common Header Styles */
+.h-root { display: flex; align-items: center; justify-content: space-between; padding: var(--sp6) var(--sp10); border-bottom: 1px solid rgba(255,255,255,0.05); color: #fff; position: relative; z-index: 100; }
+.logo { font-family: var(--font-aeonik); font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+.nav-links { display: flex; gap: var(--sp8); font-size: 13px; color: rgba(255,255,255,0.5); }
+.nav-links a:hover { color: #fff; }
+.menu-trigger { font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+
+/* CTAs */
+.cta-pill { background: var(--green); color: #000; padding: 10px 24px; border-radius: var(--r-pill); font-size: 13px; font-weight: 500; }
+.cta-link { color: var(--green); font-size: 13px; display: flex; align-items: center; gap: 4px; }
+.cta-outline { border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 24px; border-radius: var(--r-pill); font-size: 13px; }
+
+/* Overlay Base */
+.menu-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); color: #fff; z-index: 90; display: none; padding: 120px 80px 80px; }
+.menu-open .menu-overlay { display: block; }
+.eyebrow { font-family: var(--font-haas); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: var(--sp6); }
+
+/* Option A: Big Left, Small Right */
+.oa-grid { display: grid; grid-template-columns: 1fr 320px; gap: 80px; }
+.oa-main a { font-family: var(--font-aeonik); font-size: clamp(48px, 6vw, 72px); line-height: 1.1; margin-bottom: 8px; display: block; letter-spacing: -2px; }
+.oa-main a:hover { color: var(--green); padding-left: 20px; }
+.oa-side-group { margin-bottom: var(--sp8); }
+.oa-side-group a { display: block; font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+
+/* Option B: Centered Stack */
+.ob-stack { text-align: center; }
+.ob-stack a { font-family: var(--font-aeonik); font-size: 48px; display: block; margin-bottom: 16px; color: rgba(255,255,255,0.4); }
+.ob-stack a:hover { color: #fff; text-decoration: underline; text-decoration-color: var(--green); text-underline-offset: 8px; }
+
+/* Option C: Three Columns */
+.oc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.oc-col a { display: block; font-size: 18px; margin-bottom: 12px; }
+.oc-col a:hover { color: var(--green); }
+
+/* Option D: Half-Screen Slide */
+.od-overlay { width: 50%; left: auto; right: 0; border-left: 1px solid rgba(255,255,255,0.1); padding: 80px 40px; box-shadow: -40px 0 100px rgba(0,0,0,0.5); }
+.od-bg-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; padding-left: 80px; opacity: 0.1; }
+
+/* Option E: Grid with Hover Preview */
+.oe-grid { display: grid; grid-template-columns: 1fr 400px; gap: 40px; }
+.oe-preview { background: rgba(255,255,255,0.03); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: rgba(255,255,255,0.2); }
+
+.close-btn { position: absolute; top: 32px; right: 40px; cursor: pointer; font-size: 24px; z-index: 101; }
+
+</style>
+</head>
+<body class="menu-open">
+
+<div class="lab-meta">Choose a Menu UI & Sitemap Pattern</div>
+
+<!-- OPTION A -->
+<div class="lab-meta">Menu A — Big Left, Small Right (Premium Full-Screen)</div>
+<div class="preview-container" style="height: 600px;">
+  <header class="h-root">
+    <div class="logo">NEMO</div>
+    <div class="nav-links">
+      <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a>
+    </div>
+    <div class="cta-pill">Start a Project</div>
+  </header>
+  <div class="menu-overlay" style="display: block;">
+    <div class="oa-grid">
+      <div class="oa-main">
+        <a href="#">Home →</a>
+        <a href="#">Work →</a>
+        <a href="#">Services →</a>
+        <a href="#">Studio →</a>
+        <a href="#">Blog →</a>
+        <a href="#">Contact →</a>
+      </div>
+      <div class="oa-side">
+        <div class="oa-side-group">
+          <div class="eyebrow">// More</div>
+          <a href="#">Careers</a><a href="#">Partners</a><a href="#">Charity</a>
+        </div>
+        <div class="oa-side-group">
+          <div class="eyebrow">// Products</div>
+          <a href="#">Starter Kit</a><a href="#">Brand OS</a><a href="#">Growth Engine</a>
+        </div>
+        <div class="oa-side-group" style="display: flex; gap: 12px;">
+          <a href="#">IG</a><a href="#">X</a><a href="#">LI</a><a href="#">BE</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION B -->
+<div class="lab-meta">Menu B — Centered Stack (Fashion House Aesthetic)</div>
+<div class="preview-container" style="height: 600px;">
+  <header class="h-root">
+    <div class="logo">NEMO</div>
+    <div class="cta-link">Let's Talk →</div>
+  </header>
+  <div class="menu-overlay" style="display: flex; align-items: center; justify-content: center;">
+    <div class="ob-stack">
+      <a href="#">Home</a>
+      <a href="#">Work</a>
+      <a href="#">Services</a>
+      <a href="#">Studio</a>
+      <a href="#">Blog</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION C -->
+<div class="lab-meta">Menu C — Three Columns (Editorial Grid)</div>
+<div class="preview-container" style="height: 600px;">
+  <header class="h-root">
+    <div class="logo">NEMO</div>
+    <div class="cta-outline">Inquire</div>
+  </header>
+  <div class="menu-overlay" style="display: block;">
+    <div class="oc-grid">
+      <div class="oc-col">
+        <div class="eyebrow">// Menu</div>
+        <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a><a href="#">Blog</a><a href="#">Contact</a>
+      </div>
+      <div class="oc-col">
+        <div class="eyebrow">// More</div>
+        <a href="#">Careers</a><a href="#">Partners</a><a href="#">Charity</a>
+      </div>
+      <div class="oc-col">
+        <div class="eyebrow">// Products</div>
+        <a href="#">Starter Kit</a><a href="#">Brand OS</a><a href="#">Growth Engine</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION D -->
+<div class="lab-meta">Menu D — Half-Screen Slide-In (App-UI)</div>
+<div class="preview-container" style="height: 600px;">
+  <div class="od-bg-content">
+    <h1 style="font-size: 80px; color: #fff;">Building brands<br>that move culture<br>forward.</h1>
+  </div>
+  <header class="h-root">
+    <div class="logo">NEMO</div>
+    <div class="menu-trigger">MENU //</div>
+  </header>
+  <div class="menu-overlay od-overlay" style="display: block;">
+    <div class="eyebrow">// Menu</div>
+    <div class="oa-side-group" style="font-size: 24px;">
+       <a href="#" style="display: block; margin-bottom: 12px;">Home</a>
+       <a href="#" style="display: block; margin-bottom: 12px;">Work</a>
+       <a href="#" style="display: block; margin-bottom: 12px;">Services</a>
+       <a href="#" style="display: block; margin-bottom: 12px;">Contact</a>
+    </div>
+    <div class="eyebrow" style="margin-top: 40px;">// SEO Subdomains</div>
+    <div class="oa-side-group">
+       <a href="#" style="display: block; margin-bottom: 8px; color: var(--green);">ai.madebynemo.com</a>
+       <a href="#" style="display: block; margin-bottom: 8px; color: var(--green);">tech.madebynemo.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- OPTION E -->
+<div class="lab-meta">Menu E — Grid with Hover Preview (Awwwards-Tier)</div>
+<div class="preview-container" style="height: 600px;">
+  <header class="h-root">
+    <div class="logo">NEMO</div>
+    <div class="cta-pill" style="background: #fff;">Work With Us</div>
+  </header>
+  <div class="menu-overlay" style="display: block;">
+    <div class="oe-grid">
+      <div class="oa-main" style="font-size: 40px;">
+        <a href="#">Home</a><a href="#">Work</a><a href="#">Services</a><a href="#">Studio</a><a href="#">Blog</a><a href="#">Contact</a>
+      </div>
+      <div class="oe-preview">
+        [ HOVER A LINK TO PREVIEW ]
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

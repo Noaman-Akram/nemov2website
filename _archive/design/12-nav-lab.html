@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Navigation Lab 12.0</title>
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green:#35D687; 
+  --black:#050505; 
+  --charcoal:#111;
+  --off-white:#F5F5F0;
+  
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: 11px; 
+  text-transform: uppercase; letter-spacing: 0.1em; padding: 40px; color: rgba(0,0,0,0.4);
+}
+
+.variant {
+  background: var(--black);
+  color: #fff;
+  margin: 0 auto 60px;
+  max-width: 1400px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.v-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 40px; border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.logo { font-family: var(--font-aeonik); font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+
+/* ── OPTION A: ULTRA-MINIMAL (FULL SCREEN MENU) ── */
+.nav-a { display: flex; gap: 40px; }
+.nav-a a { font-size: 13px; color: #fff; }
+
+.menu-a { padding: 60px 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+.col-a-title { font-family: var(--font-aeonik); font-size: 32px; margin-bottom: 32px; color: #fff; }
+.col-a-links a { display: block; font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+.col-a-links a:hover { color: #fff; }
+
+/* ── OPTION B: COMPREHENSIVE AGENCY (TOP LINKS + DROPDOWNS) ── */
+.nav-b { display: flex; gap: 32px; }
+.nav-b a { font-size: 13px; color: rgba(255,255,255,0.6); }
+.nav-b a.active { color: #fff; border-bottom: 1px solid var(--green); padding-bottom: 4px; }
+
+.menu-b { padding: 40px; background: #0A0A0A; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.menu-b-inner { display: flex; gap: 80px; }
+.col-b-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+.col-b-links a { display: block; font-size: 14px; color: #fff; margin-bottom: 12px; }
+
+/* ── OPTION C: EDITORIAL (AVANT-GARDE) ── */
+.nav-c { display: flex; gap: 48px; }
+.nav-c a { font-family: var(--font-aeonik); font-size: 15px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+.menu-c { padding: 60px 40px; display: flex; justify-content: space-between; }
+.col-c h3 { font-family: var(--font-aeonik); font-size: 24px; color: var(--green); margin-bottom: 24px; }
+.col-c a { display: block; font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+
+</style>
+</head>
+<body>
+
+<div class="lab-title">Option A: Ultra-Minimal<br><br>Just 3 links in the top bar. Opens a giant full-screen menu.</div>
+<div class="variant">
+  <header class="v-header">
+    <div class="logo">NEMO</div>
+    <nav class="nav-a">
+      <a href="#">Work</a>
+      <a href="#">Studio</a>
+      <a href="#" style="color: var(--green);">Contact ↗</a>
+    </nav>
+  </header>
+  <div class="menu-a">
+    <div>
+      <div class="col-a-title">Work</div>
+      <div class="col-a-links">
+        <a href="#">Case Studies</a>
+        <a href="#">Experiments & Lab</a>
+      </div>
+    </div>
+    <div>
+      <div class="col-a-title">Studio</div>
+      <div class="col-a-links">
+        <a href="#">Capabilities / Services</a>
+        <a href="#">Culture / About</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div>
+      <div class="col-a-title">Connect</div>
+      <div class="col-a-links">
+        <a href="#">Start a project</a>
+        <a href="#">Book a call</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lab-title">Option B: Standard Agency<br><br>All main sections in the top bar. Hover sub-menus for deep diving.</div>
+<div class="variant">
+  <header class="v-header">
+    <div class="logo">NEMO</div>
+    <nav class="nav-b">
+      <a href="#" class="active">Services</a>
+      <a href="#">Work</a>
+      <a href="#">About</a>
+      <a href="#">Insights</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+  <div class="menu-b">
+    <div class="menu-b-inner">
+      <div>
+        <div class="col-b-title">Services</div>
+        <div class="col-b-links">
+          <a href="#">Strategy & Architecture</a>
+          <a href="#">Brand Identity</a>
+          <a href="#">UX / UI Design</a>
+          <a href="#">Engineering & WebGL</a>
+        </div>
+      </div>
+      <div>
+        <div class="col-b-title">Work</div>
+        <div class="col-b-links">
+          <a href="#">All Projects</a>
+        </div>
+      </div>
+      <div>
+        <div class="col-b-title">About</div>
+        <div class="col-b-links">
+          <a href="#">Manifesto</a>
+          <a href="#">Careers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lab-title">Option C: Editorial / Avant-Garde<br><br>Art-gallery style naming. Very exclusive feel.</div>
+<div class="variant">
+  <header class="v-header">
+    <div class="logo">NEMO</div>
+    <nav class="nav-c">
+      <a href="#">Index</a>
+      <a href="#">Practice</a>
+      <a href="#">People</a>
+      <a href="#">Connect</a>
+    </nav>
+  </header>
+  <div class="menu-c">
+    <div class="col-c">
+      <h3>Index</h3>
+      <a href="#">Featured Work</a>
+      <a href="#">Archive</a>
+    </div>
+    <div class="col-c">
+      <h3>Practice</h3>
+      <a href="#">Capabilities</a>
+      <a href="#">Methodology</a>
+    </div>
+    <div class="col-c">
+      <h3>People</h3>
+      <a href="#">Culture</a>
+      <a href="#">Careers</a>
+    </div>
+    <div class="col-c">
+      <h3>Connect</h3>
+      <a href="#">Contact</a>
+      <a href="#">Journal</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

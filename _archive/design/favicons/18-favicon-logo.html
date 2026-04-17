@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Logo Favicon Lab 18.0</title>
+<link id="favicon" rel="icon" href="https://madebynemo.com/storage/2025/05/nemo-white.png" type="image/png">
+<style>
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+
+:root {
+  --green: #35D687;
+  --black: #080808;
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas: 'NeueHaas', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #e8e8e3; color: #111; font-family: var(--font-haas); -webkit-font-smoothing: antialiased; padding: 40px; }
+
+.lab-title {
+  text-align: center; font-family: var(--font-aeonik); font-size: clamp(32px, 5vw, 48px);
+  letter-spacing: -1.5px; margin-bottom: 20px;
+}
+.lab-subtitle {
+  text-align: center; font-size: 14px; color: rgba(0,0,0,0.5); margin-bottom: 60px;
+}
+
+.options-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.option-card {
+  background: #fff; padding: 32px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+
+.preview-box {
+  width: 64px; height: 64px; background: var(--black); border-radius: 12px; margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  position: relative;
+}
+.preview-box canvas { width: 100%; height: 100%; image-rendering: auto; }
+
+.option-name { font-family: var(--font-aeonik); font-size: 18px; margin-bottom: 12px; }
+.option-desc { font-size: 13px; color: rgba(0,0,0,0.5); margin-bottom: 24px; line-height: 1.5; }
+
+.btn-active {
+  background: var(--black); color: #fff; border: none; padding: 12px 24px; border-radius: 99px;
+  font-size: 12px; font-weight: 500; cursor: pointer; transition: background 0.3s;
+}
+.btn-active:hover { background: var(--green); color: #000; }
+.btn-active.current { background: var(--green); color: #000; pointer-events: none; }
+
+.hint { margin-top: 60px; text-align: center; font-size: 12px; color: rgba(0,0,0,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+
+<h1 class="lab-title">NEMO — Actual Logo Lab v1.0</h1>
+<p class="lab-subtitle">Look at your Browser Tab ☝️ to see the animations in the real favicon space.</p>
+
+<div class="options-grid">
+  <!-- Option 1: Accent Green Pulse -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-accent"></canvas></div>
+    <h3 class="option-name">1. The Accent Pulse</h3>
+    <p class="option-desc">Logo centered on a breathing accent green background. High premium energy.</p>
+    <button class="btn-active" onclick="activateFav('accent')">Activate Accent Pulse</button>
+  </div>
+
+  <!-- Option 2: The Glitch -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-glitch"></canvas></div>
+    <h3 class="option-name">2. The Tech Glitch</h3>
+    <p class="option-desc">Fast horizontal glitch shifts on your white logo. Tech-forward and sharp.</p>
+    <button class="btn-active" onclick="activateFav('glitch')">Activate Glitch</button>
+  </div>
+
+  <!-- Option 3: The Scanline -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-scan"></canvas></div>
+    <h3 class="option-name">3. The Neon Scanline</h3>
+    <p class="option-desc">A green laser line scanning through the Nemo logo. Deeply linked to the footer line.</p>
+    <button class="btn-active" onclick="activateFav('scan')">Activate Scanline</button>
+  </div>
+
+  <!-- Option 4: The Minimal Ticker -->
+  <div class="option-card">
+    <div class="preview-box"><canvas id="canvas-rotate"></canvas></div>
+    <h3 class="option-name">4. The Logo Focus</h3>
+    <p class="option-desc">Subtle expansion and contraction of only the Logo. Incredibly clean and pure.</p>
+    <button class="btn-active" onclick="activateFav('rotate')">Activate Logo Pulse</button>
+  </div>
+</div>
+
+<div class="hint">Watch the tab bar closely ☝️</div>
+
+<script>
+const favicon = document.getElementById('favicon');
+const logoURL = "https://madebynemo.com/storage/2025/05/nemo-white.png";
+const logoImg = new Image();
+logoImg.crossOrigin = "anonymous";
+logoImg.src = logoURL;
+
+const canvases = {
+  accent: document.getElementById('canvas-accent'),
+  glitch: document.getElementById('canvas-glitch'),
+  scan: document.getElementById('canvas-scan'),
+  rotate: document.getElementById('canvas-rotate')
+};
+
+const contexts = {
+  accent: canvases.accent.getContext('2d'),
+  glitch: canvases.glitch.getContext('2d'),
+  scan: canvases.scan.getContext('2d'),
+  rotate: canvases.rotate.getContext('2d')
+};
+
+Object.values(canvases).forEach(c => { c.width = 32; c.height = 32; });
+
+let currentMode = null;
+let frame = 0;
+
+function drawAccent() {
+  const ctx = contexts.accent;
+  frame += 0.05;
+  const opacity = 0.5 + Math.sin(frame) * 0.5;
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  // Accent color pulse
+  ctx.fillStyle = `rgba(53, 214, 135, ${opacity * 0.4})`;
+  ctx.beginPath();
+  ctx.arc(16, 16, 12 + opacity * 4, 0, Math.PI * 2);
+  ctx.fill();
+  
+  if (logoImg.complete) {
+    const aw = 24, ah = (logoImg.height / logoImg.width) * aw;
+    ctx.drawImage(logoImg, 16 - (aw/2), 16 - (ah/2), aw, ah);
+  }
+  
+  if(currentMode === 'accent') updateFavicon(canvases.accent);
+}
+
+function drawGlitch() {
+  const ctx = contexts.glitch;
+  frame += 1;
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  if (logoImg.complete) {
+    const aw = 24, ah = (logoImg.height / logoImg.width) * aw;
+    const x = 16 - (aw/2);
+    const y = 16 - (ah/2);
+    
+    // Draw in slices
+    for (let i = 0; i < ah; i += 2) {
+      const offset = (Math.random() > 0.9) ? (Math.random() - 0.5) * 6 : 0;
+      ctx.drawImage(logoImg, 0, (i / ah) * logoImg.height, logoImg.width, (2 / ah) * logoImg.height, x + offset, y + i, aw, 2);
+    }
+    
+    // Tiny green flash
+    if (Math.random() > 0.98) {
+        ctx.fillStyle = 'rgba(53, 214, 135, 0.4)';
+        ctx.fillRect(x, y, aw, ah);
+    }
+  }
+  
+  if(currentMode === 'glitch') updateFavicon(canvases.glitch);
+}
+
+function drawScan() {
+  const ctx = contexts.scan;
+  frame += 0.8;
+  const scanY = (frame % 48) - 8;
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  if (logoImg.complete) {
+    const aw = 24, ah = (logoImg.height / logoImg.width) * aw;
+    const x = 16 - (aw/2);
+    const y = 16 - (ah/2);
+    ctx.drawImage(logoImg, x, y, aw, ah);
+    
+    // Scanline
+    ctx.fillStyle = 'rgba(53, 214, 135, 0.8)';
+    ctx.fillRect(x, scanY, aw, 2);
+    
+    // Bloom on scanline
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#35D687';
+    ctx.fillRect(x, scanY, aw, 1);
+    ctx.shadowBlur = 0;
+  }
+  
+  if(currentMode === 'scan') updateFavicon(canvases.scan);
+}
+
+function drawRotate() {
+  const ctx = contexts.rotate;
+  frame += 0.05;
+  const scale = 0.9 + Math.sin(frame) * 0.1;
+  
+  ctx.clearRect(0, 0, 32, 32);
+  ctx.fillStyle = '#080808';
+  ctx.fillRect(0, 0, 32, 32);
+  
+  if (logoImg.complete) {
+    const aw = 24 * scale, ah = ((logoImg.height / logoImg.width) * 24) * scale;
+    ctx.drawImage(logoImg, 16 - (aw/2), 16 - (ah/2), aw, ah);
+  }
+  
+  if(currentMode === 'rotate') updateFavicon(canvases.rotate);
+}
+
+function updateFavicon(canvas) {
+  favicon.href = canvas.toDataURL('image/png');
+}
+
+function activateFav(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.btn-active').forEach(b => {
+    b.classList.remove('current');
+    if(b.getAttribute('onclick').includes(mode)) b.classList.add('current');
+  });
+}
+
+function loop() {
+  drawAccent();
+  drawGlitch();
+  drawScan();
+  drawRotate();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
