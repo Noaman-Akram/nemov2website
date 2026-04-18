@@ -73,6 +73,7 @@ export function Nav() {
           justify-content: space-between;
           max-width: var(--container);
           margin: 0 auto;
+          padding: 0 var(--sp5);
           box-sizing: border-box;
         }
 
