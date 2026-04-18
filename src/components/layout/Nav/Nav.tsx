@@ -60,62 +60,37 @@ export function Nav() {
   return (
     <>
       <style>{`
-        /* ── Outer wrapper: fixed, never moves ── */
+        /* ── Fixed header strip: logo | pill | actions ── */
         #site-header {
           position: fixed;
-          top: var(--sp3);
+          top: var(--sp4);
           left: var(--sp6);
           right: var(--sp6);
           z-index: 900;
           pointer-events: none;
-        }
-
-        /* ── Shell: transparent on desktop when closed,
-              always has a background on mobile ── */
-        .nav-shell {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           max-width: var(--container);
           margin: 0 auto;
-          background: ${isOpen
-            ? "#141414"
-            : dark
-              ? "rgba(14,14,14,0.72)"
-              : "rgba(245,245,240,0.82)"};
-          border: 1px solid ${isOpen
-            ? "var(--b1)"
-            : dark
-              ? "rgba(255,255,255,0.06)"
-              : "rgba(0,0,0,0.06)"};
-          border-radius: var(--r-xl);
-          overflow: hidden;
-          pointer-events: auto;
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          transition: background 350ms ease, border-color 350ms ease;
-        }
-
-        /* ── Top bar: 3-col on desktop, always 56px ── */
-        .nav-topbar {
-          display: grid;
-          grid-template-columns: auto 1fr auto;
-          align-items: center;
-          gap: var(--sp4);
-          height: 56px;
           padding: 0 var(--sp5);
+          box-sizing: border-box;
         }
 
-        /* ── Logo: fixed px, never squishes ── */
+        /* ── Logo ── */
         .nav-logo {
           display: inline-flex;
           align-items: center;
           text-decoration: none;
           flex-shrink: 0;
           line-height: 0;
+          pointer-events: auto;
+          z-index: 1;
         }
         .nav-logo img {
           height: 20px;
           width: auto;
           display: block;
-          flex-shrink: 0;
           filter: ${logoWhite ? "none" : "invert(1)"};
           transition: filter 350ms ease;
         }
@@ -129,30 +104,27 @@ export function Nav() {
           transition: color 350ms ease;
         }
 
-        /* ── Pill nav ── */
-        .nav-pill-wrap {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-width: 0;
-        }
+        /* ── Pill island (absolutely centered) ── */
         .nav-pill {
+          position: absolute;
+          left: 50%;
+          top: 50%;
           display: flex;
           gap: var(--sp1);
           list-style: none;
           align-items: center;
-          background: ${dark ? "rgba(8,8,8,0.65)" : "rgba(250,251,252,0.65)"};
+          background: ${dark || isOpen ? "rgba(20,20,20,0.78)" : "rgba(245,245,240,0.88)"};
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid ${dark ? "var(--b1)" : "rgba(0,0,0,0.06)"};
+          border: 1px solid ${dark || isOpen ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"};
           border-radius: var(--r-pill);
-          padding: 6px;
+          padding: 5px;
           margin: 0;
+          white-space: nowrap;
           opacity: ${isOpen ? 0 : 1};
-          visibility: ${isOpen ? "hidden" : "visible"};
-          transform: ${isOpen ? "scale(0.96)" : "scale(1)"};
+          transform: translate(-50%, -50%) scale(${isOpen ? 0.9 : 1});
           pointer-events: ${isOpen ? "none" : "auto"};
-          transition: opacity 260ms ease, visibility 260ms ease, transform 260ms ease,
+          transition: opacity 260ms ease, transform 320ms cubic-bezier(0.16,1,0.3,1),
                       background 350ms ease, border-color 350ms ease;
         }
         .nav-pill li { list-style: none; }
@@ -162,18 +134,25 @@ export function Nav() {
           font-size: 14px;
           line-height: 1;
           text-decoration: none;
-          padding: 10px 18px;
+          padding: 9px 16px;
           border-radius: var(--r-pill);
-          transition: all 200ms ease;
+          transition: background 200ms ease, color 200ms ease;
+          color: ${dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)"};
+        }
+        .nav-pill a:hover { color: ${dark ? "#fff" : "#111"}; }
+        .nav-pill a.active {
+          color: ${dark ? "#fff" : "#111"};
+          background: ${dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"};
         }
 
-        /* ── Actions ── */
+        /* ── Actions (right) ── */
         .nav-actions {
           display: flex;
           gap: var(--sp3);
           align-items: center;
-          justify-content: flex-end;
           flex-shrink: 0;
+          pointer-events: auto;
+          z-index: 1;
         }
         .nav-cta {
           font-family: var(--font-haas);
@@ -187,22 +166,25 @@ export function Nav() {
           text-decoration: none;
           cursor: pointer;
           white-space: nowrap;
-          border: none;
-          flex-shrink: 0;
-          background: ${isOpen ? "var(--green)" : "var(--warm-cream)"};
-          color: ${isOpen ? "var(--black)" : "#151515"};
-          transition: background 300ms ease, color 300ms ease;
+          background: ${dark ? "rgba(245,245,240,0.92)" : "rgba(245,245,240,0.92)"};
+          color: #111;
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
+          transition: background 300ms ease;
         }
-        .nav-cta:hover { background: ${isOpen ? "var(--green-hover)" : "#d6d8c6"}; }
+        .nav-cta:hover { background: rgba(228,230,222,0.97); }
 
-        /* ── Burger → X ── */
+        /* ── Burger ── */
         .nav-burger {
           flex-shrink: 0;
           width: 36px;
           height: 36px;
           border-radius: var(--r-pill);
-          background: ${isOpen ? "rgba(255,255,255,0.08)" : (dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)")};
-          border: 1px solid ${isOpen ? "var(--b2)" : (dark ? "var(--b1)" : "rgba(0,0,0,0.06)")};
+          background: ${isOpen ? "rgba(30,30,30,0.9)" : dark ? "rgba(20,20,20,0.78)" : "rgba(245,245,240,0.88)"};
+          border: 1px solid ${isOpen ? "var(--b2)" : dark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"};
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -212,31 +194,64 @@ export function Nav() {
           padding: 0;
           transition: background var(--e-fast), border-color var(--e-fast);
         }
-        .nav-burger:hover { background: ${isOpen ? "rgba(255,255,255,0.14)" : (dark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)")}; }
+        .nav-burger:hover { opacity: 0.85; }
         .nav-burger .bar {
           display: block;
           width: 16px;
           height: 1.5px;
-          background: ${isOpen ? "var(--t1)" : (dark ? "var(--t1)" : "#111")};
+          background: ${isOpen ? "#fff" : dark ? "rgba(255,255,255,0.85)" : "#111"};
           border-radius: 1px;
           transform-origin: center;
-          transition: all 400ms cubic-bezier(0.16,1,0.3,1);
+          transition: transform 380ms cubic-bezier(0.16,1,0.3,1), background 300ms ease;
         }
-        .nav-burger.open .bar:nth-child(1) { transform: rotate(45deg) translate(2.3px, 2.3px); }
-        .nav-burger.open .bar:nth-child(2) { transform: rotate(-45deg) translate(2.3px, -2.3px); }
+        .nav-burger.is-open .bar:nth-child(1) { transform: rotate(45deg) translate(2.3px, 2.3px); }
+        .nav-burger.is-open .bar:nth-child(2) { transform: rotate(-45deg) translate(2.3px, -2.3px); }
 
-        /* ── Menu body: grows downward ── */
-        .nav-menu-body {
-          display: grid;
-          grid-template-rows: ${isOpen ? "1fr" : "0fr"};
-          border-top: 1px solid ${isOpen ? "var(--b1)" : "transparent"};
-          transition: grid-template-rows 460ms cubic-bezier(0.16,1,0.3,1),
-                      border-color 300ms ease;
+        /* ════════════════════════════════════════════
+           MENU OVERLAY — backdrop + panel
+           Panel is anchored to same position as header
+           so it looks like it expands from behind.
+        ════════════════════════════════════════════ */
+        .nav-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 850;
+          background: rgba(0,0,0,0.5);
+          opacity: ${isOpen ? 1 : 0};
+          pointer-events: ${isOpen ? "auto" : "none"};
+          transition: opacity 350ms ease;
         }
-        .nav-menu-overflow { overflow: hidden; min-height: 0; }
-        .nav-menu-scroll {
-          max-height: calc(100vh - 80px);
+
+        .nav-panel {
+          position: fixed;
+          top: var(--sp4);
+          left: var(--sp6);
+          right: var(--sp6);
+          margin: 0 auto;
+          max-width: var(--container);
+          z-index: 880;
+          background: #141414;
+          border: 1px solid var(--b1);
+          border-radius: var(--r-xl);
+          overflow: hidden;
+          pointer-events: ${isOpen ? "auto" : "none"};
+          max-height: ${isOpen ? "calc(100vh - var(--sp8))" : "0px"};
+          opacity: ${isOpen ? 1 : 0};
+          transform: translateY(${isOpen ? "0" : "-8px"});
+          transition: max-height 480ms cubic-bezier(0.16,1,0.3,1),
+                      opacity 300ms ease,
+                      transform 400ms cubic-bezier(0.16,1,0.3,1);
+        }
+
+        /* Spacer row inside panel so content starts below the real header */
+        .nav-panel-spacer {
+          height: 56px;
+          flex-shrink: 0;
+        }
+
+        .nav-panel-inner {
           overflow-y: auto;
+          max-height: calc(100vh - var(--sp8) - 56px);
           overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
         }
@@ -244,19 +259,17 @@ export function Nav() {
         /* ── Split layout ── */
         .menu-split {
           display: grid;
-          grid-template-columns: 1fr ${isOpen ? "360px" : "0px"};
-          transition: grid-template-columns 480ms cubic-bezier(0.16,1,0.3,1);
+          grid-template-columns: 1fr 360px;
           overflow: hidden;
         }
         .menu-left {
           padding: var(--sp8) var(--sp8) var(--sp6);
-          border-right: 1px solid ${isOpen ? "var(--b1)" : "transparent"};
+          border-right: 1px solid var(--b1);
+          border-top: 1px solid var(--b1);
           opacity: ${isOpen ? 1 : 0};
-          transform: ${isOpen ? "translateX(0)" : "translateX(-10px)"};
-          transition: opacity 360ms ease 80ms, transform 400ms cubic-bezier(0.16,1,0.3,1) 80ms,
-                      border-color 380ms ease 100ms;
+          transform: ${isOpen ? "translateY(0)" : "translateY(8px)"};
+          transition: opacity 340ms ease 120ms, transform 400ms cubic-bezier(0.16,1,0.3,1) 120ms;
         }
-        /* Primary links: readable, arrow inline next to text */
         .menu-nav-link {
           display: flex;
           align-items: center;
@@ -264,24 +277,23 @@ export function Nav() {
           font-family: var(--font-aeonik);
           font-size: clamp(28px, 3.2vw, 44px);
           font-weight: 300;
-          color: rgba(255,255,255,0.6);
+          color: rgba(255,255,255,0.55);
           padding: 10px 0;
           text-decoration: none;
           letter-spacing: -0.8px;
           line-height: 1.2;
           border-bottom: 1px solid var(--b1);
-          transition: color 260ms ease, padding-left 260ms ease;
+          transition: color 240ms ease, padding-left 240ms ease;
         }
         .menu-nav-link:last-child { border-bottom: none; }
-        .menu-nav-link:hover { color: var(--t1); padding-left: var(--sp1); }
+        .menu-nav-link:hover { color: var(--t1); padding-left: var(--sp2); }
         .menu-nav-link .link-arrow {
           font-size: 20px;
           color: var(--green);
           opacity: 0;
-          transform: translateX(-10px);
-          transition: opacity 240ms ease, transform 280ms cubic-bezier(0.16,1,0.3,1);
+          transform: translateX(-8px);
+          transition: opacity 220ms ease, transform 260ms cubic-bezier(0.16,1,0.3,1);
           flex-shrink: 0;
-          line-height: 1;
         }
         .menu-nav-link:hover .link-arrow { opacity: 1; transform: translateX(0); }
 
@@ -291,9 +303,10 @@ export function Nav() {
           display: flex;
           flex-direction: column;
           gap: var(--sp6);
+          border-top: 1px solid var(--b1);
           opacity: ${isOpen ? 1 : 0};
-          transform: ${isOpen ? "translateX(0)" : "translateX(28px)"};
-          transition: opacity 360ms ease 180ms, transform 420ms cubic-bezier(0.16,1,0.3,1) 180ms;
+          transform: ${isOpen ? "translateY(0)" : "translateY(12px)"};
+          transition: opacity 340ms ease 200ms, transform 400ms cubic-bezier(0.16,1,0.3,1) 200ms;
           overflow: hidden;
         }
         .menu-group-title {
@@ -302,7 +315,7 @@ export function Nav() {
           font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.14em;
-          color: rgba(255,255,255,0.4);
+          color: rgba(255,255,255,0.35);
           margin-bottom: var(--sp3);
           padding-bottom: var(--sp2);
           border-bottom: 1px solid var(--b1);
@@ -310,8 +323,8 @@ export function Nav() {
         .menu-group a {
           display: block;
           font-family: var(--font-haas);
-          font-size: 16px;
-          color: rgba(255,255,255,0.6);
+          font-size: 15px;
+          color: rgba(255,255,255,0.55);
           padding: var(--sp1) 0;
           text-decoration: none;
           transition: color var(--e-fast), padding-left var(--e-fast);
@@ -321,14 +334,13 @@ export function Nav() {
           font-family: var(--font-aeonik);
           font-size: 15px;
           font-weight: 500;
-          color: rgba(255,255,255,0.5);
+          color: rgba(255,255,255,0.45);
         }
         .menu-group.products a:hover { color: var(--green); padding-left: var(--sp1); }
-        .menu-group.soon .menu-group-title { color: rgba(255,255,255,0.25); }
-        .menu-group.soon a { font-size: 13px; color: rgba(255,255,255,0.3); padding: 3px 0; }
+        .menu-group.soon .menu-group-title { color: rgba(255,255,255,0.2); }
+        .menu-group.soon a { font-size: 12px; color: rgba(255,255,255,0.28); padding: 3px 0; }
         .menu-group.soon a:hover { color: rgba(255,255,255,0.6); }
 
-        /* ── Footer ── */
         .menu-footer {
           padding: var(--sp3) var(--sp8);
           border-top: 1px solid var(--b1);
@@ -336,8 +348,7 @@ export function Nav() {
           justify-content: space-between;
           align-items: center;
           opacity: ${isOpen ? 1 : 0};
-          transform: ${isOpen ? "translateY(0)" : "translateY(6px)"};
-          transition: opacity 320ms ease 300ms, transform 380ms cubic-bezier(0.16,1,0.3,1) 300ms;
+          transition: opacity 300ms ease 280ms;
         }
         .menu-footer-socials { display: flex; gap: var(--sp6); }
         .menu-footer-socials a {
@@ -345,7 +356,7 @@ export function Nav() {
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 0.08em;
-          color: rgba(255,255,255,0.4);
+          color: rgba(255,255,255,0.35);
           text-decoration: none;
           transition: color var(--e-fast);
         }
@@ -353,76 +364,42 @@ export function Nav() {
         .menu-footer-tagline {
           font-family: var(--font-haas);
           font-size: 11px;
-          color: rgba(255,255,255,0.3);
-          letter-spacing: 0.01em;
+          color: rgba(255,255,255,0.28);
         }
         .menu-footer-tagline .accent { color: var(--green); }
 
-        /* ── Backdrop ── */
-        .nav-backdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0,0,0,0.5);
-          z-index: 850;
-          opacity: ${isOpen ? 1 : 0};
-          pointer-events: ${isOpen ? "auto" : "none"};
-          transition: opacity 350ms ease;
-        }
-
-        /* ════════════════════════════════════════════════
-           TABLET 769–1024px: drop pill, 2-col topbar
-        ════════════════════════════════════════════════ */
+        /* ════════════════════════════════════════════
+           TABLET 769–1024px: pill slightly smaller
+        ════════════════════════════════════════════ */
         @media (min-width: 769px) and (max-width: 1024px) {
-          .nav-pill-wrap { display: none !important; }
-          .nav-topbar { grid-template-columns: auto auto; justify-content: space-between; }
-          .menu-split { grid-template-columns: 1fr ${isOpen ? "260px" : "0px"}; }
+          .nav-pill a { font-size: 13px; padding: 8px 14px; }
+          .menu-split { grid-template-columns: 1fr 240px; }
           .menu-left  { padding: var(--sp6) var(--sp6) var(--sp5); }
           .menu-right { padding: var(--sp6) var(--sp6) var(--sp5) var(--sp5); }
           .menu-footer { padding: var(--sp3) var(--sp6); }
         }
 
-        /* ════════════════════════════════════════════════
-           MOBILE ≤ 768px
-           Shell always visible (dynamic island on mobile too).
-           Topbar: logo | actions only.
-           Menu: stacked, scrollable.
-        ════════════════════════════════════════════════ */
+        /* ════════════════════════════════════════════
+           MOBILE ≤ 768px — pill stays visible, compact
+        ════════════════════════════════════════════ */
         @media (max-width: 768px) {
           #site-header {
-            top: var(--sp2);
+            top: var(--sp3);
+            left: var(--sp3);
+            right: var(--sp3);
+            padding: 0 var(--sp3);
+          }
+          .nav-panel {
+            top: var(--sp3);
             left: var(--sp3);
             right: var(--sp3);
           }
-          /* Always show the pill/island on mobile */
-          .nav-shell {
-            background: ${isOpen
-              ? "#141414"
-              : dark
-                ? "rgba(14,14,14,0.88)"
-                : "rgba(248,249,246,0.88)"} !important;
-            border-color: ${isOpen
-              ? "var(--b1)"
-              : dark
-                ? "var(--b1)"
-                : "rgba(0,0,0,0.07)"} !important;
-            backdrop-filter: blur(24px) !important;
-            -webkit-backdrop-filter: blur(24px) !important;
-          }
-          /* 2-col: logo + actions */
-          .nav-topbar {
-            grid-template-columns: auto auto;
-            justify-content: space-between;
-            gap: var(--sp3);
-            padding: 0 var(--sp4);
-            height: 52px;
-          }
-          /* Logo fixed 18px on mobile */
-          .nav-logo img { height: 18px !important; width: auto !important; }
-          /* Hide pill on mobile */
-          .nav-pill-wrap { display: none !important; }
-          /* Smaller CTA on mobile */
-          .nav-cta { font-size: 12px; padding: 0 var(--sp4); height: 32px; }
-          /* Stack menu vertically */
+          .nav-logo img { height: 18px !important; }
+          .nav-pill { gap: 2px; padding: 4px; }
+          .nav-pill a { font-size: 12px; padding: 7px 11px; }
+          .nav-cta { font-size: 12px; padding: 0 var(--sp3); height: 32px; }
+          .nav-burger { width: 32px; height: 32px; }
+          .nav-panel-spacer { height: 52px; }
           .menu-split {
             display: flex !important;
             flex-direction: column;
@@ -431,8 +408,6 @@ export function Nav() {
             padding: var(--sp5) var(--sp4) var(--sp4);
             border-right: none;
             border-bottom: 1px solid var(--b1);
-            opacity: 1 !important;
-            transform: none !important;
           }
           .menu-nav-link { font-size: 26px; letter-spacing: -0.4px; }
           .menu-right {
@@ -441,144 +416,130 @@ export function Nav() {
             flex-direction: row;
             flex-wrap: wrap;
             gap: var(--sp5);
-            opacity: 1 !important;
-            transform: none !important;
           }
-          .menu-group { flex: 1; min-width: 120px; }
-          .menu-group a { font-size: 14px; }
-          .menu-group.products a { font-size: 13px; }
+          .menu-group { flex: 1; min-width: 110px; }
+          .menu-group a { font-size: 13px; }
           .menu-footer {
             padding: var(--sp3) var(--sp4);
             flex-direction: column;
             align-items: flex-start;
             gap: var(--sp2);
-            opacity: 1 !important;
-            transform: none !important;
           }
           .menu-footer-socials { gap: var(--sp4); }
         }
 
-        /* ════════════════════════════════════════════════
-           VERY SMALL ≤ 480px
-        ════════════════════════════════════════════════ */
+        /* ≤ 600px — pill hides; only logo + CTA + burger fit cleanly */
+        @media (max-width: 600px) {
+          .nav-pill { display: none !important; }
+        }
+
         @media (max-width: 480px) {
           .nav-logo img { height: 16px !important; }
+          .nav-cta { font-size: 11px; padding: 0 var(--sp3); height: 30px; }
+          .nav-burger { width: 30px; height: 30px; }
           .menu-nav-link { font-size: 22px; }
           .menu-right { flex-direction: column; gap: var(--sp4); }
           .menu-group { min-width: unset; }
         }
       `}</style>
 
+      {/* Backdrop */}
       <div className="nav-backdrop" onClick={() => setIsOpen(false)} />
 
-      <header ref={headerRef} id="site-header">
-        <div className="nav-shell">
-
-          <div className="nav-topbar">
-            <Link href="/" className="nav-logo">
-              {!imgError ? (
-                <Image
-                  src="https://madebynemo.com/storage/2025/05/nemo-white.png"
-                  alt="Nemo"
-                  width={80}
-                  height={20}
-                  style={{ height: 20, width: "auto", flexShrink: 0 }}
-                  onError={() => setImgError(true)}
-                  unoptimized
-                />
-              ) : (
-                <span className="nav-logo-fallback">NEMO</span>
-              )}
-            </Link>
-
-            <div className="nav-pill-wrap">
-              <ul className="nav-pill">
-                {NAV_ITEMS.map((item) => {
-                  const active = pathname === item.href;
-                  return (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        style={{
-                          color: dark
-                            ? active ? "#fff" : "rgba(255,255,255,0.75)"
-                            : active ? "#111" : "rgba(0,0,0,0.6)",
-                          background: active
-                            ? dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"
-                            : "transparent",
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+      {/* Menu panel — sits behind header, expands downward */}
+      <div className="nav-panel" aria-hidden={!isOpen}>
+        <div className="nav-panel-spacer" />
+        <div className="nav-panel-inner">
+          <div className="menu-split">
+            <div className="menu-left">
+              {MENU_LINKS.map((item) => (
+                <Link key={item.href} href={item.href} className="menu-nav-link">
+                  {item.label}
+                  <span className="link-arrow">→</span>
+                </Link>
+              ))}
             </div>
-
-            <div className="nav-actions">
-              <Link href="/contact" className="nav-cta">
-                Let&apos;s talk
-              </Link>
-              <button
-                className={`nav-burger ${isOpen ? "open" : ""}`}
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-              >
-                <span className="bar" />
-                <span className="bar" />
-              </button>
-            </div>
-          </div>
-
-          <div className="nav-menu-body" aria-hidden={!isOpen}>
-            <div className="nav-menu-overflow">
-              <div className="nav-menu-scroll">
-                <div className="menu-split">
-                  <div className="menu-left">
-                    {MENU_LINKS.map((item) => (
-                      <Link key={item.href} href={item.href} className="menu-nav-link">
-                        {item.label}
-                        <span className="link-arrow">→</span>
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="menu-right">
-                    <div className="menu-group">
-                      <div className="menu-group-title">Company</div>
-                      <Link href="/about">Studio</Link>
-                      <Link href="/careers">Careers</Link>
-                      <Link href="/growth-plan">Growth Plan</Link>
-                      <Link href="/charity">Charity</Link>
-                    </div>
-                    <div className="menu-group products">
-                      <div className="menu-group-title">Products</div>
-                      <Link href="/products/mappire">Mappire</Link>
-                      <Link href="/products/crm">Nemo CRM</Link>
-                      <Link href="/products/go">Nemo GO</Link>
-                    </div>
-                    <div className="menu-group soon">
-                      <div className="menu-group-title">Coming Soon</div>
-                      <Link href="#">Partner Program</Link>
-                      <Link href="#">Affiliate Marketing</Link>
-                      <Link href="#">Sitemap</Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="menu-footer">
-                  <div className="menu-footer-socials">
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://behance.net"   target="_blank" rel="noopener noreferrer">Behance</a>
-                  </div>
-                  <p className="menu-footer-tagline">
-                    Independent studio. Built in <span className="accent">Cairo.</span>
-                  </p>
-                </div>
+            <div className="menu-right">
+              <div className="menu-group">
+                <div className="menu-group-title">Company</div>
+                <Link href="/about">Studio</Link>
+                <Link href="/careers">Careers</Link>
+                <Link href="/growth-plan">Growth Plan</Link>
+                <Link href="/charity">Charity</Link>
+              </div>
+              <div className="menu-group products">
+                <div className="menu-group-title">Products</div>
+                <Link href="/products/mappire">Mappire</Link>
+                <Link href="/products/crm">Nemo CRM</Link>
+                <Link href="/products/go">Nemo GO</Link>
+              </div>
+              <div className="menu-group soon">
+                <div className="menu-group-title">Coming Soon</div>
+                <Link href="#">Partner Program</Link>
+                <Link href="#">Affiliate Marketing</Link>
+                <Link href="#">Sitemap</Link>
               </div>
             </div>
           </div>
+          <div className="menu-footer">
+            <div className="menu-footer-socials">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://behance.net"   target="_blank" rel="noopener noreferrer">Behance</a>
+            </div>
+            <p className="menu-footer-tagline">
+              Independent studio. Built in <span className="accent">Cairo.</span>
+            </p>
+          </div>
+        </div>
+      </div>
 
+      {/* ── Single header: logo | pill | actions ── */}
+      <header ref={headerRef} id="site-header">
+        <Link href="/" className="nav-logo">
+          {!imgError ? (
+            <Image
+              src="https://madebynemo.com/storage/2025/05/nemo-white.png"
+              alt="Nemo"
+              width={80}
+              height={20}
+              style={{ height: 20, width: "auto" }}
+              onError={() => setImgError(true)}
+              unoptimized
+            />
+          ) : (
+            <span className="nav-logo-fallback">NEMO</span>
+          )}
+        </Link>
+
+        <ul className="nav-pill">
+          {NAV_ITEMS.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={active ? "active" : ""}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="nav-actions">
+          <Link href="/contact" className="nav-cta">
+            Let&apos;s talk
+          </Link>
+          <button
+            className={`nav-burger${isOpen ? " is-open" : ""}`}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            <span className="bar" />
+            <span className="bar" />
+          </button>
         </div>
       </header>
     </>
