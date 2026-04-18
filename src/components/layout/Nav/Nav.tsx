@@ -316,8 +316,8 @@ export function Nav() {
           flex-direction: column;
           gap: var(--sp6);
           opacity: ${isOpen ? 1 : 0};
-          transform: ${isOpen ? "translateX(0)" : "translateX(var(--sp7))"};
-          transition: opacity 340ms ease 180ms, transform 420ms cubic-bezier(0.16,1,0.3,1) 180ms;
+          transform: ${isOpen ? "translateX(0)" : "translateX(var(--sp8))"};
+          transition: opacity 340ms ease, transform 420ms cubic-bezier(0.22,1,0.36,1);
           overflow: hidden;
         }
         .menu-group-title {
