@@ -44,7 +44,10 @@ export function Nav() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
-  useEffect(() => { setIsOpen(false); }, [pathname]);
+  useEffect(() => {
+    const closeMenu = window.setTimeout(() => setIsOpen(false), 0);
+    return () => window.clearTimeout(closeMenu);
+  }, [pathname]);
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -60,32 +63,53 @@ export function Nav() {
   return (
     <>
       <style>{`
-        /* ── Fixed header strip: logo | pill | actions ── */
         #site-header {
-          position: fixed;
-          top: var(--sp4);
-          left: var(--sp6);
-          right: var(--sp6);
-          z-index: 900;
-          pointer-events: none;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          max-width: var(--container);
-          margin: 0 auto;
-          padding: 0 var(--sp6);
-          box-sizing: border-box;
+          --nav-offset-top: var(--sp3);
+          --nav-outer-x: var(--sp6);
+          --nav-shell-pad-left: var(--sp4);
+          --nav-shell-pad-right: var(--sp3);
+          --nav-topbar-height: calc(var(--sp12) + var(--sp1));
         }
 
-        /* ── Logo ── */
+        #site-header {
+          position: fixed;
+          top: var(--nav-offset-top);
+          left: var(--nav-outer-x);
+          right: var(--nav-outer-x);
+          z-index: 900;
+          pointer-events: none;
+        }
+
+        .nav-shell {
+          max-width: var(--container);
+          margin: 0 auto;
+          border-radius: var(--r-xl);
+          overflow: hidden;
+          pointer-events: auto;
+          background: ${isOpen ? "#141414" : "transparent"};
+          border: 1px solid ${isOpen ? "var(--b1)" : "transparent"};
+          backdrop-filter: ${isOpen ? "blur(20px)" : "none"};
+          -webkit-backdrop-filter: ${isOpen ? "blur(20px)" : "none"};
+          transition: background 350ms ease, border-color 350ms ease, backdrop-filter 350ms ease;
+        }
+
+        .nav-topbar {
+          position: relative;
+          display: grid;
+          grid-template-columns: max-content 1fr max-content;
+          align-items: center;
+          gap: var(--sp2);
+          min-height: var(--nav-topbar-height);
+          padding: 0 var(--nav-shell-pad-right) 0 var(--nav-shell-pad-left);
+        }
+
         .nav-logo {
           display: inline-flex;
           align-items: center;
           text-decoration: none;
           flex-shrink: 0;
           line-height: 0;
-          pointer-events: auto;
-          z-index: 1;
+          justify-self: start;
         }
         .nav-logo img {
           height: 20px;
@@ -104,11 +128,15 @@ export function Nav() {
           transition: color 350ms ease;
         }
 
-        /* ── Pill island (absolutely centered) ── */
-        .nav-pill {
+        .nav-pill-wrap {
           position: absolute;
-          left: 50%;
-          top: 50%;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          pointer-events: none;
+        }
+        .nav-pill {
           display: flex;
           gap: var(--sp1);
           list-style: none;
@@ -122,9 +150,10 @@ export function Nav() {
           margin: 0;
           white-space: nowrap;
           opacity: ${isOpen ? 0 : 1};
-          transform: translate(-50%, -50%) scale(${isOpen ? 0.9 : 1});
+          visibility: ${isOpen ? "hidden" : "visible"};
+          transform: scale(${isOpen ? 0.96 : 1});
           pointer-events: ${isOpen ? "none" : "auto"};
-          transition: opacity 260ms ease, transform 320ms cubic-bezier(0.16,1,0.3,1),
+          transition: opacity 260ms ease, visibility 260ms ease, transform 320ms cubic-bezier(0.16,1,0.3,1),
                       background 350ms ease, border-color 350ms ease;
         }
         .nav-pill li { list-style: none; }
@@ -136,6 +165,7 @@ export function Nav() {
           text-decoration: none;
           padding: 9px 16px;
           border-radius: var(--r-pill);
+          pointer-events: ${isOpen ? "none" : "auto"};
           transition: background 200ms ease, color 200ms ease;
           color: ${dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)"};
         }
@@ -145,37 +175,41 @@ export function Nav() {
           background: ${dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"};
         }
 
-        /* ── Actions (right) ── */
         .nav-actions {
           display: flex;
-          gap: var(--sp3);
+          gap: var(--sp2);
           align-items: center;
+          justify-content: flex-end;
           flex-shrink: 0;
-          pointer-events: auto;
-          z-index: 1;
+          justify-self: end;
+          width: max-content;
         }
         .nav-cta {
           font-family: var(--font-haas);
           font-size: 13px;
           font-weight: 500;
+          line-height: 1;
           border-radius: var(--r-pill);
           padding: 0 var(--sp5);
           height: 36px;
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           text-decoration: none;
           cursor: pointer;
           white-space: nowrap;
-          background: ${dark ? "rgba(245,245,240,0.92)" : "rgba(245,245,240,0.92)"};
-          color: #111;
+          flex-shrink: 0;
+          background: ${isOpen ? "var(--green)" : "rgba(245,245,240,0.92)"};
+          color: ${isOpen ? "var(--black)" : "#111"};
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
-          transition: background 300ms ease;
+          border: 1px solid ${isOpen ? "var(--b-green)" : dark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)"};
+          transition: background 300ms ease, border-color 300ms ease, color 300ms ease;
         }
-        .nav-cta:hover { background: rgba(228,230,222,0.97); }
+        .nav-cta:hover {
+          background: ${isOpen ? "var(--green)" : "rgba(228,230,222,0.97)"};
+        }
 
-        /* ── Burger ── */
         .nav-burger {
           flex-shrink: 0;
           width: 36px;
@@ -192,6 +226,7 @@ export function Nav() {
           gap: 5px;
           cursor: pointer;
           padding: 0;
+          line-height: 0;
           transition: background var(--e-fast), border-color var(--e-fast);
         }
         .nav-burger:hover { opacity: 0.85; }
@@ -207,11 +242,6 @@ export function Nav() {
         .nav-burger.is-open .bar:nth-child(1) { transform: rotate(45deg) translate(2.3px, 2.3px); }
         .nav-burger.is-open .bar:nth-child(2) { transform: rotate(-45deg) translate(2.3px, -2.3px); }
 
-        /* ════════════════════════════════════════════
-           MENU OVERLAY — backdrop + panel
-           Panel is anchored to same position as header
-           so it looks like it expands from behind.
-        ════════════════════════════════════════════ */
         .nav-backdrop {
           position: fixed;
           inset: 0;
@@ -222,50 +252,32 @@ export function Nav() {
           transition: opacity 350ms ease;
         }
 
-        .nav-panel {
-          position: fixed;
-          top: var(--sp4);
-          left: var(--sp6);
-          right: var(--sp6);
-          margin: 0 auto;
-          max-width: var(--container);
-          z-index: 880;
-          background: #141414;
-          border: 1px solid var(--b1);
-          border-radius: var(--r-xl);
+        .nav-menu-body {
+          display: grid;
+          grid-template-rows: ${isOpen ? "1fr" : "0fr"};
+          border-top: 1px solid ${isOpen ? "var(--b1)" : "transparent"};
+          transition: grid-template-rows 460ms cubic-bezier(0.16,1,0.3,1),
+                      border-color 300ms ease;
+        }
+        .nav-menu-overflow {
           overflow: hidden;
-          pointer-events: ${isOpen ? "auto" : "none"};
-          max-height: ${isOpen ? "calc(100vh - var(--sp8))" : "0px"};
-          opacity: ${isOpen ? 1 : 0};
-          transform: translateY(${isOpen ? "0" : "-8px"});
-          transition: max-height 480ms cubic-bezier(0.16,1,0.3,1),
-                      opacity 300ms ease,
-                      transform 400ms cubic-bezier(0.16,1,0.3,1);
+          min-height: 0;
         }
-
-        /* Spacer row inside panel so content starts below the real header */
-        .nav-panel-spacer {
-          height: 56px;
-          flex-shrink: 0;
-        }
-
-        .nav-panel-inner {
+        .nav-menu-scroll {
+          max-height: calc(100vh - var(--nav-offset-top) - var(--nav-topbar-height) - var(--sp4));
           overflow-y: auto;
-          max-height: calc(100vh - var(--sp8) - 56px);
           overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
         }
 
-        /* ── Split layout ── */
         .menu-split {
           display: grid;
           grid-template-columns: 1fr 360px;
           overflow: hidden;
         }
         .menu-left {
-          padding: var(--sp8) var(--sp8) var(--sp6);
+          padding: var(--sp5) var(--sp8) var(--sp6);
           border-right: 1px solid var(--b1);
-          border-top: 1px solid var(--b1);
           opacity: ${isOpen ? 1 : 0};
           transform: ${isOpen ? "translateY(0)" : "translateY(8px)"};
           transition: opacity 340ms ease 120ms, transform 400ms cubic-bezier(0.16,1,0.3,1) 120ms;
@@ -298,15 +310,14 @@ export function Nav() {
         .menu-nav-link:hover .link-arrow { opacity: 1; transform: translateX(0); }
 
         .menu-right {
-          padding: var(--sp8) var(--sp8) var(--sp6) var(--sp6);
+          padding: var(--sp5) var(--sp8) var(--sp6) var(--sp6);
           background: rgba(0,0,0,0.18);
           display: flex;
           flex-direction: column;
           gap: var(--sp6);
-          border-top: 1px solid var(--b1);
           opacity: ${isOpen ? 1 : 0};
-          transform: ${isOpen ? "translateY(0)" : "translateY(12px)"};
-          transition: opacity 340ms ease 200ms, transform 400ms cubic-bezier(0.16,1,0.3,1) 200ms;
+          transform: ${isOpen ? "translateX(0)" : "translateX(var(--sp7))"};
+          transition: opacity 340ms ease 180ms, transform 420ms cubic-bezier(0.16,1,0.3,1) 180ms;
           overflow: hidden;
         }
         .menu-group-title {
@@ -365,12 +376,10 @@ export function Nav() {
           font-family: var(--font-haas);
           font-size: 11px;
           color: rgba(255,255,255,0.28);
+          margin: 0;
         }
         .menu-footer-tagline .accent { color: var(--green); }
 
-        /* ════════════════════════════════════════════
-           TABLET 769–1024px: pill slightly smaller
-        ════════════════════════════════════════════ */
         @media (min-width: 769px) and (max-width: 1024px) {
           .nav-pill a { font-size: 13px; padding: 8px 14px; }
           .menu-split { grid-template-columns: 1fr 240px; }
@@ -379,27 +388,20 @@ export function Nav() {
           .menu-footer { padding: var(--sp3) var(--sp6); }
         }
 
-        /* ════════════════════════════════════════════
-           MOBILE ≤ 768px — pill stays visible, compact
-        ════════════════════════════════════════════ */
         @media (max-width: 768px) {
           #site-header {
-            top: var(--sp3);
-            left: var(--sp3);
-            right: var(--sp3);
-            padding: 0 var(--sp3);
+            --nav-offset-top: var(--sp2);
+            --nav-outer-x: var(--sp3);
+            --nav-shell-pad-left: var(--sp3);
+            --nav-shell-pad-right: var(--sp2);
+            --nav-topbar-height: var(--sp12);
           }
-          .nav-panel {
-            top: var(--sp3);
-            left: var(--sp3);
-            right: var(--sp3);
-          }
+          .nav-topbar { min-height: var(--nav-topbar-height); }
           .nav-logo img { height: 18px !important; }
           .nav-pill { gap: 2px; padding: 4px; }
           .nav-pill a { font-size: 12px; padding: 7px 11px; }
           .nav-cta { font-size: 12px; padding: 0 var(--sp3); height: 32px; }
           .nav-burger { width: 32px; height: 32px; }
-          .nav-panel-spacer { height: 52px; }
           .menu-split {
             display: flex !important;
             flex-direction: column;
@@ -416,6 +418,7 @@ export function Nav() {
             flex-direction: row;
             flex-wrap: wrap;
             gap: var(--sp5);
+            transform: none;
           }
           .menu-group { flex: 1; min-width: 110px; }
           .menu-group a { font-size: 13px; }
@@ -425,12 +428,14 @@ export function Nav() {
             align-items: flex-start;
             gap: var(--sp2);
           }
-          .menu-footer-socials { gap: var(--sp4); }
+          .menu-footer-socials {
+            gap: var(--sp3) var(--sp4);
+            flex-wrap: wrap;
+          }
         }
 
-        /* ≤ 600px — pill hides; only logo + CTA + burger fit cleanly */
         @media (max-width: 600px) {
-          .nav-pill { display: none !important; }
+          .nav-pill-wrap { display: none; }
         }
 
         @media (max-width: 480px) {
@@ -443,103 +448,107 @@ export function Nav() {
         }
       `}</style>
 
-      {/* Backdrop */}
       <div className="nav-backdrop" onClick={() => setIsOpen(false)} />
 
-      {/* Menu panel — sits behind header, expands downward */}
-      <div className="nav-panel" aria-hidden={!isOpen}>
-        <div className="nav-panel-spacer" />
-        <div className="nav-panel-inner">
-          <div className="menu-split">
-            <div className="menu-left">
-              {MENU_LINKS.map((item) => (
-                <Link key={item.href} href={item.href} className="menu-nav-link">
-                  {item.label}
-                  <span className="link-arrow">→</span>
-                </Link>
-              ))}
-            </div>
-            <div className="menu-right">
-              <div className="menu-group">
-                <div className="menu-group-title">Company</div>
-                <Link href="/about">Studio</Link>
-                <Link href="/careers">Careers</Link>
-                <Link href="/growth-plan">Growth Plan</Link>
-                <Link href="/charity">Charity</Link>
-              </div>
-              <div className="menu-group products">
-                <div className="menu-group-title">Products</div>
-                <Link href="/products/mappire">Mappire</Link>
-                <Link href="/products/crm">Nemo CRM</Link>
-                <Link href="/products/go">Nemo GO</Link>
-              </div>
-              <div className="menu-group soon">
-                <div className="menu-group-title">Coming Soon</div>
-                <Link href="#">Partner Program</Link>
-                <Link href="#">Affiliate Marketing</Link>
-                <Link href="#">Sitemap</Link>
-              </div>
-            </div>
-          </div>
-          <div className="menu-footer">
-            <div className="menu-footer-socials">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-              <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://behance.net"   target="_blank" rel="noopener noreferrer">Behance</a>
-            </div>
-            <p className="menu-footer-tagline">
-              Independent studio. Built in <span className="accent">Cairo.</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Single header: logo | pill | actions ── */}
       <header ref={headerRef} id="site-header">
-        <Link href="/" className="nav-logo">
-          {!imgError ? (
-            <Image
-              src="https://madebynemo.com/storage/2025/05/nemo-white.png"
-              alt="Nemo"
-              width={80}
-              height={20}
-              style={{ height: 20, width: "auto" }}
-              onError={() => setImgError(true)}
-              unoptimized
-            />
-          ) : (
-            <span className="nav-logo-fallback">NEMO</span>
-          )}
-        </Link>
+        <div className="nav-shell">
+          <div className="nav-topbar">
+            <Link href="/" className="nav-logo">
+              {!imgError ? (
+                <Image
+                  src="https://madebynemo.com/storage/2025/05/nemo-white.png"
+                  alt="Nemo"
+                  width={80}
+                  height={20}
+                  style={{ height: 20, width: "auto" }}
+                  onError={() => setImgError(true)}
+                  unoptimized
+                />
+              ) : (
+                <span className="nav-logo-fallback">NEMO</span>
+              )}
+            </Link>
 
-        <ul className="nav-pill">
-          {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href;
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={active ? "active" : ""}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+            <div className="nav-pill-wrap">
+              <ul className="nav-pill">
+                {NAV_ITEMS.map((item) => {
+                  const active = pathname === item.href;
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={active ? "active" : ""}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
 
-        <div className="nav-actions">
-          <Link href="/contact" className="nav-cta">
-            Let&apos;s talk
-          </Link>
-          <button
-            className={`nav-burger${isOpen ? " is-open" : ""}`}
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-          >
-            <span className="bar" />
-            <span className="bar" />
-          </button>
+            <div className="nav-actions">
+              <Link href="/contact" className="nav-cta">
+                Let&apos;s talk
+              </Link>
+              <button
+                className={`nav-burger${isOpen ? " is-open" : ""}`}
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+              >
+                <span className="bar" />
+                <span className="bar" />
+              </button>
+            </div>
+          </div>
+
+          <div className="nav-menu-body" aria-hidden={!isOpen}>
+            <div className="nav-menu-overflow">
+              <div className="nav-menu-scroll">
+                <div className="menu-split">
+                  <div className="menu-left">
+                    {MENU_LINKS.map((item) => (
+                      <Link key={item.href} href={item.href} className="menu-nav-link">
+                        {item.label}
+                        <span className="link-arrow">→</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="menu-right">
+                    <div className="menu-group">
+                      <div className="menu-group-title">Company</div>
+                      <Link href="/about">Studio</Link>
+                      <Link href="/careers">Careers</Link>
+                      <Link href="/growth-plan">Growth Plan</Link>
+                      <Link href="/charity">Charity</Link>
+                    </div>
+                    <div className="menu-group products">
+                      <div className="menu-group-title">Products</div>
+                      <Link href="/products/mappire">Mappire</Link>
+                      <Link href="/products/crm">Nemo CRM</Link>
+                      <Link href="/products/go">Nemo GO</Link>
+                    </div>
+                    <div className="menu-group soon">
+                      <div className="menu-group-title">Coming Soon</div>
+                      <Link href="#">Partner Program</Link>
+                      <Link href="#">Affiliate Marketing</Link>
+                      <Link href="#">Sitemap</Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="menu-footer">
+                  <div className="menu-footer-socials">
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://behance.net"   target="_blank" rel="noopener noreferrer">Behance</a>
+                  </div>
+                  <p className="menu-footer-tagline">
+                    Independent studio. Built in <span className="accent">Cairo.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
     </>
