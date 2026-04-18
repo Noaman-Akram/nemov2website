@@ -111,21 +111,24 @@ export function Nav() {
         .nav-pill {
           position: absolute;
           left: 50%;
-          transform: translateX(-50%);
+          top: 50%;
           display: flex;
           gap: var(--sp1);
           list-style: none;
           align-items: center;
-          background: ${dark ? "rgba(20,20,20,0.78)" : "rgba(245,245,240,0.88)"};
+          background: ${dark || isOpen ? "rgba(20,20,20,0.78)" : "rgba(245,245,240,0.88)"};
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid ${dark ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"};
+          border: 1px solid ${dark || isOpen ? "rgba(255,255,255,0.09)" : "rgba(0,0,0,0.08)"};
           border-radius: var(--r-pill);
           padding: 5px;
           margin: 0;
-          pointer-events: auto;
-          transition: background 350ms ease, border-color 350ms ease;
           white-space: nowrap;
+          opacity: ${isOpen ? 0 : 1};
+          transform: translate(-50%, -50%) scale(${isOpen ? 0.9 : 1});
+          pointer-events: ${isOpen ? "none" : "auto"};
+          transition: opacity 260ms ease, transform 320ms cubic-bezier(0.16,1,0.3,1),
+                      background 350ms ease, border-color 350ms ease;
         }
         .nav-pill li { list-style: none; }
         .nav-pill a {
@@ -139,6 +142,7 @@ export function Nav() {
           transition: background 200ms ease, color 200ms ease;
           color: ${dark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)"};
         }
+        .nav-pill a:hover { color: ${dark ? "#fff" : "#111"}; }
         .nav-pill a.active {
           color: ${dark ? "#fff" : "#111"};
           background: ${dark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"};
@@ -224,9 +228,9 @@ export function Nav() {
         .nav-panel {
           position: fixed;
           top: var(--sp4);
-          left: 50%;
-          transform: translateX(-50%);
-          width: calc(100% - var(--sp12));
+          left: var(--sp6);
+          right: var(--sp6);
+          margin: 0 auto;
           max-width: var(--container);
           z-index: 880;
           background: #141414;
@@ -234,22 +238,23 @@ export function Nav() {
           border-radius: var(--r-xl);
           overflow: hidden;
           pointer-events: ${isOpen ? "auto" : "none"};
-          /* Animate: closed = just tall enough for 1 topbar row, then grows */
           max-height: ${isOpen ? "calc(100vh - var(--sp8))" : "0px"};
           opacity: ${isOpen ? 1 : 0};
+          transform: translateY(${isOpen ? "0" : "-8px"});
           transition: max-height 480ms cubic-bezier(0.16,1,0.3,1),
-                      opacity 300ms ease;
+                      opacity 300ms ease,
+                      transform 400ms cubic-bezier(0.16,1,0.3,1);
         }
 
         /* Spacer row inside panel so content starts below the real header */
         .nav-panel-spacer {
-          height: 64px;
+          height: 56px;
           flex-shrink: 0;
         }
 
         .nav-panel-inner {
           overflow-y: auto;
-          max-height: calc(100vh - var(--sp8) - 64px);
+          max-height: calc(100vh - var(--sp8) - 56px);
           overscroll-behavior: contain;
           -webkit-overflow-scrolling: touch;
         }
@@ -387,15 +392,15 @@ export function Nav() {
           }
           .nav-panel {
             top: var(--sp3);
-            width: calc(100% - var(--sp8));
+            left: var(--sp4);
+            right: var(--sp4);
           }
           .nav-logo img { height: 18px !important; }
-          /* Pill smaller on mobile */
-          .nav-pill { gap: 2px; padding: 4px; }
-          .nav-pill a { font-size: 12px; padding: 7px 11px; }
+          /* Hide pill on mobile — burger handles navigation there */
+          .nav-pill { display: none !important; }
           .nav-cta { font-size: 12px; padding: 0 var(--sp4); height: 32px; }
           .nav-burger { width: 32px; height: 32px; }
-          .nav-panel-spacer { height: 56px; }
+          .nav-panel-spacer { height: 52px; }
           .menu-split {
             display: flex !important;
             flex-direction: column;
@@ -426,8 +431,6 @@ export function Nav() {
 
         @media (max-width: 480px) {
           .nav-logo img { height: 16px !important; }
-          /* Very small: hide pill, keep CTA + burger */
-          .nav-pill { display: none !important; }
           .menu-nav-link { font-size: 22px; }
           .menu-right { flex-direction: column; gap: var(--sp4); }
           .menu-group { min-width: unset; }
