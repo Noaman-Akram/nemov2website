@@ -64,19 +64,15 @@ export function Nav() {
         #site-header {
           position: fixed;
           top: var(--sp4);
-          left: 0;
-          right: 0;
+          left: var(--sp6);
+          right: var(--sp6);
           z-index: 900;
           pointer-events: none;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          width: 100%;
           max-width: var(--container);
           margin: 0 auto;
-          padding: 0 var(--sp6);
-          left: 50%;
-          transform: translateX(-50%);
           box-sizing: border-box;
         }
 
