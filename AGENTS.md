@@ -1,7 +1,7 @@
 # Nemo Website — Codex Standing Instructions
 
 ## Always follow the design system
-This project has a strict design system defined in `_archive/design/01-component-kit.html`.
+This project has a strict design system defined in `_archive/design/core/01-component-kit.html`.
 **Never** hardcode values that exist as CSS custom properties. Always use tokens:
 
 ### Spacing — `var(--sp1)` through `var(--sp20)`

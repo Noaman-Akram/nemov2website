@@ -430,42 +430,80 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ════════════════════════════════════════════════════
-   OPTION J — Rhythmic Grid (Premium)
-   Fixed-width cells to ensure uniform pace and weight
+   OPTION K — Normalized Area (Premium)
+   Ensures square and wide logos feel unified in scale.
+   Uses a 'Visual Volume' constraint (Max-Area).
    ════════════════════════════════════════════════════ */
-.j-wrap {
+.k-wrap {
   --fade-color: #0D0D0D;
-  --speed: 18s; /* FASTER as requested */
+  --speed: 15s; 
   background: #0D0D0D;
-  padding: 48px 0;
+  padding: 64px 0;
   border-top: 1px solid var(--b2);
   border-bottom: 1px solid var(--b2);
 }
-.j-track {
-  display: flex;
-  align-items: center;
-}
-.mq-cell {
+.k-cell {
   flex-shrink: 0;
-  width: 220px; /* fixed rhythmic "slot" */
+  width: 140px; /* Base width */
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 40px; /* side breathing room */
+  margin: 0 40px;
 }
-.mq-cell img {
+.k-cell img {
+  /* The "Universal Area" hack */
   max-width: 100%;
   max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   filter: brightness(0) invert(1);
-  opacity: 0.35;
-  transition: all var(--e-fast);
+  opacity: 0.3;
+  transition: all 400ms var(--e-fast);
 }
-.mq-cell:hover img {
+/* Wide logos get vertical compression to look smaller */
+.k-cell.wide img   { max-height: 28px; }
+/* Square logos get horizontal compression to look smaller */
+.k-cell.square img { max-height: 44px; max-width: 90px; }
+
+.k-cell:hover img {
   opacity: 1;
   transform: scale(1.1);
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(53,214,135,0.4));
 }
+
+/* ════════════════════════════════════════════════════
+   OPTION L — Editorial Stagger
+   Vertical offsets for break-the-grid creative rhythm.
+   ════════════════════════════════════════════════════ */
+.l-wrap {
+  --fade-color: #111;
+  --speed: 20s;
+  background: #111;
+  padding: 100px 0;
+}
+.l-track {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+.l-item {
+  flex-shrink: 0;
+  transition: all var(--e-fast);
+}
+.l-item:nth-child(even) { transform: translateY(20px); }
+.l-item:nth-child(odd)  { transform: translateY(-20px); }
+
+.l-item img {
+  height: 32px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.4;
+  transition: opacity 400ms ease;
+}
+.l-item:hover { transform: translateY(0) scale(1.15); z-index: 10; }
+.l-item:hover img { opacity: 1; }
 
 </style>
 </head>
@@ -476,33 +514,59 @@ a { text-decoration: none; color: inherit; }
   <p style="font-family: var(--font-haas); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">Design Lab</p>
   <h1 style="font-family: var(--font-aeonik); font-size:clamp(28px,4vw,44px); font-weight:400; letter-spacing:-1.5px; color:#fff; margin-bottom:16px;">Marquee Options</h1>
   <p style="font-family: var(--font-haas); font-size:14px; color:rgba(255,255,255,0.35); max-width:480px; margin:0 auto;">
-    10 variants — dark &amp; light backgrounds, different logo sizes, pill containers, card containers, multi-row, and hover effects. Hover any logo to pause.
+    12 variants — dark &amp; light backgrounds, different logo sizes, and the new 2026 Editorial Stagger. Hover any logo to pause.
   </p>
 </div>
 
 
-<!-- ════════ J — RHYTHMIC GRID · Premium (Corrected Sizing) ════════ -->
+<!-- ════════ K — NORMALIZED AREA (BEST FOR PROD) ════════ -->
 <div class="lab-section">
-  <p class="lab-label">Option J (BEST)</p>
-  <p class="lab-title">Rhythmic Grid · Fixed 220px Cells · Fast (18s) · Uniform Weight</p>
-  <div class="mq-wrap j-wrap">
-    <div class="mq-track j-track" style="animation-duration: var(--speed);">
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+  <p class="lab-label">Option K (PREMIUM)</p>
+  <p class="lab-title">Normalized Visual Area · 15s Duration · High Dynamic Balance</p>
+  <div class="mq-wrap k-wrap">
+    <div class="mq-track" style="animation-duration: var(--speed);">
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
       <!-- dup -->
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="mq-cell"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
     </div>
   </div>
 </div>
+
+<!-- ════════ L — EDITORIAL STAGGER (CREATIVE) ════════ -->
+<div class="lab-section">
+  <p class="lab-label">Option L (CREATIVE)</p>
+  <p class="lab-title">Agency Stagger · Vertical Offsets · Kinetic Rhythm</p>
+  <div class="mq-wrap l-wrap" style="--speed: 24s">
+    <div class="mq-track l-track">
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+       <!-- dup -->
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
+      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════ J — RHYTHMIC GRID · Premium (Corrected Sizing) ════════ -->
 
 
 <!-- ════════ A — DARK · greyscale logos · reference from 02-home-test ════════ -->
