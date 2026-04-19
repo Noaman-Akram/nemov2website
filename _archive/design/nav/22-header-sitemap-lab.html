@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Header Sitemap Lab 22</title>
+<style>
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');font-weight:400;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype');font-weight:500;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype');font-weight:300;}
+@font-face{font-family:'AeonikPro';src:url('../../src/fonts/AeonikPro-Bold.otf') format('opentype');font-weight:700;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');font-weight:400;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype');font-weight:500;}
+@font-face{font-family:'NeueHaas';src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype');font-weight:300;}
+
+:root{
+  --green:#35D687;--green-dim:rgba(53,214,135,0.12);
+  --black:#080808;--charcoal:#131313;--off-white:#F5F5F0;--warm-cream:#E9EBDF;
+  --border:rgba(255,255,255,0.06);--border-light:rgba(255,255,255,0.04);
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --r-pill:9999px;--r-lg:16px;--r-md:12px;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:#ddddd8;color:#111;font-family:var(--font-haas);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+
+/* ── Lab chrome ── */
+.lab-header{text-align:center;padding:56px 20px 0;}
+.lab-header h1{font-family:var(--font-aeonik);font-size:22px;font-weight:400;color:rgba(0,0,0,.65);letter-spacing:-0.5px;}
+.lab-header p{font-family:var(--font-haas);font-size:11px;color:rgba(0,0,0,.3);margin-top:8px;letter-spacing:.04em;}
+
+.section-label{text-align:center;font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.15em;padding:48px 20px 14px;color:rgba(0,0,0,.3);}
+.section-label strong{display:block;font-size:13px;font-weight:500;color:rgba(0,0,0,.55);text-transform:none;letter-spacing:-.2px;margin-bottom:4px;}
+
+/* ── Preview wrapper ── */
+.pw{max-width:1400px;margin:0 auto 80px;padding:0 20px;}
+.pt{display:flex;gap:2px;margin-bottom:-1px;position:relative;z-index:2;}
+.pt div{font-family:var(--font-aeonik);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:10px 20px;background:rgba(0,0,0,.06);color:rgba(0,0,0,.35);border-radius:8px 8px 0 0;cursor:pointer;border:1px solid transparent;border-bottom:none;transition:all 150ms ease;}
+.pt div.a{background:var(--black);color:rgba(255,255,255,.6);border-color:var(--border);}
+.pt div:hover:not(.a){background:rgba(0,0,0,.1);}
+.fd{background:var(--black);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;min-height:560px;}
+.fm{background:var(--black);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.2);width:390px;margin:0 auto;border:3px solid #1f1f1f;display:none;position:relative;min-height:680px;}
+.pw.mob .fd{display:none;}.pw.mob .fm{display:block;}
+
+/* ── Shared header shell ── */
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;position:relative;z-index:100;}
+.logo-img{height:20px;width:auto;}
+.pill{display:flex;gap:4px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill);padding:5px;}
+.pill a{display:inline-block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--r-pill);transition:all 200ms ease;}
+.pill a:hover{color:#fff;background:rgba(255,255,255,.06);}
+.pill a.ac{color:#fff;background:rgba(255,255,255,.1);}
+.fm .pill{display:none;}
+.h-actions{display:flex;gap:10px;align-items:center;}
+.cta{font-family:var(--font-haas);font-size:13px;border-radius:var(--r-pill);padding:0 20px;height:36px;display:inline-flex;align-items:center;border:none;cursor:pointer;transition:all 200ms ease;white-space:nowrap;background:var(--warm-cream);color:#151515;}
+.cta:hover{background:#d6d8c6;}
+.menu-toggle{width:36px;height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:var(--r-pill);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);transition:all 200ms ease;}
+.menu-toggle:hover{background:rgba(255,255,255,.1);}
+.menu-toggle .bar{display:block;width:16px;height:1.5px;background:#fff;transition:all 400ms var(--ease-out);transform-origin:center;}
+.menu-toggle.open .bar:nth-child(1){transform:rotate(45deg) translate(2.3px,2.3px);}
+.menu-toggle.open .bar:nth-child(2){transform:rotate(-45deg) translate(2.3px,-2.3px);}
+
+/* ── Menu panel base ── */
+.menu-panel{position:absolute;top:68px;left:16px;right:16px;z-index:90;background:var(--charcoal);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transform:translateY(-8px) scale(0.98);opacity:0;pointer-events:none;transition:transform 500ms var(--ease-out),opacity 400ms ease;transform-origin:top center;}
+.menu-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+.fm .menu-panel{top:58px;left:10px;right:10px;}
+.menu-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:80;opacity:0;pointer-events:none;transition:opacity 400ms ease;}
+.menu-backdrop.open{opacity:1;pointer-events:auto;}
+.page-content{padding:100px 32px 60px;font-family:var(--font-aeonik);font-size:52px;font-weight:300;color:rgba(255,255,255,.04);line-height:1.15;letter-spacing:-2px;transition:filter 400ms ease;}
+.page-content.dimmed{filter:blur(2px);}
+.fm .page-content{padding:80px 20px 40px;font-size:30px;}
+
+/* Panel footer shared */
+.panel-footer{padding:16px 24px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;}
+.panel-footer .socials{display:flex;gap:20px;}
+.panel-footer .socials a{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.06em;text-transform:uppercase;transition:color 200ms ease;}
+.panel-footer .socials a:hover{color:#fff;}
+.panel-footer .tagline{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.12);letter-spacing:.02em;}
+
+/* Shared stagger */
+.stagger-in{transform:translateY(12px);opacity:0;transition:transform 500ms var(--ease-out),opacity 400ms ease;}
+.menu-panel.open .stagger-in{transform:translateY(0);opacity:1;}
+.menu-panel.open .stagger-in:nth-child(1){transition-delay:60ms;}
+.menu-panel.open .stagger-in:nth-child(2){transition-delay:120ms;}
+.menu-panel.open .stagger-in:nth-child(3){transition-delay:180ms;}
+.menu-panel.open .stagger-in:nth-child(4){transition-delay:240ms;}
+.menu-panel.open .stagger-in:nth-child(5){transition-delay:300ms;}
+
+/* ── Shared token shortcuts ── */
+.eyebrow-label{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.12);}
+.green-dot::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);margin-right:6px;opacity:.7;}
+
+
+/* ═══════════════════════════════════════════════════
+   OPTION A — Wide Four-Column Directory
+   Left: 3 big nav links + descriptor
+   Middle: Capabilities + Solutions
+   Right: Hubs (service + industry)
+   Far right: Footer utility links
+════════════════════════════════════════════════════ */
+.opt-a .panel-body{display:grid;grid-template-columns:1.6fr 1.2fr 1.2fr 0.8fr;padding:28px 28px 0;gap:0;}
+.opt-a .col{padding-right:28px;border-right:1px solid var(--border-light);}
+.opt-a .col:last-child{border-right:none;padding-right:0;}
+.opt-a .col + .col{padding-left:28px;}
+
+.opt-a .big-link{display:block;font-family:var(--font-aeonik);font-size:42px;font-weight:300;color:rgba(255,255,255,.08);letter-spacing:-1.5px;line-height:1.15;padding:6px 0;transition:all 450ms var(--ease-out);}
+.opt-a .big-link:hover{color:#fff;padding-left:6px;}
+.opt-a .big-link .arr{font-size:18px;opacity:0;transform:translateX(-8px);transition:all 350ms ease;display:inline-block;margin-left:6px;color:var(--green);}
+.opt-a .big-link:hover .arr{opacity:1;transform:translateX(0);}
+
+.opt-a .col-label{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.1);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:6px;}
+.opt-a .col-label::before{content:'//';color:var(--green);opacity:.6;font-size:8px;}
+
+.opt-a .nav-link{display:block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.25);padding:5px 0;transition:all 200ms ease;}
+.opt-a .nav-link:hover{color:#fff;padding-left:4px;}
+.opt-a .nav-link.accent{font-family:var(--font-aeonik);font-size:12px;font-weight:500;color:rgba(255,255,255,.18);}
+.opt-a .nav-link.accent:hover{color:var(--green);}
+
+.opt-a .sub-group{margin-bottom:18px;}
+.opt-a .sub-head{font-family:var(--font-aeonik);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.08);margin-bottom:6px;}
+
+.opt-a .hub-tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.18);padding:4px 8px;border:1px solid rgba(255,255,255,.06);border-radius:4px;margin:2px 0;transition:all 200ms ease;cursor:pointer;}
+.opt-a .hub-tag:hover{color:#fff;border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.04);}
+.opt-a .hub-tag .dot{width:5px;height:5px;border-radius:50%;background:var(--green);opacity:.5;}
+
+.opt-a .desc-txt{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.1);line-height:1.6;margin-top:auto;padding-top:16px;border-top:1px solid var(--border-light);}
+
+.fm .opt-a .panel-body{grid-template-columns:1fr;padding:20px 20px 0;gap:16px;}
+.fm .opt-a .col{border-right:none;border-bottom:1px solid var(--border-light);padding-right:0;padding-bottom:16px;padding-left:0 !important;}
+.fm .opt-a .col:last-child{border-bottom:none;}
+.fm .opt-a .big-link{font-size:34px;}
+
+
+/* ═══════════════════════════════════════════════════
+   OPTION B — Two-Panel Mega (Left Nav + Right Context)
+   Left side: 5 mega links with sub-descriptions
+   Right side: A featured/contextual card changes on hover
+════════════════════════════════════════════════════ */
+.opt-b .panel-body{display:grid;grid-template-columns:1.1fr 1fr;padding:0;gap:0;}
+.opt-b .nav-side{padding:24px 0 0;}
+.opt-b .mega-link{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--border-light);cursor:pointer;transition:all 300ms ease;position:relative;overflow:hidden;}
+.opt-b .mega-link::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green);transform:scaleY(0);transition:transform 300ms var(--ease-out);}
+.opt-b .mega-link:hover::before,.opt-b .mega-link.active::before{transform:scaleY(1);}
+.opt-b .mega-link:hover,.opt-b .mega-link.active{background:rgba(255,255,255,.025);padding-left:36px;}
+.opt-b .ml-text{}
+.opt-b .ml-name{font-family:var(--font-aeonik);font-size:28px;font-weight:300;color:rgba(255,255,255,.2);line-height:1;transition:color 300ms ease;}
+.opt-b .mega-link:hover .ml-name,.opt-b .mega-link.active .ml-name{color:#fff;}
+.opt-b .ml-desc{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.08);margin-top:4px;transition:color 300ms ease;}
+.opt-b .mega-link:hover .ml-desc,.opt-b .mega-link.active .ml-desc{color:rgba(255,255,255,.3);}
+.opt-b .ml-arr{font-size:14px;color:rgba(255,255,255,.06);transform:translateX(-6px);transition:all 300ms ease;}
+.opt-b .mega-link:hover .ml-arr,.opt-b .mega-link.active .ml-arr{color:var(--green);transform:translateX(0);}
+
+.opt-b .ctx-side{border-left:1px solid var(--border-light);padding:24px 28px;display:flex;flex-direction:column;gap:20px;}
+.opt-b .ctx-panel{display:none;}
+.opt-b .ctx-panel.active{display:block;}
+.opt-b .ctx-label{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.1);margin-bottom:16px;display:flex;align-items:center;gap:6px;}
+.opt-b .ctx-label::before{content:'//';color:var(--green);font-size:8px;}
+.opt-b .ctx-link{display:block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.22);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.03);transition:all 200ms ease;}
+.opt-b .ctx-link:hover{color:#fff;padding-left:6px;border-color:rgba(255,255,255,.08);}
+.opt-b .ctx-link.bold{font-family:var(--font-aeonik);font-size:13px;font-weight:500;color:rgba(255,255,255,.16);}
+.opt-b .ctx-link.bold:hover{color:var(--green);}
+
+.opt-b .hub-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:12px;}
+.opt-b .hub-chip{font-family:var(--font-haas);font-size:10px;color:rgba(255,255,255,.15);padding:3px 8px;border:1px solid rgba(255,255,255,.07);border-radius:4px;transition:all 200ms ease;}
+.opt-b .hub-chip:hover{color:#fff;border-color:rgba(53,214,135,.3);background:rgba(53,214,135,.04);}
+
+.fm .opt-b .panel-body{grid-template-columns:1fr;}
+.fm .opt-b .ctx-side{display:none;}
+.fm .opt-b .mega-link{padding:12px 20px;}
+.fm .opt-b .mega-link:hover{padding-left:28px;}
+.fm .opt-b .ml-name{font-size:22px;}
+
+
+/* ═══════════════════════════════════════════════════
+   OPTION C — Indexed Bands + Sub-row
+   Full-width bands for primary pages
+   Capability + Solution tags below, service hubs at bottom
+════════════════════════════════════════════════════ */
+.opt-c .panel-body{padding:0;}
+.opt-c .band{display:flex;align-items:center;gap:20px;padding:14px 28px;border-bottom:1px solid var(--border-light);cursor:pointer;position:relative;overflow:hidden;transition:all 350ms var(--ease-out);}
+.opt-c .band::after{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,rgba(53,214,135,.07) 0%,transparent 100%);transition:width 450ms var(--ease-out);}
+.opt-c .band:hover::after{width:100%;}
+.opt-c .band:hover{padding-left:36px;}
+.opt-c .b-num{font-family:var(--font-haas);font-size:10px;color:rgba(255,255,255,.06);min-width:24px;position:relative;z-index:1;transition:color 350ms ease;}
+.opt-c .band:hover .b-num{color:var(--green);}
+.opt-c .b-name{font-family:var(--font-aeonik);font-size:30px;font-weight:300;color:rgba(255,255,255,.1);letter-spacing:-0.5px;flex:1;position:relative;z-index:1;transition:color 350ms ease;}
+.opt-c .band:hover .b-name{color:#fff;}
+.opt-c .b-tag{font-family:var(--font-haas);font-size:10px;color:rgba(255,255,255,.07);position:relative;z-index:1;transition:color 350ms ease;}
+.opt-c .band:hover .b-tag{color:rgba(255,255,255,.3);}
+.opt-c .b-arr{font-size:14px;color:rgba(255,255,255,.04);transform:translateX(-6px);transition:all 350ms ease;position:relative;z-index:1;}
+.opt-c .band:hover .b-arr{color:var(--green);transform:translateX(0);}
+
+.opt-c .sub-zone{padding:18px 28px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+.opt-c .sz-col{}
+.opt-c .sz-head{font-family:var(--font-aeonik);font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.1);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border-light);}
+.opt-c .sz-link{display:block;font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,.2);padding:4px 0;transition:all 200ms ease;}
+.opt-c .sz-link:hover{color:#fff;padding-left:4px;}
+.opt-c .sz-link.hub{font-family:var(--font-aeonik);font-size:11px;font-weight:500;color:rgba(255,255,255,.15);}
+.opt-c .sz-link.hub:hover{color:var(--green);}
+
+.fm .opt-c .band{padding:12px 20px;}
+.fm .opt-c .band:hover{padding-left:28px;}
+.fm .opt-c .b-name{font-size:22px;}
+.fm .opt-c .sub-zone{grid-template-columns:1fr;padding:14px 20px;}
+
+
+/* ═══════════════════════════════════════════════════
+   OPTION D — Two-tier Tab Panel
+   Top row: primary tabs (Work / Services / Studio etc.)
+   Below: content area changes per tab
+   Clean, organised, browsable
+════════════════════════════════════════════════════ */
+.opt-d .tab-bar{display:flex;gap:2px;padding:16px 20px 0;border-bottom:1px solid var(--border-light);}
+.opt-d .tab-btn{font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.3);padding:8px 16px;border-radius:8px 8px 0 0;cursor:pointer;transition:all 200ms ease;border:1px solid transparent;border-bottom:none;margin-bottom:-1px;position:relative;}
+.opt-d .tab-btn:hover{color:#fff;background:rgba(255,255,255,.04);}
+.opt-d .tab-btn.active{color:#fff;background:rgba(255,255,255,.06);border-color:var(--border);border-bottom-color:var(--charcoal);}
+
+.opt-d .tab-content{display:none;padding:24px 28px 0;}
+.opt-d .tab-content.active{display:grid;}
+.opt-d .tc-main{grid-template-columns:1fr 1fr;gap:28px;}
+.opt-d .tc-three{grid-template-columns:1fr 1fr 1fr;gap:24px;}
+
+.opt-d .tc-head{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.1);margin-bottom:14px;border-bottom:1px solid var(--border-light);padding-bottom:8px;}
+.opt-d .tc-link{display:block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.22);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.02);transition:all 200ms ease;}
+.opt-d .tc-link:hover{color:#fff;padding-left:5px;}
+.opt-d .tc-link.hero{font-family:var(--font-aeonik);font-size:22px;font-weight:300;color:rgba(255,255,255,.18);letter-spacing:-0.5px;line-height:1.2;padding:8px 0;}
+.opt-d .tc-link.hero:hover{color:#fff;}
+.opt-d .tc-link.accent{font-family:var(--font-aeonik);font-size:12px;font-weight:500;color:rgba(255,255,255,.15);}
+.opt-d .tc-link.accent:hover{color:var(--green);}
+.opt-d .tc-chip{display:inline-block;font-family:var(--font-haas);font-size:10px;color:rgba(255,255,255,.15);padding:3px 8px;border:1px solid rgba(255,255,255,.07);border-radius:4px;margin:2px 2px 2px 0;transition:all 200ms ease;}
+.opt-d .tc-chip:hover{color:#fff;border-color:rgba(53,214,135,.3);}
+
+.fm .opt-d .tab-bar{overflow-x:auto;scrollbar-width:none;padding:12px 12px 0;gap:1px;}
+.fm .opt-d .tab-btn{font-size:12px;padding:6px 12px;white-space:nowrap;}
+.fm .opt-d .tab-content{padding:18px 16px 0;}
+.fm .opt-d .tc-main,.fm .opt-d .tc-three{grid-template-columns:1fr;}
+
+
+/* ═══════════════════════════════════════════════════
+   OPTION E — Stack Reveal (Hover Accordion)
+   Main links in a compact vertical list
+   Hovering a link slides a context panel open to the right
+   Desktop-specific interaction pattern
+════════════════════════════════════════════════════ */
+.opt-e .panel-body{display:grid;grid-template-columns:240px 1fr;min-height:360px;padding:0;}
+.opt-e .link-col{padding:20px 0;border-right:1px solid var(--border-light);}
+.opt-e .e-link{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;cursor:pointer;transition:all 250ms ease;position:relative;}
+.opt-e .e-link::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--green);transform:scaleY(0);transform-origin:center;transition:transform 250ms var(--ease-out);}
+.opt-e .e-link.active::before,.opt-e .e-link:hover::before{transform:scaleY(1);}
+.opt-e .e-link.active,.opt-e .e-link:hover{background:rgba(255,255,255,.03);padding-left:30px;}
+.opt-e .e-name{font-family:var(--font-aeonik);font-size:20px;font-weight:300;color:rgba(255,255,255,.2);transition:color 250ms ease;}
+.opt-e .e-link.active .e-name,.opt-e .e-link:hover .e-name{color:#fff;}
+.opt-e .e-arr{font-size:12px;color:rgba(255,255,255,.06);transition:all 250ms ease;}
+.opt-e .e-link.active .e-arr,.opt-e .e-link:hover .e-arr{color:var(--green);transform:translateX(3px);}
+
+.opt-e .ctx-col{padding:24px 28px;overflow:hidden;}
+.opt-e .ctx-pane{display:none;animation:fadeSlideIn 300ms var(--ease-out) both;}
+.opt-e .ctx-pane.active{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.opt-e .ctx-pane.wide{grid-template-columns:1fr 1fr 1fr;}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateX(10px);}to{opacity:1;transform:translateX(0);}}
+.opt-e .cp-head{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.1);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border-light);}
+.opt-e .cp-link{display:block;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.22);padding:5px 0;transition:all 200ms ease;}
+.opt-e .cp-link:hover{color:#fff;padding-left:4px;}
+.opt-e .cp-link.accent{font-family:var(--font-aeonik);font-size:12px;font-weight:500;color:rgba(255,255,255,.16);}
+.opt-e .cp-link.accent:hover{color:var(--green);}
+.opt-e .cp-desc{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.1);line-height:1.6;margin-bottom:16px;}
+
+.fm .opt-e .panel-body{grid-template-columns:1fr;}
+.fm .opt-e .ctx-col{display:none;}
+.fm .opt-e .e-link{padding:12px 20px;}
+.fm .opt-e .e-link.active,.fm .opt-e .e-link:hover{padding-left:26px;}
+.fm .opt-e .e-name{font-size:18px;}
+
+
+/* ═══════════════════════════════════════════════════
+   WILDCARD J — Cinematic Full-Bleed
+   The menu IS the whole viewport, giant text,
+   faint page title behind text, very film-credit
+════════════════════════════════════════════════════ */
+.opt-j .menu-panel{top:0;left:0;right:0;border-radius:0;border:none;min-height:100%;overflow:auto;}
+.opt-j .jm-inner{display:flex;flex-direction:column;justify-content:space-between;min-height:560px;padding:100px 48px 32px;}
+.fm .opt-j .jm-inner{padding:80px 28px 28px;min-height:680px;}
+
+.opt-j .jm-links{display:flex;flex-direction:column;gap:4px;}
+.opt-j .jm-link{display:flex;align-items:center;gap:24px;font-family:var(--font-aeonik);font-size:clamp(36px,5vw,72px);font-weight:300;color:rgba(255,255,255,.07);letter-spacing:-2px;line-height:1.1;padding:8px 0;transition:all 600ms var(--ease-out);cursor:pointer;}
+.opt-j .jm-link:hover{color:#fff;gap:36px;}
+.opt-j .jm-link .jl-num{font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,.08);min-width:32px;transition:color 600ms ease;}
+.opt-j .jm-link:hover .jl-num{color:var(--green);}
+.opt-j .jm-link .jl-tag{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.06);letter-spacing:.05em;align-self:flex-end;margin-bottom:8px;transition:color 600ms ease;}
+.opt-j .jm-link:hover .jl-tag{color:rgba(255,255,255,.25);}
+
+.opt-j .jm-bottom{display:flex;align-items:flex-end;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border-light);}
+.opt-j .jm-sub{display:flex;gap:24px;}
+.opt-j .jm-sub a{font-family:var(--font-haas);font-size:12px;color:rgba(255,255,255,.15);transition:color 200ms ease;}
+.opt-j .jm-sub a:hover{color:#fff;}
+.opt-j .jm-tagline{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.1);letter-spacing:.02em;}
+
+.opt-j .bg-word{position:absolute;bottom:60px;right:32px;font-family:var(--font-aeonik);font-size:120px;font-weight:700;color:rgba(255,255,255,.015);letter-spacing:-4px;pointer-events:none;user-select:none;line-height:1;}
+.fm .opt-j .bg-word{font-size:60px;right:16px;bottom:80px;}
+
+
+/* ═══════════════════════════════════════════════════
+   WILDCARD K — Domain Switcher
+   Inspired by the Runlayer reference you sent:
+   Main nav on left, then a "switch hub" section
+   that shows all the service + industry subdomains
+   as interactive cards you can switch to
+════════════════════════════════════════════════════ */
+.opt-k .panel-body{display:grid;grid-template-columns:200px 1fr;gap:0;padding:0;}
+.opt-k .k-nav{padding:20px 0;border-right:1px solid var(--border-light);}
+.opt-k .k-nav-link{display:block;font-family:var(--font-aeonik);font-size:18px;font-weight:300;color:rgba(255,255,255,.2);padding:10px 20px;border-bottom:1px solid rgba(255,255,255,.03);transition:all 200ms ease;}
+.opt-k .k-nav-link:hover{color:#fff;padding-left:26px;background:rgba(255,255,255,.025);}
+.opt-k .k-nav-link:last-child{border-bottom:none;}
+
+.opt-k .k-right{padding:20px 24px;}
+.opt-k .k-section-head{font-family:var(--font-aeonik);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.1);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.opt-k .k-section-head::after{content:'';flex:1;height:1px;background:var(--border-light);}
+.opt-k .k-section-head span{color:var(--green);}
+
+.opt-k .hub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:20px;}
+.opt-k .hub-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px 12px;cursor:pointer;transition:all 250ms ease;}
+.opt-k .hub-card:hover{background:rgba(255,255,255,.05);border-color:rgba(53,214,135,.2);}
+.opt-k .hub-card .hc-domain{font-family:var(--font-haas);font-size:10px;color:rgba(255,255,255,.15);margin-bottom:2px;}
+.opt-k .hub-card .hc-domain span{color:var(--green);font-weight:500;}
+.opt-k .hub-card .hc-name{font-family:var(--font-aeonik);font-size:13px;font-weight:400;color:rgba(255,255,255,.3);transition:color 200ms ease;}
+.opt-k .hub-card:hover .hc-name{color:#fff;}
+
+.fm .opt-k .panel-body{grid-template-columns:1fr;}
+.fm .opt-k .k-nav{border-right:none;border-bottom:1px solid var(--border-light);padding:16px 0;}
+.fm .opt-k .k-right{padding:16px;}
+.fm .opt-k .hub-grid{grid-template-columns:repeat(2,1fr);}
+
+
+/* ═══════════════════════════════════════════════════
+   WILDCARD L — Radial Spoke (pure vibes, desktop only)
+   Menu opens as a glassy radial from the hamburger
+   Links are spokes, not a dropdown
+   Experimental / for inspiration only
+════════════════════════════════════════════════════ */
+.opt-l .menu-panel{position:absolute;top:0;right:0;left:auto;border-radius:0;border:none;background:transparent;width:100%;height:100%;transform:none;overflow:visible;}
+.opt-l .menu-panel.open{transform:none;}
+
+.opt-l .radial-bg{position:absolute;inset:0;background:rgba(10,10,10,.96);opacity:0;transition:opacity 450ms ease;pointer-events:none;}
+.opt-l .menu-panel.open .radial-bg{opacity:1;pointer-events:auto;}
+
+.opt-l .radial-hub{position:absolute;top:52px;right:40px;width:56px;height:56px;}
+.opt-l .spoke-container{position:absolute;top:52px;right:40px;width:0;height:0;}
+
+.opt-l .spoke-link{position:absolute;display:flex;align-items:center;gap:10px;white-space:nowrap;font-family:var(--font-aeonik);font-size:18px;font-weight:300;color:rgba(255,255,255,.6);opacity:0;transform:scale(0.8);transition:all 400ms var(--ease-out);cursor:pointer;}
+.opt-l .menu-panel.open .spoke-link{opacity:1;transform:scale(1);}
+.opt-l .spoke-link:hover{color:#fff;}
+.opt-l .spoke-link .sl-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;opacity:.6;}
+
+/* positioned via JS data-x data-y */
+.opt-l .spoke-link:nth-child(1){transition-delay:80ms;}
+.opt-l .spoke-link:nth-child(2){transition-delay:140ms;}
+.opt-l .spoke-link:nth-child(3){transition-delay:200ms;}
+.opt-l .spoke-link:nth-child(4){transition-delay:260ms;}
+.opt-l .spoke-link:nth-child(5){transition-delay:320ms;}
+.opt-l .spoke-link:nth-child(6){transition-delay:380ms;}
+
+.opt-l .radial-close{position:absolute;top:52px;right:40px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-size:16px;color:#fff;opacity:0;transition:opacity 300ms ease;}
+.opt-l .menu-panel.open .radial-close{opacity:1;}
+
+.opt-l .radial-footer{position:absolute;bottom:28px;left:40px;right:40px;display:flex;justify-content:space-between;opacity:0;transition:opacity 500ms ease 400ms;}
+.opt-l .menu-panel.open .radial-footer{opacity:1;}
+.opt-l .radial-footer a{font-family:var(--font-haas);font-size:11px;color:rgba(255,255,255,.15);transition:color 200ms ease;}
+.opt-l .radial-footer a:hover{color:#fff;}
+
+</style>
+</head>
+<body>
+
+<div class="lab-header">
+  <h1>Header × Sitemap Lab — 22</h1>
+  <p>Full sitemap mapped into 5 panel variants + 3 wildcard concepts. Click the hamburger to activate.</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     OPTION A — Wide Four-Column Directory
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Option A — Wide Four-Column Directory</strong>Left: 3 big nav links · Center: Capabilities + Solutions · Right: Hub tags · Far right: Utility</div>
+<div class="pw" id="pa">
+  <div class="pt"><div class="a" onclick="sv('pa','d')">Desktop</div><div onclick="sv('pa','m')">Mobile</div></div>
+  <div class="fd opt-a">
+    <header class="site-header">
+      <a href="#"><img src="nemo-logo-white.png" alt="Nemo" class="logo-img" onerror="this.style.cssText='font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;height:auto';this.outerHTML='<span style=\'font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500\'>NEMO</span>'" /></a>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a><a href="#">Insights</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body stagger-in">
+        <!-- Col 1: Big nav -->
+        <div class="col" style="display:flex;flex-direction:column;">
+          <div class="col-label">Navigate</div>
+          <a href="#" class="big-link">Work <span class="arr">→</span></a>
+          <a href="#" class="big-link">Studio <span class="arr">→</span></a>
+          <a href="#" class="big-link">Insights <span class="arr">→</span></a>
+          <a href="#" class="big-link">Connect <span class="arr">→</span></a>
+          <p class="desc-txt">Independent studio building high-fidelity digital products, brands, and ventures. Based in Cairo.</p>
+        </div>
+        <!-- Col 2: Capabilities + Solutions -->
+        <div class="col">
+          <div class="col-label">Capabilities</div>
+          <div class="sub-group">
+            <a href="#" class="nav-link">AI & Machine Learning</a>
+            <a href="#" class="nav-link">Web Design & Development</a>
+            <a href="#" class="nav-link">Motion & 3D</a>
+            <a href="#" class="nav-link">Brand Identity</a>
+            <a href="#" class="nav-link">Operations & Growth</a>
+          </div>
+          <div class="col-label" style="margin-top:16px;">Solutions</div>
+          <div class="sub-group">
+            <a href="#" class="nav-link">Startup Launch</a>
+            <a href="#" class="nav-link">Enterprise Transformation</a>
+            <a href="#" class="nav-link">Venture Building</a>
+          </div>
+        </div>
+        <!-- Col 3: Service + Industry hubs -->
+        <div class="col">
+          <div class="col-label">Service Hubs</div>
+          <div class="sub-group">
+            <div class="hub-tag"><div class="dot"></div>ai.madebynemo.com</div>
+            <div class="hub-tag"><div class="dot"></div>web.madebynemo.com</div>
+            <div class="hub-tag"><div class="dot"></div>motion.madebynemo.com</div>
+            <div class="hub-tag"><div class="dot"></div>ops.madebynemo.com</div>
+          </div>
+          <div class="col-label" style="margin-top:16px;">Industry Hubs</div>
+          <div class="sub-group">
+            <div class="hub-tag"><div class="dot"></div>healthcare</div>
+            <div class="hub-tag"><div class="dot"></div>fintech</div>
+            <div class="hub-tag"><div class="dot"></div>web3</div>
+            <div class="hub-tag"><div class="dot"></div>ecommerce</div>
+            <div class="hub-tag"><div class="dot"></div>proptech</div>
+            <div class="hub-tag"><div class="dot"></div>venture</div>
+          </div>
+        </div>
+        <!-- Col 4: Utility links -->
+        <div class="col">
+          <div class="col-label">Company</div>
+          <div class="sub-group">
+            <a href="#" class="nav-link">Careers</a>
+            <a href="#" class="nav-link">Partners</a>
+            <a href="#" class="nav-link">Charity</a>
+            <a href="#" class="nav-link">Archive</a>
+          </div>
+          <div class="col-label" style="margin-top:16px;">Products</div>
+          <div class="sub-group">
+            <a href="#" class="nav-link accent">Mappire</a>
+            <a href="#" class="nav-link accent">Nemo GO</a>
+            <a href="#" class="nav-link accent">Nemo CRM</a>
+          </div>
+          <div class="col-label" style="margin-top:16px;">Legal</div>
+          <div class="sub-group">
+            <a href="#" class="nav-link">Privacy</a>
+            <a href="#" class="nav-link">Terms</a>
+            <a href="#" class="nav-link">Brand Kit</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-a">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="col" style="display:flex;flex-direction:column;">
+          <div class="col-label">Navigate</div>
+          <a href="#" class="big-link">Work <span class="arr">→</span></a>
+          <a href="#" class="big-link">Studio <span class="arr">→</span></a>
+          <a href="#" class="big-link">Insights <span class="arr">→</span></a>
+          <a href="#" class="big-link">Connect <span class="arr">→</span></a>
+        </div>
+        <div class="col">
+          <div class="col-label">Capabilities</div>
+          <a href="#" class="nav-link">AI & Machine Learning</a>
+          <a href="#" class="nav-link">Web Design</a>
+          <a href="#" class="nav-link">Motion & 3D</a>
+          <a href="#" class="nav-link">Brand Identity</a>
+        </div>
+        <div class="col">
+          <div class="col-label">Products</div>
+          <a href="#" class="nav-link accent">Mappire</a>
+          <a href="#" class="nav-link accent">Nemo GO</a>
+          <a href="#" class="nav-link accent">Nemo CRM</a>
+        </div>
+        <div class="col">
+          <div class="col-label">Company</div>
+          <a href="#" class="nav-link">Careers</a>
+          <a href="#" class="nav-link">Partners</a>
+          <a href="#" class="nav-link">Charity</a>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     OPTION B — Two-Panel Mega with Hover Context
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Option B — Two-Panel Mega (Hover Context)</strong>Left: 5 clickable links · Right: content area updates on hover. Descriptors + sub-links per section.</div>
+<div class="pw" id="pb">
+  <div class="pt"><div class="a" onclick="sv('pb','d')">Desktop</div><div onclick="sv('pb','m')">Mobile</div></div>
+  <div class="fd opt-b">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a><a href="#">Insights</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="nav-side">
+          <div class="mega-link active" onmouseenter="switchCtx('b','work')">
+            <div class="ml-text"><div class="ml-name">Work</div><div class="ml-desc">Selected projects & case studies</div></div>
+            <span class="ml-arr">→</span>
+          </div>
+          <div class="mega-link" onmouseenter="switchCtx('b','cap')">
+            <div class="ml-text"><div class="ml-name">Capabilities</div><div class="ml-desc">What we do best</div></div>
+            <span class="ml-arr">→</span>
+          </div>
+          <div class="mega-link" onmouseenter="switchCtx('b','solutions')">
+            <div class="ml-text"><div class="ml-name">Solutions</div><div class="ml-desc">Industry-ready builds</div></div>
+            <span class="ml-arr">→</span>
+          </div>
+          <div class="mega-link" onmouseenter="switchCtx('b','studio')">
+            <div class="ml-text"><div class="ml-name">Studio</div><div class="ml-desc">Who we are, where we're going</div></div>
+            <span class="ml-arr">→</span>
+          </div>
+          <div class="mega-link" onmouseenter="switchCtx('b','hubs')">
+            <div class="ml-text"><div class="ml-name">Hubs</div><div class="ml-desc">ai · web · motion · ops</div></div>
+            <span class="ml-arr">→</span>
+          </div>
+        </div>
+        <div class="ctx-side">
+          <!-- Work context -->
+          <div class="ctx-panel active" id="ctx-b-work">
+            <div class="ctx-label">Work</div>
+            <a href="#" class="ctx-link">All Projects</a>
+            <a href="#" class="ctx-link">Brand Identity</a>
+            <a href="#" class="ctx-link">Digital Products</a>
+            <a href="#" class="ctx-link">Motion & 3D</a>
+            <a href="#" class="ctx-link">Archive</a>
+          </div>
+          <!-- Capabilities context -->
+          <div class="ctx-panel" id="ctx-b-cap">
+            <div class="ctx-label">Capabilities</div>
+            <a href="#" class="ctx-link">AI & Machine Learning</a>
+            <a href="#" class="ctx-link">Web Design & Development</a>
+            <a href="#" class="ctx-link">Motion & 3D</a>
+            <a href="#" class="ctx-link">Brand Identity</a>
+            <a href="#" class="ctx-link">Operations & Growth</a>
+            <a href="#" class="ctx-link">Strategy & Consulting</a>
+          </div>
+          <!-- Solutions context -->
+          <div class="ctx-panel" id="ctx-b-solutions">
+            <div class="ctx-label">Solutions</div>
+            <a href="#" class="ctx-link">Startup Launch</a>
+            <a href="#" class="ctx-link">Enterprise Transformation</a>
+            <a href="#" class="ctx-link">Venture Building</a>
+            <div class="hub-row">
+              <a href="#" class="hub-chip">Healthcare</a>
+              <a href="#" class="hub-chip">Fintech</a>
+              <a href="#" class="hub-chip">Web3</a>
+              <a href="#" class="hub-chip">Ecommerce</a>
+              <a href="#" class="hub-chip">Proptech</a>
+            </div>
+          </div>
+          <!-- Studio context -->
+          <div class="ctx-panel" id="ctx-b-studio">
+            <div class="ctx-label">Studio</div>
+            <a href="#" class="ctx-link">About Nemo</a>
+            <a href="#" class="ctx-link">Insights / Blog</a>
+            <a href="#" class="ctx-link">Careers</a>
+            <a href="#" class="ctx-link">Partners & Allies</a>
+            <a href="#" class="ctx-link">Charity / Give Back</a>
+            <a href="#" class="ctx-link">Growth Roadmap</a>
+          </div>
+          <!-- Hubs context -->
+          <div class="ctx-panel" id="ctx-b-hubs">
+            <div class="ctx-label">Service Hubs</div>
+            <a href="#" class="ctx-link bold">ai.madebynemo.com</a>
+            <a href="#" class="ctx-link bold">web.madebynemo.com</a>
+            <a href="#" class="ctx-link bold">motion.madebynemo.com</a>
+            <a href="#" class="ctx-link bold">ops.madebynemo.com</a>
+            <div style="margin-top:14px;"><div class="ctx-label">Industry Hubs</div>
+            <div class="hub-row">
+              <a href="#" class="hub-chip">healthcare</a>
+              <a href="#" class="hub-chip">fintech</a>
+              <a href="#" class="hub-chip">web3</a>
+              <a href="#" class="hub-chip">ecommerce</a>
+              <a href="#" class="hub-chip">proptech</a>
+              <a href="#" class="hub-chip">venture</a>
+            </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-b">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="nav-side">
+          <div class="mega-link active"><div class="ml-text"><div class="ml-name">Work</div></div><span class="ml-arr">→</span></div>
+          <div class="mega-link"><div class="ml-text"><div class="ml-name">Capabilities</div></div><span class="ml-arr">→</span></div>
+          <div class="mega-link"><div class="ml-text"><div class="ml-name">Solutions</div></div><span class="ml-arr">→</span></div>
+          <div class="mega-link"><div class="ml-text"><div class="ml-name">Studio</div></div><span class="ml-arr">→</span></div>
+          <div class="mega-link"><div class="ml-text"><div class="ml-name">Hubs</div></div><span class="ml-arr">→</span></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     OPTION C — Indexed Bands + Three-Column Sub-zone
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Option C — Indexed Bands + Sub-zone</strong>Full-width animated bands for primary pages. Three columns below: capabilities, hubs, company.</div>
+<div class="pw" id="pc">
+  <div class="pt"><div class="a" onclick="sv('pc','d')">Desktop</div><div onclick="sv('pc','m')">Mobile</div></div>
+  <div class="fd opt-c">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a><a href="#">Insights</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <a href="#" class="band"><span class="b-num">01</span><span class="b-name">Work</span><span class="b-tag">Selected projects</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">02</span><span class="b-name">Capabilities</span><span class="b-tag">What we do</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">03</span><span class="b-name">Solutions</span><span class="b-tag">Industry builds</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">04</span><span class="b-name">Studio</span><span class="b-tag">Who we are</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">05</span><span class="b-name">Insights</span><span class="b-tag">Blog & journal</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">06</span><span class="b-name">Connect</span><span class="b-tag">Let's talk</span><span class="b-arr">→</span></a>
+        <div class="sub-zone">
+          <div class="sz-col">
+            <div class="sz-head">// Capabilities</div>
+            <a href="#" class="sz-link">AI & Machine Learning</a>
+            <a href="#" class="sz-link">Web Design & Dev</a>
+            <a href="#" class="sz-link">Motion & 3D</a>
+            <a href="#" class="sz-link">Brand Identity</a>
+            <a href="#" class="sz-link">Ops & Growth</a>
+          </div>
+          <div class="sz-col">
+            <div class="sz-head">// Hubs</div>
+            <a href="#" class="sz-link hub">ai.madebynemo.com</a>
+            <a href="#" class="sz-link hub">web.madebynemo.com</a>
+            <a href="#" class="sz-link hub">motion.madebynemo.com</a>
+            <a href="#" class="sz-link hub">ops.madebynemo.com</a>
+          </div>
+          <div class="sz-col">
+            <div class="sz-head">// Company</div>
+            <a href="#" class="sz-link">Careers</a>
+            <a href="#" class="sz-link">Partners</a>
+            <a href="#" class="sz-link">Charity</a>
+            <a href="#" class="sz-link">Archive</a>
+            <a href="#" class="sz-link">Venture</a>
+            <a href="#" class="sz-link">Brand Kit</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-c">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <a href="#" class="band"><span class="b-num">01</span><span class="b-name">Work</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">02</span><span class="b-name">Capabilities</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">03</span><span class="b-name">Solutions</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">04</span><span class="b-name">Studio</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">05</span><span class="b-name">Insights</span><span class="b-arr">→</span></a>
+        <a href="#" class="band"><span class="b-num">06</span><span class="b-name">Connect</span><span class="b-arr">→</span></a>
+        <div class="sub-zone">
+          <div class="sz-col">
+            <div class="sz-head">// Company</div>
+            <a href="#" class="sz-link">Careers</a>
+            <a href="#" class="sz-link">Partners</a>
+            <a href="#" class="sz-link">Charity</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     OPTION D — Two-tier Tab Panel
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Option D — Two-Tier Tab Panel</strong>Tab bar across the top of the panel. Content area changes per active tab. Organised, scannable.</div>
+<div class="pw" id="pd">
+  <div class="pt"><div class="a" onclick="sv('pd','d')">Desktop</div><div onclick="sv('pd','m')">Mobile</div></div>
+  <div class="fd opt-d">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a><a href="#">Insights</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="tab-bar">
+        <div class="tab-btn active" onclick="switchTab(this,'d','work')">Work</div>
+        <div class="tab-btn" onclick="switchTab(this,'d','cap')">Capabilities</div>
+        <div class="tab-btn" onclick="switchTab(this,'d','solutions')">Solutions</div>
+        <div class="tab-btn" onclick="switchTab(this,'d','studio')">Studio</div>
+        <div class="tab-btn" onclick="switchTab(this,'d','hubs')">Hubs</div>
+        <div class="tab-btn" onclick="switchTab(this,'d','more')">More</div>
+      </div>
+
+      <div class="tab-content tc-main active" id="tab-d-work">
+        <div>
+          <div class="tc-head">// Projects</div>
+          <a href="#" class="tc-link hero">All Work</a>
+          <a href="#" class="tc-link hero">Brand Identity</a>
+          <a href="#" class="tc-link hero">Digital Products</a>
+          <a href="#" class="tc-link hero">Motion & 3D</a>
+        </div>
+        <div>
+          <div class="tc-head">// Browse</div>
+          <a href="#" class="tc-link">Recent Projects</a>
+          <a href="#" class="tc-link">Archive</a>
+          <a href="#" class="tc-link">Case Studies</a>
+          <a href="#" class="tc-link">Venture Builds</a>
+        </div>
+      </div>
+
+      <div class="tab-content tc-three" id="tab-d-cap" style="display:none;">
+        <div>
+          <div class="tc-head">// Build</div>
+          <a href="#" class="tc-link">AI & Machine Learning</a>
+          <a href="#" class="tc-link">Web Design & Dev</a>
+          <a href="#" class="tc-link">Motion & 3D</a>
+        </div>
+        <div>
+          <div class="tc-head">// Define</div>
+          <a href="#" class="tc-link">Brand Identity</a>
+          <a href="#" class="tc-link">Strategy & Consulting</a>
+          <a href="#" class="tc-link">Growth Roadmap</a>
+        </div>
+        <div>
+          <div class="tc-head">// Operate</div>
+          <a href="#" class="tc-link">Operations</a>
+          <a href="#" class="tc-link">CRM & Automations</a>
+          <a href="#" class="tc-link">Venture Support</a>
+        </div>
+      </div>
+
+      <div class="tab-content tc-three" id="tab-d-solutions" style="display:none;">
+        <div>
+          <div class="tc-head">// By Stage</div>
+          <a href="#" class="tc-link">Startup Launch</a>
+          <a href="#" class="tc-link">Scale-Up</a>
+          <a href="#" class="tc-link">Enterprise Transformation</a>
+        </div>
+        <div>
+          <div class="tc-head">// By Industry</div>
+          <a href="#" class="tc-chip">Healthcare</a>
+          <a href="#" class="tc-chip">Fintech</a>
+          <a href="#" class="tc-chip">Web3</a>
+          <a href="#" class="tc-chip">Ecommerce</a>
+          <a href="#" class="tc-chip">Proptech</a>
+          <a href="#" class="tc-chip">Venture</a>
+        </div>
+        <div>
+          <div class="tc-head">// Products</div>
+          <a href="#" class="tc-link accent">Mappire</a>
+          <a href="#" class="tc-link accent">Nemo GO</a>
+          <a href="#" class="tc-link accent">Nemo CRM</a>
+        </div>
+      </div>
+
+      <div class="tab-content tc-main" id="tab-d-studio" style="display:none;">
+        <div>
+          <div class="tc-head">// About</div>
+          <a href="#" class="tc-link hero">The Studio</a>
+          <a href="#" class="tc-link hero">Insights</a>
+          <a href="#" class="tc-link hero">Connect</a>
+        </div>
+        <div>
+          <div class="tc-head">// Join</div>
+          <a href="#" class="tc-link">Careers</a>
+          <a href="#" class="tc-link">Partners & Allies</a>
+          <a href="#" class="tc-link">Charity / Give Back</a>
+          <a href="#" class="tc-link">Venture</a>
+        </div>
+      </div>
+
+      <div class="tab-content tc-main" id="tab-d-hubs" style="display:none;">
+        <div>
+          <div class="tc-head">// Service Hubs</div>
+          <a href="#" class="tc-link accent">ai.madebynemo.com</a>
+          <a href="#" class="tc-link accent">web.madebynemo.com</a>
+          <a href="#" class="tc-link accent">motion.madebynemo.com</a>
+          <a href="#" class="tc-link accent">ops.madebynemo.com</a>
+        </div>
+        <div>
+          <div class="tc-head">// Industry Hubs</div>
+          <a href="#" class="tc-chip">healthcare.madebynemo.com</a>
+          <a href="#" class="tc-chip">fintech.madebynemo.com</a>
+          <a href="#" class="tc-chip">web3.madebynemo.com</a>
+          <a href="#" class="tc-chip">ecommerce.madebynemo.com</a>
+          <a href="#" class="tc-chip">proptech.madebynemo.com</a>
+          <a href="#" class="tc-chip">venture.madebynemo.com</a>
+        </div>
+      </div>
+
+      <div class="tab-content tc-three" id="tab-d-more" style="display:none;">
+        <div>
+          <div class="tc-head">// Company</div>
+          <a href="#" class="tc-link">Careers</a>
+          <a href="#" class="tc-link">Partners</a>
+          <a href="#" class="tc-link">Charity</a>
+          <a href="#" class="tc-link">Brand Kit</a>
+          <a href="#" class="tc-link">Archive</a>
+        </div>
+        <div>
+          <div class="tc-head">// Legal</div>
+          <a href="#" class="tc-link">Privacy Policy</a>
+          <a href="#" class="tc-link">Terms of Service</a>
+          <a href="#" class="tc-link">Cookie Policy</a>
+          <a href="#" class="tc-link">Sitemap</a>
+        </div>
+        <div>
+          <div class="tc-head">// Search</div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;font-family:var(--font-haas);font-size:13px;color:rgba(255,255,255,.2);">Search madebynemo.com…</div>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-d">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="tab-bar">
+        <div class="tab-btn active" onclick="switchTabMob(this,'dm','work')">Work</div>
+        <div class="tab-btn" onclick="switchTabMob(this,'dm','cap')">Cap.</div>
+        <div class="tab-btn" onclick="switchTabMob(this,'dm','studio')">Studio</div>
+        <div class="tab-btn" onclick="switchTabMob(this,'dm','hubs')">Hubs</div>
+      </div>
+      <div class="tab-content tc-main active" id="tab-dm-work">
+        <div><div class="tc-head">// Projects</div><a href="#" class="tc-link hero">Work</a><a href="#" class="tc-link hero">Identity</a><a href="#" class="tc-link hero">Products</a></div>
+        <div><div class="tc-head">// More</div><a href="#" class="tc-link">Archive</a><a href="#" class="tc-link">Careers</a><a href="#" class="tc-link">Connect</a></div>
+      </div>
+      <div class="tab-content tc-main" id="tab-dm-cap" style="display:none;">
+        <div><div class="tc-head">// Build</div><a href="#" class="tc-link">AI & ML</a><a href="#" class="tc-link">Web Dev</a><a href="#" class="tc-link">Motion</a></div>
+        <div><div class="tc-head">// Define</div><a href="#" class="tc-link">Branding</a><a href="#" class="tc-link">Strategy</a><a href="#" class="tc-link">Growth</a></div>
+      </div>
+      <div class="tab-content tc-main" id="tab-dm-studio" style="display:none;">
+        <div><div class="tc-head">// About</div><a href="#" class="tc-link hero">Studio</a><a href="#" class="tc-link hero">Insights</a></div>
+        <div><div class="tc-head">// Join</div><a href="#" class="tc-link">Careers</a><a href="#" class="tc-link">Partners</a></div>
+      </div>
+      <div class="tab-content tc-main" id="tab-dm-hubs" style="display:none;">
+        <div><div class="tc-head">// Service</div><a href="#" class="tc-link accent">ai.</a><a href="#" class="tc-link accent">web.</a><a href="#" class="tc-link accent">motion.</a></div>
+        <div><div class="tc-head">// Industry</div><a href="#" class="tc-chip">healthcare</a><a href="#" class="tc-chip">fintech</a><a href="#" class="tc-chip">web3</a></div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     OPTION E — Stack Reveal (Hover Accordion)
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Option E — Stack Reveal</strong>Compact left list · Hovering reveals contextual sub-links on the right. Desktop-forward pattern.</div>
+<div class="pw" id="pe">
+  <div class="pt"><div class="a" onclick="sv('pe','d')">Desktop</div><div onclick="sv('pe','m')">Mobile</div></div>
+  <div class="fd opt-e">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a><a href="#">Insights</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="link-col">
+          <div class="e-link active" onmouseenter="switchReveal('e','work')"><span class="e-name">Work</span><span class="e-arr">→</span></div>
+          <div class="e-link" onmouseenter="switchReveal('e','cap')"><span class="e-name">Capabilities</span><span class="e-arr">→</span></div>
+          <div class="e-link" onmouseenter="switchReveal('e','solutions')"><span class="e-name">Solutions</span><span class="e-arr">→</span></div>
+          <div class="e-link" onmouseenter="switchReveal('e','studio')"><span class="e-name">Studio</span><span class="e-arr">→</span></div>
+          <div class="e-link" onmouseenter="switchReveal('e','hubs')"><span class="e-name">Hubs</span><span class="e-arr">→</span></div>
+          <div class="e-link" onmouseenter="switchReveal('e','more')"><span class="e-name">More</span><span class="e-arr">→</span></div>
+        </div>
+        <div class="ctx-col">
+          <div class="ctx-pane active" id="ctx-e-work">
+            <div><div class="cp-head">// Projects</div><a href="#" class="cp-link">All Work</a><a href="#" class="cp-link">Brand Identity</a><a href="#" class="cp-link">Digital Products</a><a href="#" class="cp-link">Motion & 3D</a><a href="#" class="cp-link">Archive</a></div>
+            <div><div class="cp-head">// Browse</div><a href="#" class="cp-link">Recent</a><a href="#" class="cp-link">Case Studies</a><a href="#" class="cp-link">Venture Builds</a></div>
+          </div>
+          <div class="ctx-pane" id="ctx-e-cap">
+            <div><div class="cp-head">// Build</div><a href="#" class="cp-link">AI & Machine Learning</a><a href="#" class="cp-link">Web Design & Dev</a><a href="#" class="cp-link">Motion & 3D</a></div>
+            <div><div class="cp-head">// Define</div><a href="#" class="cp-link">Brand Identity</a><a href="#" class="cp-link">Strategy</a><a href="#" class="cp-link">Ops & Growth</a></div>
+          </div>
+          <div class="ctx-pane wide" id="ctx-e-solutions">
+            <div><div class="cp-head">// Stage</div><a href="#" class="cp-link">Startup Launch</a><a href="#" class="cp-link">Scale-Up</a><a href="#" class="cp-link">Enterprise</a></div>
+            <div><div class="cp-head">// Industry</div><a href="#" class="cp-link">Healthcare</a><a href="#" class="cp-link">Fintech</a><a href="#" class="cp-link">Web3</a><a href="#" class="cp-link">Ecommerce</a></div>
+            <div><div class="cp-head">// Products</div><a href="#" class="cp-link accent">Mappire</a><a href="#" class="cp-link accent">Nemo GO</a><a href="#" class="cp-link accent">Nemo CRM</a></div>
+          </div>
+          <div class="ctx-pane" id="ctx-e-studio">
+            <div><div class="cp-head">// About</div><a href="#" class="cp-link">The Studio</a><a href="#" class="cp-link">Insights</a><a href="#" class="cp-link">Careers</a><a href="#" class="cp-link">Partners</a></div>
+            <div><div class="cp-head">// Give Back</div><a href="#" class="cp-link">Charity</a><a href="#" class="cp-link">Growth Roadmap</a><a href="#" class="cp-link">Venture</a></div>
+          </div>
+          <div class="ctx-pane wide" id="ctx-e-hubs">
+            <div><div class="cp-head">// Service</div><a href="#" class="cp-link accent">ai.madebynemo.com</a><a href="#" class="cp-link accent">web.madebynemo.com</a><a href="#" class="cp-link accent">motion.madebynemo.com</a><a href="#" class="cp-link accent">ops.madebynemo.com</a></div>
+            <div><div class="cp-head">// Industry</div><a href="#" class="cp-link">healthcare</a><a href="#" class="cp-link">fintech</a><a href="#" class="cp-link">web3</a><a href="#" class="cp-link">ecommerce</a></div>
+            <div><div class="cp-head">// More</div><a href="#" class="cp-link">proptech</a><a href="#" class="cp-link">venture</a></div>
+          </div>
+          <div class="ctx-pane" id="ctx-e-more">
+            <div><div class="cp-head">// Company</div><a href="#" class="cp-link">Careers</a><a href="#" class="cp-link">Partners</a><a href="#" class="cp-link">Charity</a><a href="#" class="cp-link">Brand Kit</a><a href="#" class="cp-link">Archive</a></div>
+            <div><div class="cp-head">// Legal</div><a href="#" class="cp-link">Privacy</a><a href="#" class="cp-link">Terms</a><a href="#" class="cp-link">Cookies</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-e">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="link-col">
+          <div class="e-link active"><span class="e-name">Work</span><span class="e-arr">→</span></div>
+          <div class="e-link"><span class="e-name">Capabilities</span><span class="e-arr">→</span></div>
+          <div class="e-link"><span class="e-name">Solutions</span><span class="e-arr">→</span></div>
+          <div class="e-link"><span class="e-name">Studio</span><span class="e-arr">→</span></div>
+          <div class="e-link"><span class="e-name">Hubs</span><span class="e-arr">→</span></div>
+          <div class="e-link"><span class="e-name">More</span><span class="e-arr">→</span></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────── WILDCARDS ─────────────────────── -->
+<div class="section-label" style="padding-top:64px;"><strong style="font-size:18px;">Wildcard Concepts</strong>Three directions you probably haven't tried. Purely for inspiration — vary widely in complexity.</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     WILDCARD J — Cinematic Full-Bleed
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Wildcard J — Cinematic Full-Bleed</strong>The panel takes over the whole frame. Giant ghost text, film-credit energy. No cards, no columns.</div>
+<div class="pw" id="pj">
+  <div class="pt"><div class="a" onclick="sv('pj','d')">Desktop</div><div onclick="sv('pj','m')">Mobile</div></div>
+  <div class="fd opt-j">
+    <header class="site-header" style="position:relative;z-index:200;">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="jm-inner">
+        <div class="jm-links">
+          <a href="#" class="jm-link"><span class="jl-num">01</span>Work<span class="jl-tag">Selected projects</span></a>
+          <a href="#" class="jm-link"><span class="jl-num">02</span>Capabilities<span class="jl-tag">What we do</span></a>
+          <a href="#" class="jm-link"><span class="jl-num">03</span>Solutions<span class="jl-tag">Industry builds</span></a>
+          <a href="#" class="jm-link"><span class="jl-num">04</span>Studio<span class="jl-tag">Who we are</span></a>
+          <a href="#" class="jm-link"><span class="jl-num">05</span>Insights<span class="jl-tag">Blog & journal</span></a>
+          <a href="#" class="jm-link"><span class="jl-num">06</span>Connect<span class="jl-tag">Let's talk</span></a>
+        </div>
+        <div class="jm-bottom">
+          <div class="jm-sub">
+            <a href="#">Careers</a><a href="#">Partners</a><a href="#">Products</a><a href="#">Hubs</a><a href="#">Archive</a><a href="#">Brand Kit</a>
+          </div>
+          <div class="jm-tagline">Independent studio · Built in Cairo</div>
+        </div>
+        <div class="bg-word">NEMO</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-j">
+    <header class="site-header" style="position:relative;z-index:200;">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="jm-inner">
+        <div class="jm-links">
+          <a href="#" class="jm-link"><span class="jl-num">01</span>Work</a>
+          <a href="#" class="jm-link"><span class="jl-num">02</span>Capabilities</a>
+          <a href="#" class="jm-link"><span class="jl-num">03</span>Studio</a>
+          <a href="#" class="jm-link"><span class="jl-num">04</span>Connect</a>
+        </div>
+        <div class="jm-bottom">
+          <div class="jm-sub"><a href="#">Careers</a><a href="#">Hubs</a><a href="#">Archive</a></div>
+          <div class="jm-tagline">Built in Cairo</div>
+        </div>
+        <div class="bg-word">NEMO</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     WILDCARD K — Domain Switcher Hub
+════════════════════════════════════════════════════ -->
+<div class="section-label"><strong>Wildcard K — Domain Switcher Hub</strong>Inspired by Runlayer: left nav + a hub grid of all sub-domains and industry verticals as interactive cards.</div>
+<div class="pw" id="pk">
+  <div class="pt"><div class="a" onclick="sv('pk','d')">Desktop</div><div onclick="sv('pk','m')">Mobile</div></div>
+  <div class="fd opt-k">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <nav class="pill">
+        <a href="#" class="ac">Work</a><a href="#">Capabilities</a><a href="#">Studio</a>
+      </nav>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="k-nav">
+          <a href="#" class="k-nav-link">Work</a>
+          <a href="#" class="k-nav-link">Capabilities</a>
+          <a href="#" class="k-nav-link">Solutions</a>
+          <a href="#" class="k-nav-link">Studio</a>
+          <a href="#" class="k-nav-link">Insights</a>
+          <a href="#" class="k-nav-link">Connect</a>
+        </div>
+        <div class="k-right">
+          <div class="k-section-head"><span>//</span> Service Hubs</div>
+          <div class="hub-grid" style="grid-template-columns:repeat(4,1fr);">
+            <div class="hub-card"><div class="hc-domain"><span>ai.</span>madebynemo</div><div class="hc-name">AI & ML</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>web.</span>madebynemo</div><div class="hc-name">Web</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>motion.</span>madebynemo</div><div class="hc-name">Motion</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>ops.</span>madebynemo</div><div class="hc-name">Ops</div></div>
+          </div>
+          <div class="k-section-head"><span>//</span> Industry Hubs</div>
+          <div class="hub-grid" style="grid-template-columns:repeat(3,1fr);">
+            <div class="hub-card"><div class="hc-domain"><span>healthcare.</span>madebynemo</div><div class="hc-name">Healthcare</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>fintech.</span>madebynemo</div><div class="hc-name">Fintech</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>web3.</span>madebynemo</div><div class="hc-name">Web3</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>ecommerce.</span>madebynemo</div><div class="hc-name">Ecommerce</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>proptech.</span>madebynemo</div><div class="hc-name">Proptech</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>venture.</span>madebynemo</div><div class="hc-name">Venture</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">X</a></div>
+        <div class="tagline">Independent studio · Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that<br>matter.</div>
+  </div>
+  <div class="fm opt-k">
+    <header class="site-header">
+      <span style="font-family:var(--font-aeonik);color:#fff;font-size:16px;font-weight:500;">NEMO</span>
+      <div class="h-actions"><a href="#" class="cta">Connect</a><div class="menu-toggle" onclick="toggle(this)"><span class="bar"></span><span class="bar"></span></div></div>
+    </header>
+    <div class="menu-backdrop" onclick="closeMenu(this)"></div>
+    <div class="menu-panel">
+      <div class="panel-body">
+        <div class="k-nav">
+          <a href="#" class="k-nav-link">Work</a>
+          <a href="#" class="k-nav-link">Capabilities</a>
+          <a href="#" class="k-nav-link">Solutions</a>
+          <a href="#" class="k-nav-link">Studio</a>
+          <a href="#" class="k-nav-link">Connect</a>
+        </div>
+        <div class="k-right">
+          <div class="k-section-head"><span>//</span> Service Hubs</div>
+          <div class="hub-grid">
+            <div class="hub-card"><div class="hc-domain"><span>ai.</span>nemo</div><div class="hc-name">AI</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>web.</span>nemo</div><div class="hc-name">Web</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>motion.</span>nemo</div><div class="hc-name">Motion</div></div>
+            <div class="hub-card"><div class="hc-domain"><span>ops.</span>nemo</div><div class="hc-name">Ops</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="socials"><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+        <div class="tagline">Built in Cairo</div>
+      </div>
+    </div>
+    <div class="page-content">Building digital<br>products that matter.</div>
+  </div>
+</div>
+
+
+<div style="height:80px;"></div>
+
+<script>
+/* ── Core toggle ── */
+function toggle(btn){
+  const frame=btn.closest('.fd')||btn.closest('.fm');
+  const panel=frame.querySelector('.menu-panel');
+  const backdrop=frame.querySelector('.menu-backdrop');
+  const page=frame.querySelector('.page-content');
+  const isOpen=panel.classList.contains('open');
+  if(isOpen){
+    panel.classList.remove('open');backdrop.classList.remove('open');btn.classList.remove('open');
+    if(page)page.classList.remove('dimmed');
+  }else{
+    panel.classList.add('open');backdrop.classList.add('open');btn.classList.add('open');
+    if(page)page.classList.add('dimmed');
+  }
+}
+function closeMenu(backdrop){
+  const frame=backdrop.closest('.fd')||backdrop.closest('.fm');
+  const panel=frame.querySelector('.menu-panel');
+  const btn=frame.querySelector('.menu-toggle');
+  const page=frame.querySelector('.page-content');
+  panel.classList.remove('open');backdrop.classList.remove('open');btn.classList.remove('open');
+  if(page)page.classList.remove('dimmed');
+}
+function sv(id,mode){
+  const w=document.getElementById(id),t=w.querySelectorAll('.pt div');
+  if(mode==='m'){w.classList.add('mob');t[0].classList.remove('a');t[1].classList.add('a');}
+  else{w.classList.remove('mob');t[0].classList.add('a');t[1].classList.remove('a');}
+}
+
+/* ── Option B hover context swap ── */
+function switchCtx(opt,key){
+  const panels=document.querySelectorAll(`[id^="ctx-${opt}-"]`);
+  panels.forEach(p=>p.classList.remove('active'));
+  const target=document.getElementById(`ctx-${opt}-${key}`);
+  if(target)target.classList.add('active');
+  const links=document.querySelectorAll(`.opt-${opt} .mega-link`);
+  links.forEach(l=>l.classList.remove('active'));
+}
+
+/* ── Option D tab switch ── */
+function switchTab(btn,opt,key){
+  const panel=btn.closest('.menu-panel');
+  panel.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  panel.querySelectorAll('.tab-content').forEach(c=>{c.style.display='none';c.classList.remove('active');});
+  const t=document.getElementById(`tab-${opt}-${key}`);
+  if(t){t.style.display='grid';t.classList.add('active');}
+}
+function switchTabMob(btn,opt,key){
+  const panel=btn.closest('.menu-panel');
+  panel.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  panel.querySelectorAll('.tab-content').forEach(c=>{c.style.display='none';c.classList.remove('active');});
+  const t=document.getElementById(`tab-${opt}-${key}`);
+  if(t){t.style.display='grid';t.classList.add('active');}
+}
+
+/* ── Option E reveal swap ── */
+function switchReveal(opt,key){
+  const panes=document.querySelectorAll(`[id^="ctx-${opt}-"]`);
+  panes.forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const target=document.getElementById(`ctx-${opt}-${key}`);
+  if(target){target.classList.add('active');target.style.display='grid';}
+  const links=document.querySelectorAll(`.opt-${opt} .e-link`);
+  links.forEach(l=>l.classList.remove('active'));
+}
+/* Init opt-e ctx panels */
+document.querySelectorAll('[id^="ctx-e-"]').forEach((p,i)=>{if(i>0)p.style.display='none';});
+</script>
+</body>
+</html>
