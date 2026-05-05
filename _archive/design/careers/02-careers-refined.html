@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Careers Refined Lab</title>
+<style>
+/* ══════════════════════════════════════════════════════
+   NEMO — CAREERS REFINED LAB
+   Following the exact typographic and spatial rules of 
+   the V2 homepage and footer/nav labs.
+════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'AeonikPro';
+  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'NeueHaas';
+  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+:root {
+  --green:      #35D687;
+  --black:      #050505;
+  --off-white:  #F5F5F0;
+  --warm:       #EDE9E0;
+  --gray-text:  #555555;
+  --border:     rgba(0,0,0,0.08);
+  
+  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
+  --font-haas:   'NeueHaas', system-ui, sans-serif;
+  
+  --container: 1312px;
+  --sp10: 40px;
+  --sp20: 80px;
+  --e-fast: 150ms ease-in-out;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--off-white);
+  color: var(--black);
+  font-family: var(--font-haas);
+  -webkit-font-smoothing: antialiased;
+  padding: var(--sp20) var(--sp10);
+}
+
+.lab-container {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+/* ── Typography Atoms ── */
+.eyebrow {
+  font-family: var(--font-haas);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-text);
+  margin-bottom: 12px;
+  display: block;
+}
+.h1-mega {
+  font-family: var(--font-aeonik);
+  font-size: clamp(48px, 8vw, 110px);
+  font-weight: 400;
+  letter-spacing: -3px;
+  line-height: 0.95;
+  margin-bottom: 40px;
+}
+.h1-mega em { font-style: normal; color: var(--green); }
+
+/* ── Variant 1: The "Editorial Rail" ── */
+.rail-section {
+  margin-top: 120px;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 80px;
+}
+.rail-left h2 {
+  font-family: var(--font-aeonik);
+  font-size: 32px;
+  letter-spacing: -1px;
+  font-weight: 400;
+}
+
+.job-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s ease;
+  cursor: pointer;
+}
+.job-row:hover {
+  padding-left: 20px;
+}
+.job-row-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.job-name {
+  font-family: var(--font-aeonik);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+.job-tags {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--gray-text);
+}
+.job-arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all var(--e-fast);
+}
+.job-row:hover .job-arrow {
+  background: var(--green);
+  border-color: var(--green);
+  transform: translateX(5px);
+}
+
+/* ── Variant 2: The "Accelerated Grid" (based on home feature) ── */
+.grid-section {
+  margin-top: 160px;
+}
+.job-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.job-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  padding: 48px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.job-card:hover {
+  transform: translateY(-8px);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  background: var(--green-dim);
+  color: var(--green);
+  border-radius: 100px;
+}
+.card-title {
+  font-family: var(--font-aeonik);
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  font-weight: 400;
+}
+.card-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gray-text);
+  max-width: 320px;
+}
+.card-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.apply-btn {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ── Divider ── */
+.lab-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 100px 0;
+}
+
+</style>
+</head>
+<body>
+
+<div class="lab-container">
+  <span class="eyebrow">// RECRUITMENT LAB 02.0</span>
+  <h1 class="h1-mega">Join the <em>Nemo</em> squad.</h1>
+
+  <!-- Variant 1 -->
+  <section class="rail-section">
+    <div class="rail-left">
+      <h2>Open Positions</h2>
+      <p style="color: var(--gray-text); margin-top: 16px; max-width: 280px;">We’re looking for exceptional humans to help us build the future of agentic AI.</p>
+    </div>
+    <div class="rail-right">
+      <div class="job-row">
+        <div class="job-row-left">
+          <div class="job-name">Senior Frontend Engineer</div>
+          <div class="job-tags">
+            <span>Engineering</span>
+            <span>&bull;</span>
+            <span>Remote</span>
+          </div>
+        </div>
+        <div class="job-arrow">→</div>
+      </div>
+      <div class="job-row">
+        <div class="job-row-left">
+          <div class="job-name">Product Designer</div>
+          <div class="job-tags">
+            <span>Design</span>
+            <span>&bull;</span>
+            <span>Cairo</span>
+          </div>
+        </div>
+        <div class="job-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lab-divider"></div>
+
+  <!-- Variant 2 -->
+  <section class="grid-section">
+    <span class="eyebrow">Grid Style</span>
+    <div class="job-grid">
+      <div class="job-card">
+        <div class="card-header">
+          <span class="status-pill">Active</span>
+        </div>
+        <div class="card-title">Backend Engineer (Go)</div>
+        <p class="card-desc">Architecting distributed systems that power our core platform.</p>
+        <div class="card-footer">
+          <span class="job-tags">Full-time &bull; Cairo</span>
+          <span class="apply-btn">Apply →</span>
+        </div>
+      </div>
+      <div class="job-card">
+        <div class="card-header">
+          <span class="status-pill">Active</span>
+        </div>
+        <div class="card-title">AI Solutions Architect</div>
+        <p class="card-desc">Leading the integration of agentic workflows for global enterprises.</p>
+        <div class="card-footer">
+          <span class="job-tags">Remote &bull; Contract</span>
+          <span class="apply-btn">Apply →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

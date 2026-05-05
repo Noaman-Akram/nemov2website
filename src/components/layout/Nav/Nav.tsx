@@ -64,7 +64,7 @@ export function Nav() {
     <>
       <style>{`
         #site-header {
-          --nav-offset-top: var(--sp3);
+          --nav-offset-top: calc(var(--sp3) + 36px);
           --nav-outer-x: var(--sp6);
           --nav-shell-pad-left: var(--sp4);
           --nav-shell-pad-right: var(--sp3);
@@ -390,7 +390,7 @@ export function Nav() {
 
         @media (max-width: 768px) {
           #site-header {
-            --nav-offset-top: var(--sp2);
+            --nav-offset-top: calc(var(--sp2) + 36px);
             --nav-outer-x: var(--sp3);
             --nav-shell-pad-left: var(--sp3);
             --nav-shell-pad-right: var(--sp2);

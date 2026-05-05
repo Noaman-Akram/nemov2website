@@ -3,808 +3,660 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NEMO — Marquee Lab (Logo Options)</title>
+<title>NEMO - Marquee Lab (Sizing Systems)</title>
 <style>
-
-/* ── Fonts ── */
 @font-face {
-  font-family: 'AeonikPro';
-  src: url('../../src/fonts/AeonikPro-Regular.otf') format('opentype');
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'NeueHaas';
-  src: url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype');
-  font-weight: 400; font-style: normal; font-display: swap;
+  font-family: "AeonikPro";
+  src: url("../../../src/fonts/AeonikPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
-/* ── Tokens ── */
+@font-face {
+  font-family: "NeueHaas";
+  src: url("../../../src/fonts/NeueHaasDisplayRoman.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --green:        #35D687;
-  --green-dim:    rgba(53,214,135,0.12);
-  --green-border: rgba(53,214,135,0.28);
-  --black:        #0D0D0D;
-  --charcoal:     #1A1A1A;
-  --off-white:    #F5F5F0;
-  --b1:           rgba(255,255,255,0.07);
-  --b2:           rgba(255,255,255,0.12);
-  --b-dark:       rgba(0,0,0,0.10);
-  --t1:           #FFFFFF;
-  --t-off:        rgba(255,255,255,0.25);
-  --sp1:  4px;  --sp2:  8px;  --sp3: 12px;
-  --sp4: 16px;  --sp5: 20px;  --sp6: 24px;
-  --sp8: 32px;  --sp10: 40px; --sp12: 48px;
-  --sp16: 64px; --sp20: 80px;
-  --r-sm:   4px; --r-md: 8px; --r-lg: 16px; --r-pill: 9999px;
+  --green: #35D687;
+  --green-dim: rgba(53, 214, 135, 0.12);
+  --black: #0D0D0D;
+  --charcoal: #1A1A1A;
+  --off-white: #F5F5F0;
+  --t1: #FFFFFF;
+  --t-off: rgba(255, 255, 255, 0.62);
+  --b1: rgba(255, 255, 255, 0.07);
+  --b2: rgba(255, 255, 255, 0.12);
+  --b3: rgba(255, 255, 255, 0.2);
+  --b-green: rgba(53, 214, 135, 0.28);
+  --s3: rgba(255, 255, 255, 0.04);
+  --sp1: 4px;
+  --sp2: 8px;
+  --sp3: 12px;
+  --sp4: 16px;
+  --sp5: 20px;
+  --sp6: 24px;
+  --sp7: 28px;
+  --sp8: 32px;
+  --sp9: 36px;
+  --sp10: 40px;
+  --sp12: 48px;
+  --sp16: 64px;
+  --sp20: 80px;
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-pill: 9999px;
   --e-fast: 200ms ease;
-  --font-aeonik: 'AeonikPro', system-ui, sans-serif;
-  --font-haas:   'NeueHaas', system-ui, sans-serif;
-  --container:   1312px;
+  --font-aeonik: "AeonikPro", system-ui, sans-serif;
+  --font-haas: "NeueHaas", system-ui, sans-serif;
+  --container: 1200px;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
 body {
-  background: #111;
-  color: #eee;
-  font-family: var(--font-haas), sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(53, 214, 135, 0.08), transparent 28%),
+    var(--black);
+  color: var(--t1);
+  font-family: var(--font-haas);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
-a { text-decoration: none; color: inherit; }
 
-/* ── Lab labels ── */
-.lab-section {
-  padding: var(--sp20) 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+img {
+  display: block;
 }
-.lab-section:last-child { border-bottom: none; }
-.lab-label {
+
+.page-shell {
+  padding: var(--sp16) var(--sp10) var(--sp20);
+}
+
+.page-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.hero {
+  padding: var(--sp16) 0 var(--sp12);
+  border-bottom: 1px solid var(--b1);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp2);
+  margin-bottom: var(--sp4);
   font-family: var(--font-haas);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  text-align: center;
-  margin-bottom: var(--sp8);
+  color: rgba(255, 255, 255, 0.4);
 }
-.lab-title {
+
+.hero h1 {
+  margin: 0 0 var(--sp4);
   font-family: var(--font-aeonik);
-  font-size: 13px;
-  color: rgba(255,255,255,0.18);
-  text-align: center;
-  margin-bottom: var(--sp5);
-  letter-spacing: -0.2px;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 400;
+  letter-spacing: -2px;
 }
 
-/* ════════════════════════════════════════════════════
-   SHARED MARQUEE ENGINE
-   All variants use these base rules.
-   ════════════════════════════════════════════════════ */
-.mq-wrap {
-  overflow: hidden;
+.hero p {
+  max-width: 760px;
+  margin: 0;
+  font-size: 16px;
+  color: var(--t-off);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp4);
+  margin-top: var(--sp8);
+}
+
+.summary-card {
+  padding: var(--sp5);
+  border: 1px solid var(--b1);
+  border-radius: var(--r-lg);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.summary-card strong {
+  display: block;
+  margin-bottom: var(--sp2);
+  font-family: var(--font-aeonik);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+}
+
+.summary-card p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.summary-card.recommended {
+  border-color: var(--b-green);
+  background: linear-gradient(180deg, rgba(53, 214, 135, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.lab-section {
+  padding: var(--sp12) 0;
+  border-bottom: 1px solid var(--b1);
+}
+
+.lab-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: var(--sp8);
+  align-items: end;
+  margin-bottom: var(--sp6);
+}
+
+.section-title {
+  margin: 0 0 var(--sp2);
+  font-family: var(--font-aeonik);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -1px;
+}
+
+.section-copy,
+.section-note {
+  margin: 0;
+  font-size: 15px;
+  color: var(--t-off);
+}
+
+.section-note {
+  justify-self: end;
+  padding: var(--sp3) var(--sp4);
+  border: 1px solid var(--b1);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.03);
+  text-align: right;
+}
+
+.section-note.recommended {
+  border-color: var(--b-green);
+  color: rgba(255, 255, 255, 0.82);
+  background: var(--green-dim);
+}
+
+.marquee-shell {
   position: relative;
+  overflow: hidden;
+  padding: var(--sp7) 0;
+  border: 1px solid var(--b1);
+  border-radius: var(--r-xl);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+    var(--charcoal);
 }
 
-/* fade edges — adapts colour via custom property */
-.mq-wrap::before,
-.mq-wrap::after {
-  content: '';
+.marquee-shell::before,
+.marquee-shell::after {
+  content: "";
   position: absolute;
-  top: 0; bottom: 0;
+  inset: 0 auto 0 0;
   width: 140px;
   pointer-events: none;
   z-index: 2;
+  background: linear-gradient(90deg, var(--charcoal) 0%, transparent 100%);
 }
-.mq-wrap::before { left:  0; background: linear-gradient(90deg,  var(--fade-color, #111) 0%, transparent 100%); }
-.mq-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--fade-color, #111) 0%, transparent 100%); }
 
-.mq-track {
+.marquee-shell::after {
+  inset: 0 0 0 auto;
+  background: linear-gradient(-90deg, var(--charcoal) 0%, transparent 100%);
+}
+
+.marquee-track {
   display: flex;
+  align-items: center;
   width: max-content;
-  animation: scroll-left var(--speed, 40s) linear infinite;
-  align-items: center;
-}
-.mq-track:hover { animation-play-state: paused; }
-
-@keyframes scroll-left {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  animation: marquee var(--speed, 30s) linear infinite;
 }
 
-/* logo img inside track */
-.mq-track .logo-img {
-  flex-shrink: 0;
+.marquee-item {
+  flex: 0 0 auto;
+}
+
+.logo-core {
   display: block;
+  width: auto;
   object-fit: contain;
-  transition: filter var(--e-fast), opacity var(--e-fast), transform var(--e-fast);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION A — Dark BG · greyscale logos · medium size
-   The reference from 02-home-test "dark-marquee"
-   ════════════════════════════════════════════════════ */
-.a-wrap {
-  --fade-color: #0D0D0D;
-  --speed: 38s;
-  background: #0D0D0D;
-  border-top: 1px solid var(--b1);
-  border-bottom: 1px solid var(--b1);
-  padding: 28px 0;
-}
-.a-wrap .mq-track .logo-img {
-  height: 28px;
-  margin: 0 48px;
   filter: brightness(0) invert(1);
-  opacity: 0.35;
-}
-.a-wrap .mq-track .logo-img:hover {
-  opacity: 0.85;
-  transform: scale(1.06);
+  opacity: 0.78;
+  transition:
+    opacity var(--e-fast),
+    transform var(--e-fast),
+    filter var(--e-fast);
 }
 
-
-/* ════════════════════════════════════════════════════
-   OPTION B — Dark BG · logos slightly bigger · pill hover
-   ════════════════════════════════════════════════════ */
-.b-wrap {
-  --fade-color: #141414;
-  --speed: 44s;
-  background: #141414;
-  padding: 36px 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.b-wrap .mq-track .logo-img {
-  height: 36px;
-  margin: 0 56px;
-  filter: brightness(0) invert(1);
-  opacity: 0.28;
-  border-radius: var(--r-sm);
-  transition: opacity var(--e-fast), transform var(--e-fast), box-shadow var(--e-fast), filter var(--e-fast);
-}
-.b-wrap .mq-track .logo-img:hover {
+.marquee-item:hover .logo-core {
   opacity: 1;
-  filter: brightness(0) invert(1);
-  transform: scale(1.08);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION C — White / Off-White BG · dark logos · minimal
-   (the top-marquee style from 02-home-test)
-   ════════════════════════════════════════════════════ */
-.c-section { background: var(--off-white); }
-.c-wrap {
-  --fade-color: #F5F5F0;
-  --speed: 50s;
-  background: var(--off-white);
-  padding: 32px 0;
-}
-.c-wrap .mq-track .logo-img {
-  height: 26px;
-  margin: 0 52px;
-  filter: brightness(0);
-  opacity: 0.22;
-  transition: opacity var(--e-fast), transform var(--e-fast);
-}
-.c-wrap .mq-track .logo-img:hover {
-  opacity: 0.75;
-  transform: scale(1.05);
-}
-.c-caption {
-  text-align: center;
-  font-family: var(--font-haas);
-  font-size: 12px;
-  color: rgba(0,0,0,0.35);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: var(--sp6);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION D — White BG · colour logos · natural colours
-   ════════════════════════════════════════════════════ */
-.d-section { background: #ffffff; }
-.d-wrap {
-  --fade-color: #ffffff;
-  --speed: 46s;
-  background: #ffffff;
-  padding: 40px 0;
-  border-top: 1px solid rgba(0,0,0,0.06);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-}
-.d-wrap .mq-track .logo-img {
-  height: 32px;
-  margin: 0 56px;
-  opacity: 0.55;
-  filter: grayscale(40%);
-  transition: opacity var(--e-fast), filter var(--e-fast), transform var(--e-fast);
-}
-.d-wrap .mq-track .logo-img:hover {
-  opacity: 1;
-  filter: grayscale(0%);
-  transform: scale(1.06);
-}
-.d-caption {
-  text-align: center;
-  font-family: var(--font-haas);
-  font-size: 12px;
-  color: rgba(0,0,0,0.4);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: var(--sp6);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION E — Dark charcoal · green-tinted hover glow
-   ════════════════════════════════════════════════════ */
-.e-wrap {
-  --fade-color: #1A1A1A;
-  --speed: 42s;
-  background: #1A1A1A;
-  padding: 32px 0;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.e-wrap .mq-track .logo-img {
-  height: 30px;
-  margin: 0 52px;
-  filter: brightness(0) invert(1);
-  opacity: 0.30;
-  transition: opacity var(--e-fast), filter 250ms ease, transform var(--e-fast), drop-shadow 250ms ease;
-}
-.e-wrap .mq-track .logo-img:hover {
-  opacity: 1;
-  filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(95deg);
-  transform: scale(1.07);
-  filter: drop-shadow(0 0 8px var(--green)) brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(95deg);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION F — Two-row marquee, dark, opposite directions
-   ════════════════════════════════════════════════════ */
-.f-wrap {
-  --fade-color: #0D0D0D;
-  background: #0D0D0D;
-  padding: 28px 0;
-  border-top: 1px solid var(--b1);
-  border-bottom: 1px solid var(--b1);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.f-wrap .mq-track.row-fwd {
-  animation: scroll-left 40s linear infinite;
-}
-.f-wrap .mq-track.row-bwd {
-  animation: scroll-right 48s linear infinite;
-}
-@keyframes scroll-right {
-  0%   { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
-}
-.f-wrap .mq-track .logo-img {
-  height: 24px;
-  margin: 0 44px;
-  filter: brightness(0) invert(1);
-  opacity: 0.25;
-  transition: opacity var(--e-fast), transform var(--e-fast);
-}
-.f-wrap .mq-track .logo-img:hover {
-  opacity: 0.8;
-  transform: scale(1.08);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION G — Mixed size logos (some taller, some shorter)
-   Dark BG, unequal heights to feel more organic
-   ════════════════════════════════════════════════════ */
-.g-wrap {
-  --fade-color: #111111;
-  --speed: 36s;
-  background: #111111;
-  padding: 36px 0;
-  border-top: 1px solid var(--b1);
-  border-bottom: 1px solid var(--b1);
-}
-.g-wrap .mq-track { align-items: center; }
-.g-wrap .mq-track .logo-img {
-  margin: 0 48px;
-  filter: brightness(0) invert(1);
-  opacity: 0.32;
-  transition: opacity var(--e-fast), transform var(--e-fast);
-}
-/* individual size overrides */
-.g-wrap .logo-sm  { height: 20px; }
-.g-wrap .logo-md  { height: 30px; }
-.g-wrap .logo-lg  { height: 42px; }
-.g-wrap .mq-track .logo-img:hover {
-  opacity: 0.85;
-  transform: scale(1.07);
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION H — Dark BG · logos in pill/card containers
-   ════════════════════════════════════════════════════ */
-.h-wrap {
-  --fade-color: #0D0D0D;
-  --speed: 48s;
-  background: #0D0D0D;
-  padding: 28px 0;
-  border-top: 1px solid var(--b1);
-  border-bottom: 1px solid var(--b1);
-}
-.h-wrap .mq-track {
-  gap: 0;
-}
-.logo-pill {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px;
-  padding: 10px 24px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--r-pill);
-  background: rgba(255,255,255,0.03);
-  transition: border-color var(--e-fast), background var(--e-fast), transform var(--e-fast);
-  cursor: default;
-}
-.logo-pill:hover {
-  border-color: rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.06);
-  transform: scale(1.04);
-}
-.logo-pill .logo-img {
-  height: 24px;
-  filter: brightness(0) invert(1);
-  opacity: 0.45;
-  transition: opacity var(--e-fast);
-  margin: 0 !important; /* override mq-track spacing */
-}
-.logo-pill:hover .logo-img {
-  opacity: 0.9;
-}
-
-
-/* ════════════════════════════════════════════════════
-   OPTION I — Light / cream BG · logos in subtle cards
-   ════════════════════════════════════════════════════ */
-.i-section { background: #FAFAF8; }
-.i-wrap {
-  --fade-color: #FAFAF8;
-  --speed: 52s;
-  background: #FAFAF8;
-  padding: 32px 0;
-  border-top: 1px solid rgba(0,0,0,0.07);
-  border-bottom: 1px solid rgba(0,0,0,0.07);
-}
-.i-wrap .mq-track {
-  gap: 0;
-}
-.logo-card {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 8px;
-  padding: 12px 28px;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: var(--r-md);
-  background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  transition: box-shadow var(--e-fast), transform var(--e-fast);
-  cursor: default;
-}
-.logo-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
   transform: translateY(-2px);
 }
-.logo-card .logo-img {
-  height: 22px;
-  filter: brightness(0);
-  opacity: 0.55;
-  transition: opacity var(--e-fast);
-  margin: 0 !important;
-}
-.logo-card:hover .logo-img {
-  opacity: 0.85;
+
+.tier-track {
+  gap: var(--sp12);
 }
 
-
-/* ── Section wrappers for light background sections ── */
-.light-section-label {
-  color: rgba(0,0,0,0.3);
-}
-.light-section-title {
-  color: rgba(0,0,0,0.15);
-}
-
-/* ════════════════════════════════════════════════════
-   OPTION K — Normalized Area (Premium)
-   Ensures square and wide logos feel unified in scale.
-   Uses a 'Visual Volume' constraint (Max-Area).
-   ════════════════════════════════════════════════════ */
-.k-wrap {
-  --fade-color: #0D0D0D;
-  --speed: 15s; 
-  background: #0D0D0D;
-  padding: 64px 0;
-  border-top: 1px solid var(--b2);
-  border-bottom: 1px solid var(--b2);
-}
-.k-cell {
-  flex-shrink: 0;
-  width: 140px; /* Base width */
-  height: 60px;
+.tier-item {
+  min-width: 148px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 40px;
-}
-.k-cell img {
-  /* The "Universal Area" hack */
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.3;
-  transition: all 400ms var(--e-fast);
-}
-/* Wide logos get vertical compression to look smaller */
-.k-cell.wide img   { max-height: 28px; }
-/* Square logos get horizontal compression to look smaller */
-.k-cell.square img { max-height: 44px; max-width: 90px; }
-
-.k-cell:hover img {
-  opacity: 1;
-  transform: scale(1.1);
-  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(53,214,135,0.4));
 }
 
-/* ════════════════════════════════════════════════════
-   OPTION L — Editorial Stagger
-   Vertical offsets for break-the-grid creative rhythm.
-   ════════════════════════════════════════════════════ */
-.l-wrap {
-  --fade-color: #111;
-  --speed: 20s;
-  background: #111;
-  padding: 100px 0;
+.tier-item .logo-core {
+  height: 30px;
+  max-width: 180px;
 }
-.l-track {
+
+.tier-item.size-dense .logo-core {
+  height: 25px;
+}
+
+.tier-item.size-wide .logo-core {
+  height: 36px;
+}
+
+.tier-item.size-tall .logo-core {
+  height: 32px;
+}
+
+.weighted-track {
+  gap: var(--sp8);
+}
+
+.weighted-item {
   display: flex;
   align-items: center;
-  gap: 80px;
+  justify-content: center;
+  width: fit-content;
+  height: 78px;
+  padding: 0 var(--item-pad, var(--sp4));
 }
-.l-item {
-  flex-shrink: 0;
-  transition: all var(--e-fast);
-}
-.l-item:nth-child(even) { transform: translateY(20px); }
-.l-item:nth-child(odd)  { transform: translateY(-20px); }
 
-.l-item img {
-  height: 32px;
-  width: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.4;
-  transition: opacity 400ms ease;
+.weighted-item .logo-core {
+  height: var(--logo-height, 32px);
+  max-width: var(--logo-max-width, 180px);
+  opacity: var(--logo-opacity, 0.9);
 }
-.l-item:hover { transform: translateY(0) scale(1.15); z-index: 10; }
-.l-item:hover img { opacity: 1; }
 
+.weighted-track .logo-core {
+  filter: brightness(0) invert(1) contrast(1.12);
+}
+
+.weighted-item:hover .logo-core {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(0) invert(1) contrast(1.22) drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+}
+
+.frame-track {
+  gap: var(--sp4);
+}
+
+.frame-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--frame-width, 188px);
+  height: 74px;
+  padding: 0 var(--sp5);
+  border: 1px solid var(--b1);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.03);
+  transition:
+    transform var(--e-fast),
+    border-color var(--e-fast),
+    background var(--e-fast);
+}
+
+.frame-item .logo-core {
+  max-width: 100%;
+  max-height: 34px;
+}
+
+.frame-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--b3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.frame-item.shape-wide {
+  width: 214px;
+}
+
+.frame-item.shape-compact {
+  width: 168px;
+}
+
+.retool-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp3);
+  padding: var(--sp4) 0;
+}
+
+.retool-row {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: var(--sp7);
+}
+
+.retool-row.row-forward {
+  animation: retool-marquee-forwards 20s linear infinite;
+}
+
+.retool-row.row-backward {
+  animation: retool-marquee-backwards 20s linear infinite;
+}
+
+.retool-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--retool-slot, 156px);
+  height: 58px;
+}
+
+.retool-item .logo-core {
+  height: var(--retool-height, 30px);
+  max-width: var(--retool-max-width, 160px);
+  opacity: 0.72;
+  filter: brightness(0) invert(1) contrast(1.08);
+}
+
+.retool-item:hover .logo-core {
+  opacity: 1;
+  transform: scale(1.03);
+  filter: brightness(0) invert(1) contrast(1.26);
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp4);
+  margin-top: var(--sp5);
+}
+
+.detail-card {
+  padding: var(--sp4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--b1);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.detail-card strong {
+  display: block;
+  margin-bottom: var(--sp2);
+  color: var(--t1);
+  font-family: var(--font-aeonik);
+  font-weight: 400;
+}
+
+.footer-note {
+  padding-top: var(--sp8);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes retool-marquee-forwards {
+  from {
+    transform: translate(-25%);
+  }
+
+  to {
+    transform: translate(-75%);
+  }
+}
+
+@keyframes retool-marquee-backwards {
+  from {
+    transform: translate(-75%);
+  }
+
+  to {
+    transform: translate(-25%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@media (max-width: 920px) {
+  .page-shell {
+    padding: var(--sp12) var(--sp5) var(--sp16);
+  }
+
+  .summary-grid,
+  .detail-list,
+  .section-head {
+    grid-template-columns: 1fr;
+  }
+
+  .section-note {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .marquee-shell::before,
+  .marquee-shell::after {
+    width: 72px;
+  }
+
+  .tier-track,
+  .weighted-track,
+  .frame-track {
+    gap: var(--sp6);
+  }
+}
 </style>
 </head>
 <body>
+  <div class="page-shell">
+    <div class="page-inner">
+      <header class="hero">
+        <div class="eyebrow">// MARQUEE SIZING LAB</div>
+        <h1>Three ways to make mixed logo sets feel balanced.</h1>
+        <p>
+          Same six brands, three sizing systems. The goal is not mathematical equality. The goal is that every logo feels visible, intentional,
+          and calm when it moves through the strip.
+        </p>
+        <div class="summary-grid">
+          <article class="summary-card">
+            <strong>Tiered Buckets</strong>
+            <p>Simple to maintain. Good when the list changes and you want a clear system instead of per-logo tuning.</p>
+          </article>
+          <article class="summary-card recommended">
+            <strong>Visual Weight Multipliers</strong>
+            <p>Best for curated client sets. Each logo gets its own image-level calibration so the visible mark, not the file box, feels balanced.</p>
+          </article>
+          <article class="summary-card">
+            <strong>Normalized Frames</strong>
+            <p>Most forgiving when source files are messy or padded inconsistently. The slot creates rhythm for you.</p>
+          </article>
+          <article class="summary-card">
+            <strong>Retool Stack Motion</strong>
+            <p>Opposing rows with deeper travel. More kinetic and product-y than the standard single-strip marquee.</p>
+          </article>
+        </div>
+      </header>
 
-<!-- ════════ PAGE HEADER ════════ -->
-<div style="text-align:center; padding: 64px 40px 48px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-  <p style="font-family: var(--font-haas); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">Design Lab</p>
-  <h1 style="font-family: var(--font-aeonik); font-size:clamp(28px,4vw,44px); font-weight:400; letter-spacing:-1.5px; color:#fff; margin-bottom:16px;">Marquee Options</h1>
-  <p style="font-family: var(--font-haas); font-size:14px; color:rgba(255,255,255,0.35); max-width:480px; margin:0 auto;">
-    12 variants — dark &amp; light backgrounds, different logo sizes, and the new 2026 Editorial Stagger. Hover any logo to pause.
-  </p>
-</div>
+      <section class="lab-section" id="tiered-buckets">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">// OPTION A</div>
+            <h2 class="section-title">Tiered Buckets</h2>
+            <p class="section-copy">
+              Three semantic sizes: dense logos step down slightly, thin wordmarks step up, everything else sits in the middle.
+            </p>
+          </div>
+          <p class="section-note">Fastest to maintain when logos change often.</p>
+        </div>
 
+        <div class="marquee-shell" aria-label="Tiered bucket marquee">
+          <div class="marquee-track tier-track" data-marquee-track>
+            <div class="marquee-item tier-item size-standard"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/logo.png" alt="Travelholic logo" /></div>
+            <div class="marquee-item tier-item size-dense"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue logo" /></div>
+            <div class="marquee-item tier-item size-wide"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/new-logo_web.png" alt="MTA logo" /></div>
+            <div class="marquee-item tier-item size-standard"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/huawei_logo.png" alt="Huawei logo" /></div>
+            <div class="marquee-item tier-item size-tall"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png" alt="Hace logo" /></div>
+            <div class="marquee-item tier-item size-wide"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/eiecE.png" alt="EIEC logo" /></div>
+          </div>
+        </div>
+      </section>
 
-<!-- ════════ K — NORMALIZED AREA (BEST FOR PROD) ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option K (PREMIUM)</p>
-  <p class="lab-title">Normalized Visual Area · 15s Duration · High Dynamic Balance</p>
-  <div class="mq-wrap k-wrap">
-    <div class="mq-track" style="animation-duration: var(--speed);">
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-      <!-- dup -->
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="k-cell wide"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="k-cell square"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
+      <section class="lab-section" id="visual-weight-multipliers">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">// OPTION B</div>
+            <h2 class="section-title">Visual Weight Multipliers</h2>
+            <p class="section-copy">
+              This version ignores equal containers and tunes the raw logos directly. Heavy marks come down, weak files get pushed up, and the strip reads more evenly at a glance.
+            </p>
+          </div>
+          <p class="section-note recommended">Recommended for the final marquee.</p>
+        </div>
+
+        <div class="marquee-shell" aria-label="Visual weight marquee">
+          <div class="marquee-track weighted-track" data-marquee-track style="--speed: 28s;">
+            <div class="marquee-item weighted-item" style="--logo-height:34px; --logo-max-width:168px; --logo-opacity:0.92;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/logo.png" alt="Travelholic logo" /></div>
+            <div class="marquee-item weighted-item" style="--logo-height:30px; --logo-max-width:90px; --item-pad:var(--sp3); --logo-opacity:0.96;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue logo" /></div>
+            <div class="marquee-item weighted-item" style="--logo-height:48px; --logo-max-width:184px; --item-pad:var(--sp5); --logo-opacity:1;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/new-logo_web.png" alt="MTA logo" /></div>
+            <div class="marquee-item weighted-item" style="--logo-height:25px; --logo-max-width:154px; --logo-opacity:0.88;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/huawei_logo.png" alt="Huawei logo" /></div>
+            <div class="marquee-item weighted-item" style="--logo-height:46px; --logo-max-width:132px; --item-pad:var(--sp5); --logo-opacity:1;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png" alt="Hace logo" /></div>
+            <div class="marquee-item weighted-item" style="--logo-height:60px; --logo-max-width:168px; --item-pad:var(--sp5); --logo-opacity:1;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/eiecE.png" alt="EIEC logo" /></div>
+          </div>
+        </div>
+
+        <div class="detail-list">
+          <div class="detail-card">
+            <strong>Why it works</strong>
+            It corrects what you actually see. Huawei stops dominating, and the smaller government mark plus EIEC get enough physical size to stay readable in motion.
+          </div>
+          <div class="detail-card">
+            <strong>What changes per logo</strong>
+            Height and max-width are tuned per image. That gives more control when the source PNG bounds are inconsistent or padded badly.
+          </div>
+          <div class="detail-card">
+            <strong>What I would ship</strong>
+            This one, with one more round of visual nudging after you react to the current screenshot.
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-section" id="normalized-frames">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">// OPTION C</div>
+            <h2 class="section-title">Normalized Frames</h2>
+            <p class="section-copy">
+              Each logo sits in a quiet slot. The frame absorbs inconsistent source padding and makes the rhythm more even without having to tune every logo aggressively.
+            </p>
+          </div>
+          <p class="section-note">Safest when the incoming files are inconsistent.</p>
+        </div>
+
+        <div class="marquee-shell" aria-label="Framed marquee" style="--speed: 34s;">
+          <div class="marquee-track frame-track" data-marquee-track>
+            <div class="marquee-item frame-item shape-wide"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/logo.png" alt="Travelholic logo" /></div>
+            <div class="marquee-item frame-item shape-compact"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue logo" /></div>
+            <div class="marquee-item frame-item shape-wide"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/new-logo_web.png" alt="MTA logo" /></div>
+            <div class="marquee-item frame-item"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/huawei_logo.png" alt="Huawei logo" /></div>
+            <div class="marquee-item frame-item"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png" alt="Hace logo" /></div>
+            <div class="marquee-item frame-item shape-wide"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/eiecE.png" alt="EIEC logo" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-section" id="retool-stack-motion">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">// OPTION D</div>
+            <h2 class="section-title">Retool Stack Motion</h2>
+            <p class="section-copy">
+              Pulled from the Retool save in your archive: opposing rows, deeper translate ranges, and a more active product-brand rhythm than a standard logo rail.
+            </p>
+          </div>
+          <p class="section-note">Best when you want motion to feel more alive.</p>
+        </div>
+
+        <div class="marquee-shell retool-shell" aria-label="Retool inspired marquee">
+          <div class="retool-row row-forward" data-marquee-track>
+            <div class="marquee-item retool-item" style="--retool-height:32px; --retool-max-width:168px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/logo.png" alt="Travelholic logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:28px; --retool-max-width:84px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:44px; --retool-max-width:176px; --retool-slot:188px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/new-logo_web.png" alt="MTA logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:25px; --retool-max-width:148px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/huawei_logo.png" alt="Huawei logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:44px; --retool-max-width:128px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png" alt="Hace logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:56px; --retool-max-width:156px; --retool-slot:176px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/eiecE.png" alt="EIEC logo" /></div>
+          </div>
+
+          <div class="retool-row row-backward" data-marquee-track>
+            <div class="marquee-item retool-item" style="--retool-height:44px; --retool-max-width:176px; --retool-slot:188px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/new-logo_web.png" alt="MTA logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:25px; --retool-max-width:148px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/huawei_logo.png" alt="Huawei logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:56px; --retool-max-width:156px; --retool-slot:176px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/eiecE.png" alt="EIEC logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:32px; --retool-max-width:168px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/logo.png" alt="Travelholic logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:28px; --retool-max-width:84px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue logo" /></div>
+            <div class="marquee-item retool-item" style="--retool-height:44px; --retool-max-width:128px;"><img class="logo-core" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png" alt="Hace logo" /></div>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        Archive check: Realm gave a static wrapped logo list, not a true marquee. Retool gave the usable motion reference: opposing rows and deeper translate ranges. Fonts are loaded from the project, marquee duplicates are generated in plain browser JavaScript, and the logos are still remote assets from madebynemo.com.
+      </p>
     </div>
   </div>
-</div>
 
-<!-- ════════ L — EDITORIAL STAGGER (CREATIVE) ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option L (CREATIVE)</p>
-  <p class="lab-title">Agency Stagger · Vertical Offsets · Kinetic Rhythm</p>
-  <div class="mq-wrap l-wrap" style="--speed: 24s">
-    <div class="mq-track l-track">
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-       <!-- dup -->
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="l-item"><img src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ J — RHYTHMIC GRID · Premium (Corrected Sizing) ════════ -->
-
-
-<!-- ════════ A — DARK · greyscale logos · reference from 02-home-test ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option A</p>
-  <p class="lab-title">Dark · greyscale white logos · medium · reference style</p>
-  <div class="mq-wrap a-wrap">
-    <div class="mq-track">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <!-- duplicate for seamless loop -->
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ B — DARK · bigger logos · subtle pill glow on hover ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option B</p>
-  <p class="lab-title">Dark · larger logos · box-shadow hover ring</p>
-  <div class="mq-wrap b-wrap">
-    <div class="mq-track">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ C — WHITE BG · dark logos · airy minimal ════════ -->
-<div class="lab-section c-section">
-  <p class="lab-label light-section-label">Option C</p>
-  <p class="lab-title light-section-title">White / off-white bg · dark logos · minimal (02-home-test top-marquee style)</p>
-  <p class="c-caption">Our impact reaches</p>
-  <div class="mq-wrap c-wrap">
-    <div class="mq-track">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ D — PURE WHITE BG · natural/colour logos ════════ -->
-<div class="lab-section d-section">
-  <p class="lab-label light-section-label">Option D</p>
-  <p class="lab-title light-section-title">White bg · natural colour logos · partial greyscale, reveals colour on hover</p>
-  <p class="d-caption">Trusted by</p>
-  <div class="mq-wrap d-wrap">
-    <div class="mq-track">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ E — DARK · green glow hover ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option E</p>
-  <p class="lab-title">Dark charcoal · white logos · green glow on hover</p>
-  <div class="mq-wrap e-wrap">
-    <div class="mq-track">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ F — TWO ROWS · opposite scroll directions ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option F</p>
-  <p class="lab-title">Dark · two rows scrolling in opposite directions</p>
-  <div class="mq-wrap f-wrap">
-    <!-- Row 1: →→→ -->
-    <div class="mq-track row-fwd">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-    <!-- Row 2: ←←← -->
-    <div class="mq-track row-bwd">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ G — MIXED SIZES · organic feel ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option G</p>
-  <p class="lab-title">Dark · mixed logo heights — feels organic, not grid-locked</p>
-  <div class="mq-wrap g-wrap">
-    <div class="mq-track">
-      <img class="logo-img logo-md"  src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img logo-lg"  src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img logo-sm"  src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img logo-lg"  src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img logo-md"  src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img logo-sm"  src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-      <!-- dup -->
-      <img class="logo-img logo-md"  src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria">
-      <img class="logo-img logo-lg"  src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue">
-      <img class="logo-img logo-sm"  src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA">
-      <img class="logo-img logo-lg"  src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei">
-      <img class="logo-img logo-md"  src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace">
-      <img class="logo-img logo-sm"  src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC">
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ H — DARK · pill containers ════════ -->
-<div class="lab-section">
-  <p class="lab-label">Option H</p>
-  <p class="lab-title">Dark · logos inside pill/border containers · hover lifts border</p>
-  <div class="mq-wrap h-wrap">
-    <div class="mq-track">
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-      <!-- dup -->
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="logo-pill"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ I — LIGHT · logos in card containers ════════ -->
-<div class="lab-section i-section">
-  <p class="lab-label light-section-label">Option I</p>
-  <p class="lab-title light-section-title">Light cream bg · logos in white card containers · hover lifts card</p>
-  <div class="mq-wrap i-wrap">
-    <div class="mq-track">
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-      <!-- dup -->
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/logo.png"                          alt="Almasria"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Master-Blue@8x-e1764843862327.png" alt="TV Master Blue"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/new-logo_web.png"                  alt="MTA"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/huawei_logo.png"                   alt="Huawei"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/Hace-logo-copy-1.png"              alt="Hace"></div>
-      <div class="logo-card"><img class="logo-img" src="https://madebynemo.com/storage/2025/12/eiecE.png"                         alt="EIEC"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════════ FOOTER NOTE ════════ -->
-<div style="text-align:center; padding: 48px 40px 64px; border-top: 1px solid rgba(255,255,255,0.06);">
-  <p style="font-family: var(--font-haas); font-size:12px; color:rgba(255,255,255,0.2);">
-    Logos pulled from madebynemo.com — Almasria, TV Master Blue, MTA, Huawei, Hace, EIEC<br>
-    Hover any marquee to pause · All options use the same fade-edge technique from 02-home-test
-  </p>
-</div>
-
+  <script>
+    document.querySelectorAll("[data-marquee-track]").forEach((track) => {
+      if (track.dataset.cloned === "true") return;
+      const clone = Array.from(track.children).map((item) => item.cloneNode(true));
+      clone.forEach((item) => track.appendChild(item));
+      track.dataset.cloned = "true";
+    });
+  </script>
 </body>
 </html>

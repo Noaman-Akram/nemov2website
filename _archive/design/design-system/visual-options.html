@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Visual Options</title>
+<style>
+
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; font-display:swap; }
+
+:root {
+  --green:      #35D687;
+  --green-dim:  rgba(53,214,135,0.12);
+  --black:      #0D0D0D;
+  --charcoal:   #1A1A1A;
+  --off-white:  #F5F5F0;
+  --warm:       #EDEBE4;
+  --t1:         #FFFFFF;
+  --t-off:      rgba(255,255,255,0.45);
+  --b1:         rgba(255,255,255,0.07);
+  --b2:         rgba(255,255,255,0.13);
+  --b-green:    rgba(53,214,135,0.28);
+  --b-dark:     rgba(0,0,0,0.12);
+  --s3:         rgba(255,255,255,0.04);
+
+  --sp1:4px; --sp2:8px; --sp3:12px; --sp4:16px; --sp5:20px;
+  --sp6:24px; --sp7:28px; --sp8:32px; --sp10:40px;
+  --sp12:48px; --sp16:64px; --sp20:80px; --sp32:128px;
+
+  --r-sm:4px; --r-md:8px; --r-lg:16px; --r-xl:20px; --r-pill:9999px;
+  --e-fast:200ms ease;
+  --fa:'AeonikPro',system-ui,sans-serif;
+  --fh:'NeueHaas',system-ui,sans-serif;
+  --container:1200px;
+  --shadow-md: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{color-scheme:dark;}
+body{background:var(--black);color:var(--t1);font-family:var(--fh);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+img{display:block;max-width:100%;}
+
+/* ── Lab scaffold ── */
+.lab-header{
+  padding:var(--sp12) var(--sp10);
+  border-bottom:1px solid var(--b1);
+  display:flex;
+  align-items:baseline;
+  gap:var(--sp6);
+}
+.lab-header-title{
+  font-family:var(--fa);
+  font-size:13px;
+  font-weight:400;
+  color:rgba(255,255,255,0.3);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+.section-divider{
+  padding:var(--sp8) var(--sp10) var(--sp4);
+  border-top:1px solid var(--b1);
+  margin-top:var(--sp20);
+}
+.section-divider-label{
+  font-family:var(--fh);
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.2);
+}
+
+/* ════════════════════════════════════════════════
+   EYEBROWS — both patterns side by side
+════════════════════════════════════════════════ */
+.demo-row{
+  padding:var(--sp12) var(--sp10);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--sp8);
+  align-items:flex-start;
+  border-bottom:1px solid var(--b1);
+}
+.demo-cell{
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp3);
+}
+.demo-cell-label{
+  font-family:var(--fh);
+  font-size:10px;
+  color:rgba(255,255,255,0.2);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+}
+
+/* Pattern A — dark bg uppercase haas */
+.eyebrow-a{
+  font-family:var(--fh);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+  display:block;
+}
+.eyebrow-a-green{
+  font-family:var(--fh);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--green);
+  display:block;
+}
+
+/* Pattern B — light bg tag border (shown on light swatch) */
+.eyebrow-b-wrap{
+  background:var(--off-white);
+  padding:var(--sp6) var(--sp8);
+  border-radius:var(--r-md);
+}
+.eyebrow-b{
+  display:inline-flex;
+  align-items:center;
+  font-family:var(--fa);
+  font-size:12px;
+  font-weight:500;
+  color:rgba(0,0,0,0.5);
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.15);
+  border-radius:var(--r-sm);
+  padding:4px 16px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+}
+
+/* ════════════════════════════════════════════════
+   BUTTONS
+════════════════════════════════════════════════ */
+/* Glow hero */
+.btn-glow{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:var(--sp2);
+  font-family:var(--fh);
+  font-size:14px;
+  font-weight:500;
+  color:var(--black);
+  border:none;
+  border-radius:var(--r-pill);
+  height:44px;
+  padding:0 var(--sp6);
+  overflow:hidden;
+  z-index:1;
+  cursor:pointer;
+}
+.btn-glow::before{
+  content:'';
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:conic-gradient(from 0deg, transparent 70%, var(--green) 100%);
+  animation:spin-glow 2s linear infinite;
+  z-index:-2;
+}
+.btn-glow::after{
+  content:'';
+  position:absolute;
+  inset:1.5px;
+  background:var(--off-white);
+  border-radius:var(--r-pill);
+  z-index:-1;
+  transition:background var(--e-fast);
+}
+.btn-glow:hover::after{background:#eaede6;}
+@keyframes spin-glow{to{transform:rotate(360deg);}}
+
+/* Dark primary */
+.btn-dark{
+  display:inline-flex;
+  align-items:center;
+  height:48px;
+  padding:0 var(--sp8);
+  border-radius:var(--r-pill);
+  background:var(--black);
+  color:var(--t1);
+  border:1px solid rgba(255,255,255,0.1);
+  font-family:var(--fh);
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:background var(--e-fast);
+}
+.btn-dark:hover{background:rgba(255,255,255,0.05);}
+
+/* Green primary */
+.btn-green{
+  display:inline-flex;
+  align-items:center;
+  height:48px;
+  padding:0 var(--sp8);
+  border-radius:var(--r-pill);
+  background:var(--green);
+  color:#000;
+  border:none;
+  font-family:var(--fh);
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:background var(--e-fast);
+}
+.btn-green:hover{background:#29c275;}
+
+/* Ghost dark */
+.btn-ghost{
+  display:inline-flex;
+  align-items:center;
+  height:48px;
+  padding:0 var(--sp8);
+  border-radius:var(--r-pill);
+  background:transparent;
+  color:var(--t1);
+  border:1px solid rgba(255,255,255,0.2);
+  font-family:var(--fh);
+  font-size:14px;
+  cursor:pointer;
+  transition:border-color var(--e-fast);
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.45);}
+
+/* Ghost light */
+.btn-ghost-light{
+  display:inline-flex;
+  align-items:center;
+  height:44px;
+  padding:0 var(--sp6);
+  border-radius:var(--r-pill);
+  background:transparent;
+  color:#111;
+  border:1px solid rgba(0,0,0,0.15);
+  font-family:var(--fh);
+  font-size:14px;
+  cursor:pointer;
+  transition:border-color var(--e-fast), background var(--e-fast);
+}
+.btn-ghost-light:hover{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.3);}
+
+/* Nav CTA small */
+.btn-nav{
+  display:inline-flex;
+  align-items:center;
+  height:36px;
+  padding:0 var(--sp5);
+  border-radius:var(--r-pill);
+  background:rgba(245,245,240,0.92);
+  color:#111;
+  border:1px solid rgba(0,0,0,0.08);
+  font-family:var(--fh);
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+  transition:background var(--e-fast);
+}
+.btn-nav:hover{background:rgba(228,230,222,0.97);}
+
+/* White primary (footer) */
+.btn-white{
+  display:inline-flex;
+  align-items:center;
+  height:48px;
+  padding:0 var(--sp7);
+  border-radius:var(--r-pill);
+  background:#fff;
+  color:#111;
+  border:none;
+  font-family:var(--fh);
+  font-size:14px;
+  font-weight:500;
+  cursor:pointer;
+  transition:opacity var(--e-fast);
+}
+.btn-white:hover{opacity:0.85;}
+
+/* ════════════════════════════════════════════════
+   CARDS
+════════════════════════════════════════════════ */
+
+/* Type 1 — Work card (no bg) on light surface */
+.work-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--sp8) var(--sp6);
+}
+.work-card{
+  display:block;
+  background:transparent;
+  border:none;
+  padding:0;
+  cursor:pointer;
+}
+.work-card-img{
+  width:100%;
+  aspect-ratio:4/3;
+  border-radius:var(--r-lg);
+  background:var(--warm);
+  margin-bottom:var(--sp5);
+  overflow:hidden;
+  position:relative;
+}
+/* Placeholder pattern */
+.work-card-img::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,#e8e4dc 0%,#dedad2 100%);
+}
+.work-card:hover .work-card-img::after{
+  /* scale effect would be on real img */
+}
+.work-card-title{
+  display:block;
+  font-family:var(--fa);
+  font-size:19px;
+  font-weight:400;
+  color:#111;
+  letter-spacing:-0.3px;
+  line-height:1.35;
+  margin-bottom:var(--sp3);
+}
+.work-card-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-family:var(--fh);
+  font-size:13px;
+  color:#555;
+  transition:color var(--e-fast);
+}
+.work-card-link .arr{
+  transition:transform var(--e-fast);
+  color:#111;
+}
+.work-card:hover .work-card-link .arr{transform:translateX(4px);}
+
+/* Type 2 — Flat border dark card */
+.border-card{
+  border:1px solid var(--b1);
+  background:var(--s3);
+  border-radius:var(--r-lg);
+  padding:var(--sp6);
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp3);
+  cursor:pointer;
+  transition:border-color var(--e-fast), background var(--e-fast);
+}
+.border-card:hover{
+  border-color:var(--b2);
+  background:rgba(255,255,255,0.06);
+}
+.border-card-title{
+  font-family:var(--fa);
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:-0.3px;
+}
+.border-card-body{
+  font-family:var(--fh);
+  font-size:14px;
+  color:var(--t-off);
+  line-height:1.65;
+}
+.border-card-link{
+  font-family:var(--fh);
+  font-size:13px;
+  color:rgba(255,255,255,0.4);
+  margin-top:auto;
+  padding-top:var(--sp3);
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:color var(--e-fast);
+}
+.border-card:hover .border-card-link{color:var(--t1);}
+.border-card-link .arr{transition:transform var(--e-fast);}
+.border-card:hover .border-card-link .arr{transform:translateX(4px);}
+
+/* Type 3 — Values tile grid (light) */
+.values-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(0,0,0,0.07);
+  border:1px solid rgba(0,0,0,0.07);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+}
+.value-tile{
+  background:#FAFBFC;
+  padding:var(--sp12) var(--sp8);
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp5);
+  transition:background var(--e-fast);
+}
+.value-tile:hover{background:#fff;}
+.value-tile-icon{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+}
+.value-tile-title{
+  font-family:var(--fa);
+  font-size:18px;
+  font-weight:400;
+  color:#111;
+  letter-spacing:-0.3px;
+}
+.value-tile-body{
+  font-family:var(--fh);
+  font-size:14px;
+  color:#777;
+  line-height:1.65;
+}
+
+/* Type 4 — Team member card (light) */
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--sp8);
+}
+.team-card{
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:var(--r-sm);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform var(--e-fast), box-shadow var(--e-fast);
+  cursor:pointer;
+}
+.team-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.04);
+}
+.team-card-photo{
+  width:100%;
+  aspect-ratio:4/3;
+  background:#f0eeea;
+  overflow:hidden;
+  position:relative;
+}
+.team-card-photo::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,#ece8e1 0%,#d8d4cd 100%);
+  /* grayscale placeholder */
+  filter:saturate(0);
+}
+.team-card-content{
+  padding:var(--sp10) var(--sp8);
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp4);
+}
+.team-card-role{
+  display:inline-block;
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  font-weight:700;
+  color:#888;
+  letter-spacing:0.1em;
+  border:1px solid rgba(0,0,0,0.08);
+  padding:3px 8px;
+  border-radius:2px;
+  text-transform:uppercase;
+  width:fit-content;
+}
+.team-card-name{
+  font-family:var(--fa);
+  font-size:22px;
+  font-weight:500;
+  color:#222;
+  letter-spacing:-0.5px;
+}
+.team-card-desc{
+  font-family:var(--fh);
+  font-size:13px;
+  color:#666;
+  line-height:1.65;
+}
+
+/* Type 5 — CTA card (green tint) */
+.cta-card{
+  background:#E8FBF1;
+  border:1px solid rgba(53,214,135,0.25);
+  border-radius:var(--r-lg);
+  padding:var(--sp20) var(--sp16);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.cta-card-grid{
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(circle, rgba(53,214,135,0.1) 1px, transparent 1px);
+  background-size:24px 24px;
+  pointer-events:none;
+}
+.cta-card-inner{position:relative;z-index:1;}
+.cta-card-eyebrow{
+  font-family:var(--fh);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(0,0,0,0.4);
+  margin-bottom:var(--sp4);
+  display:block;
+}
+.cta-card-h2{
+  font-family:var(--fa);
+  font-size:clamp(36px,4.5vw,48px);
+  font-weight:400;
+  line-height:1.15;
+  letter-spacing:-1px;
+  color:#111;
+  margin-bottom:var(--sp4);
+}
+.cta-card-h2 em{font-style:normal;color:var(--green);}
+.cta-card-desc{
+  font-family:var(--fh);
+  font-size:16px;
+  color:#555;
+  line-height:1.6;
+  max-width:480px;
+  margin:0 auto var(--sp10);
+}
+
+/* ════════════════════════════════════════════════
+   PROCESS GRID (approved pattern)
+════════════════════════════════════════════════ */
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:var(--sp12);
+}
+.process-card{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+.process-icon{
+  margin-bottom:var(--sp6);
+}
+.process-title{
+  font-family:var(--fh);
+  font-size:18px;
+  font-weight:500;
+  color:var(--t1);
+  margin-bottom:var(--sp3);
+}
+.process-desc{
+  font-family:var(--fh);
+  font-size:14px;
+  color:var(--t-off);
+  line-height:1.65;
+}
+
+/* ════════════════════════════════════════════════
+   JOB LIST (careers) — row list pattern
+════════════════════════════════════════════════ */
+.job-table{}
+.job-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--sp6) 0;
+  border-top:1px solid var(--b1);
+  cursor:pointer;
+  transition:padding var(--e-fast);
+}
+.job-row:last-child{border-bottom:1px solid var(--b1);}
+.job-row:hover{padding-left:var(--sp4);padding-right:var(--sp4);}
+.job-row-main{}
+.job-row-title{
+  font-family:var(--fa);
+  font-size:clamp(18px,2vw,22px);
+  font-weight:400;
+  letter-spacing:-0.4px;
+  margin-bottom:var(--sp1);
+}
+.job-row-meta{
+  font-family:var(--fh);
+  font-size:13px;
+  color:var(--t-off);
+}
+.job-row-right{
+  display:flex;
+  align-items:center;
+  gap:var(--sp4);
+  flex-shrink:0;
+}
+.pill-tag{
+  display:inline-flex;
+  align-items:center;
+  height:26px;
+  padding:0 var(--sp3);
+  border-radius:var(--r-pill);
+  border:1px solid var(--b1);
+  font-family:var(--fh);
+  font-size:11px;
+  color:var(--t-off);
+}
+.pill-green{
+  border-color:var(--b-green);
+  background:var(--green-dim);
+  color:var(--green);
+}
+.row-arrow{
+  font-size:16px;
+  color:rgba(255,255,255,0.2);
+  transition:color var(--e-fast),transform var(--e-fast);
+}
+.job-row:hover .row-arrow{color:var(--green);transform:translateX(4px);}
+
+/* ── Shared section shells ── */
+.section-dark{
+  padding:var(--sp20) var(--sp10);
+  background:var(--black);
+}
+.section-light{
+  padding:var(--sp20) var(--sp10);
+  background:var(--off-white);
+}
+.section-inner{
+  max-width:var(--container);
+  margin:0 auto;
+}
+.section-heading{
+  font-family:var(--fa);
+  font-size:clamp(36px,4vw,48px);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:-1px;
+  margin-bottom:var(--sp16);
+}
+.section-heading-dark{color:var(--t1);}
+.section-heading-light{color:#111;}
+
+</style>
+</head>
+<body>
+
+<div class="lab-header">
+  <span class="lab-header-title">Nemo — Visual Options</span>
+  <span style="font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.15);letter-spacing:0.06em;">Eyebrows · Buttons · Cards · Sections</span>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     1. EYEBROWS
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">01 — Eyebrow Labels</span></div>
+<div class="demo-row">
+  <div class="demo-cell">
+    <span class="demo-cell-label">Pattern A · Dark · Muted</span>
+    <span class="eyebrow-a">Selected Work</span>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Pattern A · Dark · Green</span>
+    <span class="eyebrow-a-green">We're hiring</span>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Pattern B · Light · Tag Border</span>
+    <div class="eyebrow-b-wrap">
+      <span class="eyebrow-b">Selected Work</span>
+    </div>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Pattern B · Light · FAQ</span>
+    <div class="eyebrow-b-wrap">
+      <span class="eyebrow-b">Got questions</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     2. BUTTONS
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">02 — Buttons</span></div>
+<div class="demo-row">
+  <div class="demo-cell">
+    <span class="demo-cell-label">Green Primary</span>
+    <button class="btn-green">Start a project</button>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Dark Primary</span>
+    <button class="btn-dark">View all work</button>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Ghost Dark</span>
+    <button class="btn-ghost">Book a call</button>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">White (on dark)</span>
+    <button class="btn-white">Get in touch</button>
+  </div>
+  <div class="demo-cell">
+    <span class="demo-cell-label">Nav CTA (small)</span>
+    <button class="btn-nav">Let's talk</button>
+  </div>
+</div>
+<div class="demo-row" style="background:var(--off-white);">
+  <div class="demo-cell">
+    <span class="demo-cell-label" style="color:rgba(0,0,0,0.3);">Ghost Light (on light bg)</span>
+    <button class="btn-ghost-light">View all →</button>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     3. CARDS — Type 1 (Work, no bg)
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">03 — Card Type 1 · Work / Portfolio (no background)</span></div>
+<div class="section-light">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--sp12);">
+      <div>
+        <span class="eyebrow-b" style="margin-bottom:var(--sp4);display:inline-flex;">Selected Work</span>
+        <h2 style="font-family:var(--fa);font-size:clamp(36px,4vw,48px);font-weight:400;letter-spacing:-1px;color:#111;line-height:1.1;">Discover how we're driving <em style="font-style:normal;color:var(--green);">change</em></h2>
+      </div>
+      <a href="#" class="btn-ghost-light">View all →</a>
+    </div>
+    <div class="work-grid">
+      <a class="work-card" href="#">
+        <div class="work-card-img"></div>
+        <span class="work-card-title">Tekronyx AIP</span>
+        <span class="work-card-link">View project <span class="arr">→</span></span>
+      </a>
+      <a class="work-card" href="#">
+        <div class="work-card-img"></div>
+        <span class="work-card-title">Wadi Sabarah Lodge</span>
+        <span class="work-card-link">View project <span class="arr">→</span></span>
+      </a>
+      <a class="work-card" href="#">
+        <div class="work-card-img"></div>
+        <span class="work-card-title">EG Group — NEMO CRM</span>
+        <span class="work-card-link">View project <span class="arr">→</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     4. CARDS — Type 2 (Values tile, light) — renumbered
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">05 — Card Type 3 · Values Tile Grid (light surface)</span></div>
+<div class="section-light">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:var(--sp16);align-items:start;margin-bottom:var(--sp16);">
+      <span style="font-family:var(--fh);font-size:15px;color:var(--green);padding-top:6px;">Values</span>
+      <h2 style="font-family:var(--fa);font-size:clamp(36px,4vw,48px);font-weight:400;letter-spacing:-1.5px;color:#111;line-height:1.1;">What defines how<br>we work</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-tile">
+        <div class="value-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#888" stroke-width="1.2"/><circle cx="14" cy="14" r="7" stroke="#888" stroke-width="1.2" stroke-opacity="0.5"/><circle cx="14" cy="14" r="2" fill="#888"/></svg>
+        </div>
+        <h3 class="value-tile-title">Precision</h3>
+        <p class="value-tile-body">Details are not optional. Every pixel, every word, every interaction is intentional.</p>
+      </div>
+      <div class="value-tile">
+        <div class="value-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="3" y="8" width="22" height="13" rx="2" stroke="#888" stroke-width="1.2"/><path d="M9 8V6a5 5 0 0110 0v2" stroke="#888" stroke-width="1.2"/></svg>
+        </div>
+        <h3 class="value-tile-title">Trust</h3>
+        <p class="value-tile-body">We treat your product like our own. Honest timelines, transparent decisions.</p>
+      </div>
+      <div class="value-tile">
+        <div class="value-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3v22M3 14h22" stroke="#888" stroke-width="1.2"/><path d="M7 7l14 14M21 7L7 21" stroke="#888" stroke-width="1.2" stroke-opacity="0.4"/></svg>
+        </div>
+        <h3 class="value-tile-title">Clarity</h3>
+        <p class="value-tile-body">Complex problems, simple solutions. We cut through the noise and focus on what matters.</p>
+      </div>
+      <div class="value-tile">
+        <div class="value-tile-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M4 20L14 6l10 14H4z" stroke="#888" stroke-width="1.2"/></svg>
+        </div>
+        <h3 class="value-tile-title">Momentum</h3>
+        <p class="value-tile-body">Speed without sloppiness. We ship fast and iterate faster, always moving forward.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     6. CARDS — Type 4 (Team, light)
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">06 — Card Type 4 · Team Member (light surface)</span></div>
+<div class="section-light">
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:var(--sp16);">
+      <span class="eyebrow-b" style="margin-bottom:var(--sp6);display:inline-flex;">Leadership</span>
+      <h2 style="font-family:var(--fa);font-size:clamp(36px,4.5vw,52px);font-weight:400;letter-spacing:-1.5px;color:#111;margin-bottom:var(--sp4);">The people behind the work</h2>
+      <p style="font-family:var(--fh);font-size:16px;color:#777;max-width:520px;margin:0 auto;line-height:1.6;">A small team with a big output. We hire for craft, not credentials.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-photo"></div>
+        <div class="team-card-content">
+          <span class="team-card-role">Founder & CEO</span>
+          <h3 class="team-card-name">Malk Akram</h3>
+          <p class="team-card-desc">Designer, engineer, and builder. Obsessed with craft and the details that most people never notice.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-photo"></div>
+        <div class="team-card-content">
+          <span class="team-card-role">Lead Engineer</span>
+          <h3 class="team-card-name">Sara Kim</h3>
+          <p class="team-card-desc">Full-stack engineer with a frontend obsession. Turns complex systems into elegant, fast interfaces.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-photo"></div>
+        <div class="team-card-content">
+          <span class="team-card-role">Design Lead</span>
+          <h3 class="team-card-name">Alex Harper</h3>
+          <p class="team-card-desc">Thinks in systems, designs in details. Responsible for every touchpoint feeling like it belongs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     7. CARD Type 5 — CTA card
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">07 — Card Type 5 · CTA (green tint)</span></div>
+<div class="section-light" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="cta-card">
+      <div class="cta-card-grid"></div>
+      <div class="cta-card-inner">
+        <span class="cta-card-eyebrow">Ready to start</span>
+        <h2 class="cta-card-h2">Turn tech into your biggest <em>advantage</em></h2>
+        <p class="cta-card-desc">Discover how partnering with Nemo can drive your success and prepare you for what's next.</p>
+        <button class="btn-dark" style="margin:0 auto;">Get a free consultation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     8. PROCESS GRID (dark, approved)
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">08 — Process Grid (dark, SVG icons)</span></div>
+<div class="section-dark">
+  <div class="section-inner">
+    <h2 class="section-heading section-heading-dark">Accelerate your vision with our tailored process.</h2>
+    <div class="process-grid">
+
+      <div class="process-card">
+        <div class="process-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="23.5" stroke="var(--green)" stroke-width="1" stroke-opacity="0.35"/>
+            <circle cx="24" cy="24" r="17.5" stroke="var(--green)" stroke-width="1" stroke-opacity="0.55"/>
+            <circle cx="24" cy="24" r="11.5" stroke="var(--green)" stroke-width="1" stroke-opacity="0.75"/>
+            <circle cx="24" cy="24" r="5.5" stroke="var(--green)" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Discover</h3>
+        <p class="process-desc">Surface context-aware insights securely grounded in your institutional knowledge and vision.</p>
+      </div>
+
+      <div class="process-card">
+        <div class="process-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 2C36.15 2 46 11.85 46 24C46 36.15 36.15 46 24 46C11.85 46 2 36.15 2 24C2 11.85 11.85 2 24 2Z" stroke="var(--green)" stroke-width="1" stroke-opacity="0.35"/>
+            <ellipse cx="24" cy="24" rx="22" ry="7" transform="rotate(45 24 24)" stroke="var(--green)" stroke-width="1" stroke-opacity="0.65"/>
+            <ellipse cx="24" cy="24" rx="22" ry="7" transform="rotate(-45 24 24)" stroke="var(--green)" stroke-width="1" stroke-opacity="0.65"/>
+            <circle cx="24" cy="24" r="3" fill="var(--green)"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Research</h3>
+        <p class="process-desc">Quickly draft outlines, validate technologies, and create custom architectures for your needs.</p>
+      </div>
+
+      <div class="process-card">
+        <div class="process-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M2 16L24 6L46 16L24 26L2 16Z" stroke="var(--green)" stroke-width="1" stroke-opacity="0.35" stroke-linejoin="round"/>
+            <path d="M2 24L24 34L46 24" stroke="var(--green)" stroke-width="1" stroke-opacity="0.65" stroke-linejoin="round"/>
+            <path d="M2 32L24 42L46 32" stroke="var(--green)" stroke-width="1" stroke-linejoin="round"/>
+            <path d="M24 6V42" stroke="var(--green)" stroke-width="1" stroke-opacity="0.25"/>
+          </svg>
+        </div>
+        <h3 class="process-title">Development</h3>
+        <p class="process-desc">Accelerate software builds with advanced agents that engineer, reason, and act across your systems.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     9. CAREERS ROW LIST
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">09 — Careers / List Rows (dark)</span></div>
+<div class="section-dark">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp10);align-items:end;margin-bottom:var(--sp16);border-bottom:1px solid var(--b1);padding-bottom:var(--sp16);">
+      <h2 style="font-family:var(--fa);font-size:clamp(48px,5.5vw,72px);font-weight:400;letter-spacing:-2.5px;line-height:1;color:var(--t1);">Build what's<br>next with us.</h2>
+      <p style="font-family:var(--fh);font-size:15px;color:var(--t-off);line-height:1.7;max-width:360px;">We're a small team building ambitious products. Every hire changes the trajectory of the company.</p>
+    </div>
+    <div class="job-table">
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Senior Frontend Engineer</div>
+          <div class="job-row-meta">Engineering · Cairo / Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag pill-green">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </div>
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Product Designer</div>
+          <div class="job-row-meta">Design · Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag pill-green">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </div>
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Backend Engineer — Go</div>
+          <div class="job-row-meta">Engineering · Cairo</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag">Cairo</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </div>
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Growth Lead</div>
+          <div class="job-row-meta">Marketing · Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag pill-green">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="row-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     10. FOOTER BUTTONS (reference)
+════════════════════════════════════════════════ -->
+<div class="section-divider"><span class="section-divider-label">10 — Footer CTA buttons (approved, no arrows)</span></div>
+<div class="section-dark" style="padding-bottom:var(--sp32);">
+  <div class="section-inner">
+    <div style="margin-bottom:var(--sp8);">
+      <h2 style="font-family:var(--fa);font-size:clamp(36px,4vw,56px);font-weight:400;letter-spacing:-1.5px;line-height:1.05;margin-bottom:var(--sp6);">What's <em style="font-style:normal;color:var(--green);">next</em> is<br>already in motion</h2>
+      <div style="display:flex;gap:var(--sp3);">
+        <button class="btn-green">Start a project</button>
+        <button class="btn-ghost">Book a call</button>
+      </div>
+    </div>
+    <p style="font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;text-transform:uppercase;margin-top:var(--sp16);">No ↗ arrows on footer buttons. Plain labels only.</p>
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -8,7 +8,7 @@ export function CTASection() {
         <div className="cta-card">
           <div className="cta-card-grid" aria-hidden="true" />
           <div className="cta-inner">
-            <span className="eyebrow">// READY TO START?</span>
+            <span className="eyebrow">Ready to start</span>
             <h2 className="cta-h2">
               Turn tech into your biggest{" "}
               <em style={{ fontStyle: "normal", color: "var(--green)" }}>advantage</em>

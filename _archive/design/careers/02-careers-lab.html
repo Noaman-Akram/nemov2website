@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Careers Lab 02</title>
+<style>
+
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; font-display:swap; }
+
+:root {
+  --green:      #35D687;
+  --green-dim:  rgba(53,214,135,0.12);
+  --black:      #0D0D0D;
+  --charcoal:   #1A1A1A;
+  --off-white:  #F5F5F0;
+  --t1:         #FFFFFF;
+  --t-off:      rgba(255,255,255,0.5);
+  --b1:         rgba(255,255,255,0.07);
+  --b2:         rgba(255,255,255,0.12);
+  --b3:         rgba(255,255,255,0.2);
+  --b-green:    rgba(53,214,135,0.28);
+  --s3:         rgba(255,255,255,0.04);
+
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;
+  --sp6:24px;--sp7:28px;--sp8:32px;--sp9:36px;--sp10:40px;
+  --sp12:48px;--sp16:64px;--sp20:80px;
+
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-xl:20px;--r-pill:9999px;
+  --e-fast:200ms ease;
+  --font-aeonik:'AeonikPro',system-ui,sans-serif;
+  --font-haas:'NeueHaas',system-ui,sans-serif;
+  --container:1200px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{color-scheme:dark;}
+body{
+  background:var(--black);
+  color:var(--t1);
+  font-family:var(--font-haas);
+  font-size:14px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+
+/* ── Lab scaffold ── */
+.lab-chrome{
+  text-align:center;
+  font-family:var(--font-aeonik);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  padding:var(--sp12) var(--sp10) var(--sp6);
+  color:rgba(255,255,255,0.25);
+  border-bottom:1px solid var(--b1);
+  margin-bottom:var(--sp20);
+}
+
+.variant-shell{
+  padding:0 var(--sp10) var(--sp20);
+  border-bottom:1px solid var(--b1);
+  margin-bottom:var(--sp20);
+}
+.variant-shell:last-child{border-bottom:none;}
+
+.variant-label{
+  font-family:var(--font-haas);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.25);
+  margin-bottom:var(--sp12);
+  max-width:var(--container);
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.eyebrow{
+  font-family:var(--font-haas);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+  margin-bottom:var(--sp4);
+  display:block;
+}
+
+/* ════════════════════════════════════════════
+   VARIANT A
+   Dark hero + full-width table rows
+   (pattern from FAQ.tsx — border-top list)
+════════════════════════════════════════════ */
+.va-inner{
+  max-width:var(--container);
+  margin:0 auto;
+}
+.va-hero{
+  padding:var(--sp20) 0 var(--sp16);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--sp10);
+  align-items:end;
+  border-bottom:1px solid var(--b1);
+  margin-bottom:var(--sp12);
+}
+.va-hero h2{
+  font-family:var(--font-aeonik);
+  font-size:clamp(48px,5.5vw,72px);
+  font-weight:400;
+  letter-spacing:-2.5px;
+  line-height:1;
+  color:var(--t1);
+}
+.va-hero p{
+  font-family:var(--font-haas);
+  font-size:15px;
+  color:var(--t-off);
+  line-height:1.7;
+  max-width:380px;
+  align-self:end;
+}
+
+/* Table rows — exact same pattern as FAQ */
+.job-table{ }
+.job-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--sp6) 0;
+  border-top:1px solid var(--b1);
+  cursor:pointer;
+  transition:padding var(--e-fast);
+}
+.job-row:last-child{ border-bottom:1px solid var(--b1); }
+.job-row:hover{
+  padding-left:var(--sp4);
+  padding-right:var(--sp4);
+}
+.job-row-main{}
+.job-row-title{
+  font-family:var(--font-aeonik);
+  font-size:clamp(18px,2vw,22px);
+  font-weight:400;
+  letter-spacing:-0.4px;
+  margin-bottom:var(--sp1);
+}
+.job-row-meta{
+  display:flex;
+  align-items:center;
+  gap:var(--sp3);
+  font-family:var(--font-haas);
+  font-size:12px;
+  color:var(--t-off);
+}
+.job-row-meta span{ color:rgba(255,255,255,0.2); }
+
+.job-row-right{
+  display:flex;
+  align-items:center;
+  gap:var(--sp4);
+  flex-shrink:0;
+}
+.pill-tag{
+  display:inline-flex;
+  align-items:center;
+  height:26px;
+  padding:0 var(--sp3);
+  border-radius:var(--r-pill);
+  border:1px solid var(--b1);
+  font-family:var(--font-haas);
+  font-size:11px;
+  color:var(--t-off);
+  letter-spacing:0.03em;
+}
+.pill-tag-green{
+  border-color:var(--b-green);
+  background:var(--green-dim);
+  color:var(--green);
+}
+.job-row-arrow{
+  font-size:16px;
+  color:rgba(255,255,255,0.25);
+  transition:color var(--e-fast), transform var(--e-fast);
+}
+.job-row:hover .job-row-arrow{
+  color:var(--green);
+  transform:translateX(4px);
+}
+
+/* ════════════════════════════════════════════
+   VARIANT B
+   Two-col: sticky left + card list right
+   (pattern from FeatureSection.tsx grid)
+════════════════════════════════════════════ */
+.vb-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:var(--sp20);
+  align-items:start;
+}
+.vb-left{
+  position:sticky;
+  top:var(--sp10);
+}
+.vb-left h2{
+  font-family:var(--font-aeonik);
+  font-size:clamp(32px,3.5vw,44px);
+  font-weight:400;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  margin-bottom:var(--sp4);
+}
+.vb-left p{
+  font-family:var(--font-haas);
+  font-size:14px;
+  color:var(--t-off);
+  line-height:1.7;
+  margin-bottom:var(--sp8);
+}
+.role-count{
+  font-family:var(--font-haas);
+  font-size:11px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+}
+.role-count strong{
+  color:var(--green);
+  font-weight:400;
+}
+
+/* Job cards — clean border boxes, no gimmicks */
+.vb-list{
+  display:flex;
+  flex-direction:column;
+  gap:var(--sp3);
+}
+.job-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp6);
+  padding:var(--sp6) var(--sp6);
+  border-radius:var(--r-lg);
+  border:1px solid var(--b1);
+  background:var(--s3);
+  cursor:pointer;
+  transition:border-color var(--e-fast), background var(--e-fast);
+}
+.job-card:hover{
+  border-color:var(--b2);
+  background:rgba(255,255,255,0.06);
+}
+.job-card-body{flex:1;}
+.job-card-title{
+  font-family:var(--font-aeonik);
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:-0.3px;
+  margin-bottom:var(--sp3);
+}
+.job-card-meta{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:var(--sp2);
+}
+.job-card-arrow{
+  font-size:16px;
+  color:rgba(255,255,255,0.2);
+  flex-shrink:0;
+  transition:color var(--e-fast), transform var(--e-fast);
+}
+.job-card:hover .job-card-arrow{
+  color:var(--green);
+  transform:translateX(3px);
+}
+
+/* ════════════════════════════════════════════
+   VARIANT C
+   CTA-card style hero (pattern from CTASection)
+   + compact single-column list below
+════════════════════════════════════════════ */
+.vc-inner{max-width:var(--container);margin:0 auto;}
+
+.vc-banner{
+  background:var(--charcoal);
+  border-radius:var(--r-lg);
+  border:1px solid var(--b1);
+  padding:var(--sp20) var(--sp16);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:var(--sp12);
+}
+/* subtle dot grid — exact from CTASection */
+.vc-banner-grid{
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(circle, rgba(53,214,135,0.08) 1px, transparent 1px);
+  background-size:24px 24px;
+  pointer-events:none;
+}
+/* green ambient glow — exact from FeatureSection */
+.vc-banner-glow{
+  position:absolute;
+  top:-40px; left:50%;
+  transform:translateX(-50%);
+  width:500px;height:400px;
+  background:radial-gradient(circle, var(--green-dim) 0%, transparent 70%);
+  pointer-events:none;
+}
+.vc-banner-inner{position:relative;z-index:1;}
+.vc-banner h2{
+  font-family:var(--font-aeonik);
+  font-size:clamp(40px,5vw,60px);
+  font-weight:400;
+  letter-spacing:-2px;
+  line-height:1.1;
+  margin-bottom:var(--sp4);
+}
+.vc-banner h2 em{font-style:normal; color:var(--green);}
+.vc-banner p{
+  font-family:var(--font-haas);
+  font-size:15px;
+  color:var(--t-off);
+  line-height:1.7;
+  max-width:440px;
+  margin:0 auto var(--sp10);
+}
+/* Button — exact from Nav CTA pattern */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  height:44px;
+  padding:0 var(--sp6);
+  border-radius:var(--r-pill);
+  background:var(--off-white);
+  color:var(--black);
+  font-family:var(--font-haas);
+  font-size:14px;
+  font-weight:500;
+  border:none;
+  cursor:pointer;
+  transition:background var(--e-fast);
+}
+.btn-primary:hover{background:#e8e8e2;}
+
+/* Compact list — same border-row style as menu-group links in Nav */
+.vc-list{}
+.vc-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:var(--sp5) 0;
+  border-top:1px solid var(--b1);
+  cursor:pointer;
+  transition:padding var(--e-fast);
+}
+.vc-item:last-child{border-bottom:1px solid var(--b1);}
+.vc-item:hover{padding-left:var(--sp4);padding-right:var(--sp4);}
+
+.vc-item-left{display:flex;align-items:center;gap:var(--sp6);}
+.vc-item-num{
+  font-family:var(--font-aeonik);
+  font-size:12px;
+  color:rgba(255,255,255,0.2);
+  width:24px;
+  flex-shrink:0;
+}
+.vc-item-title{
+  font-family:var(--font-aeonik);
+  font-size:20px;
+  font-weight:400;
+  letter-spacing:-0.4px;
+}
+.vc-item-right{
+  display:flex;
+  align-items:center;
+  gap:var(--sp4);
+  flex-shrink:0;
+}
+.vc-item-dept{
+  font-family:var(--font-haas);
+  font-size:12px;
+  color:var(--t-off);
+}
+.vc-arrow{
+  font-size:16px;
+  color:rgba(255,255,255,0.2);
+  transition:color var(--e-fast),transform var(--e-fast);
+}
+.vc-item:hover .vc-arrow{color:var(--green);transform:translateX(4px);}
+
+</style>
+</head>
+<body>
+
+<div class="lab-chrome">// CAREERS LAB · 02 — Three Variants</div>
+
+
+<!-- ═══════════════════════════════════════════
+     VARIANT A — Hero + FAQ-style table rows
+═══════════════════════════════════════════ -->
+<div class="variant-shell">
+  <div class="variant-label">// VARIANT A — Hero header + border row list</div>
+  <div class="va-inner">
+
+    <div class="va-hero">
+      <h2>Build what's<br>next with us.</h2>
+      <p>We're a small team building ambitious products. Every hire changes the trajectory of the company.</p>
+    </div>
+
+    <div class="job-table">
+
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Senior Frontend Engineer</div>
+          <div class="job-row-meta">Engineering <span>·</span> Cairo / Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="job-row-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Product Designer</div>
+          <div class="job-row-meta">Design <span>·</span> Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="job-row-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Backend Engineer — Go</div>
+          <div class="job-row-meta">Engineering <span>·</span> Cairo</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag">Cairo</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="job-row-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="job-row">
+        <div class="job-row-main">
+          <div class="job-row-title">Growth Lead</div>
+          <div class="job-row-meta">Marketing <span>·</span> Remote</div>
+        </div>
+        <div class="job-row-right">
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="pill-tag">Full-time</span>
+          <span class="job-row-arrow">→</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     VARIANT B — Sticky left + card list
+═══════════════════════════════════════════ -->
+<div class="variant-shell">
+  <div class="variant-label">// VARIANT B — Sticky sidebar + job cards</div>
+  <div class="vb-inner">
+
+    <div class="vb-left">
+      <span class="eyebrow">// Open Roles</span>
+      <h2>Join the team.</h2>
+      <p>We move fast and care about craft. If that sounds like you, we want to hear from you.</p>
+      <div class="role-count"><strong>4</strong> open positions</div>
+    </div>
+
+    <div class="vb-list">
+
+      <div class="job-card">
+        <div class="job-card-body">
+          <div class="job-card-title">Senior Frontend Engineer</div>
+          <div class="job-card-meta">
+            <span class="pill-tag">Engineering</span>
+            <span class="pill-tag">Full-time</span>
+            <span class="pill-tag-green pill-tag">Cairo / Remote</span>
+          </div>
+        </div>
+        <span class="job-card-arrow">→</span>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-body">
+          <div class="job-card-title">Product Designer</div>
+          <div class="job-card-meta">
+            <span class="pill-tag">Design</span>
+            <span class="pill-tag">Full-time</span>
+            <span class="pill-tag-green pill-tag">Remote</span>
+          </div>
+        </div>
+        <span class="job-card-arrow">→</span>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-body">
+          <div class="job-card-title">Backend Engineer — Go</div>
+          <div class="job-card-meta">
+            <span class="pill-tag">Engineering</span>
+            <span class="pill-tag">Full-time</span>
+            <span class="pill-tag">Cairo</span>
+          </div>
+        </div>
+        <span class="job-card-arrow">→</span>
+      </div>
+
+      <div class="job-card">
+        <div class="job-card-body">
+          <div class="job-card-title">Growth Lead</div>
+          <div class="job-card-meta">
+            <span class="pill-tag">Marketing</span>
+            <span class="pill-tag">Full-time</span>
+            <span class="pill-tag-green pill-tag">Remote</span>
+          </div>
+        </div>
+        <span class="job-card-arrow">→</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     VARIANT C — CTA banner + numbered list
+═══════════════════════════════════════════ -->
+<div class="variant-shell">
+  <div class="variant-label">// VARIANT C — CTA banner + numbered row list</div>
+  <div class="vc-inner">
+
+    <div class="vc-banner">
+      <div class="vc-banner-grid"></div>
+      <div class="vc-banner-glow"></div>
+      <div class="vc-banner-inner">
+        <span class="eyebrow">// We're hiring</span>
+        <h2>Work on things<br>that <em>actually matter.</em></h2>
+        <p>Independent studio. Small team. Big ambitions. We build products that move culture forward.</p>
+        <a href="#" class="btn-primary">See all open roles →</a>
+      </div>
+    </div>
+
+    <div class="vc-list">
+
+      <div class="vc-item">
+        <div class="vc-item-left">
+          <span class="vc-item-num">01</span>
+          <span class="vc-item-title">Senior Frontend Engineer</span>
+        </div>
+        <div class="vc-item-right">
+          <span class="vc-item-dept">Engineering · Cairo / Remote</span>
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="vc-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="vc-item">
+        <div class="vc-item-left">
+          <span class="vc-item-num">02</span>
+          <span class="vc-item-title">Product Designer</span>
+        </div>
+        <div class="vc-item-right">
+          <span class="vc-item-dept">Design · Remote</span>
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="vc-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="vc-item">
+        <div class="vc-item-left">
+          <span class="vc-item-num">03</span>
+          <span class="vc-item-title">Backend Engineer — Go</span>
+        </div>
+        <div class="vc-item-right">
+          <span class="vc-item-dept">Engineering · Cairo</span>
+          <span class="pill-tag">Cairo</span>
+          <span class="vc-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="vc-item">
+        <div class="vc-item-left">
+          <span class="vc-item-num">04</span>
+          <span class="vc-item-title">Growth Lead</span>
+        </div>
+        <div class="vc-item-right">
+          <span class="vc-item-dept">Marketing · Remote</span>
+          <span class="pill-tag-green pill-tag">Remote</span>
+          <span class="vc-arrow">→</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

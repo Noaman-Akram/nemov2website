@@ -1,0 +1,2207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Reusable Components</title>
+<style>
+
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; font-display:swap; }
+
+:root {
+  --green:      #35D687;
+  --green-dim:  rgba(53,214,135,0.12);
+  --black:      #0D0D0D;
+  --charcoal:   #1A1A1A;
+  --off-white:  #F5F5F0;
+  --warm:       #EDEBE4;
+  --t1:         #FFFFFF;
+  --t-off:      rgba(255,255,255,0.45);
+  --b1:         rgba(255,255,255,0.07);
+  --b2:         rgba(255,255,255,0.13);
+  --b3:         rgba(255,255,255,0.22);
+  --b-green:    rgba(53,214,135,0.28);
+  --b-dark:     rgba(0,0,0,0.11);
+  --s3:         rgba(255,255,255,0.04);
+
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;
+  --sp6:24px;--sp7:28px;--sp8:32px;--sp10:40px;
+  --sp12:48px;--sp16:64px;--sp20:80px;--sp32:128px;
+
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-xl:20px;--r-pill:9999px;
+  --e-fast:200ms ease;
+  --fa:'AeonikPro',system-ui,sans-serif;
+  --fh:'NeueHaas',system-ui,sans-serif;
+  --container:1200px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--black);color:var(--t1);font-family:var(--fh);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+/* ── chrome ── */
+.chrome-bar{
+  position:sticky;top:0;z-index:200;
+  height:48px;padding:0 var(--sp10);
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(13,13,13,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--b1);
+}
+.chrome-title{font-family:var(--fa);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.chrome-toc{display:flex;gap:var(--sp6);}
+.chrome-toc a{font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.06em;text-transform:uppercase;transition:color var(--e-fast);}
+.chrome-toc a:hover{color:var(--t1);}
+
+/* ── section wrapper ── */
+.comp-section{border-top:1px solid var(--b1);}
+.comp-section-dark{background:var(--black);}
+.comp-section-light{background:var(--off-white);}
+.comp-section-charcoal{background:var(--charcoal);}
+
+.comp-label{
+  padding:var(--sp5) var(--sp10) 0;
+  font-family:var(--fh);font-size:10px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:rgba(255,255,255,0.18);
+}
+.comp-label-light{color:rgba(0,0,0,0.25);}
+.comp-body{padding:var(--sp10) var(--sp10) var(--sp16);}
+.comp-inner{max-width:var(--container);margin:0 auto;}
+
+/* small note label */
+.note{
+  font-family:var(--fh);font-size:11px;
+  color:rgba(255,255,255,0.2);
+  margin-bottom:var(--sp6);
+  display:block;
+}
+.note-light{color:rgba(0,0,0,0.28);}
+.row{display:flex;flex-wrap:wrap;gap:var(--sp6);align-items:flex-start;}
+.col{display:flex;flex-direction:column;gap:var(--sp3);}
+
+/* ══════════════════════════════════════════════════════════
+   A. SECTION HEADERS
+   The two-column heading pattern used to open every section
+══════════════════════════════════════════════════════════ */
+
+/* dark */
+.sh-dark{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--sp10);
+  align-items:end;
+  padding-bottom:var(--sp16);
+  border-bottom:1px solid var(--b1);
+  margin-bottom:var(--sp12);
+}
+.sh-eyebrow{
+  font-family:var(--fh);font-size:11px;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+  display:block;margin-bottom:var(--sp3);
+}
+.sh-h2{
+  font-family:var(--fa);
+  font-size:clamp(36px,4vw,52px);
+  font-weight:400;letter-spacing:-1.5px;line-height:1.05;
+  color:var(--t1);
+}
+.sh-h2-light{color:#111;}
+.sh-right{display:flex;flex-direction:column;gap:var(--sp6);align-items:flex-start;justify-content:flex-end;}
+.sh-desc{
+  font-family:var(--fh);font-size:15px;
+  color:var(--t-off);line-height:1.7;max-width:380px;
+}
+.sh-desc-light{color:#555;}
+
+/* single-col centred header (about / team pages) */
+.sh-centered{
+  text-align:center;
+  margin-bottom:var(--sp16);
+}
+.sh-centered .sh-eyebrow{display:inline-block;color:rgba(255,255,255,0.4);}
+.sh-centered .sh-h2{margin-top:var(--sp3);}
+.sh-centered .sh-desc{margin:var(--sp4) auto 0;color:var(--t-off);}
+
+/* tag-style eyebrow for light contexts */
+.sh-tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--fa);font-size:12px;font-weight:500;
+  color:rgba(0,0,0,0.5);background:transparent;
+  border:1px solid rgba(0,0,0,0.14);border-radius:var(--r-sm);
+  padding:4px 16px;letter-spacing:0.5px;text-transform:uppercase;
+  margin-bottom:var(--sp4);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   B. STAT / NUMBER ROW  (Highlights.tsx pattern)
+══════════════════════════════════════════════════════════ */
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--sp6);
+}
+.stat-item{
+  padding:var(--sp6) 0;
+  border-top:1px solid var(--b1);
+}
+.stat-value{
+  font-family:var(--fa);
+  font-size:clamp(40px,4.5vw,64px);
+  font-weight:400;letter-spacing:-1.5px;
+  color:var(--green);line-height:1;
+}
+.stat-label{
+  font-family:var(--fh);font-size:13px;
+  color:rgba(255,255,255,0.5);margin-top:var(--sp3);
+}
+
+/* light-mode stat */
+.stat-item-light{
+  padding:var(--sp6) 0;
+  border-top:1px solid rgba(0,0,0,0.08);
+}
+.stat-value-light{
+  font-family:var(--fa);
+  font-size:clamp(40px,4.5vw,64px);
+  font-weight:400;letter-spacing:-1.5px;
+  color:#111;line-height:1;
+}
+.stat-label-light{
+  font-family:var(--fh);font-size:13px;
+  color:#777;margin-top:var(--sp3);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   C. TIMELINE / DATED LIST  (Timeline.tsx pattern)
+══════════════════════════════════════════════════════════ */
+.timeline-list{display:flex;flex-direction:column;}
+.timeline-row{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:var(--sp10);
+  padding:var(--sp6) 0;
+  border-top:1px solid rgba(0,0,0,0.08);
+  align-items:baseline;
+}
+.timeline-row:last-child{border-bottom:1px solid rgba(0,0,0,0.08);}
+.timeline-year{
+  font-family:var(--fa);font-size:18px;
+  color:var(--green);letter-spacing:-0.5px;
+}
+.timeline-title{
+  font-family:var(--fa);font-size:20px;
+  font-weight:400;letter-spacing:-0.5px;color:#111;
+  margin-bottom:var(--sp2);
+}
+.timeline-body{
+  font-family:var(--fh);font-size:14px;
+  line-height:1.65;color:#555;max-width:560px;
+}
+
+/* dark variant */
+.timeline-row-dark{border-top-color:var(--b1);}
+.timeline-row-dark:last-child{border-bottom-color:var(--b1);}
+.timeline-title-dark{color:var(--t1);}
+.timeline-body-dark{color:var(--t-off);}
+
+
+/* ══════════════════════════════════════════════════════════
+   D. PILL TAGS / BADGES  (used everywhere: careers, services, work)
+══════════════════════════════════════════════════════════ */
+.tag-pill{
+  display:inline-flex;align-items:center;
+  height:26px;padding:0 var(--sp3);
+  border-radius:var(--r-pill);
+  border:1px solid var(--b1);
+  font-family:var(--fh);font-size:11px;
+  color:var(--t-off);
+  letter-spacing:0.03em;
+}
+.tag-pill-green{
+  border-color:var(--b-green);
+  color:var(--green);
+}
+.tag-pill-light{
+  border-color:rgba(0,0,0,0.12);
+  color:rgba(0,0,0,0.5);
+}
+.tag-pill-light-green{
+  border-color:rgba(53,214,135,0.4);
+  color:#1a7a4a;
+}
+/* larger tag (services page, category labels) */
+.tag-rect{
+  display:inline-flex;align-items:center;
+  height:30px;padding:0 var(--sp4);
+  border-radius:var(--r-sm);
+  border:1px solid var(--b2);
+  font-family:var(--fh);font-size:12px;
+  color:var(--t-off);
+  letter-spacing:0.04em;text-transform:uppercase;
+}
+.tag-rect-green{
+  border-color:var(--b-green);
+  color:var(--green);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   E. INPUT / FORM FIELD  (newsletter, contact page)
+══════════════════════════════════════════════════════════ */
+.form-group{display:flex;flex-direction:column;gap:var(--sp2);max-width:340px;}
+.form-label{
+  font-family:var(--fh);font-size:11px;
+  text-transform:uppercase;letter-spacing:0.1em;
+  color:rgba(255,255,255,0.4);
+}
+.form-label-light{color:rgba(0,0,0,0.4);}
+.form-input{
+  font-family:var(--fh);font-size:14px;
+  background:transparent;color:var(--t1);
+  border:none;border-bottom:1px solid var(--b2);
+  border-radius:0;padding:var(--sp3) 0;
+  outline:none;width:100%;
+  transition:border-color var(--e-fast);
+}
+.form-input::placeholder{color:rgba(255,255,255,0.25);}
+.form-input:focus{border-bottom-color:var(--green);}
+.form-input-light{
+  font-family:var(--fh);font-size:14px;
+  background:transparent;color:#111;
+  border:none;border-bottom:1px solid rgba(0,0,0,0.15);
+  border-radius:0;padding:var(--sp3) 0;
+  outline:none;width:100%;
+  transition:border-color var(--e-fast);
+}
+.form-input-light::placeholder{color:rgba(0,0,0,0.3);}
+.form-input-light:focus{border-bottom-color:var(--green);}
+
+/* pill inline form (newsletter subscribe) */
+.form-inline{
+  display:flex;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--b1);
+  border-radius:var(--r-pill);
+  padding:4px;
+  max-width:400px;
+}
+.form-inline input{
+  flex:1;min-width:0;
+  background:transparent;border:none;outline:none;
+  padding:0 var(--sp4);
+  font-family:var(--fh);font-size:13px;color:var(--t1);
+}
+.form-inline input::placeholder{color:rgba(255,255,255,0.3);}
+.form-inline button{
+  background:#fff;color:#000;
+  border:none;border-radius:var(--r-pill);
+  padding:0 var(--sp5);height:38px;
+  font-family:var(--fh);font-size:13px;font-weight:500;
+  cursor:pointer;transition:background var(--e-fast);flex-shrink:0;
+}
+.form-inline button:hover{background:#e8e8e2;}
+
+
+/* ══════════════════════════════════════════════════════════
+   F. DIVIDERS
+══════════════════════════════════════════════════════════ */
+.divider{height:1px;background:var(--b1);width:100%;}
+.divider-light{height:1px;background:rgba(0,0,0,0.08);width:100%;}
+.divider-green{height:1px;background:var(--green);opacity:0.5;width:100%;}
+.divider-glow{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  width:100%;
+}
+/* labelled divider */
+.divider-labeled{
+  display:flex;align-items:center;gap:var(--sp4);
+  font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.25);
+}
+.divider-labeled::before,.divider-labeled::after{
+  content:'';flex:1;height:1px;background:var(--b1);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   G. INLINE LINK / TEXT LINK
+══════════════════════════════════════════════════════════ */
+.link-arrow{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--fh);font-size:14px;
+  color:rgba(255,255,255,0.5);
+  cursor:pointer;transition:color var(--e-fast);
+}
+.link-arrow .arr{transition:transform var(--e-fast);}
+.link-arrow:hover{color:var(--t1);}
+.link-arrow:hover .arr{transform:translateX(4px);}
+
+.link-arrow-light{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--fh);font-size:14px;
+  color:#555;cursor:pointer;transition:color var(--e-fast);
+}
+.link-arrow-light .arr{transition:transform var(--e-fast);}
+.link-arrow-light:hover{color:#111;}
+.link-arrow-light:hover .arr{transform:translateX(4px);}
+
+.link-underline{
+  font-family:var(--fh);font-size:14px;color:var(--t1);
+  text-decoration:underline;
+  text-decoration-color:rgba(255,255,255,0.2);
+  text-underline-offset:4px;cursor:pointer;
+  transition:text-decoration-color var(--e-fast);
+}
+.link-underline:hover{text-decoration-color:rgba(255,255,255,0.7);}
+
+
+/* ══════════════════════════════════════════════════════════
+   H. LIST ROW  (FAQ / timeline / careers — same border pattern)
+══════════════════════════════════════════════════════════ */
+.list-row{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:var(--sp6) 0;
+  border-top:1px solid var(--b1);
+  cursor:pointer;
+}
+.list-row:last-child{border-bottom:1px solid var(--b1);}
+.list-row:hover .list-row-title{opacity:0.7;}
+
+.list-row-title{
+  font-family:var(--fa);font-size:clamp(16px,2vw,20px);
+  font-weight:400;letter-spacing:-0.3px;
+  transition:opacity var(--e-fast);
+}
+.list-row-meta{
+  font-family:var(--fh);font-size:13px;
+  color:var(--t-off);margin-top:var(--sp1);
+}
+.list-row-right{
+  display:flex;align-items:center;gap:var(--sp4);flex-shrink:0;
+}
+.list-row-arrow{
+  font-size:16px;color:rgba(255,255,255,0.2);
+  transition:color var(--e-fast);
+}
+.list-row:hover .list-row-arrow{color:rgba(255,255,255,0.5);}
+
+/* light variant */
+.list-row-light{
+  border-top-color:rgba(0,0,0,0.08);
+}
+.list-row-light:last-child{border-bottom-color:rgba(0,0,0,0.08);}
+.list-row-light .list-row-title{color:#111;}
+.list-row-light .list-row-meta{color:#777;}
+.list-row-light .list-row-arrow{color:rgba(0,0,0,0.18);}
+.list-row-light:hover .list-row-title{opacity:0.6;}
+
+/* FAQ variant — plus toggle */
+.list-row-faq .faq-plus{
+  font-size:20px;color:rgba(255,255,255,0.3);line-height:1;
+  flex-shrink:0;margin-left:var(--sp5);
+  transition:transform var(--e-fast),color var(--e-fast);display:inline-block;
+}
+.list-row-faq:hover .faq-plus{color:rgba(255,255,255,0.6);}
+
+
+/* ══════════════════════════════════════════════════════════
+   I. MARQUEE / TICKER  (dark band + light band)
+══════════════════════════════════════════════════════════ */
+.marquee-dark{
+  background:var(--black);
+  border-top:1px solid var(--b1);
+  border-bottom:1px solid var(--b1);
+  padding:var(--sp5) 0;
+  overflow:hidden;position:relative;
+}
+.marquee-light{
+  background:var(--off-white);
+  padding:var(--sp4) 0;
+  overflow:hidden;position:relative;
+}
+.marquee-track{
+  display:flex;width:max-content;
+  animation:marquee-scroll 30s linear infinite;
+  align-items:center;
+  white-space:nowrap;
+}
+.marquee-track-slow{animation-duration:60s;}
+.marquee-item-dark{
+  margin:0 var(--sp10);
+  font-family:var(--fa);font-size:18px;
+  color:rgba(255,255,255,0.35);font-weight:400;
+  flex-shrink:0;
+}
+.marquee-item-light{
+  margin:0 var(--sp10);
+  font-family:var(--fa);font-size:20px;font-weight:500;
+  color:rgba(0,0,0,0.3);flex-shrink:0;letter-spacing:-0.3px;
+}
+.marquee-sep{color:var(--green);margin:0 var(--sp4);opacity:0.5;}
+/* fade edges */
+.marquee-dark::before,.marquee-dark::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;pointer-events:none;z-index:2;
+}
+.marquee-dark::before{left:0;background:linear-gradient(90deg,var(--black),transparent);}
+.marquee-dark::after{right:0;background:linear-gradient(-90deg,var(--black),transparent);}
+.marquee-light::before,.marquee-light::after{
+  content:'';position:absolute;top:0;bottom:0;width:80px;pointer-events:none;z-index:2;
+}
+.marquee-light::before{left:0;background:linear-gradient(90deg,var(--off-white),transparent);}
+.marquee-light::after{right:0;background:linear-gradient(-90deg,var(--off-white),transparent);}
+@keyframes marquee-scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+
+/* ══════════════════════════════════════════════════════════
+   J. SOCIAL LINKS ROW  (footer pattern)
+══════════════════════════════════════════════════════════ */
+.social-row{display:flex;gap:var(--sp2);}
+.social-pill{
+  display:inline-flex;align-items:center;
+  height:36px;padding:0 var(--sp5);
+  border-radius:var(--r-pill);
+  border:1px solid rgba(255,255,255,0.15);
+  font-family:var(--fh);font-size:12px;color:var(--t1);
+  cursor:pointer;transition:background var(--e-fast),border-color var(--e-fast);
+}
+.social-pill:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.35);}
+
+.social-list{display:flex;flex-direction:column;gap:var(--sp4);}
+.social-link-large{
+  font-family:var(--fa);font-size:28px;font-weight:400;
+  color:var(--t1);letter-spacing:-0.5px;
+  transition:opacity var(--e-fast);cursor:pointer;
+}
+.social-link-large:hover{opacity:0.45;}
+
+
+/* ══════════════════════════════════════════════════════════
+   K. QUOTE / TESTIMONIAL BLOCK
+══════════════════════════════════════════════════════════ */
+.quote-block{
+  border-left:2px solid var(--green);
+  padding:var(--sp6) 0 var(--sp6) var(--sp8);
+  max-width:680px;
+}
+.quote-text{
+  font-family:var(--fa);font-size:clamp(22px,2.5vw,32px);
+  font-weight:300;letter-spacing:-0.5px;line-height:1.4;
+  color:var(--t1);margin-bottom:var(--sp6);
+}
+.quote-attr{
+  font-family:var(--fh);font-size:13px;
+  color:rgba(255,255,255,0.4);
+}
+.quote-attr strong{color:var(--t1);font-weight:400;}
+
+/* light variant */
+.quote-block-light{border-left-color:var(--green);}
+.quote-text-light{color:#111;}
+.quote-attr-light{color:rgba(0,0,0,0.4);}
+.quote-attr-light strong{color:#111;}
+
+
+/* ══════════════════════════════════════════════════════════
+   L. BREADCRUMB / PAGE PATH  (inner pages)
+══════════════════════════════════════════════════════════ */
+.breadcrumb{
+  display:flex;align-items:center;gap:var(--sp2);
+  font-family:var(--fh);font-size:12px;
+  color:rgba(255,255,255,0.3);
+}
+.breadcrumb a{transition:color var(--e-fast);}
+.breadcrumb a:hover{color:var(--t1);}
+.breadcrumb-sep{color:rgba(255,255,255,0.15);}
+.breadcrumb-current{color:rgba(255,255,255,0.6);}
+
+.breadcrumb-light{color:rgba(0,0,0,0.35);}
+.breadcrumb-light a:hover{color:#111;}
+.breadcrumb-light .breadcrumb-current{color:rgba(0,0,0,0.65);}
+
+
+/* ══════════════════════════════════════════════════════════
+   M. ALERT / STATUS BANNER  (system messages, alert banner)
+══════════════════════════════════════════════════════════ */
+.alert{
+  display:flex;align-items:flex-start;gap:var(--sp4);
+  padding:var(--sp4) var(--sp5);
+  border-radius:var(--r-md);
+  background:var(--s3);
+  border:1px solid var(--b1);
+  border-left-width:3px;
+}
+.alert-green{border-left-color:var(--green);}
+.alert-warn{border-left-color:#d4a017;}
+.alert-error{border-left-color:#c0392b;}
+.alert-neutral{border-left-color:var(--b2);}
+.alert-title{
+  font-family:var(--fh);font-size:13px;
+  color:var(--t1);margin-bottom:2px;
+}
+.alert-body{font-family:var(--fh);font-size:12px;color:var(--t-off);line-height:1.5;}
+.alert-dot{
+  width:6px;height:6px;border-radius:50%;
+  flex-shrink:0;margin-top:5px;
+}
+.dot-green{background:var(--green);}
+.dot-warn{background:#d4a017;}
+.dot-error{background:#c0392b;}
+.dot-neutral{background:rgba(255,255,255,0.3);}
+
+/* top announcement bar */
+.announce-bar{
+  background:var(--charcoal);
+  border-bottom:1px solid var(--b1);
+  padding:var(--sp3) var(--sp10);
+  display:flex;align-items:center;justify-content:center;
+  gap:var(--sp4);
+}
+.announce-text{
+  font-family:var(--fh);font-size:12px;
+  color:rgba(255,255,255,0.6);
+}
+.announce-link{
+  font-family:var(--fh);font-size:12px;
+  color:var(--green);
+  display:inline-flex;align-items:center;gap:4px;
+  cursor:pointer;
+}
+.announce-link .arr{transition:transform var(--e-fast);}
+.announce-link:hover .arr{transform:translateX(3px);}
+
+
+/* ══════════════════════════════════════════════════════════
+   N. PROGRESS / STEP INDICATOR
+══════════════════════════════════════════════════════════ */
+.step-row{display:flex;align-items:center;gap:var(--sp3);}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fa);font-size:13px;font-weight:400;
+  border:1px solid var(--b2);color:rgba(255,255,255,0.4);
+  flex-shrink:0;
+  transition:all var(--e-fast);
+}
+.step-num-active{
+  border-color:var(--green);
+  color:var(--green);
+  background:var(--green-dim);
+}
+.step-num-done{
+  border-color:var(--b-green);
+  background:var(--green-dim);
+  color:var(--green);
+}
+.step-line{flex:1;height:1px;background:var(--b1);}
+.step-line-done{background:var(--green);opacity:0.5;}
+.step-label{
+  font-family:var(--fh);font-size:12px;
+  color:rgba(255,255,255,0.35);
+}
+.step-label-active{color:var(--t1);}
+
+
+/* ══════════════════════════════════════════════════════════
+   O. TOGGLE / CHECKBOX
+══════════════════════════════════════════════════════════ */
+.toggle-wrap{display:flex;align-items:center;gap:var(--sp3);cursor:pointer;}
+.toggle{
+  width:40px;height:22px;
+  background:var(--s3);border:1px solid var(--b2);
+  border-radius:var(--r-pill);
+  position:relative;flex-shrink:0;
+  transition:background var(--e-fast),border-color var(--e-fast);
+}
+.toggle::after{
+  content:'';position:absolute;
+  width:16px;height:16px;border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  top:2px;left:2px;
+  transition:transform var(--e-fast),background var(--e-fast);
+}
+.toggle-on{background:var(--green);border-color:var(--green);}
+.toggle-on::after{transform:translateX(18px);background:var(--black);}
+.toggle-label{font-family:var(--fh);font-size:13px;color:var(--t-off);}
+.toggle-label-active{color:var(--t1);}
+
+
+/* ══════════════════════════════════════════════════════════
+   P. AVATAR / PERSON CHIP
+══════════════════════════════════════════════════════════ */
+.avatar{
+  border-radius:50%;
+  background:var(--green-dim);
+  border:1px solid var(--b-green);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fa);font-weight:500;
+  flex-shrink:0;color:var(--green);
+}
+.av-sm{width:28px;height:28px;font-size:10px;}
+.av-md{width:40px;height:40px;font-size:13px;}
+.av-lg{width:56px;height:56px;font-size:18px;}
+
+.person-chip{
+  display:inline-flex;align-items:center;gap:var(--sp3);
+  padding:var(--sp2) var(--sp4) var(--sp2) var(--sp2);
+  border-radius:var(--r-pill);
+  border:1px solid var(--b1);
+  background:var(--s3);
+  cursor:pointer;
+  transition:border-color var(--e-fast);
+}
+.person-chip:hover{border-color:var(--b2);}
+.person-chip-name{font-family:var(--fh);font-size:13px;color:var(--t1);}
+.person-chip-role{font-family:var(--fh);font-size:11px;color:var(--t-off);}
+
+
+/* ══════════════════════════════════════════════════════════
+   Q. CODE / MONO BLOCK
+══════════════════════════════════════════════════════════ */
+.code-block{
+  background:rgba(0,0,0,0.5);
+  border:1px solid var(--b1);
+  border-radius:var(--r-md);
+  padding:var(--sp5) var(--sp6);
+  font-family:'Courier New',monospace;
+  font-size:12px;color:var(--green);
+  line-height:1.8;overflow-x:auto;
+}
+.code-inline{
+  font-family:'Courier New',monospace;
+  font-size:12px;color:var(--green);
+  background:var(--green-dim);
+  padding:2px 7px;border-radius:var(--r-sm);
+  border:1px solid var(--b-green);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   R. SECTION TRANSITION (dark → light band)
+══════════════════════════════════════════════════════════ */
+.transition-band{
+  height:var(--sp20);
+  background:linear-gradient(180deg, var(--black) 0%, var(--off-white) 100%);
+}
+.transition-band-rev{
+  height:var(--sp20);
+  background:linear-gradient(180deg, var(--off-white) 0%, var(--black) 100%);
+}
+
+</style>
+</head>
+<body>
+
+<div class="chrome-bar">
+  <span class="chrome-title">Nemo — Reusable Components</span>
+  <nav class="chrome-toc">
+    <a href="#section-headers">Headers</a>
+    <a href="#stats">Stats</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#tags">Tags</a>
+    <a href="#forms">Forms</a>
+    <a href="#dividers">Dividers</a>
+    <a href="#links">Links</a>
+    <a href="#listrows">List rows</a>
+    <a href="#marquee">Marquee</a>
+    <a href="#social">Social</a>
+    <a href="#quote">Quote</a>
+    <a href="#breadcrumb">Breadcrumb</a>
+    <a href="#alerts">Alerts</a>
+    <a href="#steps">Steps</a>
+    <a href="#toggles">Toggles</a>
+    <a href="#avatars">Avatars</a>
+    <a href="#code">Code</a>
+    <a href="#cards">Cards</a>
+    <a href="#value-prop">Value prop</a>
+    <a href="#features">Features</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#cta-blocks">CTAs</a>
+    <a href="#case-studies">Case studies</a>
+    <a href="#grids">Grids</a>
+  </nav>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     A. SECTION HEADERS
+══════════════════════════════════════════════════ -->
+<div id="section-headers" class="comp-section comp-section-dark">
+  <div class="comp-label">A — Section Headers</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <span class="note">Two-col header · dark surface</span>
+      <div class="sh-dark">
+        <div>
+          <span class="sh-eyebrow">Selected Work</span>
+          <h2 class="sh-h2">Work that speaks<br>for itself.</h2>
+        </div>
+        <div class="sh-right">
+          <p class="sh-desc">We build for founders and teams who care about craft as much as outcomes.</p>
+        </div>
+      </div>
+
+      <span class="note" style="margin-top:var(--sp16);">Two-col header · with CTA right</span>
+      <div class="sh-dark" style="margin-top:0;">
+        <div>
+          <span class="sh-eyebrow">Open Roles</span>
+          <h2 class="sh-h2">Build what's next<br>with us.</h2>
+        </div>
+        <div class="sh-right">
+          <p class="sh-desc">Every hire changes the trajectory of the company.</p>
+          <a href="#" style="display:inline-flex;align-items:center;height:44px;padding:0 24px;border-radius:9999px;background:transparent;color:var(--t1);border:1px solid rgba(255,255,255,0.2);font-family:var(--fh);font-size:14px;cursor:pointer;">See all roles →</a>
+        </div>
+      </div>
+
+      <span class="note" style="margin-top:var(--sp16);">Centred header · dark</span>
+      <div class="sh-centered" style="margin-top:0;">
+        <span class="sh-eyebrow">Leadership</span>
+        <h2 class="sh-h2">The people behind the work.</h2>
+        <p class="sh-desc" style="max-width:460px;margin:var(--sp4) auto 0;">A small team with a big output. We hire for craft, not credentials.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">A — Section Headers · Light surface</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <span class="note note-light">Two-col header · light surface · tag eyebrow</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp10);align-items:end;padding-bottom:var(--sp16);border-bottom:1px solid rgba(0,0,0,0.08);margin-bottom:var(--sp12);">
+        <div>
+          <span class="sh-tag">Services</span>
+          <h2 style="font-family:var(--fa);font-size:clamp(36px,4vw,52px);font-weight:400;letter-spacing:-1.5px;line-height:1.05;color:#111;">What we build.</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp6);align-items:flex-start;justify-content:flex-end;">
+          <p class="sh-desc-light">Focused on the intersection of technology and design — where the best products live.</p>
+        </div>
+      </div>
+
+      <span class="note note-light" style="margin-top:var(--sp16);">Label-left / heading-right split (about page intro pattern)</span>
+      <div style="display:grid;grid-template-columns:180px 1fr;gap:var(--sp16);align-items:start;margin-top:0;">
+        <span style="font-family:var(--fh);font-size:15px;color:var(--green);padding-top:8px;">Values</span>
+        <h2 style="font-family:var(--fa);font-size:clamp(36px,4vw,52px);font-weight:400;letter-spacing:-1.5px;line-height:1.1;color:#111;">What defines how<br>we work.</h2>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     B. STATS
+══════════════════════════════════════════════════ -->
+<div id="stats" class="comp-section comp-section-dark">
+  <div class="comp-label">B — Stat / Number Row</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <span class="note">Dark · green numbers</span>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="stat-value">8+</div><div class="stat-label">Years shipping product</div></div>
+        <div class="stat-item"><div class="stat-value">60+</div><div class="stat-label">Brands launched</div></div>
+        <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Countries served</div></div>
+        <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Studio, by design</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">B — Stat / Number Row · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <span class="note note-light">Light · dark numbers</span>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp6);">
+        <div class="stat-item-light"><div class="stat-value-light">8+</div><div class="stat-label-light">Years shipping product</div></div>
+        <div class="stat-item-light"><div class="stat-value-light">60+</div><div class="stat-label-light">Brands launched</div></div>
+        <div class="stat-item-light"><div class="stat-value-light">12</div><div class="stat-label-light">Countries served</div></div>
+        <div class="stat-item-light"><div class="stat-value-light">1</div><div class="stat-label-light">Studio, by design</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     C. TIMELINE
+══════════════════════════════════════════════════ -->
+<div id="timeline" class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">C — Timeline / Dated List</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <h2 style="font-family:var(--fa);font-size:clamp(32px,4vw,48px);font-weight:400;letter-spacing:-1px;color:#111;margin-bottom:var(--sp10);">A short history.</h2>
+      <ol class="timeline-list">
+        <li class="timeline-row"><span class="timeline-year">2018</span><div><h3 class="timeline-title">First freelance contracts</h3><p class="timeline-body">Designing and building MVPs for early-stage startups in Cairo.</p></div></li>
+        <li class="timeline-row"><span class="timeline-year">2020</span><div><h3 class="timeline-title">Lead designer, fintech</h3><p class="timeline-body">Joined a Berlin-based fintech and shipped a payments platform used across the EU.</p></div></li>
+        <li class="timeline-row"><span class="timeline-year">2022</span><div><h3 class="timeline-title">Independent consulting</h3><p class="timeline-body">Started taking on dedicated long-form engagements with founders he believed in.</p></div></li>
+        <li class="timeline-row"><span class="timeline-year">2024</span><div><h3 class="timeline-title">Founded Nemo</h3><p class="timeline-body">Launched the studio with a clear thesis: small team, deep collaboration, exceptional craft.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     D. TAGS & BADGES
+══════════════════════════════════════════════════ -->
+<div id="tags" class="comp-section comp-section-dark">
+  <div class="comp-label">D — Tags &amp; Badges</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <span class="note">Pill tags · dark</span>
+      <div class="row" style="margin-bottom:var(--sp8);">
+        <span class="tag-pill">Full-time</span>
+        <span class="tag-pill">Cairo</span>
+        <span class="tag-pill tag-pill-green">Remote</span>
+        <span class="tag-pill tag-pill-green">Hiring</span>
+      </div>
+      <span class="note">Rect tags · dark (category labels)</span>
+      <div class="row" style="margin-bottom:var(--sp8);">
+        <span class="tag-rect">Engineering</span>
+        <span class="tag-rect">Design</span>
+        <span class="tag-rect tag-rect-green">New</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">D — Tags &amp; Badges · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row">
+        <span class="tag-pill tag-pill-light">Full-time</span>
+        <span class="tag-pill tag-pill-light">Cairo</span>
+        <span class="tag-pill tag-pill-light-green">Remote</span>
+        <span class="tag-pill tag-pill-light-green">Hiring</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     E. FORMS
+══════════════════════════════════════════════════ -->
+<div id="forms" class="comp-section comp-section-dark">
+  <div class="comp-label">E — Form Fields</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="gap:var(--sp12);align-items:flex-start;flex-wrap:wrap;">
+
+        <div class="col">
+          <span class="note">Underline input · dark (contact page)</span>
+          <div class="form-group">
+            <label class="form-label">Full name</label>
+            <input class="form-input" type="text" placeholder="Your name" />
+          </div>
+          <div class="form-group" style="margin-top:var(--sp6);">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" placeholder="you@company.com" />
+          </div>
+        </div>
+
+        <div class="col">
+          <span class="note">Inline pill · subscribe (footer)</span>
+          <div class="form-inline">
+            <input type="email" placeholder="Enter your email" />
+            <button>Subscribe</button>
+          </div>
+          <span style="font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.3);margin-top:var(--sp3);display:block;">No spam. One dispatch a month.</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">E — Form Fields · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="gap:var(--sp12);align-items:flex-start;flex-wrap:wrap;">
+        <div class="col">
+          <span class="note note-light">Underline input · light (contact page)</span>
+          <div style="display:flex;flex-direction:column;gap:var(--sp2);max-width:340px;">
+            <label class="form-label-light" style="font-family:var(--fh);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Full name</label>
+            <input class="form-input-light" type="text" placeholder="Your name" />
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp2);max-width:340px;margin-top:var(--sp6);">
+            <label class="form-label-light" style="font-family:var(--fh);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Project budget</label>
+            <input class="form-input-light" type="text" placeholder="$5,000 – $20,000" />
+          </div>
+        </div>
+        <div class="col">
+          <span class="note note-light">Textarea · light</span>
+          <div style="display:flex;flex-direction:column;gap:var(--sp2);max-width:400px;">
+            <label class="form-label-light" style="font-family:var(--fh);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Tell us about your project</label>
+            <textarea class="form-input-light" rows="4" placeholder="What are you building?" style="resize:vertical;line-height:1.6;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     F. DIVIDERS
+══════════════════════════════════════════════════ -->
+<div id="dividers" class="comp-section comp-section-dark">
+  <div class="comp-label">F — Dividers</div>
+  <div class="comp-body">
+    <div class="comp-inner" style="display:flex;flex-direction:column;gap:var(--sp8);">
+      <div><span class="note">Plain border</span><div class="divider"></div></div>
+      <div><span class="note">Green glow line</span><div class="divider-glow"></div></div>
+      <div><span class="note">Solid green</span><div class="divider-green"></div></div>
+      <div><span class="note">Labelled</span><div class="divider-labeled">Or continue with</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     G. LINKS
+══════════════════════════════════════════════════ -->
+<div id="links" class="comp-section comp-section-dark">
+  <div class="comp-label">G — Inline Links</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row">
+        <div class="col">
+          <span class="note">Arrow link · dark</span>
+          <a class="link-arrow">View all work <span class="arr">→</span></a>
+        </div>
+        <div class="col">
+          <span class="note">Underline link · dark</span>
+          <a class="link-underline">Read the case study</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">G — Inline Links · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row">
+        <div class="col">
+          <span class="note note-light">Arrow link · light</span>
+          <a class="link-arrow-light">View all work <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     H. LIST ROWS
+══════════════════════════════════════════════════ -->
+<div id="listrows" class="comp-section comp-section-dark">
+  <div class="comp-label">H — List Rows (careers / services / FAQ)</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <span class="note">Standard row · dark · with tags</span>
+      <div style="margin-bottom:var(--sp12);">
+        <div class="list-row">
+          <div><div class="list-row-title">Senior Frontend Engineer</div><div class="list-row-meta">Engineering · Cairo / Remote</div></div>
+          <div class="list-row-right"><span class="tag-pill tag-pill-green">Remote</span><span class="tag-pill">Full-time</span><span class="list-row-arrow">→</span></div>
+        </div>
+        <div class="list-row">
+          <div><div class="list-row-title">Product Designer</div><div class="list-row-meta">Design · Remote</div></div>
+          <div class="list-row-right"><span class="tag-pill tag-pill-green">Remote</span><span class="tag-pill">Full-time</span><span class="list-row-arrow">→</span></div>
+        </div>
+        <div class="list-row">
+          <div><div class="list-row-title">Backend Engineer — Go</div><div class="list-row-meta">Engineering · Cairo</div></div>
+          <div class="list-row-right"><span class="tag-pill">Cairo</span><span class="tag-pill">Full-time</span><span class="list-row-arrow">→</span></div>
+        </div>
+      </div>
+
+      <span class="note">FAQ row · dark · with plus toggle</span>
+      <div>
+        <div class="list-row list-row-faq">
+          <span class="list-row-title">How does your process work?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="list-row list-row-faq">
+          <span class="list-row-title">How long does it take?</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="list-row list-row-faq">
+          <span class="list-row-title">What do you specialize in?</span>
+          <span class="faq-plus" style="transform:rotate(45deg);">+</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">H — List Rows · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="list-row list-row-light">
+        <div><div class="list-row-title" style="color:#111;">Branding & Identity</div><div class="list-row-meta" style="color:#777;">Visual systems, logo, guidelines</div></div>
+        <div class="list-row-right"><span class="list-row-arrow" style="color:rgba(0,0,0,0.2);">→</span></div>
+      </div>
+      <div class="list-row list-row-light">
+        <div><div class="list-row-title" style="color:#111;">Web Design & Build</div><div class="list-row-meta" style="color:#777;">Next.js, custom CMS, animations</div></div>
+        <div class="list-row-right"><span class="list-row-arrow" style="color:rgba(0,0,0,0.2);">→</span></div>
+      </div>
+      <div class="list-row list-row-light">
+        <div><div class="list-row-title" style="color:#111;">Product Design</div><div class="list-row-meta" style="color:#777;">SaaS, apps, design systems</div></div>
+        <div class="list-row-right"><span class="list-row-arrow" style="color:rgba(0,0,0,0.2);">→</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     I. MARQUEE
+══════════════════════════════════════════════════ -->
+<div id="marquee" class="comp-section comp-section-dark">
+  <div class="comp-label">I — Marquee / Ticker</div>
+  <div class="comp-body" style="padding-left:0;padding-right:0;">
+    <span class="note" style="padding:0 var(--sp10) var(--sp4);">Dark band</span>
+    <div class="marquee-dark">
+      <div class="marquee-track">
+        <span class="marquee-item-dark">Tekronyx AIP</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Wadi Sabarah Lodge</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">EG Group CRM</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Almasria Home Decor</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Cairo OS</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Mappire</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Tekronyx AIP</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Wadi Sabarah Lodge</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">EG Group CRM</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Almasria Home Decor</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Cairo OS</span><span class="marquee-sep">·</span>
+        <span class="marquee-item-dark">Mappire</span><span class="marquee-sep">·</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">I — Marquee · Light (slow, logo ticker)</div>
+  <div class="comp-body" style="padding-left:0;padding-right:0;">
+    <div class="marquee-light">
+      <div class="marquee-track marquee-track-slow">
+        <span class="marquee-item-light">Stripe</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Linear</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Vercel</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Figma</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Framer</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Resend</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Stripe</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Linear</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Vercel</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Figma</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Framer</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+        <span class="marquee-item-light">Resend</span><span class="marquee-sep" style="color:rgba(0,0,0,0.15);">·</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     J. SOCIAL
+══════════════════════════════════════════════════ -->
+<div id="social" class="comp-section comp-section-dark">
+  <div class="comp-label">J — Social Links</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="gap:var(--sp16);align-items:flex-start;">
+        <div class="col">
+          <span class="note">Pill row (footer bottom)</span>
+          <div class="social-row">
+            <a class="social-pill">Instagram</a>
+            <a class="social-pill">LinkedIn</a>
+            <a class="social-pill">Dribbble</a>
+          </div>
+        </div>
+        <div class="col">
+          <span class="note">Large vertical list (footer / about)</span>
+          <div class="social-list">
+            <a class="social-link-large">Instagram</a>
+            <a class="social-link-large">LinkedIn</a>
+            <a class="social-link-large">Dribbble</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     K. QUOTE
+══════════════════════════════════════════════════ -->
+<div id="quote" class="comp-section comp-section-dark">
+  <div class="comp-label">K — Quote / Testimonial</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <span class="note">Dark · green left border</span>
+      <div class="quote-block">
+        <p class="quote-text">"They don't just build what you ask for. They push back, improve the brief, and then execute better than you imagined."</p>
+        <p class="quote-attr"><strong>Karim Elshafei</strong> — Co-founder, Tekronyx</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">K — Quote · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="quote-block quote-block-light">
+        <p class="quote-text quote-text-light">"Nemo made our rebrand feel effortless. Delivered on time, on budget, and above expectation."</p>
+        <p class="quote-attr quote-attr-light"><strong>Sara Kamel</strong> — Almasria Home Decor</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     L. BREADCRUMB
+══════════════════════════════════════════════════ -->
+<div id="breadcrumb" class="comp-section comp-section-dark">
+  <div class="comp-label">L — Breadcrumb</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="flex-direction:column;gap:var(--sp6);">
+        <div class="col">
+          <span class="note">Dark</span>
+          <div class="breadcrumb">
+            <a>Home</a><span class="breadcrumb-sep">/</span>
+            <a>Work</a><span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current">Tekronyx AIP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">L — Breadcrumb · Light</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="breadcrumb breadcrumb-light" style="color:rgba(0,0,0,0.35);">
+        <a style="color:rgba(0,0,0,0.35);transition:color var(--e-fast);">Home</a>
+        <span style="color:rgba(0,0,0,0.2);">/</span>
+        <a style="color:rgba(0,0,0,0.35);">Work</a>
+        <span style="color:rgba(0,0,0,0.2);">/</span>
+        <span style="color:rgba(0,0,0,0.65);">Tekronyx AIP</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     M. ALERTS
+══════════════════════════════════════════════════ -->
+<div id="alerts" class="comp-section comp-section-dark">
+  <div class="comp-label">M — Alerts &amp; Announce Bar</div>
+  <div class="comp-body">
+    <div class="comp-inner" style="display:flex;flex-direction:column;gap:var(--sp4);">
+      <span class="note">Inline alerts</span>
+      <div class="alert alert-green"><div class="alert-dot dot-green"></div><div><div class="alert-title">Submitted successfully</div><div class="alert-body">Your message has been received. We'll be in touch within 24 hours.</div></div></div>
+      <div class="alert alert-warn"><div class="alert-dot dot-warn"></div><div><div class="alert-title">Review needed</div><div class="alert-body">Some required fields are missing. Please check your form.</div></div></div>
+      <div class="alert alert-error"><div class="alert-dot dot-error"></div><div><div class="alert-title">Something went wrong</div><div class="alert-body">Please refresh the page and try again.</div></div></div>
+      <div class="alert alert-neutral"><div class="alert-dot dot-neutral"></div><div><div class="alert-title">Draft saved</div><div class="alert-body">Your changes are saved automatically.</div></div></div>
+    </div>
+    <div class="comp-inner" style="margin-top:var(--sp10);">
+      <span class="note">Announcement bar (top of page)</span>
+      <div class="announce-bar">
+        <span class="announce-text">Nemo V.2 is live. Rebuilt from the ground up.</span>
+        <a class="announce-link">Read more <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     N. STEP INDICATOR
+══════════════════════════════════════════════════ -->
+<div id="steps" class="comp-section comp-section-dark">
+  <div class="comp-label">N — Step / Progress Indicator</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- N1: Inline status row (form submission / request flow) -->
+      <span class="note" style="margin-bottom:var(--sp5);">N1 — Inline status row</span>
+      <div class="status-row" style="margin-bottom:var(--sp10);">
+        <div class="status-step status-done">
+          <span class="status-check">✓</span>
+          <span class="status-step-label">Brief</span>
+        </div>
+        <div class="status-connector status-connector-done"></div>
+        <div class="status-step status-active">
+          <span class="status-idx">2</span>
+          <span class="status-step-label status-step-label-active">Proposal</span>
+        </div>
+        <div class="status-connector"></div>
+        <div class="status-step">
+          <span class="status-idx">3</span>
+          <span class="status-step-label">Design</span>
+        </div>
+        <div class="status-connector"></div>
+        <div class="status-step">
+          <span class="status-idx">4</span>
+          <span class="status-step-label">Build</span>
+        </div>
+      </div>
+
+      <!-- N2: Process grid (4-col, used on services page) -->
+      <span class="note" style="margin-bottom:var(--sp5);">N2 — Process grid (services / about)</span>
+      <div class="proc-grid">
+        <div class="proc-item">
+          <div class="proc-num">01</div>
+          <div class="proc-title">Discover</div>
+          <div class="proc-body">We map your goals, constraints, and audience before a single pixel is designed.</div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-num">02</div>
+          <div class="proc-title">Design</div>
+          <div class="proc-body">Iterative rounds. We explore, refine, and align — then commit to what's right.</div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-num">03</div>
+          <div class="proc-title">Build</div>
+          <div class="proc-body">Clean code, token-driven. Every component documented and ready to scale.</div>
+        </div>
+        <div class="proc-item">
+          <div class="proc-num">04</div>
+          <div class="proc-title">Launch</div>
+          <div class="proc-body">We ship together. Full handoff, walkthrough, and 30 days of support included.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* N. STEPS */
+.status-row{display:flex;align-items:center;gap:0;}
+.status-step{display:flex;flex-direction:column;align-items:center;gap:var(--sp1);min-width:60px;}
+.status-done .status-check,.status-idx{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fa);font-size:11px;
+  border:1px solid var(--b2);
+  color:rgba(255,255,255,0.25);
+}
+.status-done .status-check{background:var(--green);border-color:var(--green);color:#000;font-size:10px;}
+.status-active .status-idx{border-color:var(--green);color:var(--green);}
+.status-connector{flex:1;height:1px;background:var(--b1);margin-bottom:18px;}
+.status-connector-done{background:var(--green);opacity:0.4;}
+.status-step-label{font-family:var(--fh);font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.04em;}
+.status-step-label-active{color:var(--t1);}
+
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp6);}
+.proc-item{padding:var(--sp6) 0;border-top:1px solid var(--b1);}
+.proc-num{font-family:var(--fa);font-size:12px;color:var(--green);margin-bottom:var(--sp5);}
+.proc-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp3);}
+.proc-body{font-family:var(--fh);font-size:13px;color:var(--t-off);line-height:1.65;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     O. TOGGLES
+══════════════════════════════════════════════════ -->
+<div id="toggles" class="comp-section comp-section-dark">
+  <div class="comp-label">O — Toggles</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="gap:var(--sp10);">
+        <div class="toggle-wrap">
+          <div class="toggle"></div>
+          <span class="toggle-label">Notifications</span>
+        </div>
+        <div class="toggle-wrap">
+          <div class="toggle toggle-on"></div>
+          <span class="toggle-label toggle-label-active">Dark mode</span>
+        </div>
+        <div class="toggle-wrap">
+          <div class="toggle toggle-on"></div>
+          <span class="toggle-label toggle-label-active">Weekly digest</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     P. AVATARS & PERSON CHIPS
+══════════════════════════════════════════════════ -->
+<div id="avatars" class="comp-section comp-section-dark">
+  <div class="comp-label">P — Avatars &amp; Person Chips</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <div class="row" style="gap:var(--sp10);align-items:flex-start;">
+        <div class="col">
+          <span class="note">Initials avatars</span>
+          <div class="row" style="align-items:center;">
+            <div class="avatar av-sm">MA</div>
+            <div class="avatar av-md">MA</div>
+            <div class="avatar av-lg">MA</div>
+          </div>
+        </div>
+        <div class="col">
+          <span class="note">Person chips (team, author)</span>
+          <div class="person-chip">
+            <div class="avatar av-sm">MA</div>
+            <div>
+              <div class="person-chip-name">Malk Akram</div>
+              <div class="person-chip-role">Founder</div>
+            </div>
+          </div>
+          <div class="person-chip" style="margin-top:var(--sp2);">
+            <div class="avatar av-sm">SK</div>
+            <div>
+              <div class="person-chip-name">Sara Kim</div>
+              <div class="person-chip-role">Lead Engineer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     Q. CODE
+══════════════════════════════════════════════════ -->
+<div id="code" class="comp-section comp-section-dark" style="padding-bottom:var(--sp32);">
+  <div class="comp-label">Q — Code &amp; Mono</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+      <span class="note">Inline code</span>
+      <p style="font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.8;margin-bottom:var(--sp8);">
+        Use <span class="code-inline">var(--green)</span> for all accent colours. Never hardcode <span class="code-inline">#35D687</span> directly.
+      </p>
+      <span class="note">Code block</span>
+      <div class="code-block">
+background: var(--black);<br>
+border: 1px solid var(--b1);<br>
+border-radius: var(--r-lg);<br>
+padding: var(--sp6);<br>
+font-family: var(--fh);
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ══════════════════════════════════════════════════
+     R. CARDS
+══════════════════════════════════════════════════ -->
+<div id="cards" class="comp-section comp-section-dark">
+  <div class="comp-label">R — Cards</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- R1: Work card — dark bg, no card border -->
+      <span class="note">R1 — Work card · dark (image, title, link — no border, no card bg)</span>
+      <div class="card-work-grid" style="margin-bottom:var(--sp16);">
+        <a class="card-work" href="#">
+          <div class="card-work-img" style="background:var(--charcoal);"></div>
+          <div class="card-work-meta">
+            <div class="card-work-top">
+              <h3 class="card-work-title">Meridian Health</h3>
+              <span class="card-work-arr">→</span>
+            </div>
+            <span class="card-work-cat">Branding · Identity</span>
+          </div>
+        </a>
+        <a class="card-work" href="#">
+          <div class="card-work-img" style="background:rgba(255,255,255,0.03);"></div>
+          <div class="card-work-meta">
+            <div class="card-work-top">
+              <h3 class="card-work-title">Finlo</h3>
+              <span class="card-work-arr">→</span>
+            </div>
+            <span class="card-work-cat">Web design · App UI</span>
+          </div>
+        </a>
+        <a class="card-work" href="#">
+          <div class="card-work-img" style="background:rgba(255,255,255,0.05);"></div>
+          <div class="card-work-meta">
+            <div class="card-work-top">
+              <h3 class="card-work-title">Verity</h3>
+              <span class="card-work-arr">→</span>
+            </div>
+            <span class="card-work-cat">App design</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- R2: Service card · light surface — no icons, no borders on individual cards -->
+      <span class="note note-light" style="color:rgba(0,0,0,0.2);margin-bottom:var(--sp5);">R2 — Service card · light surface</span>
+      <div style="background:var(--off-white);padding:var(--sp10);border-radius:var(--r-xl);">
+        <div class="svc-grid">
+          <div class="svc-card">
+            <div class="svc-num">01</div>
+            <h4 class="svc-title">Branding & Identity</h4>
+            <p class="svc-body">Logo, visual language, and brand guidelines that hold up at every touchpoint.</p>
+            <a class="svc-link" href="#">Learn more →</a>
+          </div>
+          <div class="svc-card">
+            <div class="svc-num">02</div>
+            <h4 class="svc-title">Web Design & Build</h4>
+            <p class="svc-body">Pixel-precise marketing sites built on modern stacks. Fast, accessible, memorable.</p>
+            <a class="svc-link" href="#">Learn more →</a>
+          </div>
+          <div class="svc-card">
+            <div class="svc-num">03</div>
+            <h4 class="svc-title">Product Design</h4>
+            <p class="svc-body">SaaS and app interfaces designed from first principles, not templates.</p>
+            <a class="svc-link" href="#">Learn more →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* R. CARDS */
+.card-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp6);}
+.card-work{display:block;}
+.card-work-img{width:100%;aspect-ratio:4/3;border-radius:var(--r-lg);margin-bottom:var(--sp4);}
+.card-work-meta{}
+.card-work-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp1);}
+.card-work-title{font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);}
+.card-work-arr{font-size:16px;color:rgba(255,255,255,0.2);transition:color var(--e-fast);}
+.card-work:hover .card-work-arr{color:var(--t1);}
+.card-work-cat{font-family:var(--fh);font-size:12px;color:var(--t-off);}
+
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp6);}
+.svc-card{padding:var(--sp6) 0;border-top:1px solid rgba(0,0,0,0.1);}
+.svc-num{font-family:var(--fa);font-size:12px;color:rgba(0,0,0,0.3);margin-bottom:var(--sp4);}
+.svc-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:#111;margin-bottom:var(--sp3);}
+.svc-body{font-family:var(--fh);font-size:14px;color:#666;line-height:1.65;margin-bottom:var(--sp4);}
+.svc-link{font-family:var(--fh);font-size:13px;color:#111;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     S. VALUE PROPOSITION
+     The "why us" section — large headline + supporting points
+══════════════════════════════════════════════════ -->
+<div id="value-prop" class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">S — Value Proposition</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- S1: 2-col headline + list -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">S1 — Large headline left, value list right</span>
+      <div class="vp-grid" style="margin-bottom:var(--sp12);">
+        <div>
+          <span class="sh-tag">Why Nemo</span>
+          <h2 class="vp-h2">Design that earns its keep.</h2>
+          <p class="vp-sub">We don't do decoration. Every pixel has a job to do — and we don't ship until it's doing it well.</p>
+        </div>
+        <div class="vp-points">
+          <div class="vp-point">
+            <div class="vp-point-num">01</div>
+            <div>
+              <div class="vp-point-title">Small by choice</div>
+              <p class="vp-point-body">No juniors on your project. One senior designer, end-to-end.</p>
+            </div>
+          </div>
+          <div class="vp-point">
+            <div class="vp-point-num">02</div>
+            <div>
+              <div class="vp-point-title">Outcomes, not outputs</div>
+              <p class="vp-point-body">We track metrics, not deliverables. Your growth is the brief.</p>
+            </div>
+          </div>
+          <div class="vp-point">
+            <div class="vp-point-num">03</div>
+            <div>
+              <div class="vp-point-title">Fast, but not rushed</div>
+              <p class="vp-point-body">Structured sprints keep things moving without cutting corners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S2: 3-col value tiles -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">S2 — 3-col value tiles (dark surface)</span>
+      <div style="background:var(--black);padding:var(--sp10);border-radius:var(--r-lg);">
+        <div class="vp-tiles">
+          <div class="vp-tile">
+            <div class="vp-tile-num">01</div>
+            <h4 class="vp-tile-title">Craft-first</h4>
+            <p class="vp-tile-body">Every component is designed with the same level of care — whether it ships on day one or version ten.</p>
+          </div>
+          <div class="vp-tile">
+            <div class="vp-tile-num">02</div>
+            <h4 class="vp-tile-title">Collaborative</h4>
+            <p class="vp-tile-body">You're not handing off a brief. You're working alongside a designer who's invested in your outcome.</p>
+          </div>
+          <div class="vp-tile">
+            <div class="vp-tile-num">03</div>
+            <h4 class="vp-tile-title">Systematic</h4>
+            <p class="vp-tile-body">Everything we build is token-driven, scalable, and documented so your team can carry it forward.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* S. VALUE PROPOSITION */
+.vp-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp16);align-items:start;}
+.vp-h2{font-family:var(--fa);font-size:clamp(32px,4vw,52px);font-weight:400;letter-spacing:-1.5px;line-height:1.05;color:#111;margin:var(--sp4) 0 var(--sp5);}
+.vp-sub{font-family:var(--fh);font-size:16px;line-height:1.7;color:#555;max-width:400px;}
+.vp-points{display:flex;flex-direction:column;gap:0;}
+.vp-point{display:grid;grid-template-columns:40px 1fr;gap:var(--sp4);padding:var(--sp5) 0;border-top:1px solid rgba(0,0,0,0.08);align-items:start;}
+.vp-point:last-child{border-bottom:1px solid rgba(0,0,0,0.08);}
+.vp-point-num{font-family:var(--fa);font-size:13px;color:rgba(0,0,0,0.25);padding-top:2px;}
+.vp-point-title{font-family:var(--fa);font-size:16px;font-weight:400;letter-spacing:-0.3px;color:#111;margin-bottom:var(--sp1);}
+.vp-point-body{font-family:var(--fh);font-size:14px;color:#666;line-height:1.6;}
+
+.vp-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp6);}
+.vp-tile{padding:var(--sp6);border:1px solid var(--b1);border-radius:var(--r-lg);}
+.vp-tile-num{font-family:var(--fa);font-size:13px;color:var(--green);margin-bottom:var(--sp4);}
+.vp-tile-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp3);}
+.vp-tile-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     T. FEATURES
+     Service / capability listings with detail
+══════════════════════════════════════════════════ -->
+<div id="features" class="comp-section comp-section-dark">
+  <div class="comp-label">T — Features</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- T1: 2-col feature row (icon/num left, text right) -->
+      <span class="note" style="margin-bottom:var(--sp6);">T1 — Numbered feature rows</span>
+      <div class="feat-rows" style="margin-bottom:var(--sp12);">
+        <div class="feat-row">
+          <span class="feat-num">01</span>
+          <div>
+            <h4 class="feat-title">Brand identity system</h4>
+            <p class="feat-body">Logo mark, wordmark, colour palette, type system, iconography, and brand guidelines ready for any surface.</p>
+          </div>
+          <div class="feat-tags">
+            <span class="pill-tag">Naming</span>
+            <span class="pill-tag">Logo</span>
+            <span class="pill-tag">Guidelines</span>
+          </div>
+        </div>
+        <div class="feat-row">
+          <span class="feat-num">02</span>
+          <div>
+            <h4 class="feat-title">Marketing website</h4>
+            <p class="feat-body">Conversion-focused design paired with clean Next.js implementation — no templates, no shortcuts.</p>
+          </div>
+          <div class="feat-tags">
+            <span class="pill-tag">Design</span>
+            <span class="pill-tag">Build</span>
+            <span class="pill-tag">Deploy</span>
+          </div>
+        </div>
+        <div class="feat-row">
+          <span class="feat-num">03</span>
+          <div>
+            <h4 class="feat-title">Product UI</h4>
+            <p class="feat-body">Full product interface design — from information architecture and user flows to polished, tokenised components.</p>
+          </div>
+          <div class="feat-tags">
+            <span class="pill-tag">UX</span>
+            <span class="pill-tag">UI</span>
+            <span class="pill-tag">Handoff</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- T2: 2-col feature grid with description -->
+      <span class="note" style="margin-bottom:var(--sp6);">T2 — 2×2 feature grid</span>
+      <div class="feat-grid">
+        <div class="feat-grid-item">
+          <h4 class="feat-grid-title">Token-driven</h4>
+          <p class="feat-grid-body">Every value — spacing, colour, type, radius — lives in a token. Redesign at scale with a single variable change.</p>
+        </div>
+        <div class="feat-grid-item">
+          <h4 class="feat-grid-title">Responsive by default</h4>
+          <p class="feat-grid-body">Layouts flex gracefully from 320px to 4K. Nothing breaks. Nothing looks like an afterthought.</p>
+        </div>
+        <div class="feat-grid-item">
+          <h4 class="feat-grid-title">Accessible</h4>
+          <p class="feat-grid-body">WCAG AA contrast ratios, focus states, and semantic HTML are built in — not bolted on.</p>
+        </div>
+        <div class="feat-grid-item">
+          <h4 class="feat-grid-title">Documented</h4>
+          <p class="feat-grid-body">Every component ships with usage notes, variants, and do/don't guidance so your team can move fast.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* T. FEATURES */
+.feat-rows{display:flex;flex-direction:column;}
+.feat-row{display:grid;grid-template-columns:48px 1fr auto;gap:var(--sp8);align-items:start;padding:var(--sp6) 0;border-top:1px solid var(--b1);}
+.feat-row:last-child{border-bottom:1px solid var(--b1);}
+.feat-num{font-family:var(--fa);font-size:13px;color:var(--green);padding-top:3px;}
+.feat-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp2);}
+.feat-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;max-width:440px;}
+.feat-tags{display:flex;gap:var(--sp2);flex-wrap:wrap;padding-top:4px;}
+.pill-tag{font-family:var(--fh);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 12px;border-radius:var(--r-pill);border:1px solid var(--b2);color:var(--t-off);}
+
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp1);}
+.feat-grid-item{padding:var(--sp8);border:1px solid var(--b1);background:var(--s3);}
+.feat-grid-item:first-child{border-radius:var(--r-lg) 0 0 0;}
+.feat-grid-item:nth-child(2){border-radius:0 var(--r-lg) 0 0;}
+.feat-grid-item:nth-child(3){border-radius:0 0 0 var(--r-lg);}
+.feat-grid-item:last-child{border-radius:0 0 var(--r-lg) 0;}
+.feat-grid-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp3);}
+.feat-grid-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     U. TESTIMONIALS
+     Quote blocks, client logos, attribution chips
+══════════════════════════════════════════════════ -->
+<div id="testimonials" class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">U — Testimonials</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- U1: Single large quote -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">U1 — Full-width featured quote</span>
+      <div class="testi-hero" style="margin-bottom:var(--sp12);">
+        <div class="testi-hero-quote">"Working with Nemo felt like having a co-founder who happened to be the best designer I'd ever met. They understood our constraints, moved fast, and shipped something we're still proud of two years later."</div>
+        <div class="testi-hero-attr">
+          <div class="person-chip-avatar-light" style="width:40px;height:40px;font-size:12px;">JK</div>
+          <div>
+            <div class="testi-name">Jonas K.</div>
+            <div class="testi-role">CEO, Finlo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- U2: 3-col quote cards -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">U2 — 3-col quote cards</span>
+      <div class="testi-grid" style="margin-bottom:var(--sp12);">
+        <div class="testi-card">
+          <p class="testi-body">"The rebrand took two weeks. We went from 'startup energy' to 'this is a real company' overnight."</p>
+          <div class="testi-attr-sm">
+            <div class="person-chip-avatar-light">AR</div>
+            <div>
+              <div class="testi-name-sm">Amara R.</div>
+              <div class="testi-role-sm">Head of Product, Verity</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-body">"We came in with a rough spec and left with a system. Nemo turned ambiguity into something our whole team could build on."</p>
+          <div class="testi-attr-sm">
+            <div class="person-chip-avatar-light">LS</div>
+            <div>
+              <div class="testi-name-sm">Lena S.</div>
+              <div class="testi-role-sm">CTO, Arco</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <p class="testi-body">"Honest, direct, fast. No ego. Just really good work delivered on time. Exactly what a founder needs."</p>
+          <div class="testi-attr-sm">
+            <div class="person-chip-avatar-light">MO</div>
+            <div>
+              <div class="testi-name-sm">Marc O.</div>
+              <div class="testi-role-sm">Founder, Meridian</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- U3: Dark-surface single quote with left border -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">U3 — Dark surface, left border</span>
+      <div style="background:var(--black);padding:var(--sp10);border-radius:var(--r-lg);">
+        <div class="quote-block">
+          <p class="quote-text">"We didn't just get a website. We got a design system, a visual language, and a team that actually understood what we were building."</p>
+          <div class="testi-attr-sm" style="margin-top:var(--sp5);">
+            <div class="person-chip-avatar">TC</div>
+            <div>
+              <div style="font-family:var(--fa);font-size:14px;color:var(--t1);">Tom C.</div>
+              <div style="font-family:var(--fh);font-size:12px;color:var(--t-off);">Co-founder, Sonder</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* U. TESTIMONIALS */
+.testi-hero{padding:var(--sp10);border:1px solid rgba(0,0,0,0.1);border-radius:var(--r-lg);background:#fff;}
+.testi-hero-quote{font-family:var(--fa);font-size:clamp(20px,2.5vw,28px);font-weight:400;letter-spacing:-0.5px;line-height:1.35;color:#111;margin-bottom:var(--sp8);}
+.testi-hero-attr{display:flex;align-items:center;gap:var(--sp3);}
+.testi-name{font-family:var(--fa);font-size:15px;color:#111;}
+.testi-role{font-family:var(--fh);font-size:13px;color:#888;}
+
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp4);}
+.testi-card{padding:var(--sp6);border:1px solid rgba(0,0,0,0.1);border-radius:var(--r-lg);background:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:var(--sp6);}
+.testi-body{font-family:var(--fh);font-size:14px;line-height:1.7;color:#444;}
+.testi-attr-sm{display:flex;align-items:center;gap:var(--sp3);}
+.testi-name-sm{font-family:var(--fa);font-size:14px;color:#111;}
+.testi-role-sm{font-family:var(--fh);font-size:12px;color:#888;}
+
+/* shared avatar — use person-chip-avatar (from P section) */
+.person-chip-avatar{
+  width:32px;height:32px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--fa);font-size:10px;
+  border:1px solid var(--b2);
+  color:rgba(255,255,255,0.5);
+  flex-shrink:0;
+}
+/* light variant for testimonial cards */
+.person-chip-avatar-light{
+  width:32px;height:32px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--fa);font-size:10px;
+  border:1px solid rgba(0,0,0,0.12);
+  color:rgba(0,0,0,0.4);
+  flex-shrink:0;
+}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     V. HOW IT WORKS / STORY
+══════════════════════════════════════════════════ -->
+<div id="how-it-works" class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">V — How it works / Story</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- V1: 2-col — heading left, steps right (used in process / about sections) -->
+      <span class="note note-light" style="margin-bottom:var(--sp8);">V1 — 2-col: heading left, numbered steps right</span>
+      <div class="hiw-layout" style="margin-bottom:var(--sp16);">
+        <div class="hiw-left">
+          <span class="sh-tag" style="margin-bottom:var(--sp5);display:inline-flex;">How it works</span>
+          <h2 class="hiw-heading">A process built around your outcome.</h2>
+          <p class="hiw-sub">Clear phases. No surprises. You always know where we are and what's next.</p>
+        </div>
+        <div class="hiw-right">
+          <div class="hiw-row">
+            <span class="hiw-n">01</span>
+            <div>
+              <div class="hiw-rt">Discovery</div>
+              <div class="hiw-rb">We map your goals, constraints, and audience before a single pixel is designed.</div>
+            </div>
+            <span class="hiw-time">1–2 days</span>
+          </div>
+          <div class="hiw-row">
+            <span class="hiw-n">02</span>
+            <div>
+              <div class="hiw-rt">Design</div>
+              <div class="hiw-rb">Iterative rounds. We explore, align, then commit to what's right — not just done.</div>
+            </div>
+            <span class="hiw-time">1–3 wks</span>
+          </div>
+          <div class="hiw-row">
+            <span class="hiw-n">03</span>
+            <div>
+              <div class="hiw-rt">Build</div>
+              <div class="hiw-rb">Token-driven, documented, and ready for your team to own and extend.</div>
+            </div>
+            <span class="hiw-time">2–4 wks</span>
+          </div>
+          <div class="hiw-row" style="border-bottom:1px solid rgba(0,0,0,0.08);">
+            <span class="hiw-n">04</span>
+            <div>
+              <div class="hiw-rt">Launch</div>
+              <div class="hiw-rb">We ship together. Full walkthrough, handoff docs, and 30 days of support.</div>
+            </div>
+            <span class="hiw-time">1–2 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- V2: Full-width story row (about page / founder section) -->
+      <span class="note note-light" style="margin-bottom:var(--sp8);">V2 — Full-width story rows (about / founder narrative)</span>
+      <div style="background:var(--black);padding:var(--sp10);border-radius:var(--r-xl);">
+        <div class="story-rows">
+          <div class="story-row">
+            <span class="story-year">2018</span>
+            <div class="story-content">
+              <div class="story-title">First freelance contracts</div>
+              <div class="story-body">Designing and building MVPs for early-stage startups. Learning what matters when time and budget are tight.</div>
+            </div>
+          </div>
+          <div class="story-row">
+            <span class="story-year">2020</span>
+            <div class="story-content">
+              <div class="story-title">Lead designer, fintech</div>
+              <div class="story-body">Shipped a payments platform used across the EU. First time building at real scale.</div>
+            </div>
+          </div>
+          <div class="story-row">
+            <span class="story-year">2024</span>
+            <div class="story-content">
+              <div class="story-title">Founded Nemo</div>
+              <div class="story-body">Launched the studio with a clear thesis: small team, deep collaboration, exceptional craft.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* V. HOW IT WORKS */
+.hiw-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:var(--sp16);align-items:start;}
+.hiw-heading{font-family:var(--fa);font-size:clamp(28px,3.5vw,44px);font-weight:400;letter-spacing:-1.2px;line-height:1.1;color:#111;margin:var(--sp4) 0 var(--sp5);}
+.hiw-sub{font-family:var(--fh);font-size:15px;color:#666;line-height:1.65;max-width:340px;}
+.hiw-right{display:flex;flex-direction:column;}
+.hiw-row{display:grid;grid-template-columns:36px 1fr 60px;gap:var(--sp5);padding:var(--sp5) 0;border-top:1px solid rgba(0,0,0,0.08);align-items:start;}
+.hiw-n{font-family:var(--fa);font-size:12px;color:rgba(0,0,0,0.25);padding-top:3px;}
+.hiw-rt{font-family:var(--fa);font-size:17px;font-weight:400;letter-spacing:-0.3px;color:#111;margin-bottom:var(--sp1);}
+.hiw-rb{font-family:var(--fh);font-size:13px;color:#777;line-height:1.6;}
+.hiw-time{font-family:var(--fh);font-size:11px;color:rgba(0,0,0,0.3);text-align:right;padding-top:3px;white-space:nowrap;}
+
+.story-rows{display:flex;flex-direction:column;}
+.story-row{display:grid;grid-template-columns:100px 1fr;gap:var(--sp10);padding:var(--sp6) 0;border-top:1px solid var(--b1);align-items:baseline;}
+.story-year{font-family:var(--fa);font-size:16px;color:var(--green);letter-spacing:-0.3px;}
+.story-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp2);}
+.story-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;max-width:500px;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     W. CALL TO ACTION BLOCKS
+     Full-width CTA, inline CTA, mini CTA row
+══════════════════════════════════════════════════ -->
+<div id="cta-blocks" class="comp-section comp-section-dark">
+  <div class="comp-label">W — CTA Blocks</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- W1: Full-width dark card CTA -->
+      <span class="note" style="margin-bottom:var(--sp6);">W1 — Full-width dark card</span>
+      <div class="cta-card" style="margin-bottom:var(--sp12);">
+        <div class="cta-card-left">
+          <span class="sh-eyebrow" style="color:var(--green);">Let's talk</span>
+          <h2 class="cta-card-h2">Ready to build something worth showing?</h2>
+          <p class="cta-card-sub">We take on a small number of projects each quarter. If you're serious, let's start the conversation now.</p>
+        </div>
+        <div class="cta-card-right">
+          <a class="cta-btn-primary" href="#">Start a project</a>
+          <a class="cta-btn-ghost" href="#">Book a call</a>
+        </div>
+      </div>
+
+      <!-- W2: Light CTA card -->
+      <span class="note" style="margin-bottom:var(--sp6);">W2 — Light surface CTA</span>
+      <div class="cta-card-light" style="margin-bottom:var(--sp12);">
+        <div class="cta-card-left">
+          <span class="sh-tag">Get started</span>
+          <h2 class="cta-card-h2-light">Your next brand is a conversation away.</h2>
+        </div>
+        <div class="cta-card-right">
+          <a class="cta-btn-dark" href="#">Start a project</a>
+          <a class="cta-btn-ghost-dark" href="#">See the work</a>
+        </div>
+      </div>
+
+      <!-- W3: Inline CTA row (minimal) -->
+      <span class="note" style="margin-bottom:var(--sp6);">W3 — Inline CTA row (between sections)</span>
+      <div class="cta-inline">
+        <div>
+          <div class="cta-inline-label">Available for new projects in Q3 2026</div>
+          <div class="cta-inline-title">Let's talk before the window closes.</div>
+        </div>
+        <a class="cta-btn-primary" href="#">Get in touch →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* W. CTA BLOCKS */
+.cta-card{display:grid;grid-template-columns:1fr auto;gap:var(--sp16);align-items:center;padding:var(--sp10) var(--sp10);border:1px solid var(--b2);border-radius:var(--r-xl);background:var(--charcoal);}
+.cta-card-left{}
+.cta-card-h2{font-family:var(--fa);font-size:clamp(24px,3vw,40px);font-weight:400;letter-spacing:-1px;line-height:1.1;color:var(--t1);margin:var(--sp3) 0 var(--sp4);}
+.cta-card-sub{font-family:var(--fh);font-size:15px;color:var(--t-off);line-height:1.65;max-width:440px;}
+.cta-card-right{display:flex;flex-direction:column;gap:var(--sp3);align-items:stretch;min-width:180px;}
+
+.cta-card-light{display:grid;grid-template-columns:1fr auto;gap:var(--sp16);align-items:center;padding:var(--sp10);border:1px solid rgba(0,0,0,0.1);border-radius:var(--r-xl);background:var(--off-white);}
+.cta-card-h2-light{font-family:var(--fa);font-size:clamp(24px,3vw,40px);font-weight:400;letter-spacing:-1px;line-height:1.1;color:#111;margin:var(--sp3) 0 0;}
+
+.cta-btn-primary{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 var(--sp6);border-radius:var(--r-pill);background:var(--green);color:#000;font-family:var(--fh);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.cta-btn-ghost{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 var(--sp6);border-radius:var(--r-pill);background:transparent;border:1px solid var(--b2);color:var(--t1);font-family:var(--fh);font-size:14px;cursor:pointer;white-space:nowrap;}
+.cta-btn-dark{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 var(--sp6);border-radius:var(--r-pill);background:var(--black);color:#fff;font-family:var(--fh);font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.cta-btn-ghost-dark{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 var(--sp6);border-radius:var(--r-pill);background:transparent;border:1px solid rgba(0,0,0,0.15);color:#111;font-family:var(--fh);font-size:14px;cursor:pointer;white-space:nowrap;}
+
+.cta-inline{display:flex;align-items:center;justify-content:space-between;gap:var(--sp10);padding:var(--sp6) var(--sp8);border:1px solid var(--b1);border-radius:var(--r-lg);background:var(--s3);}
+.cta-inline-label{font-family:var(--fh);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:var(--sp1);}
+.cta-inline-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     X. CASE STUDIES / GALLERY
+══════════════════════════════════════════════════ -->
+<div id="case-studies" class="comp-section comp-section-light">
+  <div class="comp-label comp-label-light">X — Case Studies &amp; Gallery</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- X1: Standard 3-col work grid — light bg -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">X1 — 3-col work grid (light background)</span>
+      <div class="cs-3col" style="margin-bottom:var(--sp16);">
+        <a class="cs-card" href="#">
+          <div class="cs-thumb" style="background:#E8E6E0;aspect-ratio:4/3;"></div>
+          <div class="cs-foot">
+            <div>
+              <div class="cs-name">Meridian Health</div>
+              <div class="cs-type">Branding · Web design</div>
+            </div>
+            <span class="cs-arr">→</span>
+          </div>
+        </a>
+        <a class="cs-card" href="#">
+          <div class="cs-thumb" style="background:#D8DDE8;aspect-ratio:4/3;"></div>
+          <div class="cs-foot">
+            <div>
+              <div class="cs-name">Finlo</div>
+              <div class="cs-type">Web design · App UI</div>
+            </div>
+            <span class="cs-arr">→</span>
+          </div>
+        </a>
+        <a class="cs-card" href="#">
+          <div class="cs-thumb" style="background:#E4E0D6;aspect-ratio:4/3;"></div>
+          <div class="cs-foot">
+            <div>
+              <div class="cs-name">Verity</div>
+              <div class="cs-type">App design</div>
+            </div>
+            <span class="cs-arr">→</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- X2: Wide featured + narrow stacked — light -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">X2 — Wide featured + 2 stacked right</span>
+      <div class="cs-split" style="margin-bottom:var(--sp16);">
+        <a class="cs-card" href="#">
+          <div class="cs-thumb" style="background:#E2E7ED;aspect-ratio:16/10;"></div>
+          <div class="cs-foot">
+            <div>
+              <div class="cs-name">Arco</div>
+              <div class="cs-type">Strategy · Brand</div>
+            </div>
+            <span class="cs-arr">→</span>
+          </div>
+        </a>
+        <div class="cs-stack-col">
+          <a class="cs-card" href="#">
+            <div class="cs-thumb" style="background:#EAE8E2;aspect-ratio:16/9;"></div>
+            <div class="cs-foot">
+              <div>
+                <div class="cs-name">Sonder</div>
+                <div class="cs-type">Web design</div>
+              </div>
+              <span class="cs-arr">→</span>
+            </div>
+          </a>
+          <a class="cs-card" href="#">
+            <div class="cs-thumb" style="background:#E5E8EC;aspect-ratio:16/9;"></div>
+            <div class="cs-foot">
+              <div>
+                <div class="cs-name">Prism</div>
+                <div class="cs-type">App UI</div>
+              </div>
+              <span class="cs-arr">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- X3: Case study list row (index / archive page) -->
+      <span class="note note-light" style="margin-bottom:var(--sp6);">X3 — Case study list rows (archive / index)</span>
+      <div class="cs-list">
+        <a class="cs-list-row" href="#">
+          <span class="cs-list-num">01</span>
+          <div class="cs-list-title">Tekronyx AIP</div>
+          <div class="cs-list-tags"><span class="tag-pill tag-pill-light">Branding</span><span class="tag-pill tag-pill-light">Web</span></div>
+          <span class="cs-list-year">2025</span>
+          <span class="cs-list-arr">→</span>
+        </a>
+        <a class="cs-list-row" href="#">
+          <span class="cs-list-num">02</span>
+          <div class="cs-list-title">Wadi Sabarah Lodge</div>
+          <div class="cs-list-tags"><span class="tag-pill tag-pill-light">Identity</span><span class="tag-pill tag-pill-light">Print</span></div>
+          <span class="cs-list-year">2024</span>
+          <span class="cs-list-arr">→</span>
+        </a>
+        <a class="cs-list-row" href="#">
+          <span class="cs-list-num">03</span>
+          <div class="cs-list-title">EG Group CRM</div>
+          <div class="cs-list-tags"><span class="tag-pill tag-pill-light">App UI</span><span class="tag-pill tag-pill-light">System</span></div>
+          <span class="cs-list-year">2024</span>
+          <span class="cs-list-arr">→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* X. CASE STUDIES */
+.cs-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp5);}
+.cs-split{display:grid;grid-template-columns:1.6fr 1fr;gap:var(--sp5);}
+.cs-stack-col{display:flex;flex-direction:column;gap:var(--sp5);}
+.cs-card{display:block;}
+.cs-thumb{border-radius:var(--r-lg);width:100%;display:block;}
+.cs-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:var(--sp4);}
+.cs-name{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:#111;margin-bottom:4px;}
+.cs-type{font-family:var(--fh);font-size:12px;color:#888;}
+.cs-arr{font-size:16px;color:rgba(0,0,0,0.2);transition:color var(--e-fast);}
+.cs-card:hover .cs-arr{color:#111;}
+
+.cs-list{display:flex;flex-direction:column;}
+.cs-list-row{display:grid;grid-template-columns:32px 1fr auto 48px 24px;align-items:center;gap:var(--sp6);padding:var(--sp5) 0;border-top:1px solid rgba(0,0,0,0.08);}
+.cs-list-row:last-child{border-bottom:1px solid rgba(0,0,0,0.08);}
+.cs-list-num{font-family:var(--fa);font-size:12px;color:rgba(0,0,0,0.25);}
+.cs-list-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:#111;}
+.cs-list-tags{display:flex;gap:var(--sp2);}
+.cs-list-year{font-family:var(--fh);font-size:12px;color:#aaa;text-align:right;}
+.cs-list-arr{font-size:16px;color:rgba(0,0,0,0.18);transition:color var(--e-fast);}
+.cs-list-row:hover .cs-list-arr{color:#111;}
+</style>
+
+
+<!-- ══════════════════════════════════════════════════
+     Y. LAYOUT GRIDS
+     All common grid configurations used across pages
+══════════════════════════════════════════════════ -->
+<div id="grids" class="comp-section comp-section-dark" style="padding-bottom:var(--sp32);">
+  <div class="comp-label">Y — Layout Grids</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- Y1: 1-col full -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y1 — 1 column full-width</span>
+      <div class="grid-demo" style="margin-bottom:var(--sp10);">
+        <div class="grid-col" style="grid-column:span 1;">Full width — hero, section intros, marquee</div>
+      </div>
+
+      <!-- Y2: 2-col equal -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y2 — 2 col equal (1fr 1fr)</span>
+      <div class="grid-demo grid-2" style="margin-bottom:var(--sp10);">
+        <div class="grid-col">Left — heading / stat</div>
+        <div class="grid-col">Right — body / image</div>
+      </div>
+
+      <!-- Y3: 2-col asymmetric 60/40 -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y3 — 2 col asymmetric (1.5fr 1fr)</span>
+      <div class="grid-demo grid-asym" style="margin-bottom:var(--sp10);">
+        <div class="grid-col">Primary — large heading or image</div>
+        <div class="grid-col">Secondary — supporting content</div>
+      </div>
+
+      <!-- Y4: 3-col equal -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y4 — 3 col equal</span>
+      <div class="grid-demo grid-3" style="margin-bottom:var(--sp10);">
+        <div class="grid-col">Col A</div>
+        <div class="grid-col">Col B</div>
+        <div class="grid-col">Col C</div>
+      </div>
+
+      <!-- Y5: 4-col equal -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y5 — 4 col equal (stats, team, services)</span>
+      <div class="grid-demo grid-4" style="margin-bottom:var(--sp10);">
+        <div class="grid-col">Col A</div>
+        <div class="grid-col">Col B</div>
+        <div class="grid-col">Col C</div>
+        <div class="grid-col">Col D</div>
+      </div>
+
+      <!-- Y6: Sidebar + content (nav + main) -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y6 — Sidebar 240px + content (process section, FAQ)</span>
+      <div class="grid-demo grid-sidebar" style="margin-bottom:var(--sp10);">
+        <div class="grid-col">Sidebar / label</div>
+        <div class="grid-col">Main content area</div>
+      </div>
+
+      <!-- Y7: Auto-fill card grid -->
+      <span class="note" style="margin-bottom:var(--sp4);">Y7 — Auto-fill card grid (min 300px)</span>
+      <div class="grid-demo grid-autofill">
+        <div class="grid-col">Card</div>
+        <div class="grid-col">Card</div>
+        <div class="grid-col">Card</div>
+        <div class="grid-col">Card</div>
+        <div class="grid-col">Card</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* Y. LAYOUT GRIDS */
+.grid-demo{display:grid;gap:var(--sp3);}
+.grid-2{grid-template-columns:1fr 1fr;}
+.grid-asym{grid-template-columns:1.5fr 1fr;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.grid-sidebar{grid-template-columns:240px 1fr;}
+.grid-autofill{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
+.grid-col{padding:var(--sp5) var(--sp6);border:1px dashed rgba(255,255,255,0.1);border-radius:var(--r-md);font-family:var(--fh);font-size:12px;color:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;min-height:60px;}
+</style>
+
+
+</body>
+</html>

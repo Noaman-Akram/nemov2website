@@ -12,7 +12,7 @@ export default function MarketingLayout({
   return (
     <>
       <Nav />
-      <main style={{ paddingTop: "72px" }}>{children}</main>
+      <main style={{ paddingTop: "108px" }}>{children}</main>
       {/* <Footer /> */}
     </>
   );

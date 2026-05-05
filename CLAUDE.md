@@ -68,4 +68,38 @@ This project has a strict design system defined in `_archive/design/01-component
 - Full-bleed dark sections use `data-nav-dark` attribute
 
 ## Eyebrow labels
-Use monospace style: `// SECTION NAME` pattern with the `.eyebrow` class
+Two patterns. No `//` slashes. No decorative symbols.
+
+**Dark background** — plain uppercase haas:
+```css
+font-family: var(--font-haas);
+font-size: 11px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: rgba(255,255,255,0.4); /* or var(--green) for emphasis */
+```
+
+**Light background** — bordered tag:
+```css
+display: inline-flex;
+font-family: var(--font-aeonik);
+font-size: 12px;
+font-weight: 500;
+color: rgba(0,0,0,0.5);
+border: 1px solid rgba(0,0,0,0.15);
+border-radius: var(--r-sm);
+padding: 4px 16px;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+```
+
+## Buttons
+- Primary hero CTA: rotating glow border pill (see Hero.tsx) — no arrow
+- Dark pill: `background: var(--black)` or `var(--green)`, `border-radius: var(--r-pill)`, `height: 48px`
+- Ghost pill: transparent bg, `border: 1px solid rgba(255,255,255,0.2)` on dark
+- Arrows in buttons: use plain `→` text only where directional affordance is needed. No `↗`, no SVG, no emoji.
+
+## Cards
+- Work cards: no background, no border, image with `border-radius: var(--r-lg)`, title + link below
+- Flat border cards: `border: 1px solid var(--b1)`, `background: var(--s3)`, `border-radius: var(--r-lg)`, no shadows
+- No feature cards with colored top borders. No card lift shadows. No emoji icons in cards.

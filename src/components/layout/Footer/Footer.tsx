@@ -65,10 +65,10 @@ export function Footer() {
             </h2>
             <div className="nl-buttons">
               <Link href="/contact" className="btn btn-p">
-                Start a project ↗
+                Start a project
               </Link>
               <Link href="/contact" className="btn btn-s">
-                Book a call ↗
+                Book a call
               </Link>
             </div>
           </div>

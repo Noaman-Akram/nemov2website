@@ -37,7 +37,7 @@ export function SelectedWork() {
         <Reveal>
           <div className="sw-header">
             <div>
-              <span className="eyebrow">// SELECTED WORK</span>
+              <span className="eyebrow">Selected Work</span>
               <h2 className="sw-h2">
                 Discover how we&apos;re driving{" "}
                 <em style={{ fontStyle: "normal", color: "var(--green)" }}>change</em>

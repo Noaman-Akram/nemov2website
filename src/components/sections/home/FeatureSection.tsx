@@ -19,14 +19,6 @@ export function FeatureSection() {
       {/* Green ambient glow */}
       <div aria-hidden="true" className="feature-glow" />
 
-      {/* Pill badge */}
-      <div className="feature-badge">
-        Nemo V.2{" "}
-        <span style={{ opacity: 0.4 }}>|</span>{" "}
-        <span className="feature-badge-new">NEW</span>
-        Auth0 for AI Agents →
-      </div>
-
       {/* 2-col grid */}
       <div className="feature-grid">
 

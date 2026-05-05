@@ -23,6 +23,7 @@ const neueHaas = localFont({
 });
 
 import { DynamicFavicon } from "@/components/layout/Favicon";
+import { AlertBanner } from "@/components/layout/AlertBanner";
 
 export const metadata: Metadata = {
   title: {
@@ -58,6 +59,7 @@ export default function RootLayout({
       <body style={{
         fontFamily: "var(--font-haas), 'Inter', sans-serif",
       }}>
+        <AlertBanner />
         {children}
       </body>
     </html>

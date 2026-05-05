@@ -16,7 +16,7 @@ export function FAQ() {
     <section id="services" className="faq-section">
       <div className="faq-inner">
         <Reveal>
-          <span className="eyebrow">// FAQ</span>
+          <span className="eyebrow">FAQ</span>
         </Reveal>
 
         <Reveal delay={100}>

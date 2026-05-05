@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nemo — Careers Lab</title>
+<style>
+
+/* ══════════════════════════════════════
+   FONTS
+══════════════════════════════════════ */
+@font-face { font-family:'AeonikPro'; src:url('../core/fonts/AeonikPro-Light.otf') format('opentype'); font-weight:300; }
+@font-face { font-family:'AeonikPro'; src:url('../core/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; }
+@font-face { font-family:'AeonikPro'; src:url('../core/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; }
+@font-face { font-family:'AeonikPro'; src:url('../core/fonts/AeonikPro-Bold.otf') format('opentype'); font-weight:700; }
+@font-face { font-family:'NeueHaas'; src:url('../core/fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight:300; }
+@font-face { font-family:'NeueHaas'; src:url('../core/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'NeueHaas'; src:url('../core/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'NeueHaas'; src:url('../core/fonts/NeueHaasDisplayBold.ttf') format('truetype'); font-weight:700; }
+
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════ */
+:root {
+  --green:         #35D687;
+  --green-dim:     rgba(53,214,135,0.12);
+  --black:         #080808;
+  --s1:            #13171D;
+  --s2:            #222222;
+  --s3:            rgba(255,255,255,0.04);
+  --s3h:           rgba(255,255,255,0.07);
+  --b1:            rgba(255,255,255,0.07);
+  --b2:            rgba(255,255,255,0.12);
+  --b-green:       rgba(53,214,135,0.28);
+  --t1:            #FFFFFF;
+  --t2:            #F3F3F3;
+  --t3:            #868788;
+  
+  --fp:            'AeonikPro', sans-serif;
+  --fs:            'NeueHaas', sans-serif;
+  
+  --sp2:8px; --sp4:16px; --sp6:24px; --sp8:32px; --sp12:48px; --sp16:64px; --sp20:80px;
+  
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   16px;
+  --r-pill: 9999px;
+  
+  --e-fast:   150ms ease-in-out;
+  --e-normal: 300ms ease-in-out;
+  
+  --container: 1312px;
+}
+
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--t1);font-family:var(--fs);font-size:14px;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;padding:80px 40px;}
+a{text-decoration:none;}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.page-title {
+  font-family: var(--fp);
+  font-size: clamp(36px, 4vw, 48px);
+  letter-spacing: -1px;
+  margin-bottom: var(--sp16);
+}
+
+.section-label {
+  font-family: var(--fs);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: var(--sp8);
+}
+
+.section-wrapper {
+  margin-bottom: var(--sp20);
+}
+
+/* Option 1: Minimal Line Items */
+.job-list {
+  border-top: 1px solid var(--b1);
+}
+.job-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp6) 0;
+  border-bottom: 1px solid var(--b1);
+  cursor: pointer;
+  transition: background var(--e-fast), padding var(--e-fast);
+}
+.job-item:hover {
+  background: var(--s3h);
+  padding-left: var(--sp4);
+  padding-right: var(--sp4);
+}
+.job-title {
+  font-family: var(--fp);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: var(--sp2);
+}
+.job-meta {
+  font-family: var(--fs);
+  font-size: 14px;
+  color: var(--t3);
+  display: flex;
+  gap: var(--sp4);
+}
+.job-arrow {
+  color: var(--green);
+  font-size: 24px;
+}
+
+/* Option 2: Feature Cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--sp6);
+}
+.card-feat {
+  border-radius: var(--r-md);
+  padding: var(--sp8);
+  background: var(--s3);
+  border: 1px solid var(--b1);
+  border-top: 2px solid var(--green);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--e-normal);
+  cursor: pointer;
+}
+.card-feat:hover {
+  background: var(--s3h);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 16px -4px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+.card-tags {
+  display: flex;
+  gap: var(--sp2);
+  margin-bottom: var(--sp6);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--fs);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  padding: 0 9px;
+  height: 20px;
+  background: var(--s3);
+  color: var(--t3);
+  border: 1px solid var(--b2);
+}
+.card-title {
+  font-family: var(--fp);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: var(--sp4);
+}
+.card-desc {
+  font-family: var(--fs);
+  font-size: 14px;
+  color: var(--t2);
+  line-height: 1.5;
+  margin-bottom: var(--sp6);
+}
+.card-link {
+  font-family: var(--fs);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--t1);
+  margin-top: auto;
+}
+.card-link span {
+  color: var(--green);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="page-title">Careers Listing Options</h1>
+
+  <!-- OPTION 1 -->
+  <div class="section-wrapper">
+    <div class="section-label">Option 1: Minimal Rows</div>
+    <div class="job-list">
+      <div class="job-item">
+        <div>
+          <div class="job-title">Senior Frontend Engineer</div>
+          <div class="job-meta">
+            <span>Engineering</span><span>•</span><span>Cairo / Remote</span>
+          </div>
+        </div>
+        <div class="job-arrow">→</div>
+      </div>
+      <div class="job-item">
+        <div>
+          <div class="job-title">Product Designer</div>
+          <div class="job-meta">
+            <span>Design</span><span>•</span><span>Remote</span>
+          </div>
+        </div>
+        <div class="job-arrow">→</div>
+      </div>
+      <div class="job-item">
+        <div>
+          <div class="job-title">Backend Engineer (Go)</div>
+          <div class="job-meta">
+            <span>Engineering</span><span>•</span><span>Cairo</span>
+          </div>
+        </div>
+        <div class="job-arrow">→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION 2 -->
+  <div class="section-wrapper">
+    <div class="section-label">Option 2: Feature Cards</div>
+    <div class="grid">
+      <div class="card-feat">
+        <div class="card-tags">
+          <span class="badge">Cairo / Remote</span>
+          <span class="badge">Full-time</span>
+        </div>
+        <div class="card-title">Senior Frontend Engineer</div>
+        <div class="card-desc">Join our core team to build the next generation of web applications using advanced technologies and premium design.</div>
+        <div class="card-link">View Role <span>→</span></div>
+      </div>
+      
+      <div class="card-feat">
+        <div class="card-tags">
+          <span class="badge">Remote</span>
+          <span class="badge">Contract</span>
+        </div>
+        <div class="card-title">Product Designer</div>
+        <div class="card-desc">Shape the user experience and visual direction of our most ambitious products, turning complex ideas into intuitive interfaces.</div>
+        <div class="card-link">View Role <span>→</span></div>
+      </div>
+
+      <div class="card-feat">
+        <div class="card-tags">
+          <span class="badge">Cairo</span>
+          <span class="badge">Full-time</span>
+        </div>
+        <div class="card-title">Backend Engineer (Go)</div>
+        <div class="card-desc">Architect and scale high-performance services and APIs that power our ecosystem of products.</div>
+        <div class="card-link">View Role <span>→</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
