@@ -1,9 +1,6 @@
 import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
 
-/**
- * (marketing) route group layout
- * All main site pages share this layout: Nav + Footer.
- */
 export default function MarketingLayout({
   children,
 }: {
@@ -13,7 +10,7 @@ export default function MarketingLayout({
     <>
       <Nav />
       <main style={{ paddingTop: "108px" }}>{children}</main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

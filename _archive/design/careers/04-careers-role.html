@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEMO — Role Detail Lab 04</title>
+<style>
+
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Regular.otf') format('opentype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'AeonikPro'; src:url('../../src/fonts/AeonikPro-Medium.otf') format('opentype'); font-weight:500; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight:400; font-display:swap; }
+@font-face { font-family:'NeueHaas'; src:url('../../src/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight:500; font-display:swap; }
+
+:root {
+  --green:      #35D687;
+  --green-dim:  rgba(53,214,135,0.12);
+  --black:      #0D0D0D;
+  --charcoal:   #1A1A1A;
+  --off-white:  #F5F5F0;
+  --t1:         #111111;
+  --t-off:      #666666;
+  --b1:         rgba(0,0,0,0.08);
+  --b2:         rgba(0,0,0,0.14);
+  --b-green:    rgba(53,214,135,0.3);
+  --s3:         rgba(0,0,0,0.03);
+
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;
+  --sp6:24px;--sp7:28px;--sp8:32px;--sp10:40px;
+  --sp12:48px;--sp16:64px;--sp20:80px;--sp24:96px;--sp32:128px;
+
+  --r-sm:4px;--r-md:8px;--r-lg:16px;--r-xl:24px;--r-pill:9999px;
+  --e-fast:200ms ease;
+  --fa:'AeonikPro',system-ui,sans-serif;
+  --fh:'NeueHaas',system-ui,sans-serif;
+  --container:1200px;
+  --content:760px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--off-white);color:var(--t1);font-family:var(--fh);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+/* ── NAV stand-in ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:64px;
+  padding:0 var(--sp10);display:flex;align-items:center;
+  justify-content:space-between;
+  background:rgba(245,245,240,0.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--b1);
+}
+.nav-logo{font-family:var(--fa);font-size:15px;letter-spacing:-0.3px;}
+.nav-links{display:flex;align-items:center;gap:var(--sp8);}
+.nav-link{font-size:13px;color:var(--t-off);}
+.nav-cta{height:36px;padding:0 var(--sp5);border-radius:var(--r-pill);background:var(--black);color:#fff;font-size:13px;display:inline-flex;align-items:center;}
+
+/* ── SHARED SCAFFOLDING ── */
+.lab-block{ padding:var(--sp32) var(--sp10) var(--sp20); }
+.lab-block + .lab-block{ padding-top:0; }
+.inner{max-width:var(--container);margin:0 auto;}
+.inner-narrow{max-width:var(--content);margin:0 auto;}
+
+.lab-label{
+  font-family:var(--fh);font-size:11px;letter-spacing:0.14em;
+  text-transform:uppercase;color:rgba(0,0,0,0.25);
+  margin-bottom:var(--sp12);display:block;
+  padding-bottom:var(--sp5);border-bottom:1px solid var(--b1);
+}
+
+/* ── SHARED ATOMS ── */
+.eyebrow{
+  font-family:var(--fh);font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(0,0,0,0.4);
+  display:block;margin-bottom:var(--sp4);
+}
+.eyebrow-dark{
+  font-family:var(--fh);font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+  display:block;margin-bottom:var(--sp4);
+}
+.tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--fh);font-size:12px;
+  color:var(--t-off);border:1px solid var(--b2);
+  border-radius:var(--r-sm);padding:3px 12px;
+  letter-spacing:0.2px;
+}
+.tag-green{
+  color:var(--green);border-color:var(--b-green);
+}
+.breadcrumb{
+  display:flex;align-items:center;gap:var(--sp2);
+  font-size:13px;color:var(--t-off);margin-bottom:var(--sp8);
+}
+.breadcrumb a{color:var(--t-off);}
+.breadcrumb a:hover{color:var(--t1);}
+.breadcrumb-sep{color:var(--b2);}
+
+/* ── BUTTONS ── */
+.btn-primary{
+  display:inline-flex;align-items:center;height:52px;
+  padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:var(--black);color:#fff;font-family:var(--fh);
+  font-size:14px;cursor:pointer;border:none;transition:opacity var(--e-fast);
+}
+.btn-primary:hover{opacity:0.8;}
+.btn-ghost{
+  display:inline-flex;align-items:center;height:52px;
+  padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:transparent;color:var(--t1);font-family:var(--fh);
+  font-size:14px;cursor:pointer;border:1px solid var(--b2);
+  transition:border-color var(--e-fast);
+}
+.btn-ghost:hover{border-color:var(--b2);background:var(--s3);}
+.btn-green{
+  display:inline-flex;align-items:center;height:52px;
+  padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:var(--green);color:var(--black);font-family:var(--fh);
+  font-size:14px;font-weight:500;cursor:pointer;border:none;
+  transition:opacity var(--e-fast);
+}
+.btn-green:hover{opacity:0.88;}
+
+/* ── META ROW (shared) ── */
+.meta-row{
+  display:flex;align-items:center;gap:var(--sp3);flex-wrap:wrap;
+  margin-bottom:var(--sp8);
+}
+
+/* ── ROLE BODY CONTENT ── */
+.role-body h3{
+  font-family:var(--fa);font-size:20px;font-weight:400;
+  letter-spacing:-0.5px;margin:var(--sp10) 0 var(--sp4);
+}
+.role-body h3:first-child{margin-top:0;}
+.role-body p{
+  font-size:15px;line-height:1.75;color:var(--t-off);
+  margin-bottom:var(--sp5);
+}
+.role-body ul{
+  margin:0 0 var(--sp6) var(--sp5);
+  display:flex;flex-direction:column;gap:var(--sp2);
+}
+.role-body ul li{
+  font-size:15px;line-height:1.65;color:var(--t-off);
+  list-style:none;padding-left:var(--sp5);position:relative;
+}
+.role-body ul li::before{
+  content:'';position:absolute;left:0;top:10px;
+  width:4px;height:4px;border-radius:50%;background:var(--green);
+}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--b1);margin:var(--sp20) 0;}
+
+/* ── VARIANT LABELS ── */
+.variant-header{
+  padding:var(--sp20) var(--sp10) var(--sp10);
+}
+.variant-title{
+  font-family:var(--fa);font-size:28px;font-weight:400;
+  letter-spacing:-0.8px;margin-bottom:var(--sp3);
+}
+.variant-desc{font-size:14px;color:var(--t-off);}
+
+/* ════════════════════════════════════════════════
+   VARIANT A — Single Column, Clean Editorial
+   Header: role title + tags + apply CTA inline
+   Body: single column, narrow prose
+   No sidebar. Simple, focused.
+════════════════════════════════════════════════ */
+
+.va-hero{
+  padding:calc(64px + var(--sp20)) var(--sp10) var(--sp16);
+  border-bottom:1px solid var(--b1);
+}
+.va-hero-inner{
+  max-width:var(--container);margin:0 auto;
+  display:flex;justify-content:space-between;
+  align-items:flex-end;gap:var(--sp10);flex-wrap:wrap;
+}
+.va-title{
+  font-family:var(--fa);font-size:clamp(36px,5vw,64px);
+  font-weight:400;letter-spacing:-2px;line-height:1;
+  margin:var(--sp5) 0 var(--sp6);
+}
+.va-actions{display:flex;gap:var(--sp3);align-items:center;flex-shrink:0;}
+
+.va-body{padding:var(--sp16) var(--sp10);}
+
+/* ════════════════════════════════════════════════
+   VARIANT B — Two Column: Sticky Sidebar + Prose
+   Sidebar: role meta, apply CTA, back link
+   Content: full role description
+════════════════════════════════════════════════ */
+
+.vb-hero{
+  padding:calc(64px + var(--sp16)) var(--sp10) var(--sp12);
+  border-bottom:1px solid var(--b1);
+  background:var(--off-white);
+}
+.vb-hero-inner{max-width:var(--container);margin:0 auto;}
+.vb-title{
+  font-family:var(--fa);font-size:clamp(40px,5vw,72px);
+  font-weight:400;letter-spacing:-2.5px;line-height:1;
+  margin:var(--sp5) 0 var(--sp8);
+}
+
+.vb-layout{
+  max-width:var(--container);margin:0 auto;
+  padding:var(--sp16) 0 var(--sp20);
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:var(--sp20);
+  align-items:start;
+}
+.vb-sidebar{
+  position:sticky;top:calc(64px + var(--sp8));
+  display:flex;flex-direction:column;gap:var(--sp6);
+}
+.vb-sidebar-card{
+  border:1px solid var(--b1);border-radius:var(--r-lg);
+  padding:var(--sp6);background:#fff;
+}
+.vb-sidebar-label{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(0,0,0,0.3);margin-bottom:var(--sp4);display:block;
+}
+.vb-meta-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:var(--sp3) 0;border-bottom:1px solid var(--b1);
+  font-size:13px;
+}
+.vb-meta-item:last-child{border-bottom:none;}
+.vb-meta-key{color:var(--t-off);}
+.vb-meta-val{color:var(--t1);font-family:var(--fh);}
+.vb-apply-cta{
+  border:1px solid var(--b1);border-radius:var(--r-lg);
+  padding:var(--sp6);background:var(--black);
+  display:flex;flex-direction:column;gap:var(--sp4);
+}
+.vb-apply-headline{
+  font-family:var(--fa);font-size:18px;font-weight:400;
+  letter-spacing:-0.5px;color:#fff;
+}
+.vb-apply-sub{font-size:13px;color:rgba(255,255,255,0.45);}
+.vb-apply-btn{
+  width:100%;height:48px;border-radius:var(--r-pill);
+  background:var(--green);color:var(--black);
+  font-size:14px;font-weight:500;font-family:var(--fh);
+  border:none;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;margin-top:var(--sp2);
+  transition:opacity var(--e-fast);
+}
+.vb-apply-btn:hover{opacity:0.88;}
+.vb-back{
+  font-size:13px;color:var(--t-off);display:inline-flex;
+  align-items:center;gap:var(--sp2);
+}
+.vb-back:hover{color:var(--t1);}
+
+/* ════════════════════════════════════════════════
+   VARIANT C — Dark Hero Header + Light Body
+   Bold dark header with green accent on title
+   Clean prose section below
+════════════════════════════════════════════════ */
+
+.vc-hero{
+  padding:calc(64px + var(--sp20)) var(--sp10) var(--sp20);
+  background:var(--black);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.vc-hero-inner{max-width:var(--container);margin:0 auto;}
+.vc-dept{
+  font-family:var(--fh);font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--green);display:block;
+  margin-bottom:var(--sp4);
+}
+.vc-title{
+  font-family:var(--fa);font-size:clamp(44px,6vw,80px);
+  font-weight:400;letter-spacing:-3px;line-height:0.95;
+  color:#fff;margin-bottom:var(--sp8);
+}
+.vc-title em{font-style:normal;color:var(--green);}
+.vc-meta-row{
+  display:flex;align-items:center;gap:var(--sp4);flex-wrap:wrap;
+  margin-bottom:var(--sp10);
+}
+.vc-tag{
+  display:inline-flex;align-items:center;
+  font-size:12px;color:rgba(255,255,255,0.5);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--r-sm);padding:3px 12px;
+}
+.vc-actions{display:flex;gap:var(--sp3);}
+.vc-btn-primary{
+  height:50px;padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:var(--green);color:var(--black);font-family:var(--fh);
+  font-size:14px;font-weight:500;border:none;cursor:pointer;
+  display:inline-flex;align-items:center;transition:opacity var(--e-fast);
+}
+.vc-btn-primary:hover{opacity:0.88;}
+.vc-btn-ghost{
+  height:50px;padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:transparent;color:rgba(255,255,255,0.7);font-family:var(--fh);
+  font-size:14px;border:1px solid rgba(255,255,255,0.16);cursor:pointer;
+  display:inline-flex;align-items:center;transition:border-color var(--e-fast);
+}
+.vc-btn-ghost:hover{border-color:rgba(255,255,255,0.4);}
+
+.vc-body{
+  padding:var(--sp20) var(--sp10);
+  display:grid;grid-template-columns:1fr 340px;
+  gap:var(--sp16);max-width:var(--container);margin:0 auto;
+}
+.vc-sidebar{display:flex;flex-direction:column;gap:var(--sp6);}
+.vc-share-btn{
+  display:inline-flex;align-items:center;gap:var(--sp3);
+  font-size:13px;color:var(--t-off);border:1px solid var(--b1);
+  border-radius:var(--r-pill);height:40px;padding:0 var(--sp5);
+  transition:color var(--e-fast),border-color var(--e-fast);
+}
+.vc-share-btn:hover{color:var(--t1);border-color:var(--b2);}
+.vc-quick-stat{
+  border:1px solid var(--b1);border-radius:var(--r-lg);
+  padding:var(--sp6);background:#fff;
+}
+.vc-quick-stat-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp3) 0;border-bottom:1px solid var(--b1);font-size:13px;
+}
+.vc-quick-stat-row:last-child{border-bottom:none;}
+.vc-stat-key{color:var(--t-off);}
+.vc-stat-val{color:var(--t1);}
+.vc-perks-card{
+  border:1px solid var(--b1);border-radius:var(--r-lg);
+  padding:var(--sp6);
+}
+.vc-perks-title{
+  font-family:var(--fa);font-size:15px;letter-spacing:-0.3px;
+  margin-bottom:var(--sp5);
+}
+.vc-perk-item{
+  display:flex;align-items:flex-start;gap:var(--sp3);
+  font-size:13px;color:var(--t-off);padding:var(--sp2) 0;
+}
+.vc-perk-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--green);
+  flex-shrink:0;margin-top:7px;
+}
+
+/* ════════════════════════════════════════════════
+   VARIANT D — Minimal / Magazine Editorial
+   Very stripped back. Role title + breadcrumb.
+   Body is wide single column prose, full-width
+   Apply CTA at bottom as inline section.
+════════════════════════════════════════════════ */
+
+.vd-hero{
+  padding:calc(64px + var(--sp20)) var(--sp10) var(--sp16);
+}
+.vd-hero-inner{max-width:var(--container);margin:0 auto;}
+.vd-back{
+  display:inline-flex;align-items:center;gap:var(--sp2);
+  font-size:13px;color:var(--t-off);margin-bottom:var(--sp10);
+}
+.vd-dept-tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--fa);font-size:12px;font-weight:500;
+  color:rgba(0,0,0,0.5);border:1px solid rgba(0,0,0,0.15);
+  border-radius:var(--r-sm);padding:4px 14px;
+  letter-spacing:0.5px;text-transform:uppercase;
+  margin-bottom:var(--sp6);
+}
+.vd-title{
+  font-family:var(--fa);
+  font-size:clamp(48px,7vw,96px);
+  font-weight:400;letter-spacing:-3px;line-height:0.95;
+  margin-bottom:var(--sp8);
+}
+.vd-subtitle{
+  font-size:18px;line-height:1.65;color:var(--t-off);
+  max-width:600px;margin-bottom:var(--sp10);
+}
+.vd-meta-strip{
+  display:flex;align-items:center;gap:var(--sp6);
+  padding:var(--sp6) 0;border-top:1px solid var(--b1);
+  border-bottom:1px solid var(--b1);
+  font-size:13px;color:var(--t-off);
+}
+.vd-meta-sep{color:var(--b2);}
+
+.vd-body{
+  padding:var(--sp20) var(--sp10);
+  max-width:var(--container);margin:0 auto;
+}
+.vd-prose{max-width:680px;}
+
+.vd-apply-section{
+  margin-top:var(--sp20);padding:var(--sp16);
+  border:1px solid var(--b1);border-radius:var(--r-xl);
+  background:var(--black);
+  display:flex;justify-content:space-between;align-items:center;
+  gap:var(--sp10);flex-wrap:wrap;
+}
+.vd-apply-left h3{
+  font-family:var(--fa);font-size:28px;font-weight:400;
+  letter-spacing:-0.8px;color:#fff;margin-bottom:var(--sp2);
+}
+.vd-apply-left p{font-size:14px;color:rgba(255,255,255,0.45);}
+.vd-apply-btns{display:flex;gap:var(--sp3);}
+.vd-btn-green{
+  height:52px;padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:var(--green);color:var(--black);
+  font-size:14px;font-weight:500;font-family:var(--fh);
+  border:none;cursor:pointer;display:inline-flex;align-items:center;
+}
+.vd-btn-ghost-w{
+  height:52px;padding:0 var(--sp8);border-radius:var(--r-pill);
+  background:transparent;color:rgba(255,255,255,0.6);
+  font-size:14px;font-family:var(--fh);
+  border:1px solid rgba(255,255,255,0.14);cursor:pointer;
+  display:inline-flex;align-items:center;
+}
+
+/* ════════════════════════════════════════════════
+   VARIANT E — Application Form Inline
+   All-in-one: role detail + application form
+   in a two-column layout side by side
+════════════════════════════════════════════════ */
+
+.ve-hero{
+  padding:calc(64px + var(--sp16)) var(--sp10) var(--sp10);
+  border-bottom:1px solid var(--b1);
+}
+.ve-hero-inner{max-width:var(--container);margin:0 auto;}
+.ve-title{
+  font-family:var(--fa);font-size:clamp(36px,4.5vw,56px);
+  font-weight:400;letter-spacing:-1.5px;line-height:1.05;
+  margin:var(--sp4) 0 var(--sp6);
+}
+
+.ve-layout{
+  max-width:var(--container);margin:0 auto;
+  padding:var(--sp16) 0 var(--sp20);
+  display:grid;
+  grid-template-columns:1fr 400px;
+  gap:var(--sp20);
+  align-items:start;
+}
+.ve-content{padding:0 var(--sp10) 0 var(--sp10);}
+
+/* sticky form panel */
+.ve-form-panel{
+  position:sticky;top:calc(64px + var(--sp8));
+  padding:0 var(--sp10) 0 0;
+}
+.ve-form-card{
+  border:1px solid var(--b1);border-radius:var(--r-xl);
+  padding:var(--sp8);background:#fff;
+}
+.ve-form-title{
+  font-family:var(--fa);font-size:20px;font-weight:400;
+  letter-spacing:-0.5px;margin-bottom:var(--sp6);
+}
+.form-group{display:flex;flex-direction:column;gap:var(--sp2);margin-bottom:var(--sp5);}
+.form-label{font-size:12px;color:var(--t-off);letter-spacing:0.05em;}
+.form-input{
+  height:48px;padding:0 var(--sp5);border:1px solid var(--b2);
+  border-radius:var(--r-md);background:#fff;font-family:var(--fh);
+  font-size:14px;color:var(--t1);outline:none;
+  transition:border-color var(--e-fast);
+}
+.form-input:focus{border-color:var(--green);}
+.form-textarea{
+  padding:var(--sp4) var(--sp5);border:1px solid var(--b2);
+  border-radius:var(--r-md);background:#fff;font-family:var(--fh);
+  font-size:14px;color:var(--t1);outline:none;resize:vertical;
+  min-height:100px;transition:border-color var(--e-fast);
+}
+.form-textarea:focus{border-color:var(--green);}
+.form-upload{
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:var(--sp2);
+  height:80px;border:1px dashed var(--b2);border-radius:var(--r-md);
+  background:var(--s3);font-size:13px;color:var(--t-off);cursor:pointer;
+  transition:border-color var(--e-fast);
+}
+.form-upload:hover{border-color:var(--green);color:var(--t1);}
+.form-submit{
+  width:100%;height:52px;border-radius:var(--r-pill);
+  background:var(--black);color:#fff;font-family:var(--fh);
+  font-size:14px;border:none;cursor:pointer;margin-top:var(--sp4);
+  transition:opacity var(--e-fast);
+}
+.form-submit:hover{opacity:0.8;}
+.form-note{font-size:12px;color:rgba(0,0,0,0.3);text-align:center;margin-top:var(--sp3);}
+.form-divider{
+  display:flex;align-items:center;gap:var(--sp4);
+  margin:var(--sp6) 0;font-size:12px;color:rgba(0,0,0,0.25);
+}
+.form-divider::before,.form-divider::after{
+  content:'';flex:1;height:1px;background:var(--b1);
+}
+.form-linkedin{
+  width:100%;height:44px;border-radius:var(--r-pill);
+  background:transparent;border:1px solid var(--b2);
+  font-family:var(--fh);font-size:13px;color:var(--t-off);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  gap:var(--sp2);transition:border-color var(--e-fast),color var(--e-fast);
+}
+.form-linkedin:hover{border-color:var(--b2);color:var(--t1);background:var(--s3);}
+
+/* ── page separator ── */
+.page-sep{
+  padding:var(--sp20) var(--sp10) var(--sp5);
+  border-top:4px solid var(--b1);
+  margin-top:var(--sp32);
+}
+.page-sep-label{
+  font-family:var(--fa);font-size:32px;font-weight:400;letter-spacing:-1px;
+  color:var(--t1);
+}
+.page-sep-sub{font-size:14px;color:var(--t-off);margin-top:var(--sp2);}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">Nemo</span>
+  <div class="nav-links">
+    <a class="nav-link" href="#">Work</a>
+    <a class="nav-link" href="#">Services</a>
+    <a class="nav-link" href="#" style="color:var(--t1);">Careers</a>
+    <a class="nav-link" href="#">About</a>
+    <a class="nav-cta" href="#">Get in touch</a>
+  </div>
+</nav>
+
+
+<!-- ════════════════════════════════════════════════════════
+     PAGE INTRO
+════════════════════════════════════════════════════════ -->
+<div style="padding:calc(64px + var(--sp16)) var(--sp10) var(--sp10);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,0,0,0.3);">Lab 04 — Role Detail Page Options</span>
+    <div style="font-family:var(--fa);font-size:clamp(40px,5vw,72px);font-weight:400;letter-spacing:-2.5px;line-height:1;margin:var(--sp4) 0 var(--sp5);">
+      Single role page.<br>5 variants.
+    </div>
+    <p style="font-size:16px;color:var(--t-off);max-width:520px;">What a candidate sees after clicking into a job posting. Each variant explores a different layout, tone, and apply UX pattern.</p>
+    <div style="display:flex;gap:var(--sp3);margin-top:var(--sp8);flex-wrap:wrap;">
+      <span class="tag">A — Clean single column</span>
+      <span class="tag">B — Sticky sidebar</span>
+      <span class="tag">C — Dark hero</span>
+      <span class="tag">D — Magazine editorial</span>
+      <span class="tag">E — Inline form</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     VARIANT A — Clean Single Column
+════════════════════════════════════════════════════════ -->
+
+<div class="page-sep">
+  <div class="page-sep-label">A — Clean Single Column</div>
+  <div class="page-sep-sub">Header with inline apply CTA, narrow body prose centered. Minimal and focused.</div>
+</div>
+
+<!-- A: Hero -->
+<section class="va-hero">
+  <div class="va-hero-inner">
+    <div>
+      <div class="breadcrumb">
+        <a href="#">Careers</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Senior Product Designer</span>
+      </div>
+      <div class="meta-row">
+        <span class="tag">Design</span>
+        <span class="tag">Cairo or Remote</span>
+        <span class="tag">Full-time</span>
+        <span class="tag-green tag">Active</span>
+      </div>
+      <div class="va-title">Senior Product<br>Designer</div>
+    </div>
+    <div class="va-actions">
+      <button class="btn-primary">Apply for this role</button>
+      <button class="btn-ghost">Share</button>
+    </div>
+  </div>
+</section>
+
+<!-- A: Body -->
+<div class="va-body">
+  <div class="inner-narrow">
+    <div class="role-body">
+      <h3>About the role</h3>
+      <p>We're looking for a Senior Product Designer who can take ambiguous problems and turn them into sharp, considered interfaces. You'll work directly with our product and engineering teams to define new product experiences across our AI platform — from zero to polished.</p>
+      <p>This is a high-ownership role. You'll drive design end-to-end: from discovery and strategy through to pixel-perfect delivery. We move fast and we care deeply about craft.</p>
+
+      <h3>What you'll do</h3>
+      <ul>
+        <li>Lead design on 1–2 major product workstreams at a time</li>
+        <li>Run discovery sessions with customers and translate insights into product decisions</li>
+        <li>Design flows, wireframes, and high-fidelity specs that engineers can build directly from</li>
+        <li>Define and evolve the Nemo product design language</li>
+        <li>Partner with PMs to shape roadmap and prioritization</li>
+        <li>Mentor junior designers across the team</li>
+      </ul>
+
+      <h3>What we're looking for</h3>
+      <ul>
+        <li>4+ years of product design experience, ideally at a software company</li>
+        <li>A portfolio that shows strong thinking — not just execution</li>
+        <li>Proficiency in Figma, and comfort working closely with engineers</li>
+        <li>Comfort navigating ambiguity and defining your own brief</li>
+        <li>Excellent communication — you can articulate design decisions clearly</li>
+      </ul>
+
+      <h3>Nice to haves</h3>
+      <ul>
+        <li>Experience designing data-heavy or AI-adjacent products</li>
+        <li>Motion / prototyping chops (Framer, ProtoPie)</li>
+        <li>Cairo-based or willing to spend meaningful time there</li>
+      </ul>
+
+      <h3>What we offer</h3>
+      <ul>
+        <li>Competitive salary, reviewed annually</li>
+        <li>Equity — you're building this with us</li>
+        <li>Flexible working (remote-first culture)</li>
+        <li>Annual learning & equipment budget</li>
+        <li>Access to a team that genuinely cares about craft</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp6);">
+      <div>
+        <div style="font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.5px;margin-bottom:var(--sp2);">Ready to apply?</div>
+        <div style="font-size:14px;color:var(--t-off);">Takes about 5 minutes. No cover letter required.</div>
+      </div>
+      <button class="btn-primary" style="flex-shrink:0;">Apply for this role</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     VARIANT B — Sticky Sidebar + Prose
+════════════════════════════════════════════════════════ -->
+
+<div class="page-sep">
+  <div class="page-sep-label">B — Sticky Sidebar</div>
+  <div class="page-sep-sub">Sidebar stays fixed while you scroll. Role meta + apply CTA always visible.</div>
+</div>
+
+<!-- B: Hero -->
+<section class="vb-hero">
+  <div class="vb-hero-inner">
+    <div class="breadcrumb">
+      <a href="#">Careers</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>Frontend Engineer</span>
+    </div>
+    <div class="meta-row" style="margin-top:var(--sp3);">
+      <span class="tag">Engineering</span>
+      <span class="tag">Remote</span>
+      <span class="tag">Full-time</span>
+    </div>
+    <div class="vb-title">Frontend<br>Engineer</div>
+  </div>
+</section>
+
+<!-- B: Sidebar layout -->
+<div style="padding:0 var(--sp10);">
+  <div class="vb-layout">
+
+    <!-- sidebar -->
+    <aside class="vb-sidebar">
+      <a class="vb-back" href="#">← Back to all roles</a>
+
+      <!-- apply card -->
+      <div class="vb-apply-cta">
+        <div class="vb-apply-headline">Interested?</div>
+        <div class="vb-apply-sub">Apply in under 5 minutes. No cover letter needed.</div>
+        <button class="vb-apply-btn">Apply now</button>
+      </div>
+
+      <!-- meta card -->
+      <div class="vb-sidebar-card">
+        <span class="vb-sidebar-label">Role details</span>
+        <div class="vb-meta-item">
+          <span class="vb-meta-key">Department</span>
+          <span class="vb-meta-val">Engineering</span>
+        </div>
+        <div class="vb-meta-item">
+          <span class="vb-meta-key">Location</span>
+          <span class="vb-meta-val">Remote</span>
+        </div>
+        <div class="vb-meta-item">
+          <span class="vb-meta-key">Type</span>
+          <span class="vb-meta-val">Full-time</span>
+        </div>
+        <div class="vb-meta-item">
+          <span class="vb-meta-key">Level</span>
+          <span class="vb-meta-val">Senior</span>
+        </div>
+        <div class="vb-meta-item">
+          <span class="vb-meta-key">Posted</span>
+          <span class="vb-meta-val">April 2025</span>
+        </div>
+      </div>
+
+      <!-- share -->
+      <div>
+        <span class="vb-sidebar-label">Share</span>
+        <div style="display:flex;gap:var(--sp2);">
+          <button style="height:36px;padding:0 var(--sp4);border:1px solid var(--b1);border-radius:var(--r-pill);font-size:12px;background:transparent;cursor:pointer;color:var(--t-off);">LinkedIn</button>
+          <button style="height:36px;padding:0 var(--sp4);border:1px solid var(--b1);border-radius:var(--r-pill);font-size:12px;background:transparent;cursor:pointer;color:var(--t-off);">Copy link</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <article class="role-body">
+      <h3>About the role</h3>
+      <p>We're hiring a Senior Frontend Engineer to help build the interfaces that power our AI platform. You'll work at the intersection of performance, craft, and complexity — turning technically demanding requirements into experiences that feel effortless.</p>
+      <p>You'll own significant parts of the frontend codebase, contribute to architectural decisions, and work closely with designers to get things right. We use React, TypeScript, and Next.js — and we care about shipping things that actually work.</p>
+
+      <h3>What you'll do</h3>
+      <ul>
+        <li>Build and maintain core product features across our React/Next.js stack</li>
+        <li>Architect scalable frontend systems that the team can grow with</li>
+        <li>Collaborate with product and design to ship with high craft and low friction</li>
+        <li>Own performance — from rendering to load times to bundle size</li>
+        <li>Contribute to code review and raise the engineering bar</li>
+      </ul>
+
+      <h3>What we're looking for</h3>
+      <ul>
+        <li>5+ years of frontend experience, with deep React and TypeScript knowledge</li>
+        <li>Strong understanding of the browser and how things actually work</li>
+        <li>Comfort with complex state management and async data patterns</li>
+        <li>An eye for design — you notice when spacing is off</li>
+        <li>Experience building production systems that handle real load</li>
+      </ul>
+
+      <h3>Nice to haves</h3>
+      <ul>
+        <li>Next.js App Router experience</li>
+        <li>Familiarity with animation libraries (Framer Motion, GSAP)</li>
+        <li>Prior experience at a startup or fast-moving product team</li>
+      </ul>
+
+      <h3>What we offer</h3>
+      <ul>
+        <li>Competitive compensation + equity</li>
+        <li>Remote-first, async-friendly culture</li>
+        <li>Equipment budget and annual learning allowance</li>
+        <li>Work with a team that cares about the details</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p style="font-size:14px;color:var(--t-off);">Questions about this role? Email us at <span style="color:var(--t1);">hiring@nemo.com</span></p>
+    </article>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     VARIANT C — Dark Hero + Light Body + Right Sidebar
+════════════════════════════════════════════════════════ -->
+
+<div class="page-sep">
+  <div class="page-sep-label">C — Dark Hero</div>
+  <div class="page-sep-sub">Bold dark header with green accent. Light body with perks sidebar.</div>
+</div>
+
+<!-- C: Dark Hero -->
+<section class="vc-hero">
+  <div class="vc-hero-inner">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.3);">
+      <a href="#" style="color:rgba(255,255,255,0.3);">Careers</a>
+      <span class="breadcrumb-sep" style="color:rgba(255,255,255,0.15);">/</span>
+      <span>Brand Strategist</span>
+    </div>
+    <span class="vc-dept">Strategy</span>
+    <div class="vc-title">Brand <em>Strategist</em></div>
+    <div class="vc-meta-row">
+      <span class="vc-tag">Full-time</span>
+      <span class="vc-tag">Cairo</span>
+      <span class="vc-tag">Strategy</span>
+      <span style="display:inline-flex;align-items:center;font-size:12px;color:var(--green);border:1px solid var(--b-green);border-radius:var(--r-sm);padding:3px 12px;">Active</span>
+    </div>
+    <div class="vc-actions">
+      <button class="vc-btn-primary">Apply now</button>
+      <button class="vc-btn-ghost">Share role</button>
+    </div>
+  </div>
+</section>
+
+<!-- C: Body + sidebar -->
+<div style="padding:0 var(--sp10);">
+  <div class="vc-body">
+    <article class="role-body">
+      <h3>About the role</h3>
+      <p>Nemo is looking for a Brand Strategist to help our clients — some of the most ambitious companies in the region — tell better stories. You'll sit at the intersection of insight and idea: equal parts researcher, writer, and strategic thinker.</p>
+      <p>You'll work across brand positioning, naming, messaging frameworks, and go-to-market strategy. Sometimes you'll be defining a brand from scratch; sometimes you'll be helping an established player reframe what they stand for.</p>
+
+      <h3>What you'll do</h3>
+      <ul>
+        <li>Lead brand strategy engagements from discovery to delivery</li>
+        <li>Conduct audience and competitive research, synthesize into clear insights</li>
+        <li>Develop positioning, messaging hierarchies, and brand narratives</li>
+        <li>Present confidently to senior clients and leadership teams</li>
+        <li>Collaborate with creative teams to ensure strategy is translated well</li>
+        <li>Build internal frameworks the team can use across clients</li>
+      </ul>
+
+      <h3>What we're looking for</h3>
+      <ul>
+        <li>3–6 years in brand strategy, consulting, or planning (agency or in-house)</li>
+        <li>Strong writing and verbal communication skills</li>
+        <li>Comfort with ambiguity and building structured thinking from scratch</li>
+        <li>Experience working with client stakeholders at a senior level</li>
+        <li>Based in Cairo or willing to relocate</li>
+      </ul>
+
+      <h3>Nice to haves</h3>
+      <ul>
+        <li>Experience with tech or AI-adjacent brands</li>
+        <li>Arabic fluency a strong plus</li>
+        <li>Background in qualitative research methods</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p style="font-size:14px;color:var(--t-off);">Sound like you? <span style="color:var(--t1);">Apply below or send your CV directly to hiring@nemo.com</span></p>
+    </article>
+
+    <!-- C: Sidebar -->
+    <aside class="vc-sidebar">
+      <button class="vc-share-btn">Share this role ↑</button>
+
+      <div class="vc-quick-stat">
+        <div class="vc-quick-stat-row">
+          <span class="vc-stat-key">Department</span>
+          <span class="vc-stat-val">Strategy</span>
+        </div>
+        <div class="vc-quick-stat-row">
+          <span class="vc-stat-key">Location</span>
+          <span class="vc-stat-val">Cairo</span>
+        </div>
+        <div class="vc-quick-stat-row">
+          <span class="vc-stat-key">Type</span>
+          <span class="vc-stat-val">Full-time</span>
+        </div>
+        <div class="vc-quick-stat-row">
+          <span class="vc-stat-key">Level</span>
+          <span class="vc-stat-val">Mid–Senior</span>
+        </div>
+      </div>
+
+      <div class="vc-perks-card">
+        <div class="vc-perks-title">What we offer</div>
+        <div class="vc-perk-item">
+          <div class="vc-perk-dot"></div>
+          <span>Competitive salary + annual review</span>
+        </div>
+        <div class="vc-perk-item">
+          <div class="vc-perk-dot"></div>
+          <span>Equity in a growing company</span>
+        </div>
+        <div class="vc-perk-item">
+          <div class="vc-perk-dot"></div>
+          <span>Flexible hours, async culture</span>
+        </div>
+        <div class="vc-perk-item">
+          <div class="vc-perk-dot"></div>
+          <span>Learning & equipment budget</span>
+        </div>
+        <div class="vc-perk-item">
+          <div class="vc-perk-dot"></div>
+          <span>Small team, high ownership</span>
+        </div>
+      </div>
+
+      <button class="vc-btn-primary" style="width:100%;justify-content:center;">Apply for this role</button>
+    </aside>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     VARIANT D — Magazine Editorial
+════════════════════════════════════════════════════════ -->
+
+<div class="page-sep">
+  <div class="page-sep-label">D — Magazine Editorial</div>
+  <div class="page-sep-sub">Very stripped back. Big title, wide prose, apply CTA as bottom section.</div>
+</div>
+
+<section class="vd-hero">
+  <div class="vd-hero-inner">
+    <a class="vd-back" href="#">← All roles</a>
+    <span class="vd-dept-tag">Motion Design</span>
+    <div class="vd-title">Motion<br>Designer</div>
+    <div class="vd-subtitle">Help us make complex things feel inevitable. We're looking for someone who thinks in time as much as space.</div>
+    <div class="vd-meta-strip">
+      <span>Design</span>
+      <span class="vd-meta-sep">·</span>
+      <span>Remote or Cairo</span>
+      <span class="vd-meta-sep">·</span>
+      <span>Full-time</span>
+      <span class="vd-meta-sep">·</span>
+      <span style="color:var(--green);">Active</span>
+    </div>
+  </div>
+</section>
+
+<div class="vd-body">
+  <div class="vd-prose role-body">
+    <h3>About the role</h3>
+    <p>We're building interfaces, brand moments, and product experiences that need to move well. You'll work across product UI animation, marketing motion, and occasional brand films — with significant creative ownership over each.</p>
+    <p>This is a rare role. You'll report directly to our Creative Director and work closely with both product and brand teams. You won't be executing other people's briefs — you'll be generating ideas and owning them end to end.</p>
+
+    <h3>What you'll do</h3>
+    <ul>
+      <li>Design and produce motion for product UI, onboarding flows, and empty states</li>
+      <li>Create brand motion assets: intros, social content, event visuals</li>
+      <li>Develop a motion language that sits alongside our visual identity</li>
+      <li>Prototype animations in Framer or ProtoPie for engineering handoff</li>
+      <li>Occasionally direct short-form video content</li>
+    </ul>
+
+    <h3>What we're looking for</h3>
+    <ul>
+      <li>3+ years creating motion for digital products or agencies</li>
+      <li>Mastery of After Effects, Lottie/Bodymovin, and at least one prototyping tool</li>
+      <li>Strong sense of timing — you feel the difference between 200ms and 280ms</li>
+      <li>Portfolio with real shipped work, not just personal projects</li>
+    </ul>
+
+    <h3>Nice to haves</h3>
+    <ul>
+      <li>3D motion experience (Cinema 4D, Blender)</li>
+      <li>Experience with CSS animations and web performance constraints</li>
+    </ul>
+
+    <!-- D: Bottom CTA section -->
+    <div class="vd-apply-section">
+      <div class="vd-apply-left">
+        <h3>This sounds like you?</h3>
+        <p>No cover letter required. Just send your portfolio and a note about what excites you.</p>
+      </div>
+      <div class="vd-apply-btns">
+        <button class="vd-btn-green">Apply now</button>
+        <button class="vd-btn-ghost-w">Save for later</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     VARIANT E — Role Detail + Inline Application Form
+════════════════════════════════════════════════════════ -->
+
+<div class="page-sep">
+  <div class="page-sep-label">E — Inline Application Form</div>
+  <div class="page-sep-sub">Role content left, sticky application form right. Everything in one place.</div>
+</div>
+
+<section class="ve-hero">
+  <div class="ve-hero-inner">
+    <div class="breadcrumb">
+      <a href="#">Careers</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>AI Solutions Architect</span>
+    </div>
+    <div class="meta-row" style="margin-top:var(--sp3);">
+      <span class="tag">Strategy</span>
+      <span class="tag">Remote</span>
+      <span class="tag">Contract</span>
+      <span class="tag-green tag">Active</span>
+    </div>
+    <div class="ve-title">AI Solutions<br>Architect</div>
+  </div>
+</section>
+
+<div style="padding:0 var(--sp10);">
+  <div class="ve-layout">
+    <!-- Left: role content -->
+    <article class="ve-content role-body">
+      <h3>About the role</h3>
+      <p>We need a senior solutions architect who can help enterprise clients see the path from where they are to where agentic AI can take them. You'll be the bridge between Nemo's technical capabilities and client outcomes — running discovery, designing solutions, and staying involved through delivery.</p>
+      <p>This is a contract-first engagement with potential to convert to full-time based on fit. You'll work across multiple clients concurrently and have significant latitude over how you approach engagements.</p>
+
+      <h3>What you'll do</h3>
+      <ul>
+        <li>Lead technical discovery sessions with enterprise stakeholders</li>
+        <li>Design end-to-end agentic AI solutions — architectures, tooling, integrations</li>
+        <li>Produce solution blueprints and statements of work</li>
+        <li>Stay involved during implementation to ensure fidelity to design</li>
+        <li>Help build Nemo's solutions playbook over time</li>
+      </ul>
+
+      <h3>What we're looking for</h3>
+      <ul>
+        <li>Strong background in AI/ML architecture or technical consulting</li>
+        <li>Experience with LLM-based product development (agents, RAG, fine-tuning)</li>
+        <li>Comfort presenting and negotiating with executive audiences</li>
+        <li>Fluency in at least one major cloud platform (AWS, GCP, Azure)</li>
+        <li>Arabic helpful but not required</li>
+      </ul>
+
+      <h3>What we offer</h3>
+      <ul>
+        <li>Competitive contract rate (daily or monthly)</li>
+        <li>Remote and flexible hours</li>
+        <li>High-profile enterprise clients across MENA and Europe</li>
+        <li>Potential full-time conversion with equity</li>
+      </ul>
+
+      <div class="divider"></div>
+      <p style="font-size:14px;color:var(--t-off);">Have questions first? Reach us at <span style="color:var(--t1);">hello@nemo.com</span></p>
+    </article>
+
+    <!-- Right: sticky application form -->
+    <div class="ve-form-panel">
+      <div class="ve-form-card">
+        <div class="ve-form-title">Apply for this role</div>
+
+        <div class="form-group">
+          <label class="form-label">Full name</label>
+          <input class="form-input" type="text" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input class="form-input" type="email" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">LinkedIn or portfolio URL</label>
+          <input class="form-input" type="url" placeholder="https://" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Anything you'd like us to know</label>
+          <textarea class="form-textarea" placeholder="Optional — what makes you the right person for this?"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CV / Resume</label>
+          <div class="form-upload">
+            <span style="font-size:18px;color:rgba(0,0,0,0.2);">↑</span>
+            <span>Drop your CV or click to upload</span>
+            <span style="font-size:11px;">PDF, DOC up to 10MB</span>
+          </div>
+        </div>
+
+        <button class="form-submit">Submit application</button>
+        <div class="form-note">We respond to every application within 5 business days.</div>
+
+        <div class="form-divider">or apply with</div>
+        <button class="form-linkedin">LinkedIn Easy Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- bottom spacing -->
+<div style="height:var(--sp32);"></div>
+
+</body>
+</html>

@@ -375,12 +375,10 @@ a{text-decoration:none;color:inherit;}
   cursor:pointer;
 }
 .list-row:last-child{border-bottom:1px solid var(--b1);}
-.list-row:hover .list-row-title{opacity:0.7;}
 
 .list-row-title{
   font-family:var(--fa);font-size:clamp(16px,2vw,20px);
   font-weight:400;letter-spacing:-0.3px;
-  transition:opacity var(--e-fast);
 }
 .list-row-meta{
   font-family:var(--fh);font-size:13px;
@@ -391,9 +389,9 @@ a{text-decoration:none;color:inherit;}
 }
 .list-row-arrow{
   font-size:16px;color:rgba(255,255,255,0.2);
-  transition:color var(--e-fast);
+  transition:color var(--e-fast),transform var(--e-fast);
 }
-.list-row:hover .list-row-arrow{color:rgba(255,255,255,0.5);}
+.list-row:hover .list-row-arrow{color:var(--green);transform:translateX(4px);}
 
 /* light variant */
 .list-row-light{
@@ -403,7 +401,7 @@ a{text-decoration:none;color:inherit;}
 .list-row-light .list-row-title{color:#111;}
 .list-row-light .list-row-meta{color:#777;}
 .list-row-light .list-row-arrow{color:rgba(0,0,0,0.18);}
-.list-row-light:hover .list-row-title{opacity:0.6;}
+.list-row-light:hover .list-row-arrow{color:#111;transform:translateX(4px);}
 
 /* FAQ variant — plus toggle */
 .list-row-faq .faq-plus{
@@ -536,27 +534,40 @@ a{text-decoration:none;color:inherit;}
   display:flex;align-items:flex-start;gap:var(--sp4);
   padding:var(--sp4) var(--sp5);
   border-radius:var(--r-md);
-  background:var(--s3);
   border:1px solid var(--b1);
-  border-left-width:3px;
+  position:relative;overflow:hidden;
 }
-.alert-green{border-left-color:var(--green);}
-.alert-warn{border-left-color:#d4a017;}
-.alert-error{border-left-color:#c0392b;}
-.alert-neutral{border-left-color:var(--b2);}
+/* coloured tint strip on left via pseudo */
+.alert::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;border-radius:var(--r-md) 0 0 var(--r-md);
+}
+.alert-green{ background:rgba(53,214,135,0.04); border-color:rgba(53,214,135,0.15); }
+.alert-green::before{ background:var(--green); }
+.alert-warn{  background:rgba(212,160,23,0.05);  border-color:rgba(212,160,23,0.2); }
+.alert-warn::before{  background:#d4a017; }
+.alert-error{ background:rgba(192,57,43,0.05);   border-color:rgba(192,57,43,0.2); }
+.alert-error::before{ background:#c0392b; }
+.alert-neutral{ background:var(--s3); border-color:var(--b1); }
+.alert-neutral::before{ background:var(--b2); }
+
+.alert-icon{
+  font-size:15px;flex-shrink:0;margin-top:1px;line-height:1;
+}
+.alert-green  .alert-icon{ color:var(--green); }
+.alert-warn   .alert-icon{ color:#d4a017; }
+.alert-error  .alert-icon{ color:#c0392b; }
+.alert-neutral .alert-icon{ color:rgba(255,255,255,0.3); }
+
 .alert-title{
   font-family:var(--fh);font-size:13px;
   color:var(--t1);margin-bottom:2px;
 }
 .alert-body{font-family:var(--fh);font-size:12px;color:var(--t-off);line-height:1.5;}
-.alert-dot{
-  width:6px;height:6px;border-radius:50%;
-  flex-shrink:0;margin-top:5px;
-}
-.dot-green{background:var(--green);}
-.dot-warn{background:#d4a017;}
-.dot-error{background:#c0392b;}
-.dot-neutral{background:rgba(255,255,255,0.3);}
+
+/* kept for backwards compat — no longer rendered */
+.alert-dot{display:none;}
+.dot-green,.dot-warn,.dot-error,.dot-neutral{}
 
 /* top announcement bar */
 .announce-bar{
@@ -578,6 +589,27 @@ a{text-decoration:none;color:inherit;}
 }
 .announce-link .arr{transition:transform var(--e-fast);}
 .announce-link:hover .arr{transform:translateX(3px);}
+
+/* toast / pill alerts */
+.toast{
+  display:inline-flex;align-items:center;gap:var(--sp3);
+  padding:var(--sp3) var(--sp5);
+  border-radius:var(--r-pill);
+  font-family:var(--fh);font-size:13px;
+  border:1px solid var(--b1);
+  background:var(--charcoal);
+  color:var(--t1);
+  width:fit-content;
+}
+.toast-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.toast-green{ border-color:rgba(53,214,135,0.2); }
+.toast-dot-green{ background:var(--green); }
+.toast-warn{ border-color:rgba(212,160,23,0.25); }
+.toast-dot-warn{ background:#d4a017; }
+.toast-error{ border-color:rgba(192,57,43,0.25); }
+.toast-dot-error{ background:#c0392b; }
+.toast-neutral{ border-color:var(--b1); }
+.toast-dot-neutral{ background:rgba(255,255,255,0.25); }
 
 
 /* ══════════════════════════════════════════════════════════
@@ -640,11 +672,11 @@ a{text-decoration:none;color:inherit;}
 ══════════════════════════════════════════════════════════ */
 .avatar{
   border-radius:50%;
-  background:var(--green-dim);
-  border:1px solid var(--b-green);
+  background:var(--charcoal);
+  border:1px solid var(--b2);
   display:flex;align-items:center;justify-content:center;
-  font-family:var(--fa);font-weight:500;
-  flex-shrink:0;color:var(--green);
+  font-family:var(--fa);font-weight:400;
+  flex-shrink:0;color:rgba(255,255,255,0.55);
 }
 .av-sm{width:28px;height:28px;font-size:10px;}
 .av-md{width:40px;height:40px;font-size:13px;}
@@ -729,6 +761,7 @@ a{text-decoration:none;color:inherit;}
     <a href="#cta-blocks">CTAs</a>
     <a href="#case-studies">Case studies</a>
     <a href="#grids">Grids</a>
+    <a href="#extra">Extra</a>
   </nav>
 </div>
 
@@ -1228,12 +1261,21 @@ a{text-decoration:none;color:inherit;}
   <div class="comp-body">
     <div class="comp-inner" style="display:flex;flex-direction:column;gap:var(--sp4);">
       <span class="note">Inline alerts</span>
-      <div class="alert alert-green"><div class="alert-dot dot-green"></div><div><div class="alert-title">Submitted successfully</div><div class="alert-body">Your message has been received. We'll be in touch within 24 hours.</div></div></div>
-      <div class="alert alert-warn"><div class="alert-dot dot-warn"></div><div><div class="alert-title">Review needed</div><div class="alert-body">Some required fields are missing. Please check your form.</div></div></div>
-      <div class="alert alert-error"><div class="alert-dot dot-error"></div><div><div class="alert-title">Something went wrong</div><div class="alert-body">Please refresh the page and try again.</div></div></div>
-      <div class="alert alert-neutral"><div class="alert-dot dot-neutral"></div><div><div class="alert-title">Draft saved</div><div class="alert-body">Your changes are saved automatically.</div></div></div>
+      <div class="alert alert-green"><div class="alert-icon">✓</div><div><div class="alert-title">Submitted successfully</div><div class="alert-body">Your message has been received. We'll be in touch within 24 hours.</div></div></div>
+      <div class="alert alert-warn"><div class="alert-icon">!</div><div><div class="alert-title">Review needed</div><div class="alert-body">Some required fields are missing. Please check your form.</div></div></div>
+      <div class="alert alert-error"><div class="alert-icon">✕</div><div><div class="alert-title">Something went wrong</div><div class="alert-body">Please refresh the page and try again.</div></div></div>
+      <div class="alert alert-neutral"><div class="alert-icon">·</div><div><div class="alert-title">Draft saved</div><div class="alert-body">Your changes are saved automatically.</div></div></div>
     </div>
     <div class="comp-inner" style="margin-top:var(--sp10);">
+      <span class="note" style="margin-bottom:var(--sp5);">Toast / pill alerts (floating, compact)</span>
+      <div style="display:flex;flex-direction:column;gap:var(--sp3);max-width:420px;margin-bottom:var(--sp10);">
+        <div class="toast toast-green"><span class="toast-dot toast-dot-green"></span>Message sent successfully</div>
+        <div class="toast toast-warn"><span class="toast-dot toast-dot-warn"></span>Your session will expire in 5 minutes</div>
+        <div class="toast toast-error"><span class="toast-dot toast-dot-error"></span>Payment failed — please try again</div>
+        <div class="toast toast-neutral"><span class="toast-dot toast-dot-neutral"></span>Changes saved automatically</div>
+      </div>
+    </div>
+    <div class="comp-inner" style="margin-top:var(--sp2);">
       <span class="note">Announcement bar (top of page)</span>
       <div class="announce-bar">
         <span class="announce-text">Nemo V.2 is live. Rebuilt from the ground up.</span>
@@ -1490,6 +1532,92 @@ font-family: var(--fh);
         </div>
       </div>
 
+      <!-- R3: Work card sharp — small radius (4px), high contrast -->
+      <span class="note" style="margin-bottom:var(--sp5);">R3 — Work card · sharp (r-sm image, no border, dark)</span>
+      <div class="card-work-grid" style="margin-bottom:var(--sp16);">
+        <a class="card-work-sharp" href="#">
+          <div class="card-sharp-img" style="background:var(--charcoal);"></div>
+          <div class="card-sharp-foot">
+            <div class="card-sharp-left">
+              <div class="card-sharp-cat">Branding</div>
+              <div class="card-sharp-title">Meridian Health</div>
+            </div>
+            <span class="card-sharp-arr">→</span>
+          </div>
+        </a>
+        <a class="card-work-sharp" href="#">
+          <div class="card-sharp-img" style="background:rgba(255,255,255,0.03);"></div>
+          <div class="card-sharp-foot">
+            <div class="card-sharp-left">
+              <div class="card-sharp-cat">Web design</div>
+              <div class="card-sharp-title">Finlo</div>
+            </div>
+            <span class="card-sharp-arr">→</span>
+          </div>
+        </a>
+        <a class="card-work-sharp" href="#">
+          <div class="card-sharp-img" style="background:rgba(255,255,255,0.05);"></div>
+          <div class="card-sharp-foot">
+            <div class="card-sharp-left">
+              <div class="card-sharp-cat">App UI</div>
+              <div class="card-sharp-title">Verity</div>
+            </div>
+            <span class="card-sharp-arr">→</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- R4: No-border flat dark cards — full bleed bg, type only -->
+      <span class="note" style="margin-bottom:var(--sp5);">R4 — Flat dark cards · no border, bg fill only</span>
+      <div class="card-flat-grid" style="margin-bottom:var(--sp16);">
+        <div class="card-flat">
+          <div class="card-flat-num">01</div>
+          <div class="card-flat-title">Brand identity</div>
+          <p class="card-flat-body">Naming, logo system, colour, type, and full brand guidelines that scale to any surface.</p>
+          <a class="card-flat-link" href="#">Learn more →</a>
+        </div>
+        <div class="card-flat">
+          <div class="card-flat-num">02</div>
+          <div class="card-flat-title">Web design & build</div>
+          <p class="card-flat-body">Marketing sites built on modern stacks. Pixel-precise, fast, and memorable.</p>
+          <a class="card-flat-link" href="#">Learn more →</a>
+        </div>
+        <div class="card-flat">
+          <div class="card-flat-num">03</div>
+          <div class="card-flat-title">Product design</div>
+          <p class="card-flat-body">SaaS and app interfaces designed from first principles — not templates, not shortcuts.</p>
+          <a class="card-flat-link" href="#">Learn more →</a>
+        </div>
+      </div>
+
+      <!-- R5: Borderless work cards on light — image fills full card, label on hover -->
+      <span class="note note-light" style="color:rgba(0,0,0,0.2);margin-bottom:var(--sp5);">R5 — Work cards · light bg, full-width image, category below</span>
+      <div style="background:var(--off-white);padding:var(--sp10);border-radius:var(--r-xl);">
+        <div class="card-work-grid">
+          <a class="card-lw" href="#">
+            <div class="card-lw-img" style="background:#D8D5CC;"></div>
+            <div class="card-lw-foot">
+              <span class="card-lw-cat">Branding · Identity</span>
+              <div class="card-lw-title">Tekronyx AIP</div>
+            </div>
+          </a>
+          <a class="card-lw" href="#">
+            <div class="card-lw-img" style="background:#CACED6;"></div>
+            <div class="card-lw-foot">
+              <span class="card-lw-cat">Web design</span>
+              <div class="card-lw-title">Wadi Sabarah</div>
+            </div>
+          </a>
+          <a class="card-lw" href="#">
+            <div class="card-lw-img" style="background:#D6D0C8;"></div>
+            <div class="card-lw-foot">
+              <span class="card-lw-cat">App UI · System</span>
+              <div class="card-lw-title">EG Group CRM</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1498,13 +1626,38 @@ font-family: var(--fh);
 /* R. CARDS */
 .card-work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp6);}
 .card-work{display:block;}
-.card-work-img{width:100%;aspect-ratio:4/3;border-radius:var(--r-lg);margin-bottom:var(--sp4);}
+.card-work-img{width:100%;aspect-ratio:4/3;border-radius:var(--r-sm);margin-bottom:var(--sp4);}
 .card-work-meta{}
 .card-work-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--sp1);}
 .card-work-title{font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);}
 .card-work-arr{font-size:16px;color:rgba(255,255,255,0.2);transition:color var(--e-fast);}
 .card-work:hover .card-work-arr{color:var(--t1);}
 .card-work-cat{font-family:var(--fh);font-size:12px;color:var(--t-off);}
+
+/* R3 — sharp */
+.card-work-sharp{display:block;}
+.card-sharp-img{width:100%;aspect-ratio:4/3;border-radius:0;margin-bottom:var(--sp4);}
+.card-sharp-foot{display:flex;justify-content:space-between;align-items:flex-end;}
+.card-sharp-cat{font-family:var(--fh);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--t-off);margin-bottom:var(--sp1);}
+.card-sharp-title{font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.5px;color:var(--t1);}
+.card-sharp-arr{font-size:16px;color:rgba(255,255,255,0.2);transition:color var(--e-fast),transform var(--e-fast);flex-shrink:0;margin-bottom:4px;}
+.card-work-sharp:hover .card-sharp-arr{color:var(--t1);transform:translateX(3px);}
+
+/* R4 — flat no-border */
+.card-flat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp3);}
+.card-flat{padding:var(--sp8);background:var(--charcoal);border-radius:var(--r-lg);}
+.card-flat-num{font-family:var(--fa);font-size:12px;color:rgba(255,255,255,0.2);margin-bottom:var(--sp8);}
+.card-flat-title{font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.5px;color:var(--t1);margin-bottom:var(--sp3);}
+.card-flat-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;margin-bottom:var(--sp6);}
+.card-flat-link{font-family:var(--fh);font-size:13px;color:rgba(255,255,255,0.4);}
+.card-flat:hover .card-flat-link{color:var(--t1);}
+
+/* R5 — light work cards */
+.card-lw{display:block;}
+.card-lw-img{width:100%;aspect-ratio:4/3;border-radius:var(--r-sm);margin-bottom:var(--sp4);}
+.card-lw-foot{}
+.card-lw-cat{font-family:var(--fh);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:var(--sp1);display:block;}
+.card-lw-title{font-family:var(--fa);font-size:19px;font-weight:400;letter-spacing:-0.4px;color:#111;}
 
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp6);}
 .svc-card{padding:var(--sp6) 0;border-top:1px solid rgba(0,0,0,0.1);}
@@ -1653,27 +1806,6 @@ font-family: var(--fh);
         </div>
       </div>
 
-      <!-- T2: 2-col feature grid with description -->
-      <span class="note" style="margin-bottom:var(--sp6);">T2 — 2×2 feature grid</span>
-      <div class="feat-grid">
-        <div class="feat-grid-item">
-          <h4 class="feat-grid-title">Token-driven</h4>
-          <p class="feat-grid-body">Every value — spacing, colour, type, radius — lives in a token. Redesign at scale with a single variable change.</p>
-        </div>
-        <div class="feat-grid-item">
-          <h4 class="feat-grid-title">Responsive by default</h4>
-          <p class="feat-grid-body">Layouts flex gracefully from 320px to 4K. Nothing breaks. Nothing looks like an afterthought.</p>
-        </div>
-        <div class="feat-grid-item">
-          <h4 class="feat-grid-title">Accessible</h4>
-          <p class="feat-grid-body">WCAG AA contrast ratios, focus states, and semantic HTML are built in — not bolted on.</p>
-        </div>
-        <div class="feat-grid-item">
-          <h4 class="feat-grid-title">Documented</h4>
-          <p class="feat-grid-body">Every component ships with usage notes, variants, and do/don't guidance so your team can move fast.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -1688,15 +1820,6 @@ font-family: var(--fh);
 .feat-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;max-width:440px;}
 .feat-tags{display:flex;gap:var(--sp2);flex-wrap:wrap;padding-top:4px;}
 .pill-tag{font-family:var(--fh);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 12px;border-radius:var(--r-pill);border:1px solid var(--b2);color:var(--t-off);}
-
-.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp1);}
-.feat-grid-item{padding:var(--sp8);border:1px solid var(--b1);background:var(--s3);}
-.feat-grid-item:first-child{border-radius:var(--r-lg) 0 0 0;}
-.feat-grid-item:nth-child(2){border-radius:0 var(--r-lg) 0 0;}
-.feat-grid-item:nth-child(3){border-radius:0 0 0 var(--r-lg);}
-.feat-grid-item:last-child{border-radius:0 0 var(--r-lg) 0;}
-.feat-grid-title{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp3);}
-.feat-grid-body{font-family:var(--fh);font-size:14px;color:var(--t-off);line-height:1.65;}
 </style>
 
 
@@ -1714,7 +1837,7 @@ font-family: var(--fh);
       <div class="testi-hero" style="margin-bottom:var(--sp12);">
         <div class="testi-hero-quote">"Working with Nemo felt like having a co-founder who happened to be the best designer I'd ever met. They understood our constraints, moved fast, and shipped something we're still proud of two years later."</div>
         <div class="testi-hero-attr">
-          <div class="person-chip-avatar-light" style="width:40px;height:40px;font-size:12px;">JK</div>
+          <div class="avatar av-md">JK</div>
           <div>
             <div class="testi-name">Jonas K.</div>
             <div class="testi-role">CEO, Finlo</div>
@@ -1728,7 +1851,7 @@ font-family: var(--fh);
         <div class="testi-card">
           <p class="testi-body">"The rebrand took two weeks. We went from 'startup energy' to 'this is a real company' overnight."</p>
           <div class="testi-attr-sm">
-            <div class="person-chip-avatar-light">AR</div>
+            <div class="avatar av-sm">AR</div>
             <div>
               <div class="testi-name-sm">Amara R.</div>
               <div class="testi-role-sm">Head of Product, Verity</div>
@@ -1738,7 +1861,7 @@ font-family: var(--fh);
         <div class="testi-card">
           <p class="testi-body">"We came in with a rough spec and left with a system. Nemo turned ambiguity into something our whole team could build on."</p>
           <div class="testi-attr-sm">
-            <div class="person-chip-avatar-light">LS</div>
+            <div class="avatar av-sm">LS</div>
             <div>
               <div class="testi-name-sm">Lena S.</div>
               <div class="testi-role-sm">CTO, Arco</div>
@@ -1748,7 +1871,7 @@ font-family: var(--fh);
         <div class="testi-card">
           <p class="testi-body">"Honest, direct, fast. No ego. Just really good work delivered on time. Exactly what a founder needs."</p>
           <div class="testi-attr-sm">
-            <div class="person-chip-avatar-light">MO</div>
+            <div class="avatar av-sm">MO</div>
             <div>
               <div class="testi-name-sm">Marc O.</div>
               <div class="testi-role-sm">Founder, Meridian</div>
@@ -1763,7 +1886,7 @@ font-family: var(--fh);
         <div class="quote-block">
           <p class="quote-text">"We didn't just get a website. We got a design system, a visual language, and a team that actually understood what we were building."</p>
           <div class="testi-attr-sm" style="margin-top:var(--sp5);">
-            <div class="person-chip-avatar">TC</div>
+            <div class="avatar av-sm">TC</div>
             <div>
               <div style="font-family:var(--fa);font-size:14px;color:var(--t1);">Tom C.</div>
               <div style="font-family:var(--fh);font-size:12px;color:var(--t-off);">Co-founder, Sonder</div>
@@ -1791,24 +1914,6 @@ font-family: var(--fh);
 .testi-name-sm{font-family:var(--fa);font-size:14px;color:#111;}
 .testi-role-sm{font-family:var(--fh);font-size:12px;color:#888;}
 
-/* shared avatar — use person-chip-avatar (from P section) */
-.person-chip-avatar{
-  width:32px;height:32px;border-radius:50%;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-family:var(--fa);font-size:10px;
-  border:1px solid var(--b2);
-  color:rgba(255,255,255,0.5);
-  flex-shrink:0;
-}
-/* light variant for testimonial cards */
-.person-chip-avatar-light{
-  width:32px;height:32px;border-radius:50%;
-  display:inline-flex;align-items:center;justify-content:center;
-  font-family:var(--fa);font-size:10px;
-  border:1px solid rgba(0,0,0,0.12);
-  color:rgba(0,0,0,0.4);
-  flex-shrink:0;
-}
 </style>
 
 
@@ -2104,7 +2209,7 @@ font-family: var(--fh);
 .cs-split{display:grid;grid-template-columns:1.6fr 1fr;gap:var(--sp5);}
 .cs-stack-col{display:flex;flex-direction:column;gap:var(--sp5);}
 .cs-card{display:block;}
-.cs-thumb{border-radius:var(--r-lg);width:100%;display:block;}
+.cs-thumb{border-radius:var(--r-sm);width:100%;display:block;}
 .cs-foot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:var(--sp4);}
 .cs-name{font-family:var(--fa);font-size:18px;font-weight:400;letter-spacing:-0.4px;color:#111;margin-bottom:4px;}
 .cs-type{font-family:var(--fh);font-size:12px;color:#888;}
@@ -2200,6 +2305,202 @@ font-family: var(--fh);
 .grid-sidebar{grid-template-columns:240px 1fr;}
 .grid-autofill{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
 .grid-col{padding:var(--sp5) var(--sp6);border:1px dashed rgba(255,255,255,0.1);border-radius:var(--r-md);font-family:var(--fh);font-size:12px;color:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;min-height:60px;}
+</style>
+
+
+
+<!-- ══════════════════════════════════════════════════
+     Z. EXTRA — Additional variants from audit research
+     Stat cards, testimonial alt, how-it-works alt,
+     pricing row, logo strip, empty state, pagination
+══════════════════════════════════════════════════ -->
+<div id="extra" class="comp-section comp-section-dark" style="padding-bottom:var(--sp32);">
+  <div class="comp-label">Z — Extra Variants</div>
+  <div class="comp-body">
+    <div class="comp-inner">
+
+      <!-- Z1: Stat cards with description (Intercom / Retool style) -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z1 — Metric cards with description (dark)</span>
+      <div class="metric-grid" style="margin-bottom:var(--sp16);">
+        <div class="metric-card">
+          <div class="metric-value">87%</div>
+          <div class="metric-title">Fewer issues reported</div>
+          <div class="metric-body">Over 2,500 issues resolved with a direct improvement in client satisfaction scores.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">6×</div>
+          <div class="metric-title">Faster delivery cycles</div>
+          <div class="metric-body">Systematic design reduces iteration time and eliminates late-stage revisions.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">2×</div>
+          <div class="metric-title">Faster than in-house</div>
+          <div class="metric-body">One senior designer moving fast beats a team of three moving cautiously.</div>
+        </div>
+      </div>
+
+      <!-- Z2: Testimonial alt — horizontal single row (Retool-inspired) -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z2 — Testimonial horizontal row (dark)</span>
+      <div class="testi-row" style="margin-bottom:var(--sp16);">
+        <div class="testi-row-item">
+          <p class="testi-row-quote">"Working with Nemo felt like having a co-founder who happened to be the best designer I'd ever met."</p>
+          <div class="testi-row-attr">
+            <div class="avatar av-sm">JK</div>
+            <div>
+              <div class="testi-row-name">Jonas K.</div>
+              <div class="testi-row-role">CEO, Finlo</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-row-divider"></div>
+        <div class="testi-row-item">
+          <p class="testi-row-quote">"The rebrand took two weeks. We went from startup energy to 'this is a real company' overnight."</p>
+          <div class="testi-row-attr">
+            <div class="avatar av-sm">AR</div>
+            <div>
+              <div class="testi-row-name">Amara R.</div>
+              <div class="testi-row-role">Head of Product, Verity</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-row-divider"></div>
+        <div class="testi-row-item">
+          <p class="testi-row-quote">"Honest, direct, fast. No ego. Just really good work delivered on time."</p>
+          <div class="testi-row-attr">
+            <div class="avatar av-sm">MO</div>
+            <div>
+              <div class="testi-row-name">Marc O.</div>
+              <div class="testi-row-role">Founder, Meridian</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Z3: How it works alt — 2-col with large number (Neon / Cohere style) -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z3 — How it works alt: large number + text side by side</span>
+      <div class="hiw-alt" style="margin-bottom:var(--sp16);">
+        <div class="hiw-alt-item">
+          <div class="hiw-alt-num">01</div>
+          <div>
+            <div class="hiw-alt-title">Discovery call</div>
+            <div class="hiw-alt-body">30 minutes. We ask the hard questions so we can move fast later. You leave with a clear brief.</div>
+          </div>
+        </div>
+        <div class="hiw-alt-item">
+          <div class="hiw-alt-num">02</div>
+          <div>
+            <div class="hiw-alt-title">Proposal</div>
+            <div class="hiw-alt-body">Scope, timeline, and a fixed price. No surprises. You approve before we start.</div>
+          </div>
+        </div>
+        <div class="hiw-alt-item">
+          <div class="hiw-alt-num">03</div>
+          <div>
+            <div class="hiw-alt-title">Design & build</div>
+            <div class="hiw-alt-body">Iterative sprints with async check-ins. You see progress every week, not just at the end.</div>
+          </div>
+        </div>
+        <div class="hiw-alt-item">
+          <div class="hiw-alt-num">04</div>
+          <div>
+            <div class="hiw-alt-title">Handoff</div>
+            <div class="hiw-alt-body">Full walkthrough, design system docs, and 30 days of support. You own everything.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Z4: Logo / client strip (dark) -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z4 — Client logo strip (dark)</span>
+      <div class="logo-strip" style="margin-bottom:var(--sp16);">
+        <span class="logo-item">Tekronyx</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-item">Wadi Sabarah</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-item">EG Group</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-item">Almasria</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-item">Cairo OS</span>
+        <span class="logo-sep">·</span>
+        <span class="logo-item">Mappire</span>
+      </div>
+
+      <!-- Z5: Empty state -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z5 — Empty state (no results / coming soon)</span>
+      <div class="empty-state" style="margin-bottom:var(--sp16);">
+        <div class="empty-icon">◌</div>
+        <div class="empty-title">Nothing here yet</div>
+        <div class="empty-body">New case studies are added each quarter. Check back soon.</div>
+        <a class="empty-cta" href="#">Get notified →</a>
+      </div>
+
+      <!-- Z6: Pagination -->
+      <span class="note" style="margin-bottom:var(--sp6);">Z6 — Pagination</span>
+      <div class="pagination">
+        <a class="page-btn page-prev" href="#">← Prev</a>
+        <div class="page-nums">
+          <a class="page-num page-num-active" href="#">1</a>
+          <a class="page-num" href="#">2</a>
+          <a class="page-num" href="#">3</a>
+          <span class="page-ellipsis">…</span>
+          <a class="page-num" href="#">8</a>
+        </div>
+        <a class="page-btn page-next" href="#">Next →</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* Z. EXTRA */
+
+/* Z1 metric cards */
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp4);}
+.metric-card{padding:var(--sp8) var(--sp6);border:1px solid var(--b1);border-radius:var(--r-lg);background:var(--s3);}
+.metric-value{font-family:var(--fa);font-size:clamp(40px,5vw,64px);font-weight:400;letter-spacing:-2px;color:var(--t1);line-height:1;margin-bottom:var(--sp5);}
+.metric-title{font-family:var(--fa);font-size:16px;font-weight:400;letter-spacing:-0.3px;color:var(--t1);margin-bottom:var(--sp2);}
+.metric-body{font-family:var(--fh);font-size:13px;color:var(--t-off);line-height:1.65;}
+
+/* Z2 testimonial row */
+.testi-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:start;gap:0;padding:var(--sp8);border:1px solid var(--b1);border-radius:var(--r-xl);background:var(--s3);}
+.testi-row-item{padding:0 var(--sp8);display:flex;flex-direction:column;gap:var(--sp6);}
+.testi-row-divider{width:1px;background:var(--b1);align-self:stretch;}
+.testi-row-quote{font-family:var(--fh);font-size:14px;line-height:1.75;color:var(--t-off);flex:1;}
+.testi-row-attr{display:flex;align-items:center;gap:var(--sp3);}
+.testi-row-name{font-family:var(--fa);font-size:14px;color:var(--t1);}
+.testi-row-role{font-family:var(--fh);font-size:11px;color:var(--t-off);}
+
+/* Z3 how it works alt */
+.hiw-alt{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.hiw-alt-item{display:grid;grid-template-columns:72px 1fr;gap:var(--sp5);padding:var(--sp8) 0;border-top:1px solid var(--b1);align-items:start;}
+.hiw-alt-item:nth-child(odd){padding-right:var(--sp8);}
+.hiw-alt-item:nth-child(even){padding-left:var(--sp8);border-left:1px solid var(--b1);}
+.hiw-alt-num{font-family:var(--fa);font-size:clamp(28px,3vw,40px);font-weight:400;letter-spacing:-1px;color:rgba(255,255,255,0.1);line-height:1;}
+.hiw-alt-title{font-family:var(--fa);font-size:17px;font-weight:400;letter-spacing:-0.4px;color:var(--t1);margin-bottom:var(--sp2);}
+.hiw-alt-body{font-family:var(--fh);font-size:13px;color:var(--t-off);line-height:1.65;}
+
+/* Z4 logo strip */
+.logo-strip{display:flex;align-items:center;gap:var(--sp5);flex-wrap:wrap;}
+.logo-item{font-family:var(--fa);font-size:16px;font-weight:400;letter-spacing:-0.3px;color:rgba(255,255,255,0.2);}
+.logo-sep{color:var(--b1);font-size:18px;}
+
+/* Z5 empty state */
+.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;padding:var(--sp16) var(--sp10);border:1px solid var(--b1);border-radius:var(--r-xl);}
+.empty-icon{font-size:32px;color:rgba(255,255,255,0.1);margin-bottom:var(--sp5);}
+.empty-title{font-family:var(--fa);font-size:20px;font-weight:400;letter-spacing:-0.5px;color:var(--t1);margin-bottom:var(--sp2);}
+.empty-body{font-family:var(--fh);font-size:14px;color:var(--t-off);max-width:320px;line-height:1.6;margin-bottom:var(--sp6);}
+.empty-cta{font-family:var(--fh);font-size:13px;color:var(--green);}
+
+/* Z6 pagination */
+.pagination{display:flex;align-items:center;gap:var(--sp3);}
+.page-btn{font-family:var(--fh);font-size:13px;color:var(--t-off);padding:var(--sp2) var(--sp4);border:1px solid var(--b1);border-radius:var(--r-pill);transition:all var(--e-fast);}
+.page-btn:hover{color:var(--t1);border-color:var(--b2);}
+.page-nums{display:flex;align-items:center;gap:var(--sp1);}
+.page-num{font-family:var(--fh);font-size:13px;color:var(--t-off);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid transparent;transition:all var(--e-fast);}
+.page-num:hover{color:var(--t1);border-color:var(--b1);}
+.page-num-active{color:var(--t1);border-color:var(--b2);background:var(--s3);}
+.page-ellipsis{font-family:var(--fh);font-size:13px;color:rgba(255,255,255,0.2);padding:0 var(--sp2);}
 </style>
 
 

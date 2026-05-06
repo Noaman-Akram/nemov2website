@@ -3,7 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Image optimization — add external domains here when needed
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "madebynemo.com",
+        pathname: "/storage/**",
+      },
+    ],
   },
 
   // Strict mode for better DX

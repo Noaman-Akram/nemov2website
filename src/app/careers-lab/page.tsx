@@ -1,3 +1,4 @@
+"use client";
 import { Nav } from "@/components/layout/Nav";
 
 export default function CareersLab() {
